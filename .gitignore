@@ -4,3 +4,4 @@ bin/
 asm/
 tools/armips
 tools/iplfontutil
+.vscode
