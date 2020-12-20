@@ -5,7 +5,7 @@ CC           := gcc
 CXX          := g++
 CFLAGS       := -I . -Wall -Wextra -Wno-unused-parameter -O2 -s
 LDFLAGS      := -lm
-ALL_PROGRAMS := armips
+ALL_PROGRAMS := iplfontutil armips
 
 # Only build armips from tools if it is not found on the system
 ifeq ($(shell which armips 2>/dev/null),)
@@ -15,6 +15,9 @@ else
 endif
 
 default: all
+
+iplfontutil_SOURCES := iplfontutil.c
+iplfontutil_CFLAGS := -O2 # faster compile time
 
 armips: CC := $(CXX)
 armips_SOURCES := armips.cpp

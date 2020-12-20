@@ -23,6 +23,7 @@ segments:
     vram: 0xA4000040
     files:
     - [0x0040, "asm", "boot"]
+    - [0x0B70, "bin", "ipl3_font"]
   - name: app
     type: code
     start: 0x1000

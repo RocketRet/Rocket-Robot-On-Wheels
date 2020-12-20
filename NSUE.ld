@@ -34,6 +34,7 @@ SECTIONS
     
     SPLAT_BEGIN_SEG(code_boot, 0x40, 0xA4000040, )
         BUILD_DIR/asm/boot.s.o(.text);
+        BUILD_DIR/bin/ipl3_font.bin.o(.data);
     SPLAT_END_SEG(code_boot, 0x1000)
     
     SPLAT_BEGIN_SEG(code_app, 0x1000, 0x80000400, )

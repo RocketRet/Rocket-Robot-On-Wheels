@@ -3,3 +3,4 @@ bin/
 .splat_cache
 asm/
 tools/armips
+tools/iplfontutil
