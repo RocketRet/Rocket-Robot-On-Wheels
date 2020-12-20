@@ -1,0 +1,36 @@
+name: "Rocket Robot on Wheels (US)"
+basename: "NSUE"
+options:
+  compiler: "IDO"
+  ld_o_replace_extension: no
+  cpp_args:
+  - "-D_LANGUAGE_C"
+  - "-D_FINALROM"
+  modes:
+  - all
+  generated_c_preamble: |
+    #include <ultra64.h>
+segments:
+  - name: header
+    type: header
+    start: 0x00
+    vram: 0
+    files:
+    - [0x0000, "header", "header"]
+  - name: boot
+    type: code
+    start: 0x0040
+    vram: 0xA4000040
+    files:
+    - [0x0040, "asm", "boot"]
+  - name: app
+    type: code
+    start: 0x1000
+    vram: 0x80000400
+    files:
+    - [0x001000, "bin", "entry"]
+    - [0x002DC0, "bin", "f3dex2_code"]
+    - [0x004150, "bin"]
+    - [0x018F70, "bin", "f3dex2_data"]
+    - [0x019390, "bin"]
+  - [0xC00000]
