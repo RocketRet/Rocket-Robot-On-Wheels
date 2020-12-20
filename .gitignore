@@ -2,3 +2,4 @@ baserom.us.z64
 bin/
 .splat_cache
 asm/
+tools/armips
