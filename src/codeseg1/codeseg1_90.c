@@ -2,7 +2,7 @@
 #include <ultra64.h>
 
 
-void func_8000ADF0(void) {
+void __assert(const char *arg0, const char *filename, int line) {
 
 }
 

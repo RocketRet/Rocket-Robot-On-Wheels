@@ -178,8 +178,8 @@ SECTIONS
         BUILD_DIR/src/codeseg1/codeseg1_130.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_131.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_132.o(.text);
-        BUILD_DIR/src/codeseg1/codeseg1_133.o(.text);
-        BUILD_DIR/src/codeseg1/codeseg1_134.o(.text);
+        BUILD_DIR/src/codeseg1/sirawread.o(.text);
+        BUILD_DIR/src/codeseg1/sirawwrite.o(.text);
         BUILD_DIR/src/codeseg1/invalicache.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_136.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_137.o(.text);

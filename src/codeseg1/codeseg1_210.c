@@ -10,4 +10,4 @@ INCLUDE_ASM(s32, "codeseg1/codeseg1_210", func_800150A4);
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_210", func_800150EC);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_210", func_80015138);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_210", __nextSampleTime);

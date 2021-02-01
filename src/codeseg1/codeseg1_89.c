@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_89", func_8000AD50);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_89", osSetIntMask);

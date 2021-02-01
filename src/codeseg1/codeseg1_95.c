@@ -2,6 +2,6 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_95", func_8000AF20);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_95", osSpTaskLoad);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_95", func_8000B12C);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_95", osSpTaskStartGo);

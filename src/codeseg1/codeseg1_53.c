@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_53", func_800081C0);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_53", osRecvMesg);

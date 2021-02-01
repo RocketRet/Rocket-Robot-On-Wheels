@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_10", func_80004310);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_10", osCreateThread);

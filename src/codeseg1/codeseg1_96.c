@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_96", func_8000B160);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_96", osDpSetNextBuffer);
