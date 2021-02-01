@@ -1,6 +1,6 @@
-[submodule "tools/n64splat"]
-	path = tools/n64splat
-	url = https://github.com/ethteck/n64splat.git
+[submodule "tools/splat"]
+	path = tools/splat
+	url = https://github.com/ethteck/splat.git
 [submodule "f3dex2"]
 	path = f3dex2
 	url = https://github.com/Mr-Wiseguy/f3dex2.git

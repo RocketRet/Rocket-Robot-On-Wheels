@@ -5,3 +5,6 @@ asm/
 tools/armips
 tools/iplfontutil
 .vscode
+build
+match_tmp
+__pycache__
