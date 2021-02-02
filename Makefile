@@ -39,9 +39,10 @@ LD := mips-linux-gnu-ld
 
 # Flags
 CPPFLAGS := -Iinclude
-CFLAGS := -quiet -G0 -version -mcpu=vr4300 -mfix4300 -mips3 -mgp32 -mfp32 -Wuninitialized -Wshadow
+CFLAGS := -quiet -G0 -mcpu=vr4300 -mips2 -mgp32 -mfp32
+WARNFLAGS := -Wuninitialized -Wshadow
 OPTFLAGS := -O2
-ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=o64 -mgp64 -mfp64 -I. -Iinclude
+ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=o64 -mgp64 -mfp64 -I. -Iinclude -O0
 BINOFLAGS := -I binary -O elf32-big
 CPP_LDFLAGS := -P -Wno-trigraphs -DBUILD_DIR=$(BUILD_DIR)
 LDFLAGS := -T $(BUILD_DIR)/$(LD_SCRIPT) -mips3 --accept-unknown-input-arch -T undefined_syms_auto.txt --no-check-sections -T undefined_syms.txt
@@ -63,7 +64,7 @@ $(BUILD_ROOT) $(BUILD_DIR) $(SRC_DIR) $(SRC_BUILD_DIRS) $(ASM_BUILD_DIR) $(BIN_B
 	$(MKDIR) $@
 
 $(BUILD_DIR)/%.s : %.c | $(SRC_BUILD_DIRS)
-	$(CPP) $(CPPFLAGS) $< -o - | $(CC) $(CFLAGS) $(OPTFLAGS) - -o $@
+	$(CPP) $(CPPFLAGS) $< -o - | $(CC) $(CFLAGS) $(WARNFLAGS) $(OPTFLAGS) - -o $@
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
@@ -82,6 +83,15 @@ $(ELF) : $(OBJS) $(BUILD_DIR)/$(LD_SCRIPT)
 
 $(Z64) : $(ELF)
 	$(OBJCOPY) $(Z64OFLAGS) $< $@
+
+# $(BUILD_DIR)/src/codeseg1/codeseg1_35.s: OPTFLAGS := -O0
+# $(BUILD_DIR)/src/codeseg1/codeseg1_35.s: WARNFLAGS := 
+# $(BUILD_DIR)/src/codeseg0/codeseg0_0.s: CC := tools/sn/gnun64280/cc1n64.exe
+# $(BUILD_DIR)/src/codeseg0/codeseg0_0.s: CC := /mnt/c/n64/n64sdk/ultra/GCC/MIPSE/BIN/CC1.EXE
+# $(BUILD_DIR)/src/codeseg0/codeseg0_0.o: AS := ../papermario/tools/linux/mips-nintendo-nu64-as
+# $(BUILD_DIR)/src/codeseg0/codeseg0_0.o: ASFLAGS := -G0 -EB -I. -Iinclude -O0 -mcpu=vr4300 -g
+# $(BUILD_DIR)/src/codeseg0/codeseg0_0.o: AS := /mnt/c/sn_n64/bin/asn64.exe
+# $(BUILD_DIR)/src/codeseg0/codeseg0_0.o: ASFLAGS := /l
 
 clean:
 	$(RMDIR) $(BUILD_ROOT)

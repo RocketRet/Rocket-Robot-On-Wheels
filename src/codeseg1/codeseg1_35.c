@@ -3,7 +3,15 @@
 
 // IDO?
 
-extern s32 D_800BD2F8;
+struct unkfunc_80005D8C {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32 unk10;
+};
+
+extern struct unkfunc_80005D8C *D_800BD2F8;
 extern s32 D_800BD304;
 extern s32 D_800BD308;
 
@@ -14,14 +22,6 @@ INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005CB4);
 INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005D2C);
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005D64);
-
-struct unkfunc_80005D8C {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-    s32 unk10;
-};
 
 void func_80005D8C(struct unkfunc_80005D8C *arg0)
 {
