@@ -60,8 +60,6 @@ extern u32 D_800B1D70; // thread1 stack end
 
 void thread6_unk(void *);
 
-void osCreatePiManager(s32, void *, void *, s32);
-
 // TODO different compiler
 
 // void thread1_idle(void *arg0)
@@ -80,8 +78,6 @@ INCLUDE_ASM(s32, "codeseg0/codeseg0_0", thread6_unk);
 void func_8001DE00(void);
 void func_80041908(void);
 void func_800638EC(s32);
-void osSendMesg(void *, void *, s32);
-void osRecvMesg(void *, void *, s32);
 void func_800954FC(void);
 void func_8008FC1C(void);
 
