@@ -45,12 +45,7 @@ SECTIONS
         BUILD_DIR/bin/rspboot_code.o(.data);
         BUILD_DIR/bin/n_aspMain_code.o(.data);
         BUILD_DIR/bin/f3dex2_code.o(.data);
-        BUILD_DIR/src/codeseg1/codeseg1_0.o(.text);
-        BUILD_DIR/src/codeseg1/codeseg1_1.o(.text);
-        BUILD_DIR/src/codeseg1/codeseg1_2.o(.text);
-        BUILD_DIR/src/codeseg1/codeseg1_3.o(.text);
-        BUILD_DIR/src/codeseg1/codeseg1_4.o(.text);
-        BUILD_DIR/src/codeseg1/codeseg1_5.o(.text);
+        BUILD_DIR/src/codeseg1/sched.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_6.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_7.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_8.o(.text);
@@ -250,7 +245,7 @@ SECTIONS
         BUILD_DIR/src/codeseg1/codeseg1_201.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_202.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_203.o(.text);
-        BUILD_DIR/src/codeseg1/__osSetCompare.o(.text);
+        BUILD_DIR/src/codeseg1/setcompare.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_205.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_206.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_207.o(.text);

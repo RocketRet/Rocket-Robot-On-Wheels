@@ -21,7 +21,7 @@ void func_80056FA0(f32, f32*, f32*);
 //         func_80056FA0(fVar2, arr, arg1);
 //     }
 //     else {
-//         func_800040B0(arg1, 0x24);
+//         bzero(arg1, 0x24);
 //         arg1[8] = D_8001BA18;
 //         arg1[4] = D_8001BA18;
 //         arg1[0] = D_8001BA18;

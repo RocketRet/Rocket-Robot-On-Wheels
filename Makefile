@@ -39,10 +39,10 @@ LD := mips-linux-gnu-ld
 
 # Flags
 CPPFLAGS := -Iinclude
-CFLAGS := -quiet -G0 -mcpu=vr4300 -mips2 -mgp32 -mfp32
+CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32
 WARNFLAGS := -Wuninitialized -Wshadow
 OPTFLAGS := -O2
-ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=o64 -mgp64 -mfp64 -I. -Iinclude -O0
+ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=o64 -I. -Iinclude -O0
 BINOFLAGS := -I binary -O elf32-big
 CPP_LDFLAGS := -P -Wno-trigraphs -DBUILD_DIR=$(BUILD_DIR)
 LDFLAGS := -T $(BUILD_DIR)/$(LD_SCRIPT) -mips3 --accept-unknown-input-arch -T undefined_syms_auto.txt --no-check-sections -T undefined_syms.txt
