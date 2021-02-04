@@ -87,6 +87,7 @@
  */
 
 #ifdef   F3DEX_GBI_2
+#define F3DEX_GBI
 #define	G_NOOP			0x00
 #define	G_RDPHALF_2		0xf1
 #define	G_SETOTHERMODE_H	0xe3
@@ -288,7 +289,7 @@
 /*
  * G_MTX: parameter flags
  */
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 # define G_MTX_MODELVIEW	0x00	/* matrix types */
 # define G_MTX_PROJECTION	0x04
 # define G_MTX_MUL		0x00	/* concat or load */
@@ -1175,7 +1176,7 @@ typedef union {
  * which to store a 1-4 word DMA.
  *
  */
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 /* 0,2,4,6 are reserved by G_MTX */
 # define G_MV_VIEWPORT	8
 # define G_MV_LIGHT	10
@@ -1224,7 +1225,7 @@ typedef union {
 #define G_MW_SEGMENT		0x06
 #define G_MW_FOG		0x08
 #define G_MW_LIGHTCOL		0x0a
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 # define G_MW_FORCEMTX		0x0c
 #else	/* F3DEX_GBI_2 */
 # define G_MW_POINTS		0x0c
@@ -1714,7 +1715,7 @@ typedef union {
 #define	gSPNoOp(pkt)		gDma0p(pkt, G_SPNOOP, 0, 0)
 #define	gsSPNoOp()		gsDma0p(G_SPNOOP, 0, 0)
 
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 # define gSPMatrix(pkt, m, p)	\
 	 gDma2p((pkt),G_MTX,(m),sizeof(Mtx),(p)^G_MTX_PUSH,0)
 # define gsSPMatrix(m, p)	\
@@ -1746,7 +1747,7 @@ typedef union {
 #endif
 
 	
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 # define gSPViewport(pkt, v) gDma2p(pkt,G_MOVEMEM,v,sizeof(Vp),G_MV_VIEWPORT,0)
 # define gsSPViewport(v)    gsDma2p(    G_MOVEMEM,v,sizeof(Vp),G_MV_VIEWPORT,0)
 #else	/* F3DEX_GBI_2 */
@@ -1834,7 +1835,7 @@ typedef union {
         (unsigned int) (dat)						\
 }
 
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 #define gMoveWd(pkt, index, offset, data)				\
 	gDma1p((pkt), G_MOVEWORD, data, offset, index)
 #define gsMoveWd(    index, offset, data)				\
@@ -2096,8 +2097,9 @@ typedef union {
  * num   = new element (32 bit value replacing 2 int or 2 frac matrix 
  *                                 componants
  */
-#ifdef	F3DEX_GBI_2x
-ERROR!! gSPInsertMatrix is no longer supported.
+#ifdef	F3DEX_GBI_2
+#define gSPInsertMatrix(pkt, where, num)				\
+	ERROR!! gSPInsertMatrix is no longer supported.
 #else
 #define gSPInsertMatrix(pkt, where, num)				\
 	gMoveWd(pkt, G_MW_MATRIX, where, num)
@@ -2110,7 +2112,7 @@ ERROR!! gSPInsertMatrix is no longer supported.
  *
  * mptr = pointer to matrix
  */
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 #define	gSPForceMatrix(pkt, mptr)					\
 {	gDma2p((pkt),G_MOVEMEM,(mptr),sizeof(Mtx),G_MV_MATRIX,0);	\
 	gMoveWd((pkt), G_MW_FORCEMTX,0,0x00010000);			\
@@ -2274,7 +2276,7 @@ ERROR!! gSPInsertMatrix is no longer supported.
 /*
  * Lighting Macros
  */
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 # define NUML(n)	((n)*24)
 #else
 # define NUML(n)	(((n)+1)*32 + 0x80000000)
@@ -2313,7 +2315,7 @@ ERROR!! gSPInsertMatrix is no longer supported.
  *       LIGHT_1 through LIGHT_3 will be the directional lights and light
  *       LIGHT_4 will be the ambient light.
  */
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 # define gSPLight(pkt, l, n)	\
 	  gDma2p((pkt),G_MOVEMEM,(l),sizeof(Light),G_MV_LIGHT,(n)*3+3)
 # define gsSPLight(l, n)	\
@@ -2600,7 +2602,7 @@ ERROR!! gSPInsertMatrix is no longer supported.
 #define gsSPPerspNormalize(s)						\
 	gsMoveWd(    G_MW_PERSPNORM, 0, (s))
 
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 # define gSPPopMatrixN(pkt, n, num)	gDma2p((pkt),G_POPMTX,(num)*64,64,2,0)
 # define gsSPPopMatrixN(n, num)		gsDma2p(     G_POPMTX,(num)*64,64,2,0)
 # define gSPPopMatrix(pkt, n)		gSPPopMatrixN((pkt), (n), 1)
@@ -2623,7 +2625,7 @@ ERROR!! gSPInsertMatrix is no longer supported.
 	_SHIFTL(G_ENDDL, 24, 8), 0					\
 }
 
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 /*
  *	One gSPGeometryMode(pkt,c,s) GBI is equal to these two GBIs.
  *
@@ -2678,7 +2680,7 @@ ERROR!! gSPInsertMatrix is no longer supported.
 }
 #endif	/* F3DEX_GBI_2 */
 
-#ifdef	F3DEX_GBI_2x
+#ifdef	F3DEX_GBI_2
 #define	gSPSetOtherMode(pkt, cmd, sft, len, data)			\
 {									\
 	Gfx *_g = (Gfx *)(pkt);						\

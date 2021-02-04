@@ -10,7 +10,7 @@ extern u8 _dataRomEndCart[];
 extern u8 D_80100000[];
 
 void thread1_idle(void *);
-extern u32 gThread1; // OSThread
+extern OSThread gThread1;
 extern u32 D_800B0D70[]; // thread 1 stack end
 
 // TODO regalloc
@@ -55,7 +55,7 @@ INCLUDE_ASM(s32, "codeseg0/codeseg0_0", game_init);
 extern u32 D_800BA0B0;
 extern u32 D_800B9D90;
 
-extern u32 D_800AFA10; // OSThread
+extern OSThread D_800AFA10;
 extern u32 D_800B1D70; // thread1 stack end
 
 void thread6_unk(void *);
@@ -94,8 +94,8 @@ void func_80074ADC(void *, f32);
 void func_8004ED04(void);
 void func_8004E60C(void);
 
-extern u32 D_80017DE4; // OSMesgQueue
-extern u32 D_800180A0; // OSMesgQueue
+extern OSMesgQueue D_80017DE4;
+extern OSMesgQueue D_800180A0;
 extern u32 D_800A638C;
 extern u32 D_8009FE10;
 extern u32 D_8009F094;
@@ -125,11 +125,11 @@ extern struct unkD_800A6380 D_800A6380;
 //     func_80041908();
 //     func_800638EC(0);
 //     sp10[0] = 0xFF;
-//     osSendMesg(&D_80017DE4, &sp10, 1); // OS_MESG_BLOCK
+//     osSendMesg(&D_80017DE4, &sp10, OS_MESG_BLOCK);
 //     f20 = D_80000500;
 //     while (1)
 //     {
-//         osRecvMesg(&D_800180A0, &sp18, 1); // OS_MESG_BLOCK
+//         osRecvMesg(&D_800180A0, &sp18, OS_MESG_BLOCK);
 //         if (sp18[0] != 0)
 //         {
 //             if (sp18[0] == 1)
@@ -158,7 +158,7 @@ extern struct unkD_800A6380 D_800A6380;
 //             func_8004E60C();
 //         }
 //         sp10[0] = 0xFF;
-//         osSendMesg(&D_80017DE4, &sp10, 1); // OS_MESG_BLOCK
+//         osSendMesg(&D_80017DE4, &sp10, OS_MESG_BLOCK);
 //     }
 //     return;
 // }

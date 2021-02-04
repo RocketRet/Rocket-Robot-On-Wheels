@@ -38,7 +38,7 @@ OBJCOPY := mips-linux-gnu-objcopy
 LD := mips-linux-gnu-ld
 
 # Flags
-CPPFLAGS := -Iinclude -Iinclude/2.0I
+CPPFLAGS := -Iinclude -Iinclude/2.0I -DF3DEX_GBI_2 -D_FINALROM
 CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32
 WARNFLAGS := -Wuninitialized -Wshadow
 OPTFLAGS := -O2
