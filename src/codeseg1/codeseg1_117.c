@@ -6,10 +6,12 @@
 extern OSSched *gSchedulerPtr;
 extern s32 *D_800BEB14;
 
-void func_8000CCA0(void *arg0)
-{
-    gSchedulerPtr = arg0;
-}
+// void func_8000CCA0(void *arg0)
+// {
+//     gSchedulerPtr = arg0;
+// }
+
+INCLUDE_ASM(s32, "codeseg1/codeseg1_117", func_8000CCA0);
 
 // TODO different compiler
 // void func_8000CCAC()

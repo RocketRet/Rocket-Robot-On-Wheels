@@ -14,6 +14,22 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_223", func_80061518);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_223", func_80061574);
 
+extern s32 D_800E48B0;
+
+// TODO different compiler
+// s32 func_800615A4(s32 arg0)
+// {
+//     if (arg0 == 0)
+//     {
+//         return 0;
+//     }
+//     else
+//     {
+//         D_800E48B0 -= ALIGN(arg0, 8); 
+//         return D_800E48B0;
+//     }
+// }
+
 INCLUDE_ASM(s32, "codeseg2/codeseg2_223", func_800615A4);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_223", func_800615D4);

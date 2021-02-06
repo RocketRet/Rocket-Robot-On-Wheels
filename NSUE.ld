@@ -40,8 +40,7 @@ SECTIONS
     SPLAT_BEGIN_SEG(code_codesegs0_1, 0x1000, 0x80000400, )
         BUILD_DIR/asm/entry.o(.text);
         BUILD_DIR/bin/codesegs0_1_1100.o(.data);
-        BUILD_DIR/src/codeseg0/codeseg0_0.o(.text);
-        BUILD_DIR/src/codeseg0/codeseg0_1.o(.text);
+        BUILD_DIR/src/codeseg0/codeseg0.o(.text);
         BUILD_DIR/bin/rspboot_code.o(.data);
         BUILD_DIR/bin/n_aspMain_code.o(.data);
         BUILD_DIR/bin/f3dex2_code.o(.data);
@@ -742,6 +741,7 @@ SECTIONS
         BUILD_DIR/src/codeseg2/codeseg2_454.o(.text);
         BUILD_DIR/src/codeseg2/codeseg2_455.o(.text);
         BUILD_DIR/bin/codeseg2_9FC70.o(.data);
+        BUILD_DIR/bin/content.o(.data);
     SPLAT_END_SEG(code_codeseg2, 0xBCC610)
     
     SPLAT_BEGIN_SEG(data_BCC610, 0xBCC610, 0xBCC610, )

@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_202", func_80014860);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_202", __osProbeTLB);

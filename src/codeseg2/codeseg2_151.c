@@ -30,7 +30,7 @@ extern struct GfxTask* D_800A5DBC; // 0x04 bytes
 
 extern u32* D_800AAF7C;
 extern u32 D_800AAF84;
-extern OSMesgQueue *D_80017E14;
+extern OSMesgQueue *gSchedMesgQueue;
 
 extern u8 _binary_bin_rspboot_code_bin_start[];
 extern u8 _binary_bin_rspboot_code_bin_end[];
@@ -123,7 +123,7 @@ extern OSMesgQueue D_80017DE4;
 //     osWritebackDCache(D_800A5DA8.dlStart, (u32)D_800A5DA8.dlHead - (u32)D_800A5DA8.dlStart);
 //     osWritebackDCache(D_800A5DA8.unkC, (u32)D_800A5DA8.dlStart + (u32)D_800A5DA8.unk0 - (u32)D_800A5DA8.unkC);
 //     osWritebackDCache(D_800AAF7C, D_800AAF84);
-//     osSendMesg(D_80017E14, curTask, OS_MESG_BLOCK);
+//     osSendMesg(gSchedMesgQueue, curTask, OS_MESG_BLOCK);
 // }
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_151", func_800473F0);

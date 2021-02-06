@@ -92,6 +92,14 @@ $(Z64) : $(ELF)
 # $(BUILD_DIR)/src/codeseg0/codeseg0_0.o: ASFLAGS := -G0 -EB -I. -Iinclude -O0 -mcpu=vr4300 -g
 # $(BUILD_DIR)/src/codeseg0/codeseg0_0.o: AS := /mnt/c/sn_n64/bin/asn64.exe
 # $(BUILD_DIR)/src/codeseg0/codeseg0_0.o: ASFLAGS := /l
+# $(BUILD_DIR)/src/codeseg0/codeseg0.s: OPTFLAGS := -O0
+$(BUILD_DIR)/src/codeseg0/codeseg0.s: CC := ../papermario/tools/linux/cc1
+$(BUILD_DIR)/src/codeseg2/codeseg2_148.s: CC := tools/gcc/mips-cc1
+# $(BUILD_DIR)/src/codeseg1/codeseg1_117.s: CC := tools/gcc/mips-cc1
+# $(BUILD_DIR)/src/codeseg1/codeseg1_117.s: CC := ../papermario/tools/linux/cc1
+# $(BUILD_DIR)/src/codeseg1/codeseg1_117.s: CC := tools/sn/gnun64280/cc1n64.exe
+# $(BUILD_DIR)/src/codeseg1/codeseg1_117.s: OPTFLAGS := -O2
+# $(BUILD_DIR)/src/codeseg1/codeseg1_117.o: ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=o64 -I. -Iinclude -O0
 
 clean:
 	$(RMDIR) $(BUILD_ROOT)

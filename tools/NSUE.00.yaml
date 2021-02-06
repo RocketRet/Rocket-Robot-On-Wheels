@@ -34,8 +34,7 @@ segments:
     files:
     - [0x001000, "asm", "entry"]
     - [0x001100, "bin"] 
-    - [0x0019D0, "c", "codeseg0/codeseg0_0"]
-    - [0x001FC0, "c", "codeseg0/codeseg0_1"]
+    - [0x0019D0, "c", "codeseg0/codeseg0"]
     - [0x002090, "bin", "rspboot_code"]
     - [0x002160, "bin", "n_aspMain_code"]
     - [0x002DC0, "bin", "f3dex2_code"] 
@@ -738,5 +737,6 @@ segments:
     - [0x09F640, "c", "codeseg2/codeseg2_454"]
     - [0x09FA60, "c", "codeseg2/codeseg2_455"]
     - [0x09FC70, "bin"]
+    - [0x0B0460, "bin", "content"]
   - [0xBCC610, "bin", "padding"]
   - [0xC00000]

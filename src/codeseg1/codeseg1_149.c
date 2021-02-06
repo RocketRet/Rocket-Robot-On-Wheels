@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_149", func_8000E530);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_149", osPiGetCmdQueue);

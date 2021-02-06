@@ -1,7 +1,48 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <PR/sched.h>
 
 #define	OS_K0_TO_PHYSICAL(x)	(u32)(((char *)(x)-0x80000000))
+
+
+struct unkD_800A6380 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    u16 unkC;
+};
+
+extern struct unkD_800A6380 D_800A6380;
+extern u32 D_800A638C;
+extern u32 D_8009FE10;
+extern u32 D_8009F094;
+extern u32 D_800AB9C8;
+
+// static bss
+extern OSThread gThread1; // 0x800AF860
+extern OSThread D_800AFA10; // 0x800AFA10 // thread 6
+extern OSThread D_800AFBC0; // 0x800AFBC0 // thread 7
+extern u8 gIdleThreadStack[0x1000]; // 0x800AFD70
+extern u8 gThread6Stack[0x1000]; // 0x800B0D70
+extern u8 gThread7Stack[0x8000]; // 0x800B1D70
+extern OSMesg D_800B9D70[8]; // 0x800B9D70
+extern OSMesg D_800B9D90[200]; // 0x800B9D90
+extern OSMesgQueue D_800BA0B0; // 0x800BA0B0
+extern OSMesg D_800BA0C8; // 0x800BA0C8
+extern OSMesg D_800BA0CC; // 0x800BA0CC
+extern u8 gSchedStack[OS_SC_STACKSIZE]; // 0x800BA0D0
+extern OSScClient D_800BC0D0; // 0x800BC0D0
+// end static bss (0x800BC0D8, padded to 0x800BC0E0)
+
+// bss
+extern u32 D_80017DE0; // 0x80017DE0
+extern OSMesgQueue D_80017DE4; // 0x80017DE4
+extern OSMesgQueue D_80017DFC; // 0x80017DFC
+extern OSMesgQueue *gSchedMesgQueue; // 0x80017E14
+extern OSSched gScheduler; // 0x80017E18
+extern OSMesgQueue D_800180A0; // 0x800180A0
+// end bss (0x800180B8, padded to 0x800180C0)
+
 
 extern u8 _bssStart[];
 extern u8 _bssEnd[];
@@ -10,8 +51,6 @@ extern u8 _dataRomEndCart[];
 extern u8 D_80100000[];
 
 void thread1_idle(void *);
-extern OSThread gThread1;
-extern u32 D_800B0D70[]; // thread 1 stack end
 
 // TODO regalloc
 // void func_80000DD0()
@@ -29,7 +68,7 @@ extern u32 D_800B0D70[]; // thread 1 stack end
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg0/codeseg0_0", func_80000DD0);
+INCLUDE_ASM(s32, "codeseg0/codeseg0", func_80000DD0);
 
 // TODO regalloc (same as func_80000DD0)
 // void game_init()
@@ -46,17 +85,12 @@ INCLUDE_ASM(s32, "codeseg0/codeseg0_0", func_80000DD0);
 //         osPiRawStartDma(0, _dataRomEndCart, 0x80100000, diff2);
 //         while (osPiGetStatus() & 5);
 //     }
-//     osCreateThread(&gThread1, 1, thread1_idle, NULL, D_800B0D70, 10);
+//     osCreateThread(&gThread1, 1, thread1_idle, NULL, &gIdleThreadStack[0x1000], 10);
 //     osStartThread(&gThread1);
 // }
 
-INCLUDE_ASM(s32, "codeseg0/codeseg0_0", game_init);
+INCLUDE_ASM(s32, "codeseg0/codeseg0", game_init);
 
-extern u32 D_800BA0B0;
-extern u32 D_800B9D90;
-
-extern OSThread D_800AFA10;
-extern u32 D_800B1D70; // thread1 stack end
 
 void thread6_unk(void *);
 
@@ -64,16 +98,16 @@ void thread6_unk(void *);
 
 // void thread1_idle(void *arg0)
 // {
-//     osCreatePiManager(0x96, &D_800BA0B0, &D_800B9D90, 0xc8);
-//     osCreateThread(&D_800AFA10, 6, thread6_unk, NULL, &D_800B1D70, 9);
+//     osCreatePiManager(0x96, &D_800BA0B0, D_800B9D90, 200);
+//     osCreateThread(&D_800AFA10, 6, thread6_unk, NULL, &gThread6Stack[0x1000], 9);
 //     osStartThread(&D_800AFA10);
 //     osSetThreadPri(NULL, 0);
 //     while (1);
 // }
 
-INCLUDE_ASM(s32, "codeseg0/codeseg0_0", thread1_idle);
+INCLUDE_ASM(s32, "codeseg0/codeseg0", thread1_idle);
 
-INCLUDE_ASM(s32, "codeseg0/codeseg0_0", thread6_unk);
+INCLUDE_ASM(s32, "codeseg0/codeseg0", thread6_unk);
 
 void func_8001DE00(void);
 void func_80041908(void);
@@ -94,24 +128,9 @@ void func_80074ADC(void *, f32);
 void func_8004ED04(void);
 void func_8004E60C(void);
 
-extern OSMesgQueue D_80017DE4;
-extern OSMesgQueue D_800180A0;
-extern u32 D_800A638C;
-extern u32 D_8009FE10;
-extern u32 D_8009F094;
-extern u32 D_800AB9C8;
 
 
 extern f32 D_80000500; // 1.0f / 6.0f
-
-struct unkD_800A6380 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    u16 unkC;
-};
-
-extern struct unkD_800A6380 D_800A6380;
 
 // TODO different compiler
 // 
@@ -163,4 +182,33 @@ extern struct unkD_800A6380 D_800A6380;
 //     return;
 // }
 
-INCLUDE_ASM(s32, "codeseg0/codeseg0_0", func_80001248);
+INCLUDE_ASM(s32, "codeseg0/codeseg0", func_80001248);
+
+
+
+// TODO different compiler
+// void create_scheduler()
+// {
+//     s32 tmp;
+
+//     osCreateMesgQueue(&D_80017DFC, &D_800BA0C8, 1);
+//     osCreateMesgQueue(&D_80017DE4, D_800B9D70, 8);
+//     switch (osTvType)
+//     {
+//         case OS_TV_PAL:
+//             tmp = OS_VI_PAL_LAN1;
+//             break;
+//         case OS_TV_NTSC:
+//             tmp = OS_VI_NTSC_LAN1;
+//             break;
+//         default:
+//             tmp = OS_VI_MPAL_LAN1;
+//             break;
+//     }
+//     osCreateScheduler(&gScheduler, &gSchedStack[OS_SC_STACKSIZE], 0xf, tmp, 1);
+//     osScAddClient(&gScheduler, &D_800BC0D0, &D_80017DE4);
+//     gSchedMesgQueue = osScGetCmdQ(&gScheduler);
+//     return;
+// }
+
+INCLUDE_ASM(s32, "codeseg0/codeseg0", create_scheduler);
