@@ -31,7 +31,7 @@ void func_80005D8C(struct unkfunc_80005D8C *arg0)
     }
 }
 
-// TODO Doesn't match, different opt flags or different compiler
+// TODO different compiler
 // s32 func_80005DAC()
 // {
 //     return D_800BD2F8;
@@ -43,7 +43,7 @@ INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005DBC);
 
 void func_80006220(u8 *);
 
-// TODO Doesn't match, different opt flags or different compiler
+// TODO different compiler
 // void func_80005E14(s32 arg0)
 // {
 //     u8 sp10[4];
@@ -53,7 +53,7 @@ void func_80006220(u8 *);
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005E14);
 
-// TODO Doesn't match, different opt flags or different compiler
+// TODO different compiler
 // void func_80005E3C(s32 arg0)
 // {
 //     u8 sp10[4];
@@ -69,7 +69,7 @@ INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005E9C);
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005EEC);
 
-// TODO Doesn't match, different opt flags or different compiler
+// TODO different compiler
 // s32 func_80005F5C(s32 *arg0)
 // {
 //     return arg0[1];

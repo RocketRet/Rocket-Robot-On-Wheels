@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_60", func_80008980);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_60", osEepromProbe);

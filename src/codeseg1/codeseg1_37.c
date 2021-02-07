@@ -14,6 +14,14 @@ void func_80005F90(struct unkfunc_80005F90 *arg0, s32 arg1)
     arg0->unk10 = arg1;
 }
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_37", func_80005F98);
+s32 func_80005F98(struct unkfunc_80005F90 *arg0)
+{
+    return arg0->unk10;
+}
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_37", func_80005FA4);
+extern struct unkfunc_80005F90 *D_8001988C;
+
+void func_80005FA4(struct unkfunc_80005F90 *arg0)
+{
+    D_8001988C = arg0;
+}

@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_83", func_8000A740);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_83", osWritebackDCacheAll);

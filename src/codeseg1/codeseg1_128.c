@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_128", func_8000D830);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_128", n_alSynSetPitch);

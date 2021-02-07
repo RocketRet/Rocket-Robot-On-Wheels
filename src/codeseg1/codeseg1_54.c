@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_54", func_800082F0);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_54", osGetTime);

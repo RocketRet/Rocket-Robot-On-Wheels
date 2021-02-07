@@ -2,6 +2,6 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_67", func_80009290);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_67", guMtxCatL);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_67", func_80009304);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_67", guMtxXFML);

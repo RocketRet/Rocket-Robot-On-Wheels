@@ -1,5 +1,8 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
+void osSpTaskYield(void)
+{
+    __osSpSetStatus(SP_SET_YIELD);
+}
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_97", osSpTaskYield);

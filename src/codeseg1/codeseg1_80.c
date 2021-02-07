@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_80", func_80009EC0);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_80", osMotorStart);

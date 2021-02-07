@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_58", func_80008600);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_58", guPerspectiveF);

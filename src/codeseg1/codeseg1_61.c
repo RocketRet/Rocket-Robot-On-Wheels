@@ -2,8 +2,8 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_61", func_80008A00);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_61", osEepromWrite);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_61", func_80008B88);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_61", __osPackEepWriteData);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_61", func_80008C4C);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_61", __osEepStatus);

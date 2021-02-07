@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_101", func_8000B2A0);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_101", __osExceptionPreamble);
