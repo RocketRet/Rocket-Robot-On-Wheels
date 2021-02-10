@@ -4,4 +4,4 @@
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_213", alEnvmixerPull);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_213", func_8001575C);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_213", alEnvmixerParam);

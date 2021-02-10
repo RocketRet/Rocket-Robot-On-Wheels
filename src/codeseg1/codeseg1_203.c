@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_203", func_80014920);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_203", __osSiDeviceBusy);

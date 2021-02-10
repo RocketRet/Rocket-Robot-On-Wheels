@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_231", func_80017AF0);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_231", osEPiStartDma);

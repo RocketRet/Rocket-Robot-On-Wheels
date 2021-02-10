@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_236", func_80017D20);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_236", alCopy);

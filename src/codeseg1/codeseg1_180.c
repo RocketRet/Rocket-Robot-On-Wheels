@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_180", func_80012120);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_180", alHeapDBAlloc);

@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_182", func_80012690);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_182", n_alFxPull);

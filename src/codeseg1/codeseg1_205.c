@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_205", func_80014950);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_205", __osPfsGetStatus);

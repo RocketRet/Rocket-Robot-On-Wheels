@@ -2,10 +2,10 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_209", func_80014B50);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_209", alSynNew);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_209", func_80014E1C);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_209", alAudioFrame);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_209", func_80014FCC);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_209", __allocParam);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_209", func_80014FF8);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_209", __freeParam);

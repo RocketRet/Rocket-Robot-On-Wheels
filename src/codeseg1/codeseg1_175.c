@@ -2,12 +2,12 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_175", func_80010C60);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_175", init_lpfilter);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_175", func_80010D04);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_175", alFxNew);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_175", func_8001119C);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_175", alEnvmixerNew);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_175", func_80011254);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_175", alLoadNew);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_175", func_80011304);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_175", alResampleNew);

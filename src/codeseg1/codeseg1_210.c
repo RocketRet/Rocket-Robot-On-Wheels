@@ -2,12 +2,12 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_210", func_80015010);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_210", _collectPVoices);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_210", func_80015064);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_210", _freePVoice);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_210", func_800150A4);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_210", _timeToSamplesNoRound);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_210", func_800150EC);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_210", _timeToSamples);
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_210", __nextSampleTime);

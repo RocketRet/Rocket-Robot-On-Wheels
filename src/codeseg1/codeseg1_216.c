@@ -2,8 +2,8 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_216", func_80015C10);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_216", _ldexpf);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_216", func_80015C34);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_216", _getRate);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_216", func_80015EB4);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_216", _getVol);
