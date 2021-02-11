@@ -1,13 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 #include <PR/sched.h>
-
-struct GfxContext {
-    u32 unk0;
-    Gfx *dlStart;
-    Gfx *dlHead;
-    void *unkC;
-};
+#include <types.h>
 
 struct unk800473F0 {
     u8 unk0;
