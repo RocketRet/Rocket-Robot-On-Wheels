@@ -6,4 +6,4 @@ INCLUDE_ASM(s32, "codeseg1/codeseg1_229", n_alAdpcmPull);
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_229", n_alLoadParam);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_229", _decodeChunk);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_229", __n_decodeChunk);

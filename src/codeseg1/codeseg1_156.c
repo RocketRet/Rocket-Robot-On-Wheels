@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_156", func_8000F280);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_156", __osPackRamWriteData);

@@ -2,8 +2,8 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_166", func_80010010);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_166", __osLeoInterrupt);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_166", func_8001051C);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_166", __osLeoAbnormalResume);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_166", func_800105EC);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_166", __osLeoResume);

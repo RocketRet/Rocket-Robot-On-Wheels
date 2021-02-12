@@ -2,6 +2,6 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_152", func_8000ECD0);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_152", osPfsIsPlug);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_152", func_8000EE4C);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_152", __osPfsRequestData);

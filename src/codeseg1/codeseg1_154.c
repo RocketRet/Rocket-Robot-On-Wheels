@@ -2,6 +2,6 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_154", func_8000EFB0);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_154", __osContAddressCrc);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_154", func_8000EFF8);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_154", __osContDataCrc);
