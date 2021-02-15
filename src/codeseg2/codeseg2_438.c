@@ -1,20 +1,21 @@
 #include <include_asm.h>
 #include <ultra64.h>
 #include <macros.h>
+#include <types.h>
 
-extern f32 D_800AF794[3];
+extern Vec3f gZeroVec3f;
 
-void func_8009A810(f32 *vec)
+void set_vec3f_zero(Vec3f vec)
 {
-    VEC3F_COPY(vec, D_800AF794);
+    VEC3F_COPY(vec, gZeroVec3f);
 }
 
-void func_8009A838(f32 *vec, f32 val)
+void set_vec3f_scalar(Vec3f vec, f32 val)
 {
     vec[0] = vec[1] = vec[2] = val;
 }
 
-void func_8009A84C(f32 *vec, f32 x, f32 y, f32 z)
+void set_vec3f_components(Vec3f vec, f32 x, f32 y, f32 z)
 {
     vec[0] = x;
     vec[1] = y;
@@ -25,7 +26,7 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_438", func_8009A85C);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_438", func_8009A8C4);
 
-f32 magnitude(f32 *vec)
+f32 magnitude(Vec3f vec)
 {
     f32 x2 = vec[0] * vec[0];
     f32 y2 = vec[1] * vec[1];
@@ -36,7 +37,7 @@ f32 magnitude(f32 *vec)
     return mag;
 }
 
-f32 normalize(f32 *vec)
+f32 normalize(Vec3f vec)
 {
     s32 i;
     f32 x2 = vec[0] * vec[0];

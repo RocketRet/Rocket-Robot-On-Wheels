@@ -10,15 +10,7 @@ struct unk800473F0 {
     u8 unk3;
 };
 
-struct GfxTask {
-    void *framebuffer;
-    u8 unk4[0x10];
-    u8 unk14[0x110];
-    u8 unk124[0xC];
-    OSScTask schedTask;
-};
-
-struct GfxContext D_800A5DA8; // 0x10 bytes
+extern struct GfxContext D_800A5DA8; // 0x10 bytes
 extern struct unk800473F0 D_800A5DB8; // 0x04 bytes
 extern struct GfxTask* D_800A5DBC; // 0x04 bytes
 
@@ -105,7 +97,7 @@ extern OSMesgQueue D_80017DE4;
 //     curTask->list.t.dram_stack = D_800C0460;
 //     curTask->list.t.dram_stack_size = SP_DRAM_STACK_SIZE8;
 //     curTask->list.t.data_ptr = &ctx->unk14;
-//     curTask->list.t.data_size = (u32)D_800A5DA8.dlHead - (u32)D_800A5DA8.dlStart;
+//     curTask->list.t.data_size = (uintptr_t)D_800A5DA8.dlHead - (uintptr_t)D_800A5DA8.dlStart;
 //     curTask->list.t.yield_data_ptr = D_800C0860;
 //     curTask->list.t.yield_data_size = OS_YIELD_DATA_SIZE;
 //     // curTask->next = NULL;
@@ -114,8 +106,8 @@ extern OSMesgQueue D_80017DE4;
 //     curTask->msg = ctx->unk124;
 //     curTask->framebuffer = ctx->framebuffer;
 //     osWritebackDCache(ctx, sizeof(struct GfxTask));
-//     osWritebackDCache(D_800A5DA8.dlStart, (u32)D_800A5DA8.dlHead - (u32)D_800A5DA8.dlStart);
-//     osWritebackDCache(D_800A5DA8.unkC, (u32)D_800A5DA8.dlStart + (u32)D_800A5DA8.unk0 - (u32)D_800A5DA8.unkC);
+//     osWritebackDCache(D_800A5DA8.dlStart, (uintptr_t)D_800A5DA8.dlHead - (uintptr_t)D_800A5DA8.dlStart);
+//     osWritebackDCache(D_800A5DA8.unkC, (uintptr_t)D_800A5DA8.dlStart + (uintptr_t)D_800A5DA8.unk0 - (uintptr_t)D_800A5DA8.unkC);
 //     osWritebackDCache(D_800AAF7C, D_800AAF84);
 //     osSendMesg(gSchedMesgQueue, curTask, OS_MESG_BLOCK);
 // }

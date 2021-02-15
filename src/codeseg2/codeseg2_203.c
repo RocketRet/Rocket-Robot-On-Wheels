@@ -6,7 +6,7 @@ extern f32 D_8001BA14;
 extern f32 D_8001BA18;
 
 f32 magnitude();
-void func_8009ABD8(f32, f32*, f32*);
+void vec3f_scale(f32, f32*, f32*);
 void func_80056FA0(f32, f32*, f32*);
 
 // TODO different compiler
@@ -17,7 +17,7 @@ void func_80056FA0(f32, f32*, f32*);
 
 //     fVar2 = magnitude();
 //     if (D_8001BA10 < fVar2) {
-//         func_8009ABD8(D_8001BA14 / fVar2, arg1, arr);
+//         vec3f_scale(D_8001BA14 / fVar2, arg1, arr);
 //         func_80056FA0(fVar2, arr, arg1);
 //     }
 //     else {

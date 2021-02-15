@@ -2,9 +2,6 @@
 #include <ultra64.h>
 #include <PR/sched.h>
 
-#define	OS_K0_TO_PHYSICAL(x)	(u32)(((char *)(x)-0x80000000))
-
-
 struct unkD_800A6380 {
     s32 unk0;
     s32 unk4;

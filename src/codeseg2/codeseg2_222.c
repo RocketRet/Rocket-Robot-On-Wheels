@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <macros.h>
 
 extern void *D_800AAF68;
 extern u32 D_800F6ADF;
@@ -19,8 +20,6 @@ extern void *D_800E4DA0;
 extern s8 D_800E499F;
 
 #define RAM_END 0x80400000
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
 #define FRAMEBUFFER_BYTES ((SCREEN_WIDTH) * (SCREEN_HEIGHT) * 2)
 
 // TODO different compiler, different order?

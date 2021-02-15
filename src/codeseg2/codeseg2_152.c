@@ -11,7 +11,8 @@ void func_800476A0(Gfx *arg0, Vtx * arg1, u32 arg2, u32 arg3)
 extern f32 D_8001B430;
 extern f32 D_8001B434;
 extern f32 D_8001B438;
-extern f32 D_800A5DC0[3];
+extern f32 D_8001B448;
+extern Vec3f D_800A5DC0;
 
 extern Gfx *gDisplayListHead;
 
@@ -39,14 +40,57 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_152", load_translation_mtx);
 // TODO regalloc
 // void pop_matrix()
 // {
-//     gSPPopMatrix(D_800A5DA8.dlHead++, 1);
+//     gSPPopMatrix(D_800A5DA8.dlHead++, G_MTX_MODELVIEW);
 // }
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_152", pop_matrix);
 
+struct unkfunc_800477D8_inner {
+    u8 unk0;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+};
+
+struct unkfunc_800477D8 {
+    s16 unk0[3];
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    struct unkfunc_800477D8_inner unkC;
+};
+
+// TODO regalloc
+// void func_800477D8(struct unkfunc_800477D8 *arg0, Vec3f arg1, struct unkfunc_800477D8_inner arg2)
+// {
+//     s32 i;
+//     s16 *arr = &arg0->unk0[0];
+//     for (i = 0; i < 3; i++)
+//     {
+//         arr[i] = (arg1[i] - D_800A5DC0[i]) * D_8001B438;
+//     }
+
+//     arg0->unkC = arg2;
+// }
+
 INCLUDE_ASM(s32, "codeseg2/codeseg2_152", func_800477D8);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_152", func_80047844);
+
+// TODO regalloc
+// void func_80047908(struct unkfunc_800477D8 *arg0, Vec3f arg1, struct unkfunc_800477D8_inner arg2, s32 arg3, s32 arg4)
+// {
+//     s32 i;
+//     s16 *arr = &arg0->unk0[0];
+//     for (i = 0; i < 3; i++)
+//     {
+//         arr[i] = (arg1[i] - D_800A5DC0[i]) * D_8001B448;
+//     }
+
+//     arg0->unkC = arg2;
+//     arg0->unk8 = arg3;
+//     arg0->unkA = arg4;
+// }
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_152", func_80047908);
 

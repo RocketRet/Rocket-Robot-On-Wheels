@@ -38,7 +38,7 @@ OBJCOPY := mips-linux-gnu-objcopy
 LD := mips-linux-gnu-ld
 
 # Flags
-CPPFLAGS := -Iinclude -Iinclude/2.0I -DF3DEX_GBI_2 -D_FINALROM
+CPPFLAGS := -Iinclude -Iinclude/2.0I -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64
 CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32
 WARNFLAGS := -Wuninitialized -Wshadow
 OPTFLAGS := -O2
@@ -63,8 +63,11 @@ $(BUILD_DIR) : | $(BUILD_ROOT)
 $(BUILD_ROOT) $(BUILD_DIR) $(SRC_DIR) $(SRC_BUILD_DIRS) $(ASM_BUILD_DIR) $(BIN_BUILD_DIR) :
 	$(MKDIR) $@
 
-$(BUILD_DIR)/%.s : %.c | $(SRC_BUILD_DIRS)
-	$(CPP) $(CPPFLAGS) $< -o - | $(CC) $(CFLAGS) $(WARNFLAGS) $(OPTFLAGS) - -o $@
+$(BUILD_DIR)/%.i : %.c | $(SRC_BUILD_DIRS)
+	$(CPP) $(CPPFLAGS) $< -o $@
+
+$(BUILD_DIR)/%.s : $(BUILD_DIR)/%.i %.c
+	$(CC) $(CFLAGS) $(WARNFLAGS) $(OPTFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
@@ -116,7 +119,7 @@ setup:
 .SUFFIXES:
 MAKEFLAGS += --no-builtin-rules
 
-keep-asm: $(C_ASMS)
+keep-asm: $(C_ASMS) $(C_ASMS:.s=.i)
 
 .PHONY: all keep-asm clean check setup
 

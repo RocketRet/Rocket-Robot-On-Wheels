@@ -1,23 +1,116 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <types.h>
+#include <macros.h>
 
+extern f32 D_8001DCD0;
+extern f32 D_8001DCD4;
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009A9D0);
+void vec3f_scale(f32, Vec3f, Vec3f);
+
+// TODO regalloc
+// TODO different compiler
+// f32 vec3f_safe_normalize(Vec3f in, Vec3f out)
+// {
+//     f32 mag;
+//     f32 magSq;
+//     f32 ret;
+
+//     magSq = in[0] * in[0] + in[1] * in[1] + in[2] * in[2];
+//     sqrt_s(magSq, mag);
+//     if (mag > D_8001DCD0)
+//     {
+//         vec3f_scale(D_8001DCD4 / mag, in, out);
+//     }
+//     else
+//     {
+//         VEC3F_COPY(out, in);
+//     }
+
+//     return mag;
+// }
+
+INCLUDE_ASM(s32, "codeseg2/codeseg2_439", vec3f_safe_normalize);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AA68);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AABC);
+// TODO different compiler
+// f32 vec3f_dist(Vec3f a, Vec3f b)
+// {
+//     Vec3f diff;
+//     f32 sumSq;
+//     f32 ret;
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AB14);
+//     diff[0] = (a[0] - b[0]);
+//     diff[1] = (a[1] - b[1]);
+//     diff[2] = (a[2] - b[2]);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AB64);
+//     sumSq = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
+//     sqrt_s(sumSq, ret);
+//     return ret;
+// }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009ABB8);
+INCLUDE_ASM(s32, "codeseg2/codeseg2_439", vec3f_dist);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009ABD8);
+// TODO different compiler
+// void vec3f_xy_dist(Vec3f a, Vec3f b)
+// {
+//     Vec3f diff;
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AC04);
+//     diff[0] = (a[0] - b[0]);
+//     diff[1] = (a[1] - b[1]);
+//     diff[2] = (a[2] - b[2]);
+
+//     return vec2f_magnitude(diff);
+// }
+
+INCLUDE_ASM(s32, "codeseg2/codeseg2_439", vec3f_xy_dist);
+
+// TODO different compiler
+// f32 vec3f_dist_sq(Vec3f a, Vec3f b)
+// {
+//     Vec3f diff;
+
+//     diff[0] = (a[0] - b[0]);
+//     diff[1] = (a[1] - b[1]);
+//     diff[2] = (a[2] - b[2]);
+
+//     return diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
+// }
+
+INCLUDE_ASM(s32, "codeseg2/codeseg2_439", vec3f_dist_sq);
+
+f32 vec2f_magnitude(Vec2f in)
+{
+    f32 magSq = in[0] * in[0] + in[1] * in[1]; 
+    f32 ret;
+    sqrt_s(magSq, ret);
+    return ret;
+}
+
+void vec3f_scale(f32 scale, Vec3f in, Vec3f out)
+{
+    s32 i;
+    for (i = 0; i < 3; i++)
+    {
+        out[i] = scale * in[i];
+    }
+}
+
+void vec3f_cross_product(Vec3f a, Vec3f b, Vec3f out)
+{
+    out[0] = a[1] * b[2] - a[2] * b[1];
+    out[1] = a[2] * b[0] - a[0] * b[2];
+    out[2] = a[0] * b[1] - a[1] * b[0];
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AC68);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AE3C);
+void vec3f_scale_add(f32 aScale, Vec3f a, f32 bScale, Vec3f b, Vec3f out)
+{
+    s32 i;
+    for (i = 0; i < 3; i++)
+    {
+        out[i] = a[i] * aScale + b[i] * bScale;
+    }
+}

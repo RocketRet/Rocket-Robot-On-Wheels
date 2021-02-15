@@ -43,7 +43,7 @@ extern OSIoMesg D_800E4DB0;
 extern OSMesgQueue D_80017DFC;
 extern struct unkD_800E4DD0 D_800E4DD0[];
 
-// TODO different compiler, different assembler
+// TODO different compiler
 // void func_80061A58()
 // {
 //     OSMesg mesg;
