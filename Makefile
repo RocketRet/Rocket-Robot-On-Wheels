@@ -42,7 +42,7 @@ CPPFLAGS := -Iinclude -Iinclude/2.0I -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64
 CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32
 WARNFLAGS := -Wuninitialized -Wshadow
 OPTFLAGS := -O2
-ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=o64 -I. -Iinclude -O0
+ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I. -Iinclude -O0
 BINOFLAGS := -I binary -O elf32-big
 CPP_LDFLAGS := -P -Wno-trigraphs -DBUILD_DIR=$(BUILD_DIR)
 LDFLAGS := -T $(BUILD_DIR)/$(LD_SCRIPT) -mips3 --accept-unknown-input-arch --no-check-sections -T tools/undefined_syms.txt -T tools/undefined_syms_auto.txt
