@@ -27,8 +27,7 @@ extern f32 D_8001B420;
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_144", func_80046200);
 
-// TODO different compiler
-// void func_80046268()
+// TODO float load
 // {
 //     func_80089D5C();
 //     D_800A5C3C.unk34 = func_800615A4(0x3C00);
@@ -47,14 +46,11 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_144", func_80046200);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_144", func_80046268);
 
-// TODO different compiler
-// void func_800462E4(s32 *arg0)
-// {
-//     func_8008AAEC();
-//     (*arg0) -= 8;
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_144", func_800462E4);
+void func_800462E4(s32 *arg0)
+{
+    func_8008AAEC();
+    (*arg0) -= 8;
+}
 
 void func_80046318(s32 arg0, s32 arg1)
 {

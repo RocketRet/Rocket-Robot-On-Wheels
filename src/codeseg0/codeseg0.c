@@ -91,18 +91,14 @@ INCLUDE_ASM(s32, "codeseg0/codeseg0", game_init);
 
 void thread6_unk(void *);
 
-// TODO different compiler
-
-// void thread1_idle(void *arg0)
-// {
-//     osCreatePiManager(0x96, &D_800BA0B0, D_800B9D90, 200);
-//     osCreateThread(&D_800AFA10, 6, thread6_unk, NULL, &gThread6Stack[0x1000], 9);
-//     osStartThread(&D_800AFA10);
-//     osSetThreadPri(NULL, 0);
-//     while (1);
-// }
-
-INCLUDE_ASM(s32, "codeseg0/codeseg0", thread1_idle);
+void thread1_idle(void *arg0)
+{
+    osCreatePiManager(0x96, &D_800BA0B0, D_800B9D90, 200);
+    osCreateThread(&D_800AFA10, 6, thread6_unk, NULL, &gThread6Stack[0x1000], 9);
+    osStartThread(&D_800AFA10);
+    osSetThreadPri(NULL, 0);
+    while (1);
+}
 
 INCLUDE_ASM(s32, "codeseg0/codeseg0", thread6_unk);
 
@@ -130,7 +126,6 @@ void func_8004E60C(void);
 extern f32 D_80000500; // 1.0f / 6.0f
 
 // TODO different compiler
-// 
 // void func_80001248(void *arg0)
 // {
 //     f32 f20;
@@ -181,31 +176,26 @@ extern f32 D_80000500; // 1.0f / 6.0f
 
 INCLUDE_ASM(s32, "codeseg0/codeseg0", func_80001248);
 
+void create_scheduler()
+{
+    s32 tmp;
 
-
-// TODO different compiler
-// void create_scheduler()
-// {
-//     s32 tmp;
-
-//     osCreateMesgQueue(&D_80017DFC, &D_800BA0C8, 1);
-//     osCreateMesgQueue(&D_80017DE4, D_800B9D70, 8);
-//     switch (osTvType)
-//     {
-//         case OS_TV_PAL:
-//             tmp = OS_VI_PAL_LAN1;
-//             break;
-//         case OS_TV_NTSC:
-//             tmp = OS_VI_NTSC_LAN1;
-//             break;
-//         default:
-//             tmp = OS_VI_MPAL_LAN1;
-//             break;
-//     }
-//     osCreateScheduler(&gScheduler, &gSchedStack[OS_SC_STACKSIZE], 0xf, tmp, 1);
-//     osScAddClient(&gScheduler, &D_800BC0D0, &D_80017DE4);
-//     gSchedMesgQueue = osScGetCmdQ(&gScheduler);
-//     return;
-// }
-
-INCLUDE_ASM(s32, "codeseg0/codeseg0", create_scheduler);
+    osCreateMesgQueue(&D_80017DFC, &D_800BA0C8, 1);
+    osCreateMesgQueue(&D_80017DE4, D_800B9D70, 8);
+    switch (osTvType)
+    {
+        case OS_TV_PAL:
+            tmp = OS_VI_PAL_LAN1;
+            break;
+        case OS_TV_NTSC:
+            tmp = OS_VI_NTSC_LAN1;
+            break;
+        default:
+            tmp = OS_VI_MPAL_LAN1;
+            break;
+    }
+    osCreateScheduler(&gScheduler, &gSchedStack[OS_SC_STACKSIZE], 0xf, tmp, 1);
+    osScAddClient(&gScheduler, &D_800BC0D0, &D_80017DE4);
+    gSchedMesgQueue = osScGetCmdQ(&gScheduler);
+    return;
+}

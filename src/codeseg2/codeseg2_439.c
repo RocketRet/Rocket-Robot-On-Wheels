@@ -9,7 +9,6 @@ extern f32 D_8001DCD4;
 void vec3f_scale(f32, Vec3f, Vec3f);
 
 // TODO regalloc
-// TODO different compiler
 // f32 vec3f_safe_normalize(Vec3f in, Vec3f out)
 // {
 //     f32 magSq;
@@ -34,51 +33,40 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_439", vec3f_safe_normalize);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AA68);
 
-// TODO different compiler
-// f32 vec3f_dist(Vec3f a, Vec3f b)
-// {
-//     Vec3f diff;
-//     f32 sumSq;
-//     f32 ret;
+f32 vec3f_dist(Vec3f a, Vec3f b)
+{
+    Vec3f diff;
+    f32 sumSq;
 
-//     diff[0] = (a[0] - b[0]);
-//     diff[1] = (a[1] - b[1]);
-//     diff[2] = (a[2] - b[2]);
+    diff[0] = (a[0] - b[0]);
+    diff[1] = (a[1] - b[1]);
+    diff[2] = (a[2] - b[2]);
 
-//     sumSq = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
-//     sqrt_s(sumSq, ret);
-//     return ret;
-// }
+    sumSq = diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
+    return sqrtf(sumSq);
+}
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", vec3f_dist);
+void vec3f_xy_dist(Vec3f a, Vec3f b)
+{
+    Vec3f diff;
 
-// TODO different compiler
-// void vec3f_xy_dist(Vec3f a, Vec3f b)
-// {
-//     Vec3f diff;
+    diff[0] = (a[0] - b[0]);
+    diff[1] = (a[1] - b[1]);
+    diff[2] = (a[2] - b[2]);
 
-//     diff[0] = (a[0] - b[0]);
-//     diff[1] = (a[1] - b[1]);
-//     diff[2] = (a[2] - b[2]);
+    return vec2f_magnitude(diff);
+}
 
-//     return vec2f_magnitude(diff);
-// }
+f32 vec3f_dist_sq(Vec3f a, Vec3f b)
+{
+    Vec3f diff;
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", vec3f_xy_dist);
+    diff[0] = (a[0] - b[0]);
+    diff[1] = (a[1] - b[1]);
+    diff[2] = (a[2] - b[2]);
 
-// TODO different compiler
-// f32 vec3f_dist_sq(Vec3f a, Vec3f b)
-// {
-//     Vec3f diff;
-
-//     diff[0] = (a[0] - b[0]);
-//     diff[1] = (a[1] - b[1]);
-//     diff[2] = (a[2] - b[2]);
-
-//     return diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", vec3f_dist_sq);
+    return diff[0] * diff[0] + diff[1] * diff[1] + diff[2] * diff[2];
+}
 
 f32 vec2f_magnitude(Vec2f in)
 {

@@ -31,13 +31,10 @@ void func_80005D8C(struct unkfunc_80005D8C *arg0)
     }
 }
 
-// TODO different compiler
-// s32 func_80005DAC()
-// {
-//     return D_800BD2F8;
-// }
-
-INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005DAC);
+s32 func_80005DAC()
+{
+    return D_800BD2F8;
+}
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005DBC);
 
@@ -69,13 +66,10 @@ INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005E9C);
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005EEC);
 
-// TODO different compiler
-// s32 func_80005F5C(s32 *arg0)
-// {
-//     return arg0[1];
-// }
-
-INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005F5C);
+s32 func_80005F5C(s32 *arg0)
+{
+    return arg0[1];
+}
 
 void func_80005F68(s32 arg0)
 {

@@ -10,20 +10,16 @@ struct unkfunc_8001FAF4 {
     struct unkfunc_8001FAF4_sub0 *unk0;
 };
 
-// TODO different compiler
-// void func_8001FAB0(struct unkfunc_8001FAF4 *arg0, s32 *arg1)
-// {
-//     s32 auStack48[10];
+void func_8001FAB0(struct unkfunc_8001FAF4 *arg0, s32 *arg1)
+{
+    s32 auStack48[10];
 
-//     func_800570D0(arg1, auStack48);
-//     arg0->unk0->unk5C(arg0, auStack48);
-//     return;
-// }
+    func_800570D0(arg1, auStack48);
+    arg0->unk0->unk5C(arg0, auStack48);
+    return;
+}
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_8", func_8001FAB0);
-
-
-// TODO different compiler
+// TODO minor diff
 // void func_8001FAF4(struct unkfunc_8001FAF4 *arg0, s32 arg1, s32 arg2, s32 arg3)
 // {
 //     s32 auStack48 [14];
@@ -48,7 +44,7 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_8", func_8001FAF4);
 //     arg0[0x1e] = arg1[0];
 //     arg0[0x1f] = sVar1;
 //     arg0[0x20] = sVar2;
-//     func_8001FD30();
+//     func_8001FD30(arg0, arg1);
 //     return;
 // }
 
@@ -63,15 +59,12 @@ struct unkfunc_8001FB7C_sub0 {
     void (*unk60)(void *, void *);
 };
 
-// TODO different compiler
-// void func_8001FB7C(struct unkfunc_8001FB7C *arg0, s32 arg1, s32 arg2, s32 arg3)
-// {
-//     s32 arr[3];
+void func_8001FB7C(struct unkfunc_8001FB7C *arg0, s32 arg1, s32 arg2, s32 arg3)
+{
+    s32 arr[3];
 
-//     arr[0] = arg1;
-//     arr[1] = arg2;
-//     arr[2] = arg3;
-//     arg0->unk0->unk60(arg0, arr);
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_8", func_8001FB7C);
+    arr[0] = arg1;
+    arr[1] = arg2;
+    arr[2] = arg3;
+    arg0->unk0->unk60(arg0, arr);
+}

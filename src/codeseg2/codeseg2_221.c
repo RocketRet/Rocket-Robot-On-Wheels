@@ -40,15 +40,12 @@ struct unkfunc_80060E64 {
 // called by func_80050E24 via jalr with return address 0x80051050
 // seems to get called on level load
 // arg0->unk0->unk2C seems to always be func_800824A0
-// TODO different compiler
-// void func_80060E64(struct unkfunc_80060E64 *arg0)
-// {
-//     func_80083734(arg0);
-//     arg0->unk230 = arg0->unk10;
-//     arg0->unk0->unk2C(arg0, 0);
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_80060E64);
+void func_80060E64(struct unkfunc_80060E64 *arg0)
+{
+    func_80083734(arg0);
+    arg0->unk230 = arg0->unk10;
+    arg0->unk0->unk2C(arg0, 0);
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_80060EA8);
 

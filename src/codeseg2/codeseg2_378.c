@@ -23,31 +23,28 @@ extern u32 D_800E508C;
 extern u32 gScreenWidth;
 extern u32 gScreenHeight;
 
-// TODO different compiler
-// void func_80089D5C(Gfx **dlPtr)
-// {
-//     Gfx *head = *dlPtr;
+void func_80089D5C(Gfx **dlPtr)
+{
+    Gfx *head = *dlPtr;
 
-//     D_800ADAF8 = 0;
-//     D_800E5088 = 0;
-//     D_800E508C = 0;
-//     gScreenWidth = 320;
-//     gScreenHeight = 240;
-//     gDPPipeSync(head++);
-//     gDPSetCycleType(head++, G_CYC_1CYCLE);
-//     gSPTexture(head++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-//     gDPSetAlphaCompare(head++, G_AC_NONE);
-//     gDPSetTexturePersp(head++, G_TP_NONE);
-//     gDPSetTextureFilter(head++, G_TF_BILERP);
-//     gDPSetTextureConvert(head++, G_TC_FILT);
-//     gDPSetTextureDetail(head++, G_TD_CLAMP);
-//     gDPSetTextureLOD(head++, G_TL_TILE);
-//     gDPSetTextureLUT(head++, G_TT_NONE);
-//     gDPSetRenderMode(head++, G_RM_TEX_EDGE, G_RM_TEX_EDGE2)
-//     *dlPtr = head;
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_378", func_80089D5C);
+    D_800ADAF8 = 0;
+    D_800E5088 = 0;
+    D_800E508C = 0;
+    gScreenWidth = 320;
+    gScreenHeight = 240;
+    gDPPipeSync(head++);
+    gDPSetCycleType(head++, G_CYC_1CYCLE);
+    gSPTexture(head++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+    gDPSetAlphaCompare(head++, G_AC_NONE);
+    gDPSetTexturePersp(head++, G_TP_NONE);
+    gDPSetTextureFilter(head++, G_TF_BILERP);
+    gDPSetTextureConvert(head++, G_TC_FILT);
+    gDPSetTextureDetail(head++, G_TD_CLAMP);
+    gDPSetTextureLOD(head++, G_TL_TILE);
+    gDPSetTextureLUT(head++, G_TT_NONE);
+    gDPSetRenderMode(head++, G_RM_TEX_EDGE, G_RM_TEX_EDGE2)
+    *dlPtr = head;
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_378", func_80089F18);
 

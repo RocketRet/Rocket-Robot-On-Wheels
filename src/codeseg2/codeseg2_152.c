@@ -18,7 +18,6 @@ extern Gfx *gDisplayListHead;
 
 extern struct GfxContext D_800A5DA8;
 
-// TODO different compiler
 // TODO regalloc
 // void load_translation_mtx(f32 *translation)
 // {
@@ -36,7 +35,6 @@ extern struct GfxContext D_800A5DA8;
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_152", load_translation_mtx);
 
-// TODO different compiler
 // TODO regalloc
 // void pop_matrix()
 // {

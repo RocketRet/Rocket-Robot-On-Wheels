@@ -19,29 +19,26 @@ void func_80061440()
     D_800E48A4 = D_800E48A8 = D_800E48AC = D_800E48A0;
 }
 
-// TODO different compiler
-// void *main_alloc_nozero(s32 size)
-// {
-//     if (size == 0)
-//     {
-//         return NULL;
-//     }
-//     else
-//     {
-//         void *addr = D_800E48AC;
-//         D_800E48AC = (void*)((uintptr_t)addr + ALIGN(size,8));
-//         return addr;
-//     }
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_223", main_alloc_nozero);
+void *main_alloc_nozero(s32 size)
+{
+    if (size == 0)
+    {
+        return NULL;
+    }
+    else
+    {
+        void *addr = D_800E48AC;
+        D_800E48AC = (void*)((uintptr_t)addr + ALIGN(size,8));
+        return addr;
+    }
+}
 
 void clear_main_pool()
 {
     D_800E48AC = D_800E48A8;
 }
 
-// TODO different compiler
+// TODO regalloc
 // void *main_alloc_copy(s32 size, u8 *src)
 // {
 //     void *addr;
@@ -61,52 +58,47 @@ void clear_main_pool()
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_223", main_alloc_copy);
 
-// TODO different compiler
-// void *main_alloc_bzero(s32 size)
-// {
-//     void *addr;
-//     if (size == 0)
-//     {
-//         addr = NULL;
-//     }
-//     else
-//     {
-//         void *tmpAddr = D_800E48AC;
-//         D_800E48AC = (void*)((uintptr_t)tmpAddr + ALIGN(size, 8));
-//         addr = tmpAddr;
-//     }
-//     bzero(addr, size);
-//     return addr;
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_223", main_alloc_bzero);
+void *main_alloc_bzero(s32 size)
+{
+    void *addr;
+    if (size == 0)
+    {
+        addr = NULL;
+    }
+    else
+    {
+        void *tmpAddr = D_800E48AC;
+        D_800E48AC = (void*)((uintptr_t)tmpAddr + ALIGN(size, 8));
+        addr = tmpAddr;
+    }
+    bzero(addr, size);
+    return addr;
+}
 
 void func_80061574()
 {
     D_800E48C0[++D_800E48B8] = D_800E48B0;
 }
 
-// TODO different compiler
-// s32 func_800615A4(s32 arg0)
-// {
-//     if (arg0 == 0)
-//     {
-//         return 0;
-//     }
-//     else
-//     {
-//         D_800E48B0 -= ALIGN(arg0, 8); 
-//         return D_800E48B0;
-//     }
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_223", func_800615A4);
+s32 func_800615A4(s32 arg0)
+{
+    if (arg0 == 0)
+    {
+        return 0;
+    }
+    else
+    {
+        D_800E48B0 -= ALIGN(arg0, 8); 
+        return D_800E48B0;
+    }
+}
 
 void func_800615D4()
 {
     D_800E48B0 = D_800E48C0[D_800E48B8--];
 }
 
+// TODO regalloc
 // void memcpy(u8 *dst, u8 *src, s32 count)
 // {
 //     if (count >= 100 && ((uintptr_t)src & 3) == ((uintptr_t)dst & 3))
@@ -140,24 +132,22 @@ void func_800615D4()
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_223", memcpy);
 
-// void memmove(u8 *dst, u8 *src, s32 count)
-// {
-//     if (src < dst)
-//     {
-//         dst += count;
-//         src += count;
-//         while (--count >= 0)
-//         {
-//             *--dst = *--src;
-//         }
-//     }
-//     else
-//     {
-//         while (--count >= 0)
-//         {
-//             *dst++ = *src++;
-//         }
-//     }
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_223", memmove);
+void memmove(u8 *dst, u8 *src, s32 count)
+{
+    if (src < dst)
+    {
+        dst += count;
+        src += count;
+        while (--count >= 0)
+        {
+            *--dst = *--src;
+        }
+    }
+    else
+    {
+        while (--count >= 0)
+        {
+            *dst++ = *src++;
+        }
+    }
+}

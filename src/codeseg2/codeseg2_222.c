@@ -22,7 +22,7 @@ extern s8 D_800E499F;
 #define RAM_END 0x80400000
 #define FRAMEBUFFER_BYTES ((SCREEN_WIDTH) * (SCREEN_HEIGHT) * 2)
 
-// TODO different compiler, different order?
+// TODO different order?
 // void func_80061300()
 // {
 //     D_800AAF68 = (s32)&D_800F6ADF & ~0x3F;

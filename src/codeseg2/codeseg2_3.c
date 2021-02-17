@@ -21,22 +21,19 @@ struct unkfunc_8001DFD0 {
 
 extern f32 D_80019FB0;
 
-// TODO different compiler
-// void func_8001DFD0(struct unkfunc_8001DFD0 *arg0)
-// {
-//     s32 v0;
-//     func_80050868();
-//     v0 = arg0->unk110 | 0xC00000;
-//     arg0->unk110 = v0 | 0x300000;
-//     *(s8 *)&arg0->unk110 = 0xff; // what?
-//     arg0->unkE0 = 0x10;
-//     arg0->unk104 = D_80019FB0;
-//     arg0->unk108 = 0x7fffffff;
-//     arg0->unk110 = arg0->unk110 | 0x4000;
-//     return;
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_3", func_8001DFD0);
+void func_8001DFD0(struct unkfunc_8001DFD0 *arg0)
+{
+    s32 v0;
+    func_80050868();
+    v0 = arg0->unk110 | 0xC00000;
+    arg0->unk110 = v0 | 0x300000;
+    *(s8 *)&arg0->unk110 = 0xff; // what?
+    arg0->unkE0 = 0x10;
+    arg0->unk104 = D_80019FB0;
+    arg0->unk108 = 0x7fffffff;
+    arg0->unk110 = arg0->unk110 | 0x4000;
+    return;
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_3", func_8001E044);
 

@@ -14,7 +14,7 @@ extern struct unkD_800A5DA8 D_800A5DA8;
 
 #define MACRO_FUNC_800751D8(x) (((x) + 0xF < 0) ? (x) + 0x1E : (x) + 0xF)
 
-// TODO different compiler, regalloc
+// TODO regalloc
 // void func_800751D8(s32 **arg0, s32 arg1)
 // {
 //     s32 *s1;
@@ -42,20 +42,19 @@ struct unkfunc_80075348 {
     s32 unkC;
 };
 
-// TODO different compiler
-// void func_80075348(struct unkfunc_80075348 *arg0, s32 arg1)
-// {
-//     bzero(arg0, arg1 * sizeof(struct unkfunc_80075348));
-//     for (arg1--; arg1 >= 0; arg0++, arg1--)
-//     {
-//         arg0->unk0 = -1;
-//         arg0->unk4 = 0;
-//         arg0->unk8 = 0;
-//         arg0->unkC = 1;
-//     }
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_302", func_80075348);
+void func_80075348(struct unkfunc_80075348 *arg0, s32 arg1)
+{
+    s32 s0 = arg1;
+    struct unkfunc_80075348 *s1 = arg0;
+    bzero(s1, s0 * sizeof(struct unkfunc_80075348));
+    for (s0--; s0 >= 0; s1++, s0--)
+    {
+        s1->unk0 = -1;
+        s1->unk4 = 0;
+        s1->unk8 = 0;
+        s1->unkC = 1;
+    }
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_302", func_800753B4);
 

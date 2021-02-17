@@ -9,7 +9,7 @@ f32 magnitude();
 void vec3f_scale(f32, f32*, f32*);
 void func_80056FA0(f32, f32*, f32*);
 
-// TODO different compiler
+// TODO wip
 // void func_800570D0(s32 arg0, f32 *arg1)
 // {
 //     float fVar2;

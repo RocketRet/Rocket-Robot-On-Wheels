@@ -12,82 +12,69 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E4E0);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E548);
 
-// TODO different compiler
-// void func_8004E574(s32 arg0)
-// {
-//     D_800A637C &= ~arg0;
-//     func_8004E5A4();
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E574);
+void func_8004E574(s32 arg0)
+{
+    D_800A637C &= ~arg0;
+    func_8004E5A4();
+}
 
 extern struct ControllerData D_800A6380;
 
-// TODO different compiler?
-// void func_8004E5A4()
-// {
-//     if (D_800A637C & 0x01)
-//     {
-//         D_800A6378 = 0;
-//     }
-//     else if (D_800A637C & 0x02)
-//     {
-//         D_800A6378 = 4;
-//     }
-//     else if (D_800A637C & 0x04)
-//     {
-//         D_800A6378 = 8;
-//     }
-//     else if (D_800A637C & 0x08)
-//     {
-//         D_800A6378 = 4;
-//     }
-//     else
-//     {
-//         D_800A6378 = 7;
-//     }
-// }
+void func_8004E5A4()
+{
+    if ((D_800A637C & 0x01) == 0)
+    {
+        D_800A6378 = 0;
+    }
+    else if (D_800A637C & 0x02)
+    {
+        D_800A6378 = 4;
+    }
+    else if (D_800A637C & 0x04)
+    {
+        D_800A6378 = 8;
+    }
+    else if (D_800A637C & 0x08)
+    {
+        D_800A6378 = 4;
+    }
+    else
+    {
+        D_800A6378 = 7;
+    }
+}
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E5A4);
+s32 func_8004E60C()
+{
+    s32 ret = D_800E4824;
+    if (ret == 0)
+    {
+        osContStartReadData(&D_800A63A8);
+        ret = 1;
+        D_800E4824 = 1;
+    }
+    return ret;
+}
 
-// TODO different compiler
-// s32 func_8004E60C()
-// {
-//     s32 ret = D_800E4824;
-//     if (ret == 0)
-//     {
-//         osContStartReadData(&D_800A63A8);
-//         ret = 1;
-//         D_800E4824 = 1;
-//     }
-//     return ret;
-// }
+void func_8004E64C()
+{
+    if (D_800E4824)
+    {
+        if (osRecvMesg(&D_800A63A8, NULL, OS_MESG_NOBLOCK) == 0)
+        {
+            func_8004E6D4();
+        }
+    }
+}
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E60C);
-
-// TODO different compiler
-// void func_8004E64C()
-// {
-//     if (D_800E4824)
-//     {
-//         if (osRecvMesg(&D_800A63A8, NULL, OS_MESG_NOBLOCK) == 0)
-//         {
-//             func_8004E6D4();
-//         }
-//     }
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E64C);
-
-// TODO different compiler
-// void func_8004E694()
-// {
-//     if (D_800E4824)
-//     {
-//         osRecvMesg(&D_800A63A8, NULL, OS_MESG_BLOCK);
-//         func_8004E6D4();
-//     }
-// }
+void func_8004E694()
+{
+    if (D_800E4824)
+    {
+        osRecvMesg(&D_800A63A8, NULL, OS_MESG_BLOCK);
+        func_8004E6D4();
+    }
+}
 
 struct unkD_800A5FC4
 {
@@ -99,10 +86,7 @@ struct unkD_800A5FC4
 
 extern struct unkD_800A5FC4 D_800A5FC4[MAXCONTROLLERS];
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E694);
-
 // TODO finish this
-// TODO different compiler
 // void func_8004E6D4()
 // {
 //     OSContPad pads[MAXCONTROLLERS];
