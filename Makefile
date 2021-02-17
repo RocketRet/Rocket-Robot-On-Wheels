@@ -89,6 +89,7 @@ $(Z64) : $(ELF)
 
 # $(BUILD_DIR)/src/codeseg1/codeseg1_35.s: OPTFLAGS := -O0
 # $(BUILD_DIR)/src/codeseg1/codeseg1_35.s: WARNFLAGS := 
+$(BUILD_DIR)/src/codeseg1/codeseg1_97.s: CC := tools/sn/gcc-2.8.0/cc1
 # $(BUILD_DIR)/src/codeseg0/codeseg0_0.s: CC := tools/sn/gnun64280/cc1n64.exe
 # $(BUILD_DIR)/src/codeseg0/codeseg0_0.s: CC := /mnt/c/n64/n64sdk/ultra/GCC/MIPSE/BIN/CC1.EXE
 # $(BUILD_DIR)/src/codeseg0/codeseg0_0.o: AS := ../papermario/tools/linux/mips-nintendo-nu64-as
