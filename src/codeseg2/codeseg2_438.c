@@ -31,22 +31,18 @@ f32 magnitude(Vec3f vec)
     f32 x2 = vec[0] * vec[0];
     f32 y2 = vec[1] * vec[1];
     f32 z2 = vec[2] * vec[2];
-    f32 mag;
-    sqrt_s(x2 + y2 + z2, mag);
-    
-    return mag;
+    return sqrtf(x2 + y2 + z2);
 }
 
 f32 normalize(Vec3f vec)
 {
-    s32 i;
+    s32 i = 0;
     f32 x2 = vec[0] * vec[0];
     f32 y2 = vec[1] * vec[1];
     f32 z2 = vec[2] * vec[2];
-    f32 mag;
-    sqrt_s(x2 + y2 + z2, mag);
+    f32 mag = sqrtf(x2 + y2 + z2);
 
-    for (i = 0; i < 3; i++)
+    for (; i < 3; i++)
     {
         vec[i] /= mag;
     }

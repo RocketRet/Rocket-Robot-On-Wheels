@@ -50,7 +50,7 @@ extern struct unkD_800E4DD0 D_800E4DD0[];
 //     if (D_800AAF64 != D_800AAF60)
 //     {
 //         u32 romAddr = D_800E4DD0[D_800AAF60].romAddr;
-//         void *ramAddr = D_800E4DD0[D_800AAF60].ramAddr;
+//         void *ramAddr = (void *)D_800E4DD0[D_800AAF60].ramAddr;
 //         u32 size = D_800E4DD0[D_800AAF60].size;
 //         osInvalDCache(ramAddr, size);
 //         osPiStartDma(&D_800E4DB0, OS_MESG_PRI_NORMAL, OS_READ, romAddr, ramAddr, size, &D_80017DFC);
