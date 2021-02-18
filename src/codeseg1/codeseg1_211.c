@@ -2,4 +2,7 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_211", alSynDelete);
+void alSynDelete(ALSynth *s) {
+    s->head = NULL;
+}
+
