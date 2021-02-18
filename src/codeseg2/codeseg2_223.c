@@ -38,25 +38,24 @@ void clear_main_pool()
     D_800E48AC = D_800E48A8;
 }
 
-// TODO regalloc
-// void *main_alloc_copy(s32 size, u8 *src)
-// {
-//     void *addr;
-//     if (size == 0)
-//     {
-//         addr = NULL;
-//     }
-//     else
-//     {
-//         void *tmpAddr = D_800E48AC;
-//         D_800E48AC = (void*)((uintptr_t)tmpAddr + ALIGN(size,8));
-//         addr = tmpAddr;
-//     }
-//     memcpy(addr, src, size);
-//     return addr;
-// }
+void memcpy(void *, void *, s32);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_223", main_alloc_copy);
+void *main_alloc_copy(s32 size, u8 *src)
+{
+    void *addr;
+    if (size == 0)
+    {
+        addr = NULL;
+    }
+    else
+    {
+        void *tmpAddr = D_800E48AC;
+        D_800E48AC = (void*)((uintptr_t)tmpAddr + ALIGN(size,8));
+        addr = tmpAddr;
+    }
+    memcpy(addr, src, size);
+    return addr;
+}
 
 void *main_alloc_bzero(s32 size)
 {

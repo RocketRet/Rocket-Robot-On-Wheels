@@ -2,11 +2,22 @@
 #include <ultra64.h>
 
 
+struct unkfunc_8008530C {
+    u8 padding[0x268];
+    u32 unk268;
+};
+
 INCLUDE_ASM(s32, "codeseg2/codeseg2_368", func_80085220);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_368", func_800852EC);
+void func_800852EC(struct unkfunc_8008530C *arg0)
+{
+    func_80085094(&arg0->unk268);
+}
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_368", func_8008530C);
+void func_8008530C(struct unkfunc_8008530C *arg0)
+{
+    func_80084A88(&arg0->unk268);
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_368", func_8008532C);
 

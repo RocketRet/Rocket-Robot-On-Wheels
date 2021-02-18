@@ -35,13 +35,12 @@ extern struct GfxContext D_800A5DA8;
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_152", load_translation_mtx);
 
-// TODO regalloc
-// void pop_matrix()
-// {
-//     gSPPopMatrix(D_800A5DA8.dlHead++, G_MTX_MODELVIEW);
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_152", pop_matrix);
+void pop_matrix()
+{
+    // Ugly, but matches
+    D_800A5DA8.dlHead++;
+    gSPPopMatrix(D_800A5DA8.dlHead - 1, G_MTX_MODELVIEW);
+}
 
 struct unkfunc_800477D8_inner {
     u8 unk0;

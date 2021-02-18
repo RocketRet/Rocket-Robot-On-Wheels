@@ -125,7 +125,7 @@ void func_8004E60C(void);
 
 extern f32 D_80000500; // 1.0f / 6.0f
 
-// TODO different compiler
+// TODO float load
 // void func_80001248(void *arg0)
 // {
 //     f32 f20;

@@ -40,25 +40,26 @@ INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005DBC);
 
 void func_80006220(u8 *);
 
-// TODO different compiler
-// void func_80005E14(s32 arg0)
-// {
-//     u8 sp10[4];
-//     sp10[0] = 0;
-//     func_80006220(sp10);
-// }
+struct unkfunc_80005E3C {
+    u8 unk0;
+    u32 unk4;
+};
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005E14);
+void func_80005E14(s32 arg0)
+{
+    struct unkfunc_80005E3C sp10;
+    sp10.unk0 = 0;
+    sp10.unk4 = arg0;
+    func_80006220(&sp10);
+}
 
-// TODO different compiler
-// void func_80005E3C(s32 arg0)
-// {
-//     u8 sp10[4];
-//     sp10[0] = 1;
-//     func_80006220(sp10);
-// }
-
-INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005E3C);
+void func_80005E3C(s32 arg0)
+{
+    struct unkfunc_80005E3C sp10;
+    sp10.unk0 = 1;
+    sp10.unk4 = arg0;
+    func_80006220(&sp10);
+}
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_35", func_80005E68);
 

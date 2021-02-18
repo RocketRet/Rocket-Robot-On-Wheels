@@ -10,4 +10,9 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_406", func_80094184);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_406", func_80094248);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_406", func_800942D4);
+extern s32 D_800AF4FC;
+
+void func_800942D4()
+{
+    D_800AF4FC = 0;
+}

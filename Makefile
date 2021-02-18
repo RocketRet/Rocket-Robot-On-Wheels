@@ -67,7 +67,7 @@ $(BUILD_DIR)/%.i : %.c | $(SRC_BUILD_DIRS)
 	$(CPP) $(CPPFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.s : $(BUILD_DIR)/%.i %.c
-	$(CC) $(CFLAGS) $(WARNFLAGS) $(OPTFLAGS) $< -o $@
+	$(CC) $(CFLAGS) $(WARNFLAGS) $(OPTFLAGS) $< -o $@ || rm -f $@
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
@@ -103,7 +103,13 @@ $(BUILD_DIR)/src/codeseg1/codeseg1_97.s: CC := tools/sn/gcc-2.8.0/cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_221.s: CC := tools/gcc/mips-cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_225.s: CC := tools/gcc/mips-cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_225.s: CC := tools/gcc-2.7.2/cc1
-# $(BUILD_DIR)/src/codeseg2/codeseg2_226.s: CC := tools/sn/gcc-2.7.2/cc1
+# $(BUILD_DIR)/src/codeseg2/codeseg2_237.s: CC := tools/sn/gcc-2.7.2/cc1
+# $(BUILD_DIR)/src/codeseg2/codeseg2_237.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
+# $(BUILD_DIR)/src/codeseg2/codeseg2_103.s: CC := tools/sn/gcc-2.7.2/cc1
+# $(BUILD_DIR)/src/codeseg2/codeseg2_103.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
+# $(BUILD_DIR)/src/codeseg2/codeseg2_434.s: CC := tools/sn/gcc-2.7.2/cc1
+# $(BUILD_DIR)/src/codeseg2/codeseg2_434.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
+# $(BUILD_DIR)/src/codeseg2/codeseg2_434.s: ASFLAGS := -G0 -EB -mabi=32 -I. -Iinclude -O1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_235.s: CC := tools/sn/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_378.s: OPTFLAGS := -O2 -g
 # $(BUILD_DIR)/src/codeseg0/codeseg0.s: CC := tools/sn/gcc-2.7.2/cc1

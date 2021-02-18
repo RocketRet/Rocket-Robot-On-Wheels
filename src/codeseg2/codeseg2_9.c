@@ -9,19 +9,16 @@ struct s32_3 {
 
 struct unkfunc_8001FBB0 {
     u8 padding[0x84];
-    
+    struct s32_3 unk84;
 };
 
-// void func_8001FBB0(struct unkfunc_8001FBB0 *param_1,struct s32_3 *param_2)
+void func_8001FD30();
 
-// {
-//     param_1[0x21] = param_2[0];
-//     param_1[0x22] = param_2[1];
-//     param_1[0x23] = param_2[2];
-//     func_8001FD30();
-// }
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_9", func_8001FBB0);
+void func_8001FBB0(struct unkfunc_8001FBB0 *param_1,struct s32_3 *param_2)
+{
+    param_1->unk84 = *param_2;
+    func_8001FD30();
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_9", func_8001FBE8);
 

@@ -11,7 +11,11 @@ void func_80088980(struct unkfunc_80088980 *arg0, s16 arg1)
     arg0->unk16 = arg1;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_378", func_80088988);
+void func_80088988(s16 *arg0, s16 arg1, s16 arg2)
+{
+    arg0[0] = arg1;
+    arg0[1] = arg2;
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_378", func_80088994);
 

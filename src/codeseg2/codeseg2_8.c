@@ -1,5 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <macros.h>
+#include <types.h>
 
 struct unkfunc_8001FAF4_sub0 {
     u8 padding[0x5C];
@@ -33,22 +35,18 @@ void func_8001FAB0(struct unkfunc_8001FAF4 *arg0, s32 *arg1)
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_8", func_8001FAF4);
 
-// TODO different compiler
-// void func_8001FB44(s32 *arg0, s32 *arg1)
-// {
-//     s32 sVar1;
-//     s32 sVar2;
+struct unkfunc_8001FB44 {
+    u8 padding[0x78];
+    Vec3f unk1E;
+};
 
-//     sVar1 = arg1[1];
-//     sVar2 = arg1[2];
-//     arg0[0x1e] = arg1[0];
-//     arg0[0x1f] = sVar1;
-//     arg0[0x20] = sVar2;
-//     func_8001FD30(arg0, arg1);
-//     return;
-// }
+void func_8001FD30();
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_8", func_8001FB44);
+void func_8001FB44(struct unkfunc_8001FB44 *arg0, Vec3f arg1)
+{
+    VEC3F_COPY(&arg0->unk1E, arg1);
+    func_8001FD30();
+}
 
 struct unkfunc_8001FB7C {
     struct unkfunc_8001FB7C_sub0 *unk0;

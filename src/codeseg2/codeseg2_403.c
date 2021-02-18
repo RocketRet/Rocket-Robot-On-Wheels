@@ -2,6 +2,11 @@
 #include <ultra64.h>
 
 
+struct unkfunc_80091F2C {
+    u8 padding[0x18];
+    s32 unk18[1]; // TODO real array size
+};
+
 INCLUDE_ASM(s32, "codeseg2/codeseg2_403", func_80091410);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_403", func_80091474);
@@ -14,7 +19,12 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_403", func_80091AA8);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_403", func_80091AF8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_403", func_80091BD4);
+// TODO is this really the same struct?
+void func_80091BD4(struct unkfunc_80091F2C *arg0, s32 arg1)
+{
+    // index[array] again
+    arg1[arg0->unk18] = 1;
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_403", func_80091BE8);
 
@@ -26,4 +36,8 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_403", func_80091CD8);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_403", func_80091DD8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_403", func_80091F2C);
+void func_80091F2C(struct unkfunc_80091F2C *arg0, s32 arg1)
+{
+    // index[array] again
+    arg1[arg0->unk18] = 1;
+}

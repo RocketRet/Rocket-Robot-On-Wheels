@@ -6,7 +6,14 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_54", func_8002D050);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_54", func_8002D42C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_54", func_8002D678);
+void func_8002D678(s32 arg0, s32 (*arg1)[3], s32 arg2, s32 arg3, s32 arg4)
+{
+    s32 i;
+    for (i = 0; i < arg0; i++)
+    {
+        arg1[i][0] = arg4 + (arg1[i][0] - arg3);
+    }
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_54", func_8002D6AC);
 
