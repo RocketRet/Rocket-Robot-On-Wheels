@@ -6,15 +6,27 @@ struct unkfunc_800841C4 {
     s32 unk22C;
 };
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_362", func_80084410);
+void func_80084410(struct unkfunc_800841C4 *arg0)
+{
+    arg0->unk22C |= 0x00100000;
+}
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_362", func_80084424);
+void func_80084424(struct unkfunc_800841C4 *arg0)
+{
+    arg0->unk22C &= ~0x00100000;
+}
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_362", func_8008443C);
+void func_8008443C(struct unkfunc_800841C4 *arg0)
+{
+    arg0->unk22C |= 0x00008000;
+}
 
 void func_8008444C(struct unkfunc_800841C4 *arg0)
 {
     arg0->unk22C |= 0x00004000;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_362", func_8008445C);
+void func_8008445C(struct unkfunc_800841C4 *arg0)
+{
+    arg0->unk22C &= ~0x00004000;
+}

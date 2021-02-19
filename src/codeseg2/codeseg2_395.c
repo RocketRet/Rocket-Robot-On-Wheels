@@ -15,7 +15,12 @@ void func_8008FC14(void) {
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_395", func_8008FC1C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_395", func_8008FD0C);
+extern s32 D_800AF3F0;
+
+func_8008FD0C(s32 arg0)
+{
+    D_800AF3F0 = arg0;
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_395", func_8008FD18);
 

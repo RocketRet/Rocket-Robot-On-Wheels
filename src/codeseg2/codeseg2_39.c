@@ -6,7 +6,10 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_39", func_800288D0);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_39", func_80028A2C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_39", func_80028A84);
+void func_80028A84(s32 **arg0)
+{
+    arg0[0xAB] = arg0[3][0x38]; // TODO probably a struct
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_39", func_80028A94);
 

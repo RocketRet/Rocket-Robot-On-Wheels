@@ -1,8 +1,17 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
+struct unkfunc_8003CFD0 {
+    u8 padding[0x18];
+    s32 unk18[0x09];
+    s32 unk3C;
+};
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_106", func_8003CFD0);
+void func_8003CFD0(struct unkfunc_8003CFD0 *arg0, s32 arg1)
+{
+    // index[array] again
+    arg0->unk3C++[arg0->unk18] = arg1;
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_106", func_8003CFEC);
 

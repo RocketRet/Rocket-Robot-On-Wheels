@@ -1,5 +1,8 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_269", func_8006C080);
+void func_8006C080(s32 *arg0, s32 arg1, s32 arg2)
+{
+    arg0[3] = arg1; // TODO probably a struct
+    arg0[4] = arg2;
+}

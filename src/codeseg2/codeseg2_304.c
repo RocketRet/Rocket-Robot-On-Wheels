@@ -6,9 +6,31 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_304", func_800765B0);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_304", func_8007668C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_304", func_800766E8);
+void func_800766E8(s32 arg0)
+{
+    func_80076734(arg0, 2);
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_304", func_80076708);
+
+extern f32 D_8009FE14;
+
+struct unkfunc_80076734 {
+    u8 padding[0x48];
+    s32 unk48;
+    s32 unk4C;
+    f32 unk50;
+};
+
+// TODO reorder
+// void func_80076734(struct unkfunc_80076734 *arg0, s32 arg1)
+// {
+//     if (arg1 != arg0->unk48)
+//     {
+//         arg0->unk48 = arg1;
+//         arg0->unk50 = D_8009FE14;
+//     }
+// }
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_304", func_80076734);
 

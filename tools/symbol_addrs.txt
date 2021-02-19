@@ -329,3 +329,4 @@ main_alloc_nozero = 0x80061478; // !
 clear_main_pool = 0x800614A8; // !
 memcpy = 0x80061604; // !
 main_alloc_copy = 0x800614BC; // !
+__osViCurr = 0x80019920;

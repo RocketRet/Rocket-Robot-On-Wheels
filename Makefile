@@ -13,15 +13,16 @@ SRC_DIR := src
 ASM_DIR := asm
 BIN_DIR := bin
 SRC_DIRS := $(filter-out $(wildcard $(SRC_DIR)/*.*), $(wildcard src/*))
+ASM_DIRS := $(filter-out $(wildcard $(ASM_DIR)/*.*), $(wildcard asm/*))
 SRC_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(SRC_DIRS))
-ASM_BUILD_DIR := $(BUILD_DIR)/$(ASM_DIR)
+ASM_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(ASM_DIRS))
 BIN_BUILD_DIR := $(BUILD_DIR)/$(BIN_DIR)
 
 # Files
 C_SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 C_ASMS := $(addprefix $(BUILD_DIR)/, $(C_SRCS:.c=.s))
 C_OBJS := $(C_ASMS:.s=.o)
-AS_SRCS := $(wildcard $(ASM_DIR)/*.s)
+AS_SRCS := $(wildcard $(ASM_DIR)/*.s) $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
 AS_OBJS := $(addprefix $(BUILD_DIR)/, $(AS_SRCS:.s=.o))
 BINS := $(wildcard $(BIN_DIR)/*.bin)
 BIN_OBJS := $(addprefix $(BUILD_DIR)/, $(BINS:.bin=.o))
@@ -60,7 +61,7 @@ $(SRC_DIR) : | $(BUILD_DIR)
 
 $(BUILD_DIR) : | $(BUILD_ROOT)
 
-$(BUILD_ROOT) $(BUILD_DIR) $(SRC_DIR) $(SRC_BUILD_DIRS) $(ASM_BUILD_DIR) $(BIN_BUILD_DIR) :
+$(BUILD_ROOT) $(BUILD_DIR) $(SRC_DIR) $(SRC_BUILD_DIRS) $(ASM_BUILD_DIRS) $(BIN_BUILD_DIR) :
 	$(MKDIR) $@
 
 $(BUILD_DIR)/%.i : %.c | $(SRC_BUILD_DIRS)
@@ -72,7 +73,7 @@ $(BUILD_DIR)/%.s : $(BUILD_DIR)/%.i %.c
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
 	
-$(BUILD_DIR)/%.o : %.s | $(ASM_BUILD_DIR)
+$(BUILD_DIR)/%.o : %.s | $(ASM_BUILD_DIRS)
 	$(AS) $(ASFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o : %.bin | $(BIN_BUILD_DIR)

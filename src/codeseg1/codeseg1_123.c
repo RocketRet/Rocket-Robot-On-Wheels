@@ -6,7 +6,12 @@ INCLUDE_ASM(s32, "codeseg1/codeseg1_123", func_8000D110);
 
 INCLUDE_ASM(s32, "codeseg1/codeseg1_123", func_8000D144);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_123", func_8000D15C);
+s32 D_800BEB20;
+
+s32 *func_8000D15C()
+{
+    return &D_800BEB20;
+}
 
 // void func_8000D168(u8 *arg0, u8 arg1, s32 arg2)
 // {

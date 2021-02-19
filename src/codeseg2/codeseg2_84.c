@@ -6,4 +6,18 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_84", func_80036300);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_84", func_80036328);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_84", func_800364F8);
+struct unkfunc_800364F8_sub8 {
+    u8 padding[0x134];
+    s32 unk134;
+};
+
+struct unkfunc_800364F8 {
+    s32 unk0;
+    s32 unk4;
+    struct unkfunc_800364F8_sub8 *unk8;
+};
+
+void func_800364F8(struct unkfunc_800364F8 *arg0)
+{
+    func_8003B89C(arg0->unk4, &arg0->unk8->unk134);
+}

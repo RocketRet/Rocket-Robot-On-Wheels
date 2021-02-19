@@ -1,5 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_351", func_800830C0);
+u32 func_800830C0(u32 *arg0)
+{
+    return (~arg0[0x70]) >> 0x1F;
+}

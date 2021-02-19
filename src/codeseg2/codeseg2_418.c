@@ -6,7 +6,10 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_418", func_80095DB0);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_418", func_80095DF4);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_418", func_80095E64);
+void func_80095E64()
+{
+    func_80096290();
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_418", func_80095E84);
 

@@ -1,5 +1,8 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_359", func_80084340);
+void func_80084340(s32 *arg0)
+{
+    arg0[0x6E] = 3;
+    arg0[0x6A] = 3;
+}

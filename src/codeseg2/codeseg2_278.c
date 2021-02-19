@@ -1,5 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
-
-INCLUDE_ASM(s32, "codeseg2/codeseg2_278", func_8006DE20);
+void func_8006DE20()
+{
+    func_800263B4();
+}

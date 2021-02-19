@@ -20,7 +20,17 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_388", func_8008D0BC);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_388", func_8008D0F8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_388", func_8008D18C);
+// TODO types
+void func_8008D18C(s32 *arg0, s32 **arg1)
+{
+    arg0[2] = *arg1;
+    arg0[3] = 0;
+    if (*arg1)
+    {
+        (*arg1)[3]  = arg0;
+    }
+    *arg1 = arg0;
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_388", func_8008D1AC);
 

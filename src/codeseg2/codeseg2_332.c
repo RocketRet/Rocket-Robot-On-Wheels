@@ -1,8 +1,12 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
+extern s32 D_8009F094;
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_332", func_8007F1D0);
+void func_8007F1D0()
+{
+    func_8007F1F4(&D_8009F094);
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_332", func_8007F1F4);
 
