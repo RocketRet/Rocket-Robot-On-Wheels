@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <types.h>
 
 struct unkfunc_800841C4 {
     u8 padding[0x170];
@@ -19,6 +20,13 @@ void func_80084048(struct unkfunc_800841C4 *arg0)
     arg0->unk22C |= 0x00080000;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_356", func_8008405C);
+void func_8008405C(s32 arg0, f32 arg1)
+{
+    Vec3f vec;
+    vec[2] = arg1;
+    vec[1] = arg1;
+    vec[0] = 0;
+    func_8008408C(arg0, vec);
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_356", func_8008408C);

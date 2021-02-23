@@ -10,7 +10,11 @@ extern u32 D_800A637C;
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E4E0);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E548);
+void func_8004E548(u32 arg0)
+{
+    D_800A637C |= arg0;
+    func_8004E5A4();
+}
 
 void func_8004E574(s32 arg0)
 {

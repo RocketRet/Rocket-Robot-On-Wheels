@@ -32,7 +32,18 @@ s32 func_800508B4(struct unkfunc_800508B4 *arg0)
     return arg0;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_179", func_800508D8);
+s32 func_800508D8(struct unkfunc_800508B4 *arg0, struct unkfunc_800508B4 *arg1)
+{
+    while (arg0)
+    {
+        if (arg0 == arg1)
+        {
+            return 1;
+        }
+        arg0 = arg0->unk10;
+    }
+    return 0;
+}
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_179", func_800508FC);
 

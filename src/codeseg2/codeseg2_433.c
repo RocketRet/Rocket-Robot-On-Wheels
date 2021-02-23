@@ -39,4 +39,7 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_433", func_80099B08);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_433", func_80099B8C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_433", func_80099BCC);
+s32 func_80099BCC(f32 *arg0, f32 arg1)
+{
+    return arg0[0] < arg1 && arg1 < arg0[1];
+}

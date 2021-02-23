@@ -28,6 +28,8 @@ struct GfxTask {
 
 typedef float Vec2f[2];
 typedef float Vec3f[3];
+typedef float Mtx3f[3][3];
+typedef float Mtx4f[4][4];
 
 struct ControllerData {
     /* 0x00 */ f32 x;

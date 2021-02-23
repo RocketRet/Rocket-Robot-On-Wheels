@@ -34,7 +34,7 @@ f32 magnitude(Vec3f vec)
     return sqrtf(x2 + y2 + z2);
 }
 
-f32 normalize(Vec3f vec)
+f32 vec3f_normalize(Vec3f vec)
 {
     s32 i = 0;
     f32 x2 = vec[0] * vec[0];
