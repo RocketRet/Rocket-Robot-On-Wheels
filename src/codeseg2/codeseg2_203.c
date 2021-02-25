@@ -6,7 +6,7 @@ extern f32 D_8001BA10;
 extern f32 D_8001BA14;
 extern f32 D_8001BA18;
 
-f32 magnitude();
+f32 vec3f_magnitude();
 void vec3f_scale(f32, f32*, f32*);
 void func_80056FA0(f32, f32*, f32*);
 
@@ -16,7 +16,7 @@ void func_80056FA0(f32, f32*, f32*);
 //     float fVar2;
 //     Vec3f val;
 
-//     fVar2 = magnitude(arg0);
+//     fVar2 = vec3f_magnitude(arg0);
 //     if (D_8001BA10 < fVar2) {
 //         vec3f_scale(D_8001BA14 / fVar2, arg0, val);
 //         func_80056FA0(fVar2, val, arg1);

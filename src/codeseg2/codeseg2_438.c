@@ -26,7 +26,7 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_438", func_8009A85C);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_438", func_8009A8C4);
 
-f32 magnitude(Vec3f vec)
+f32 vec3f_magnitude(Vec3f vec)
 {
     f32 x2 = vec[0] * vec[0];
     f32 y2 = vec[1] * vec[1];

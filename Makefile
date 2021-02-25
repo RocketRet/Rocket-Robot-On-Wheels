@@ -40,7 +40,7 @@ LD := mips-linux-gnu-ld
 
 # Flags
 CPPFLAGS := -Iinclude -Iinclude/2.0I -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64
-CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32 -msplit-addresses -mgas
+CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32 -msplit-addresses -mgas -mrnames
 WARNFLAGS := -Wuninitialized -Wshadow
 OPTFLAGS := -O2
 ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I. -Iinclude -O1
@@ -106,6 +106,8 @@ $(BUILD_DIR)/src/codeseg1/codeseg1_97.s: CC := tools/sn/gcc-2.8.0/cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_225.s: CC := tools/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_237.s: CC := tools/sn/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_237.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
+# $(BUILD_DIR)/src/codeseg2/codeseg2_208.s: CC := tools/sn/gcc-2.7.2/cc1
+# $(BUILD_DIR)/src/codeseg2/codeseg2_208.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
 # $(BUILD_DIR)/src/codeseg2/codeseg2_103.s: CC := tools/sn/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_103.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
 # $(BUILD_DIR)/src/codeseg2/codeseg2_434.s: CC := tools/sn/gcc-2.7.2/cc1
