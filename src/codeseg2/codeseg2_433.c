@@ -1,13 +1,31 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <macros.h>
 
+extern f64 D_8001DB80;
+extern f32 D_8001DB88;
 extern f64 D_8001DB90;
 
 extern f32 __sinf(f32);
 
-// void func_800991C0(f32 arg0, f32 arg1, f32 *arg2, f32 *arg3)
+// TODO almost
+// void func_800991C0(f32 arg0, f32 *arg1, f32 *arg2, f32 *arg3)
 // {
-//     *arg2 = __sinf(arg0);
+//     f32 sinVal = __sinf(arg0); // f0
+//     f32 fvar2;
+//     f64 fvar4;
+//     fvar4 = D_8001DB80 - sinVal * sinVal;
+//     *arg1 = sinVal;
+//     // fvar2 = ;
+//     fvar2 = (absf(arg0) / D_8001DB88) + D_8001DB90;
+//     if ((s32)(fvar2) & 1)
+//     {
+//         *arg2 = -fvar4;
+//     }
+//     else
+//     {
+//         *arg2 = fvar4;
+//     }
 // }
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_433", func_800991C0);

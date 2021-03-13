@@ -35,6 +35,77 @@ void func_8001DFD0(struct unkfunc_8001DFD0 *arg0)
     return;
 }
 
+struct unkfunc_8001E044 {
+    struct unkfunc_8001E044_inner *unk0;
+    u8 padding[0x18 - 0x04];
+    s32 unk18;
+    u8 padding2[0x3C - 0x18 - 0x04];
+    s32 unk3C;
+    u8 padding3[0xF4 - 0x3C - 0x04];
+    void *unkF4;
+    s32 unkF8;
+};
+
+struct unkfunc_8001E044_inner {
+    u8 padding[0x40];
+    void (*unk40)(struct unkfunc_8001E044*);
+    u8 padding2[0x68 - 0x40 - 0x04];
+    void (*unk68)(struct unkfunc_8001E044*, s32, void*, s32);
+};
+
+void *main_alloc_copy(s32 size, u8 *src);
+
+extern s32 D_800AF720;
+
+void *func_800615A4(s32);
+void func_80098820(s32 *, s32, s32 *, s32, void*);
+
+// TODO function call load order
+// void func_8001E044(struct unkfunc_8001E044 *arg0, s32 arg1, s32 *arg2, s32 arg3)
+// {
+//     s32 s0;
+//     void *s1;
+//     s32 s2;
+//     s32 s3;
+//     void *s5;
+
+//     func_80085D04(&arg2, &arg0->unk3C, &arg0->unk18);
+//     func_80085C68(&arg2, arg0);
+//     func_80061574();
+//     s5 = func_800615A4(0x5000);
+
+//     arg0->unkF4 = s5;
+
+//     arg2 = (s32*)ALIGN(arg2, 4);
+//     arg2 += 1;
+//     s3 = *(arg2 - 1);
+//     arg2 += 1;
+//     s0 = *(arg2 - 1);
+//     arg2 += 1;
+//     s2 = *(arg2 - 1);
+
+//     s1 = func_800615A4(s0);
+
+//     func_80098820(&D_800AF720, s2, arg2, s0, s1);
+
+//     arg0->unk0->unk68(arg0, s0, s1, s3);
+
+//     arg2 = (s32*)((u8*)arg2 + s2);
+
+//     if (arg0->unkF8 > 0)
+//     {
+//         arg0->unkF4 = main_alloc_copy(arg0->unkF8 * 40, s5);
+//     }
+
+//     func_800615D4();
+//     func_800615D4();
+
+//     if (arg0->unk0->unk40)
+//     {
+//         arg0->unk0->unk40(arg0);
+//     }
+// }
+
 INCLUDE_ASM(s32, "codeseg2/codeseg2_3", func_8001E044);
 
 INCLUDE_ASM(s32, "codeseg2/codeseg2_3", func_8001E198);

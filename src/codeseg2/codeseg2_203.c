@@ -11,19 +11,19 @@ void vec3f_scale(f32, f32*, f32*);
 void func_80056FA0(f32, f32*, f32*);
 
 // TODO float load
-// void func_800570D0(Vec3f arg0, Mtx3f arg1)
+// void func_800570D0(Vec3f in, Mtx3f out)
 // {
-//     float fVar2;
-//     Vec3f val;
+//     float magnitude;
+//     Vec3f normalized;
 
-//     fVar2 = vec3f_magnitude(arg0);
-//     if (D_8001BA10 < fVar2) {
-//         vec3f_scale(D_8001BA14 / fVar2, arg0, val);
-//         func_80056FA0(fVar2, val, arg1);
+//     magnitude = vec3f_magnitude(in);
+//     if (D_8001BA10 < magnitude) {
+//         vec3f_scale(D_8001BA14 / magnitude, in, normalized);
+//         func_80056FA0(magnitude, normalized, out);
 //     }
 //     else {
-//         bzero(arg1, 0x24);
-//         arg1[0][0] = arg1[1][1] = arg1[2][2] = D_8001BA18;
+//         bzero(out, 0x24);
+//         out[0][0] = out[1][1] = out[2][2] = D_8001BA18;
 //     }
 // }
 

@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_126", func_8000D4B0);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_126", n_alSynStartVoice);

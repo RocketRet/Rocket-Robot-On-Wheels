@@ -24,4 +24,4 @@ void func_80064DC8(s32 *arg0,s32 arg1)
     func_8006409C(arg0,arg1);
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_235", func_80064E48);
+INCLUDE_ASM(void, "codeseg2/codeseg2_235", func_80064E48, s32, s32);

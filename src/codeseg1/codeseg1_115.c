@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_115", func_8000CC10);
+INCLUDE_ASM(s32, "codeseg1/codeseg1_115", GetFxLongest);

@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/initialize", osInitialize);
+INCLUDE_ASM(void, "codeseg1/initialize", osInitialize, void);

@@ -1,6 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 #include <PR/sched.h>
+#include <macros.h>
 
 struct unkD_800A6380 {
     s32 unk0;
@@ -44,50 +45,51 @@ extern OSMesgQueue D_800180A0; // 0x800180A0
 extern u8 _bssStart[];
 extern u8 _bssEnd[];
 extern u8 D_800F6AA0[];
-extern u8 _dataRomEndCart[];
+extern u8 _dataEndRom[];
 extern u8 D_80100000[];
 
 void thread1_idle(void *);
 
-// TODO regalloc
-// void func_80000DD0()
-// {
-//     s32 diff;
-//     s32 diff2;
-//     bzero(_bssEnd, D_800F6AA0 - _bssEnd);
-//     diff = _bssStart - D_80100000;
-//     diff2 = _dataRomEndCart - diff;
-//     if (diff > 0)
-//     {
-//         osInvalDCache(D_80100000, diff2);
-//         osPiRawStartDma(0, _dataRomEndCart, 0x80100000, diff2);
-//         while (osPiGetStatus() & 5);
-//     }
-// }
+void func_80000DD0()
+{
+    s32 numBytes;
+    s32 start;
+    u8 *bssStart;
+    u8 *oneMB;
+    bzero(_bssEnd, D_800F6AA0 - _bssEnd);
+    bssStart = _bssStart;
+    oneMB = (u8 *)0x80100000;
+    numBytes = bssStart - oneMB;
+    start = _dataEndRom - numBytes;
+    if (numBytes > 0)
+    {
+        osInvalDCache(oneMB, numBytes);
+        osPiRawStartDma(0, start, oneMB, numBytes);
+        while (osPiGetStatus() & 5);
+    }
+}
 
-INCLUDE_ASM(s32, "codeseg0/codeseg0", func_80000DD0);
-
-// TODO regalloc (same as func_80000DD0)
-// void game_init()
-// {
-//     s32 diff;
-//     s32 diff2;
-//     osInitialize();
-//     bzero(_bssEnd, D_800F6AA0 - _bssEnd);
-//     diff = _bssStart - D_80100000;
-//     diff2 = _dataRomEndCart - diff;
-//     if (diff > 0)
-//     {
-//         osInvalDCache(D_80100000, diff2);
-//         osPiRawStartDma(0, _dataRomEndCart, 0x80100000, diff2);
-//         while (osPiGetStatus() & 5);
-//     }
-//     osCreateThread(&gThread1, 1, thread1_idle, NULL, &gIdleThreadStack[0x1000], 10);
-//     osStartThread(&gThread1);
-// }
-
-INCLUDE_ASM(s32, "codeseg0/codeseg0", game_init);
-
+void game_init()
+{
+    s32 numBytes;
+    s32 start;
+    u8 *bssStart;
+    u8 *oneMB;
+    osInitialize();
+    bzero(_bssEnd, D_800F6AA0 - _bssEnd);
+    bssStart = _bssStart;
+    oneMB = (u8 *)0x80100000;
+    numBytes = bssStart - oneMB;
+    start = _dataEndRom - numBytes;
+    if (numBytes > 0)
+    {
+        osInvalDCache(oneMB, numBytes);
+        osPiRawStartDma(0, start, oneMB, numBytes);
+        while (osPiGetStatus() & 5);
+    }
+    osCreateThread(&gThread1, 1, thread1_idle, NULL, &gIdleThreadStack[0x1000], 10);
+    osStartThread(&gThread1);
+}
 
 void thread6_unk(void *);
 
@@ -100,7 +102,7 @@ void thread1_idle(void *arg0)
     while (1);
 }
 
-INCLUDE_ASM(s32, "codeseg0/codeseg0", thread6_unk);
+INCLUDE_ASM(void, "codeseg0/codeseg0", thread6_unk, void *);
 
 void func_8001DE00(void);
 void func_80041908(void);

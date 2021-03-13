@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_235", alSynAllocFX);
+INCLUDE_ASM(ALFxRef *, "codeseg1/codeseg1_235", alSynAllocFX, ALSynth *s, s16 bus, ALSynConfig *c, ALHeap *hp);

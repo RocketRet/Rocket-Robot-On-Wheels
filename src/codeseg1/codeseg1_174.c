@@ -2,10 +2,10 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_174", alInit);
+INCLUDE_ASM(void, "codeseg1/codeseg1_174", alInit, ALGlobals *glob, ALSynConfig *c);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_174", alClose);
+INCLUDE_ASM(void, "codeseg1/codeseg1_174", alClose, ALGlobals *glob);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_174", alLink);
+INCLUDE_ASM(void, "codeseg1/codeseg1_174", alLink, ALLink *element, ALLink *after);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_174", alUnlink);
+INCLUDE_ASM(void, "codeseg1/codeseg1_174", alUnlink, ALLink *element);

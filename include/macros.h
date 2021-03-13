@@ -17,9 +17,20 @@
     (dst)[1] = (a)[1] - (b)[1]; \
     (dst)[2] = (a)[2] - (b)[2]
 
+#define MTX3F_COPY(dst, src) \
+    __builtin_memcpy(dst, src, 9 * sizeof(f32))
+
 #define sqrtf __inline_sqrtf
+#define sqrt __inline_sqrt
 
 static __inline__ __const__ f32 __inline_sqrtf (f32 in)
+{
+    float out;
+    __asm__("sqrt.s %0,%1" : "=f" (out) : "f" (in));
+    return out;
+}
+
+static __inline__ __const__ f64 __inline_sqrt (f64 in)
 {
     float out;
     __asm__("sqrt.s %0,%1" : "=f" (out) : "f" (in));

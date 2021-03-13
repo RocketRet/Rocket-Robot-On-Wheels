@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_129", osVirtualToPhysical);
+INCLUDE_ASM(u32, "codeseg1/codeseg1_129", osVirtualToPhysical, void *);

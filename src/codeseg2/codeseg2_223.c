@@ -38,7 +38,7 @@ void clear_main_pool()
     D_800E48AC = D_800E48A8;
 }
 
-void memcpy(void *, void *, s32);
+void memcpy(u8 *, u8 *, s32);
 
 void *main_alloc_copy(s32 size, u8 *src)
 {
@@ -105,17 +105,17 @@ void func_800615D4()
 //         s32 byteCopies = (4 - ((uintptr_t)src & 3)) & 3;
 //         s32 dwordCopies = (u32)(count - byteCopies) / 8;
 //         s32 byteCopies2 = (count - byteCopies) & 7;
-//         while (--byteCopies >= 0)
+//         for (;--byteCopies >= 0;)
 //         {
 //             *dst++ = *src++;
 //         }
-//         while (--dwordCopies >= 0)
+//         for (;--dwordCopies >= 0;)
 //         {
 //             *(u64*)dst = *(u64*)src;
 //             dst += 8;
 //             src += 8;
 //         }
-//         while (--byteCopies2 >= 0)
+//         for (; --byteCopies2 >= 0;)
 //         {
 //             *dst++ = *src++;
 //         }
@@ -129,7 +129,7 @@ void func_800615D4()
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_223", memcpy);
+INCLUDE_ASM(void, "codeseg2/codeseg2_223", memcpy, u8*, u8*, s32);
 
 void memmove(u8 *dst, u8 *src, s32 count)
 {

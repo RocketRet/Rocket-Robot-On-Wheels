@@ -41,7 +41,7 @@ LD := mips-linux-gnu-ld
 # Flags
 CPPFLAGS := -Iinclude -Iinclude/2.0I -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64
 CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32 -msplit-addresses -mgas -mrnames
-WARNFLAGS := -Wuninitialized -Wshadow
+WARNFLAGS := -Wuninitialized -Wshadow -Wall
 OPTFLAGS := -O2
 ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I. -Iinclude -O1
 BINOFLAGS := -I binary -O elf32-big
@@ -119,11 +119,6 @@ $(BUILD_DIR)/src/codeseg1/codeseg1_97.s: CC := tools/sn/gcc-2.8.0/cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_3.s: CC := tools/sn/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_378.s: CC := tools/sn/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/codeseg2/codeseg2_225.s: OPTFLAGS := -O3 -g0
-# $(BUILD_DIR)/src/codeseg1/codeseg1_117.s: CC := tools/gcc/mips-cc1
-# $(BUILD_DIR)/src/codeseg1/codeseg1_117.s: CC := ../papermario/tools/linux/cc1
-# $(BUILD_DIR)/src/codeseg1/codeseg1_117.s: CC := tools/sn/gnun64280/cc1n64.exe
-# $(BUILD_DIR)/src/codeseg1/codeseg1_117.s: OPTFLAGS := -O2
-# $(BUILD_DIR)/src/codeseg1/codeseg1_117.o: ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=o64 -I. -Iinclude -O0
 
 clean:
 	$(RMDIR) $(BUILD_ROOT)

@@ -5,7 +5,7 @@
 extern f32 D_8001BA0C;
 
 // TODO float load
-// void func_80056FA0(s32 arg0, Vec3f arg1, Mtx3f out)
+// void func_80056FA0(f32 arg0, Vec3f arg1, Mtx3f out)
 // {
 //     s32 i,j;
 //     f32 val, val2, val3;

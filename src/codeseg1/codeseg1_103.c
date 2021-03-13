@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_103", osCartRomInit);
+INCLUDE_ASM(OSPiHandle *, "codeseg1/codeseg1_103", osCartRomInit, void);

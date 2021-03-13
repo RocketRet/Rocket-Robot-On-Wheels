@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_71", osViSetSpecialFeatures);
+INCLUDE_ASM(void, "codeseg1/codeseg1_71", osViSetSpecialFeatures, u32);

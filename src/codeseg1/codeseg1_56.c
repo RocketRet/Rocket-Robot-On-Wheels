@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_56", guMtxIdentF);
+INCLUDE_ASM(void, "codeseg1/codeseg1_56", guMtxIdentF, float mf[4][4]);
