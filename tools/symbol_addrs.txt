@@ -480,3 +480,6 @@ GetFxMostSections = 0x8000CBD0; // !
 GetFxLongest = 0x8000CC10; // !
 CustomFxSet = 0x8000C8F0; // !
 n_alSynDelete = 0x80014B40; // !
+gAudioHeapPtr = 0x800AAF74;
+gAudioFxBank = 0x800E5FE0;
+gAudioPtrBank = 0x800E73D0;

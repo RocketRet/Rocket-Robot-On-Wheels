@@ -1,7 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 #include <types.h>
-
+#include <audio.h>
 
 extern void *D_800E48A0;
 extern void *D_800E48A4;
@@ -11,11 +11,9 @@ extern s32 D_800E48B0;
 extern s32 D_800E48B8;
 extern s32 D_800E48C0[];
 
-extern void *D_800AAF74;
-
 void func_80061440()
 {
-    D_800E48A0 = D_800AAF74 + 0x39800;
+    D_800E48A0 = gAudioHeapPtr + AUDIO_HEAP_SIZE;
     D_800E48A4 = D_800E48A8 = D_800E48AC = D_800E48A0;
 }
 
