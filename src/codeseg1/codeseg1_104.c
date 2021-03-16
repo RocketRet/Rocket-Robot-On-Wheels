@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(OSPiHandle *, "codeseg1/codeseg1_104", osLeoDiskInit, void);
+INCLUDE_ASM(OSPiHandle *, "lib/codeseg1/codeseg1_104", osLeoDiskInit, void);

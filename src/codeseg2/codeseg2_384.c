@@ -2,6 +2,6 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_384", func_8008C590);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_384", func_8008C590);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_384", func_8008CA1C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_384", func_8008CA1C);

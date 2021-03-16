@@ -2,11 +2,11 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_12", func_80020050);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_12", func_80020050);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_12", func_800200F4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_12", func_800200F4);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_12", func_80020134);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_12", func_80020134);
 
 struct unkD_8009F400 {
     u8 padding[24];

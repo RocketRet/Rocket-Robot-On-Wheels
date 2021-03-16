@@ -2,11 +2,11 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_314", func_80078790);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_314", func_80078790);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_314", func_800789A8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_314", func_800789A8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_314", func_800795B8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_314", func_800795B8);
 
 void func_8007982C(s32 *arg0)
 {
@@ -16,4 +16,4 @@ void func_8007982C(s32 *arg0)
     }
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_314", func_8007985C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_314", func_8007985C);

@@ -170,6 +170,6 @@ static void __MusIntFifoProcessCommand(fifo_t *command)
 //   return (1);
 // }
 
-INCLUDE_ASM(s32, "codeseg1/player_fifo", __MusIntFifoAddCommand);
+INCLUDE_ASM(s32, "lib/codeseg1/player_fifo", __MusIntFifoAddCommand);
 
 /* end of file */

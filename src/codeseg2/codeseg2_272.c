@@ -2,7 +2,7 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_272", func_8006C870);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_272", func_8006C870);
 
 extern s32 D_800AB6C4;
 extern s32 D_800AB6C8[];

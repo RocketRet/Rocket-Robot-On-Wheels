@@ -20,6 +20,6 @@ void func_8001FBB0(struct unkfunc_8001FBB0 *param_1,struct s32_3 *param_2)
     func_8001FD30();
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_9", func_8001FBE8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_9", func_8001FBE8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_9", func_8001FC1C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_9", func_8001FC1C);

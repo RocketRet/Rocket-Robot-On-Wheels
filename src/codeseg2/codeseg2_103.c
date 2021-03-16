@@ -15,6 +15,6 @@ extern f32 D_8001AE90;
 //     arg0->unk230 = D_8001AE90;    
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_103", func_8003CBD0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_103", func_8003CBD0);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_103", func_8003CC04);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_103", func_8003CC04);

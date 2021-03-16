@@ -44,10 +44,10 @@ u32 func_80042C48(u32 arg0)
     return v1 & (1 << arg0);
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_126", func_80042C68);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_126", func_80042C68);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_126", func_80042CA4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_126", func_80042CA4);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_126", func_80042D1C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_126", func_80042D1C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_126", func_8004303C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_126", func_8004303C);

@@ -2,6 +2,6 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_220", alResamplePull);
+INCLUDE_ASM(s32, "lib/codeseg1/codeseg1_220", alResamplePull);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_220", alResampleParam);
+INCLUDE_ASM(s32, "lib/codeseg1/codeseg1_220", alResampleParam);

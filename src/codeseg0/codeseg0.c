@@ -102,7 +102,7 @@ void thread1_idle(void *arg0)
     while (1);
 }
 
-INCLUDE_ASM(void, "codeseg0/codeseg0", thread6_unk, void *);
+INCLUDE_ASM(void, "rocket/codeseg0/codeseg0", thread6_unk, void *);
 
 void func_8001DE00(void);
 void func_80041908(void);
@@ -176,7 +176,7 @@ extern f32 D_80000500; // 1.0f / 6.0f
 //     return;
 // }
 
-INCLUDE_ASM(s32, "codeseg0/codeseg0", func_80001248);
+INCLUDE_ASM(s32, "rocket/codeseg0/codeseg0", func_80001248);
 
 void create_scheduler()
 {

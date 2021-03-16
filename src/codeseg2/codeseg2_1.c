@@ -48,4 +48,4 @@ void func_80056BD0(void*);
 //     func_80056BD0(&t0->unk50);
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_1", func_8001DE50);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_1", func_8001DE50);

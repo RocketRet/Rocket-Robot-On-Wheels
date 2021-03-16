@@ -4,9 +4,9 @@
 #include <mus/libmus.h>
 #include <PR/sched.h>
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_395", func_8008F9D0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_395", func_8008F9D0);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_395", func_8008FA24);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_395", func_8008FA24);
 
 struct unkD_800E5090 {
     s32 unk0;
@@ -80,14 +80,14 @@ void func_80091C98();
 //     func_80091C98();
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_395", func_8008FA88);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_395", func_8008FA88);
 
 void func_8008FC14(s32 *arg0) {
 
 }
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_395", func_8008FC1C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_395", func_8008FC1C);
 
 extern s32 D_800AF3F0;
 
@@ -96,6 +96,6 @@ void func_8008FD0C(s32 arg0)
     D_800AF3F0 = arg0;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_395", func_8008FD18);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_395", func_8008FD18);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_395", func_8008FEB4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_395", func_8008FEB4);

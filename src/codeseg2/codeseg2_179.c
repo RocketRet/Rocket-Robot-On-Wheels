@@ -6,7 +6,7 @@ s32 func_80050860(s32 arg0) {
     return arg0;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_179", func_80050868);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_179", func_80050868);
 
 s32 func_800508A4()
 {
@@ -45,8 +45,8 @@ s32 func_800508D8(struct unkfunc_800508B4 *arg0, struct unkfunc_800508B4 *arg1)
     return 0;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_179", func_800508FC);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_179", func_800508FC);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_179", func_80050948);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_179", func_80050948);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_179", func_8005098C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_179", func_8005098C);

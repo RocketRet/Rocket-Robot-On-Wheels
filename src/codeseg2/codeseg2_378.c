@@ -17,9 +17,9 @@ void func_80088988(s16 *arg0, s16 arg1, s16 arg2)
     arg0[1] = arg2;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_378", func_80088994);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_378", func_80088994);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_378", func_800889B8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_378", func_800889B8);
 
 extern u16 D_800ADAF8;
 extern u32 D_800E5088;
@@ -50,6 +50,6 @@ void func_80089D5C(Gfx **dlPtr)
     *dlPtr = head;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_378", func_80089F18);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_378", func_80089F18);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_378", func_8008AAEC);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_378", func_8008AAEC);

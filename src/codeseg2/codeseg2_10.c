@@ -3,7 +3,7 @@
 #include <types.h>
 #include <macros.h>
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_10", func_8001FD30);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_10", func_8001FD30);
 
 struct unkfunc_8001FDB4 {
     u8 padding[0x48];
@@ -39,4 +39,4 @@ void vec3f_transpose_rotate();
 //     VEC3F_COPY(arg3, src);
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_10", func_8001FDB4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_10", func_8001FDB4);

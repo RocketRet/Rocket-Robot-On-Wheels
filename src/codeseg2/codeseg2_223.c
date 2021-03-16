@@ -127,7 +127,7 @@ void func_800615D4()
 //     }
 // }
 
-INCLUDE_ASM(void, "codeseg2/codeseg2_223", memcpy, u8*, u8*, s32);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_223", memcpy, u8*, u8*, s32);
 
 void memmove(u8 *dst, u8 *src, s32 count)
 {

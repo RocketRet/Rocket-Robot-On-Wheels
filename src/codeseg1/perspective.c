@@ -55,6 +55,6 @@
 // 	guMtxF2L(mf, m);
 // }
 
-INCLUDE_ASM(void, "codeseg1/perspective", guPerspectiveF, float mf[4][4], u16 *perspNorm, float fovy, float aspect, float near, float far, float scale);
+INCLUDE_ASM(void, "lib/codeseg1/perspective", guPerspectiveF, float mf[4][4], u16 *perspNorm, float fovy, float aspect, float near, float far, float scale);
 
-INCLUDE_ASM(void, "codeseg1/perspective", guPerspective, Mtx *m, u16 *perspNorm, float fovy, float aspect, float near, float far, float scale);
+INCLUDE_ASM(void, "lib/codeseg1/perspective", guPerspective, Mtx *m, u16 *perspNorm, float fovy, float aspect, float near, float far, float scale);

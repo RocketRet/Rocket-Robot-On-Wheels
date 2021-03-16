@@ -3,7 +3,7 @@
 #include <types.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_424", func_800976D0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_424", func_800976D0);
 
 struct unkfunc_8009778C {
     u8 padding[0x7C];

@@ -15,4 +15,4 @@ void func_80083A10(struct unkfunc_80083A10 *arg0, void **arg1)
     arg0->unk22C &= 0x7FFFFFFF;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_354", func_80083A34);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_354", func_80083A34);

@@ -20,7 +20,7 @@
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_208", func_80057AC0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_208", func_80057AC0);
 
 f32 func_8009990C(f32, f32);
 
@@ -57,7 +57,7 @@ void func_80056FA0(f32, s32 *, Mtx3f);
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_208", func_80057BAC);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_208", func_80057BAC);
 
 extern f32 D_8001BA78; // 1e-4
 extern f32 D_8001BA7C; // 1
@@ -86,13 +86,13 @@ f32 vec3f_magnitude(Vec3f);
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_208", func_80057C6C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_208", func_80057C6C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_208", func_80057D28);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_208", func_80057D28);
 
 // void func_80057EA4()
 // {
 
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_208", func_80057EA4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_208", func_80057EA4);

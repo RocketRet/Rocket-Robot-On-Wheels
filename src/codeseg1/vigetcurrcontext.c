@@ -29,4 +29,4 @@ extern __OSViContext *__osViCurr;
 //     return __osViCurr;
 // }
 
-INCLUDE_ASM(s32, "codeseg1/vigetcurrcontext", __osViGetCurrentContext);
+INCLUDE_ASM(s32, "lib/codeseg1/vigetcurrcontext", __osViGetCurrentContext);

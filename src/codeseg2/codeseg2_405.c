@@ -3,9 +3,9 @@
 #include <types.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_405", func_80092050);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_80092050);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_405", func_80092094);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_80092094);
 
 struct unkfunc_800922C4 {
     u32 *unk0;
@@ -36,9 +36,9 @@ struct unkfunc_800922C4 {
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_405", func_800922C4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800922C4);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_405", func_800923E8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800923E8);
 
 // wip long function
 // void func_800926B8(s32 arg0, struct unkD_800ADAD0 *arg1, s32 *arg2)
@@ -58,9 +58,9 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_405", func_800923E8);
 //     gSPEndDisplayList(arg1->unk8++);
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_405", func_800926B8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800926B8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_405", func_80093DDC);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_80093DDC);
 
 void func_80093F48(s32 arg0, s32 arg1, s32 *arg2)
 {

@@ -34,4 +34,4 @@ void do_dma_read(u32 romAddr, void *ramAddr, s32 length);
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_224", func_80061740);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_224", func_80061740);

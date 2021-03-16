@@ -22,9 +22,9 @@ void set_vec3f_components(Vec3f vec, f32 x, f32 y, f32 z)
     vec[2] = z;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_438", func_8009A85C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_438", func_8009A85C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_438", func_8009A8C4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_438", func_8009A8C4);
 
 f32 vec3f_magnitude(Vec3f vec)
 {

@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(OSYieldResult, "codeseg1/codeseg1_91", osSpTaskYielded, OSTask *tp);
+INCLUDE_ASM(OSYieldResult, "lib/codeseg1/codeseg1_91", osSpTaskYielded, OSTask *tp);

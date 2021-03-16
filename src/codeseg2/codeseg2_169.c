@@ -8,7 +8,7 @@ extern OSMesgQueue D_800A63A8;
 extern u32 D_800A6378;
 extern u32 D_800A637C;
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E4E0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", func_8004E4E0);
 
 void func_8004E548(u32 arg0)
 {
@@ -123,7 +123,7 @@ extern struct unkD_800A5FC4 D_800A5FC4[MAXCONTROLLERS];
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E6D4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", func_8004E6D4);
 
 void clear_buttons_pressed(struct ControllerData *contData, u32 buttons)
 {
@@ -137,4 +137,4 @@ void func_8004E92C()
     D_800A63C8 = 0;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_169", func_8004E938);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", func_8004E938);

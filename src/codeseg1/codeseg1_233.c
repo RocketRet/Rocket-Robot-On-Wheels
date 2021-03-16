@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(u32, "codeseg1/codeseg1_233", osAiGetLength, void);
+INCLUDE_ASM(u32, "lib/codeseg1/codeseg1_233", osAiGetLength, void);

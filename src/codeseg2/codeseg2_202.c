@@ -41,4 +41,4 @@ extern f32 D_8001BA0C;
 //     out[2][1] -= val;
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_202", func_80056FA0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_202", func_80056FA0);

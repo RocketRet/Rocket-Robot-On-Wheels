@@ -37,4 +37,4 @@ void func_80057778(Mtx3f a, Mtx3f b, Mtx3f out)
     }
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_205", func_800577E8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_205", func_800577E8);

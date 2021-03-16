@@ -2,7 +2,7 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_364", func_80084820);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_364", func_80084820);
 
 void func_80084894(void) {
 
@@ -19,7 +19,7 @@ struct unkfunc_80084998 {
 };
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_364", func_800848A4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_364", func_800848A4);
 
 void func_80084998(struct unkfunc_80084998 *arg0, u32 arg1)
 {

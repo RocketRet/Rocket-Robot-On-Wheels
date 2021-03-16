@@ -42,11 +42,11 @@ extern const f32 D_8001C574;
 //     arg0->unk244 = D_8001C574;
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_237", func_80065194);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_237", func_80065194);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_237", func_800651F8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_237", func_800651F8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_237", func_800652F4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_237", func_800652F4);
 
 struct unkfunc_800654D4 {
     u8 padding[0x10];
@@ -61,6 +61,6 @@ void func_800654D4(struct unkfunc_800654D4 *arg0)
     func_800824A0();
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_237", func_800654F8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_237", func_800654F8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_237", func_80065544);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_237", func_80065544);

@@ -3,7 +3,7 @@
 
 extern s32 D_800A5990;
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_123", func_800429C0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_123", func_800429C0);
 
 void func_80042A28(s32 arg0)
 {

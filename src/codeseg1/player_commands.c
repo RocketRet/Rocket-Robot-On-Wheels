@@ -57,9 +57,9 @@ static unsigned char *Fportoff(channel_t *cp, unsigned char *ptr)
   return (ptr);
 }
 
-INCLUDE_ASM(s32, "codeseg1/player_commands", Fdefa);
+INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Fdefa);
 
-INCLUDE_ASM(s32, "codeseg1/player_commands", Ftempo);
+INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Ftempo);
 
 /* Ftempo - set endit value
  * Format: <cmd> <endit>
@@ -247,9 +247,9 @@ static unsigned char *Ftron(channel_t *cp, unsigned char *ptr)
   return (ptr);
 }
 
-INCLUDE_ASM(s32, "codeseg1/player_commands", Ffor);
+INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Ffor);
 
-INCLUDE_ASM(s32, "codeseg1/player_commands", Fnext);
+INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Fnext);
 
 /* Fwobble - define wobble settings
  * Format: <cmd> <amount> <on speed> <off speed>
@@ -443,7 +443,7 @@ static unsigned char *Fvolume(channel_t *cp, unsigned char *ptr)
   return (ptr);
 }
 
-INCLUDE_ASM(s32, "codeseg1/player_commands", Fstartfx);
+INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Fstartfx);
 
 extern f64 D_80000548; // (1.0/64.0)
 
@@ -529,4 +529,4 @@ void func_8000516C(s32 arg0, unsigned char arg1)
     D_800BD2D0[arg0] = arg1;
 }
 
-INCLUDE_ASM(s32, "codeseg1/player_commands", func_80005180);
+INCLUDE_ASM(s32, "lib/codeseg1/player_commands", func_80005180);

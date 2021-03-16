@@ -13,9 +13,9 @@ void func_80046D20()
     D_800A5DA8 = D_800A5DBC->ctx;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_150", func_80046D58);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_150", func_80046D58);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_150", func_80046FBC);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_150", func_80046FBC);
 
 // TODO regalloc
 // void func_8004721C()
@@ -37,4 +37,4 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_150", func_80046FBC);
 //     gDPPipelineMode(D_800A5DA8.dlHead++, G_PM_1PRIMITIVE);
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_150", func_8004721C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_150", func_8004721C);

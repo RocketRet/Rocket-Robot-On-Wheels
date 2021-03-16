@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(void, "codeseg1/codeseg1_86", osViSetMode, OSViMode *);
+INCLUDE_ASM(void, "lib/codeseg1/codeseg1_86", osViSetMode, OSViMode *);

@@ -2,24 +2,24 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_8005FC10);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_8005FC10);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_8005FC44);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_8005FC44);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_800601A4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_800601A4);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_800605A4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_800605A4);
 
 void func_80060794(s32 arg0)
 {
     func_8004C44C(arg0 + 0x3A4);
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_800607B4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_800607B4);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_8006096C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_8006096C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_80060DE4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_80060DE4);
 
 void func_80060E5C(void) {
 
@@ -50,9 +50,9 @@ void func_80060E64(struct unkfunc_80060E64 *arg0)
     arg0->unk0->unk2C(arg0, 0);
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_80060EA8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_80060EA8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_80061038);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_80061038);
 
 s32 func_800611A4(s32 arg0, s32 *arg1)
 {
@@ -66,4 +66,4 @@ s32 func_800611A4(s32 arg0, s32 *arg1)
     }    
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_221", func_800611D4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_800611D4);

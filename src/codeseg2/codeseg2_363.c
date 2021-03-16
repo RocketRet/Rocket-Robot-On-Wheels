@@ -2,15 +2,15 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_363", func_80084470);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_363", func_80084470);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_363", func_800844DC);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_363", func_800844DC);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_363", func_8008455C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_363", func_8008455C);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_363", func_800845D8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_363", func_800845D8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_363", func_80084658);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_363", func_80084658);
 
 // s32 func_800846D8(s32 *arg0, s32 arg1)
 // {
@@ -30,8 +30,8 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_363", func_80084658);
 //     return arg1;
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_363", func_800846D8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_363", func_800846D8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_363", func_80084704);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_363", func_80084704);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_363", func_80084794);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_363", func_80084794);

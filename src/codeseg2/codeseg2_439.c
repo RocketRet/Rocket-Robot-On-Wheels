@@ -29,9 +29,9 @@ void vec3f_scale(f32, Vec3f, Vec3f);
 //     return mag;
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", vec3f_safe_normalize);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_439", vec3f_safe_normalize);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AA68);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_439", func_8009AA68);
 
 f32 vec3f_dist(Vec3f a, Vec3f b)
 {
@@ -90,7 +90,7 @@ void vec3f_cross_product(Vec3f a, Vec3f b, Vec3f out)
     out[2] = a[0] * b[1] - a[1] * b[0];
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_439", func_8009AC68);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_439", func_8009AC68);
 
 void vec3f_scale_add(f32 aScale, Vec3f a, f32 bScale, Vec3f b, Vec3f out)
 {

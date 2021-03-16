@@ -9,7 +9,7 @@ struct unkfunc_8002C154 {
 
 extern f32 D_8009FE14;
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_49", func_8002C120);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_49", func_8002C120);
 
 // TODO reorder
 // void func_8002C154(struct unkfunc_8002C154 *arg0, s32 arg1)
@@ -21,8 +21,8 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_49", func_8002C120);
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_49", func_8002C154);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_49", func_8002C154);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_49", func_8002C174);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_49", func_8002C174);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_49", func_8002C25C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_49", func_8002C25C);

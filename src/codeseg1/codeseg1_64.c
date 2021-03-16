@@ -2,6 +2,6 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_64", osEepromRead);
+INCLUDE_ASM(s32, "lib/codeseg1/codeseg1_64", osEepromRead);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_64", __osPackEepReadData);
+INCLUDE_ASM(s32, "lib/codeseg1/codeseg1_64", __osPackEepReadData);

@@ -29,4 +29,4 @@ void func_8008ABE4(u8 *arg0, u8 arg1, u8 arg2, u8 arg3, u8 arg4)
     arg0[0x1B] = arg4;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_379", func_8008ABFC);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_379", func_8008ABFC);

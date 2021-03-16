@@ -2,11 +2,11 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/lib_memory", __MusIntMemInit);
+INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemInit);
 
-INCLUDE_ASM(s32, "codeseg1/lib_memory", __MusIntMemMalloc);
+INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemMalloc);
 
-INCLUDE_ASM(s32, "codeseg1/lib_memory", __MusIntMemRemaining);
+INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemRemaining);
 
 s32 D_800BEB20;
 
@@ -25,6 +25,6 @@ s32 *__MusIntMemGetHeapAddr()
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg1/lib_memory", __MusIntMemSet);
+INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemSet);
 
-INCLUDE_ASM(s32, "codeseg1/lib_memory", __MusIntMemMove);
+INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemMove);

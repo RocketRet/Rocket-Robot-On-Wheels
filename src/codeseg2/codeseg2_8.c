@@ -33,7 +33,7 @@ void func_8001FAB0(struct unkfunc_8001FAF4 *arg0, s32 *arg1)
 //     arg0->unk0->unk5C(arg0, auStack48 + 3); // changing this to be 4 messes everything up, but should be correct
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_8", func_8001FAF4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_8", func_8001FAF4);
 
 struct unkfunc_8001FB44 {
     u8 padding[0x78];

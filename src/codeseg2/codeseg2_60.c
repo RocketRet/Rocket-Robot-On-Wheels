@@ -2,7 +2,7 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_60", func_8002E480);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_60", func_8002E480);
 
 extern f32 D_8009FE14;
 
@@ -22,6 +22,6 @@ struct unkfunc_8002E4E4 {
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_60", func_8002E4E4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_60", func_8002E4E4);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_60", func_8002E504);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_60", func_8002E504);

@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_80", func_80035680);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_80", func_80035680);

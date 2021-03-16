@@ -39,6 +39,6 @@ extern s8 D_800E499F;
 //     D_800E4DA0 = (s32)&D_800E499F & ~0xF;
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_222", func_80061300);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_222", func_80061300);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_222", func_800613F8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_222", func_800613F8);

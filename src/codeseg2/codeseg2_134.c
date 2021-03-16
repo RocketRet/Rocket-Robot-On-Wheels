@@ -19,4 +19,4 @@ struct unkfunc_800451D0 {
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_134", func_800451D0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_134", func_800451D0);

@@ -1,4 +1,4 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_169", osEPiRawWriteIo);
+INCLUDE_ASM(s32, "lib/codeseg1/codeseg1_169", osEPiRawWriteIo);

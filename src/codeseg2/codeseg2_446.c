@@ -3,7 +3,7 @@
 #include <types.h>
 
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_446", func_8009C0E0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_446", func_8009C0E0);
 
 void func_8009C28C(struct unkfunc_8009C28C *arg0, s32 arg1)
 {

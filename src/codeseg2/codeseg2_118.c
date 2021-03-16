@@ -29,4 +29,4 @@ void func_80041A54()
     D_800A63C4 = 0;
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_118", func_80041A88);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_118", func_80041A88);

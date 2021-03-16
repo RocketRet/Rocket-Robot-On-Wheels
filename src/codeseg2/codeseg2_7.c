@@ -28,4 +28,4 @@ void mtx3f_concat(Mtx3f, Mtx3f, Mtx3f);
 //     arg0->unk0->unk5C(arg0, b);
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_7", func_8001FA50);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_7", func_8001FA50);

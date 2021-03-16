@@ -25,7 +25,7 @@ extern struct unkD_800A5C3C D_800A5C3C;
 extern struct unkD_800C0440 D_800C0440;
 extern f32 D_8001B420;
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_144", func_80046200);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_144", func_80046200);
 
 // TODO float load
 // {
@@ -44,7 +44,7 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_144", func_80046200);
 //     D_800C0440.unkC = 1;
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_144", func_80046268);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_144", func_80046268);
 
 void func_800462E4(s32 *arg0)
 {

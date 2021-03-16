@@ -8,4 +8,4 @@ s32 func_800911B0(s32 arg0)
     return D_800AF404[arg0];
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_400", func_800911CC);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_400", func_800911CC);

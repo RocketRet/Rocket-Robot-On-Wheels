@@ -106,8 +106,8 @@ void func_80098820(s32 *, s32, s32 *, s32, void*);
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_3", func_8001E044);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E044);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_3", func_8001E198);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E198);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_3", func_8001E248);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E248);

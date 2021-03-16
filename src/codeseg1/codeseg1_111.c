@@ -3,7 +3,7 @@
 #include <PR/n_libaudio.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_111", CustomSynNew);
+INCLUDE_ASM(s32, "lib/codeseg1/codeseg1_111", CustomSynNew);
 #define AL_MAX_AUX_BUS_SOURCES       8
 #define AL_MAX_AUX_BUS_FX	     1
 
@@ -198,4 +198,4 @@ void CustomFxNew();
 //     return(n_syn->auxBus->fx_array[bus]);
 // }
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_111", CustomAllocFX);
+INCLUDE_ASM(s32, "lib/codeseg1/codeseg1_111", CustomAllocFX);

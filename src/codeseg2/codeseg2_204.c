@@ -15,9 +15,9 @@ void func_80098990(f32, f32);
 //     func_80098990((sum - D_8001BA20) * D_8001BA28, D_8001BA30);
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_204", func_80057280);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_204", func_80057280);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_204", func_800572D8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_204", func_800572D8);
 
 void vec3f_scale(f32, Vec3f, Vec3f);
 

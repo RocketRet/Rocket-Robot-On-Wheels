@@ -7,7 +7,7 @@ struct unkfunc_800841C4 {
     s32 unk22C;
 };
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_358", func_80084140);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_358", func_80084140);
 
 void func_800841C4(struct unkfunc_800841C4 *arg0)
 {
@@ -23,7 +23,7 @@ void func_800841D8(s32 arg0, f32 arg1)
     func_80084208(arg0, vec);
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_358", func_80084208);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_358", func_80084208);
 
 void func_8008428C(s32 arg0, f32 arg1)
 {
@@ -34,4 +34,4 @@ void func_8008428C(s32 arg0, f32 arg1)
     func_800842BC(arg0, vec);
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_358", func_800842BC);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_358", func_800842BC);

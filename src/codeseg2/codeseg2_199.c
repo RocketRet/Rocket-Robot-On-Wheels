@@ -2,7 +2,7 @@
 #include <ultra64.h>
 #include <types.h>
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_199", func_80056C10);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_199", func_80056C10);
 
 void mtx3f_concat(Mtx3f a, Mtx3f b, Mtx3f out)
 {

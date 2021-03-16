@@ -47,7 +47,7 @@ extern musHandle __MusIntStartSong(void *addr);
 extern void __MusIntProcessContinuousVolume(channel_t *cp);
 extern void __MusIntProcessContinuousPitchBend(channel_t *cp);
 
-INCLUDE_ASM(int, "codeseg1/player_api", MusInitialize, musConfig*);
+INCLUDE_ASM(int, "lib/codeseg1/player_api", MusInitialize, musConfig*);
 
 /*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
   [API FUNCTION]
@@ -212,7 +212,7 @@ musHandle MusStartSong(void *addr)
 // 	MusHandleUnPause(handle);
 // 	return (handle);
 // }
-INCLUDE_ASM(musHandle, "codeseg1/player_api", MusStartSongFromMarker, void *addr, int marker);
+INCLUDE_ASM(musHandle, "lib/codeseg1/player_api", MusStartSongFromMarker, void *addr, int marker);
 
 /*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
   [API FUNCTION]

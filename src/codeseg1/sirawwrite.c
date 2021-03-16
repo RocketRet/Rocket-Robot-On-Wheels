@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/sirawwrite", __osSiRawWriteIo);
+INCLUDE_ASM(s32, "lib/codeseg1/sirawwrite", __osSiRawWriteIo);

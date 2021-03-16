@@ -2,4 +2,4 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(int, "codeseg1/codeseg1_76", guRandom, void);
+INCLUDE_ASM(int, "lib/codeseg1/codeseg1_76", guRandom, void);

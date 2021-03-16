@@ -2,6 +2,6 @@
 #include <ultra64.h>
 
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_173", n_alInit);
+INCLUDE_ASM(s32, "lib/codeseg1/codeseg1_173", n_alInit);
 
-INCLUDE_ASM(s32, "codeseg1/codeseg1_173", n_alClose);
+INCLUDE_ASM(s32, "lib/codeseg1/codeseg1_173", n_alClose);

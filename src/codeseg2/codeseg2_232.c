@@ -32,7 +32,7 @@ void func_80078244(s32, s32, f32);
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_232", func_80063840);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_232", func_80063840);
 
 void func_800638CC()
 {
@@ -57,11 +57,11 @@ void func_800638EC()
     func_80078244(2, -1, 1.0f);
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_232", func_80063934);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_232", func_80063934);
 
 void func_80063A88(s32 arg0)
 {
     func_8002A86C(arg0, 0xC);
 }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_232", func_80063AA8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_232", func_80063AA8);

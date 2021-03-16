@@ -33,7 +33,7 @@ extern struct GfxContext D_800A5DA8;
 //     gSPMatrix(D_800A5DA8.dlHead++, m2, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_PUSH);
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_152", load_translation_mtx);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_152", load_translation_mtx);
 
 void pop_matrix()
 {
@@ -70,9 +70,9 @@ struct unkfunc_800477D8 {
 //     arg0->unkC = arg2;
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_152", func_800477D8);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_152", func_800477D8);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_152", func_80047844);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_152", func_80047844);
 
 // TODO regalloc
 // void func_80047908(struct unkfunc_800477D8 *arg0, Vec3f arg1, struct unkfunc_800477D8_inner arg2, s32 arg3, s32 arg4)
@@ -89,6 +89,6 @@ INCLUDE_ASM(s32, "codeseg2/codeseg2_152", func_80047844);
 //     arg0->unkA = arg4;
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_152", func_80047908);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_152", func_80047908);
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_152", func_8004797C);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_152", func_8004797C);

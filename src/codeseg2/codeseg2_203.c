@@ -27,7 +27,7 @@ void func_80056FA0(f32, f32*, f32*);
 //     }
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_203", func_800570D0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_203", func_800570D0);
 
 extern f32 D_8001BA1C;
 
@@ -53,7 +53,7 @@ extern f32 D_8001BA1C;
 //     out[3][3] = 1.0f;
 // }
 
-INCLUDE_ASM(s32, "codeseg2/codeseg2_203", func_80057174);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_203", func_80057174);
 
 void mtx4f_decompose(Mtx4f in, Vec3f translation, Mtx3f rotation)
 {
