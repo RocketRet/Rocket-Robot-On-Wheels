@@ -17,6 +17,7 @@ ASM_DIRS := $(filter-out $(wildcard $(ASM_DIR)/*.*), $(wildcard asm/*))
 SRC_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(SRC_DIRS))
 ASM_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(ASM_DIRS))
 BIN_BUILD_DIR := $(BUILD_DIR)/$(BIN_DIR)
+KMCGCCDIR := tools/kmc/gcc
 
 # Files
 C_SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
@@ -37,6 +38,13 @@ CC := tools/sn/gcc-2.8.0-rocket/cc1
 AS := mips-linux-gnu-as
 OBJCOPY := mips-linux-gnu-objcopy
 LD := mips-linux-gnu-ld
+WINE := wine
+EXEW32 := exew32.exe
+KMCGCCBINDIR := $(KMCGCCDIR)/mipse/bin
+KMC_CC := $(WINE) $(EXEW32) gcc
+
+export gccdir = $(KMCGCCDIR)
+export WINEPATH := $(KMCGCCBINDIR)
 
 # Flags
 CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64

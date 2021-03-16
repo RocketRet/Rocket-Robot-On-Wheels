@@ -67,8 +67,7 @@ SECTIONS
         BUILD_DIR/src/codeseg1/codeseg1_55.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_56.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_57.o(.text);
-        BUILD_DIR/src/codeseg1/codeseg1_58.o(.text);
-        BUILD_DIR/src/codeseg1/codeseg1_59.o(.text);
+        BUILD_DIR/src/codeseg1/perspective.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_60.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_61.o(.text);
         BUILD_DIR/src/codeseg1/codeseg1_62.o(.text);
