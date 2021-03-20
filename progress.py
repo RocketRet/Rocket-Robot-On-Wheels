@@ -29,7 +29,7 @@ def get_matching_stats():
     total_unmatched = 0
 
     for line in nm_lines:
-        if "g     F .code" in line:
+        if "g     F .code" in line or "g     F *ABS*	" in line:
             components = line.split()
             size = int(components[4], 16)
             name = components[5]

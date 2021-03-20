@@ -4,3 +4,6 @@
 [submodule "f3dex2"]
 	path = f3dex2
 	url = https://github.com/Mr-Wiseguy/f3dex2.git
+[submodule "ultra"]
+	path = ultra
+	url = https://github.com/RocketRet/libreultra.git

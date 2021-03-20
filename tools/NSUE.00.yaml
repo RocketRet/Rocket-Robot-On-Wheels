@@ -13,6 +13,7 @@ options:
     #include <ultra64.h>
   symbol_addrs_path: tools/symbol_addrs.txt
   undefined_syms_auto_path: tools/undefined_syms_auto.txt
+  undefined_funcs_auto_path: tools/undefined_funcs_auto.txt
 segments:
   - name: header
     type: header
