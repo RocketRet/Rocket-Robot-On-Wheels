@@ -6,12 +6,12 @@ extern f64 D_8001DB80;
 extern f32 D_8001DB88;
 extern f64 D_8001DB90;
 
-extern f32 __sinf(f32);
+extern f32 sinf(f32);
 
 // TODO almost
 // void func_800991C0(f32 arg0, f32 *arg1, f32 *arg2, f32 *arg3)
 // {
-//     f32 sinVal = __sinf(arg0); // f0
+//     f32 sinVal = sinf(arg0); // f0
 //     f32 fvar2;
 //     f64 fvar4;
 //     fvar4 = D_8001DB80 - sinVal * sinVal;
@@ -38,7 +38,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", func_80099408);
 
 f32 func_800995D8(f32 x)
 {
-    return -__sinf(x);
+    return -sinf(x);
 }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", func_800995F8);

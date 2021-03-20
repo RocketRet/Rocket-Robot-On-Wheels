@@ -44,20 +44,27 @@ typedef struct N_ALVoice_s {
     s16                 unityPitch;
 } N_ALVoice;
 
+// Is this a real struct? The normal ALPlayer struct has an s32 for samplesLeft, which
+// causes n_audio not to match, but changing that to s64 makes regular libultra audio not match.
+typedef struct N_ALPlayer_s {
+    struct N_ALPlayer_s   *next;
+    void                *clientData;    /* storage for client callback  */
+    ALVoiceHandler      handler;        /* voice handler for player     */
+    ALMicroTime         callTime;       /* usec requested callback      */
+    s64                 samplesLeft;    /* usec remaining to callback   */
+} N_ALPlayer;
+
 typedef struct {
-    ALPlayer    *head;          /* client list head                     */
-    ALPlayer    *n_seqp1;	/* for fade in / fade out */
-    ALPlayer    *n_seqp2;
-    ALPlayer    *n_sndp;
+    N_ALPlayer    *head;          /* client list head                     */
 
     ALLink      pFreeList;      /* list of free physical voices         */
     ALLink      pAllocList;     /* list of allocated physical voices    */
     ALLink      pLameList;      /* list of voices ready to be freed     */
-    s32         paramSamples;
-    s32         curSamples;     /* samples from start of game           */
+    s64         paramSamples;
+    s64         curSamples;     /* samples from start of game           */
     ALDMANew    dma;
     ALHeap      *heap;
-    struct ALParam_s    *paramList;
+    struct N_ALParam_s    *paramList;
     struct N_ALMainBus_s  *mainBus;
     struct N_ALAuxBus_s   *auxBus; 
     s32                 numPVoices;
@@ -69,7 +76,7 @@ typedef struct {
 } N_ALSynth;
 
 
-void    n_alSynAddPlayer(ALPlayer *client);
+void    n_alSynAddPlayer(N_ALPlayer *client);
 void    n_alSynAddSndPlayer(ALPlayer *client);
 void    n_alSynAddSeqPlayer(ALPlayer *client);
 

@@ -15,10 +15,11 @@ BUILD_DIR := $(BUILD_ROOT)/$(VERSION)
 SRC_DIR := src
 ASM_DIR := asm
 BIN_DIR := bin
-SRC_DIRS := $(shell find $(SRC_DIR)/ -type d)
+LIBULTRA_DIRS := audio gu io n_audio os sched
+SRC_DIRS := $(shell find $(SRC_DIR)/ -type d) $(addprefix ultra/src/,$(LIBULTRA_DIRS))
 ASM_DIRS := $(call RFILTER_OUT,nonmatching,$(shell find $(ASM_DIR)/ -type d))
-SRC_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(SRC_DIRS))
-ASM_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(ASM_DIRS))
+SRC_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(SRC_DIRS)) # Don't search libultra dirs, but generate them for manual specifying of libultra asm files
+ASM_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(ASM_DIRS) $(LIBULTRA_DIRS))
 BIN_BUILD_DIR := $(BUILD_DIR)/$(BIN_DIR)
 KMCGCCDIR := tools/kmc/gcc
 
@@ -26,7 +27,8 @@ KMCGCCDIR := tools/kmc/gcc
 C_SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
 C_ASMS := $(addprefix $(BUILD_DIR)/, $(C_SRCS:.c=.s))
 C_OBJS := $(C_ASMS:.s=.o)
-AS_SRCS := $(wildcard $(ASM_DIR)/*.s) $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
+LIBULTRA_ASMS := gu/libm_vals.s
+AS_SRCS := $(wildcard $(ASM_DIR)/*.s) $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s)) $(addprefix ultra/src/,$(LIBULTRA_ASMS))
 AS_OBJS := $(addprefix $(BUILD_DIR)/, $(AS_SRCS:.s=.o))
 BINS := $(wildcard $(BIN_DIR)/*.bin)
 BIN_OBJS := $(addprefix $(BUILD_DIR)/, $(BINS:.bin=.o))
@@ -40,7 +42,7 @@ CPP := mips-linux-gnu-cpp
 CC := tools/sn/gcc-2.8.0-rocket/cc1
 AS := mips-linux-gnu-as
 OBJCOPY := mips-linux-gnu-objcopy
-LD := mips-linux-gnu-ld
+LD := mips-n64-ld
 WINE := wine
 EXEW32 := exew32.exe
 KMCGCCBINDIR := $(KMCGCCDIR)/mipse/bin
@@ -50,8 +52,9 @@ export gccdir = $(KMCGCCDIR)
 export WINEPATH := $(KMCGCCBINDIR)
 
 # Flags
-CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64
+CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -Iultra/src/audio -Iultra/src/n_audio -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64 -DSUPPORT_NAUDIO -DN_MICRO
 CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32 -msplit-addresses -mgas -mrnames
+KMC_CFLAGS := -c -G0 -mgp32 -mfp32 -mips3
 WARNFLAGS := -Wuninitialized -Wshadow -Wall
 OPTFLAGS := -O2
 ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I. -Iinclude -O1
@@ -75,16 +78,28 @@ $(BUILD_DIR) : | $(BUILD_ROOT)
 $(BUILD_ROOT) $(BUILD_DIR) $(SRC_DIR) $(SRC_BUILD_DIRS) $(ASM_BUILD_DIRS) $(BIN_BUILD_DIR) :
 	$(MKDIR) $@
 
-$(BUILD_DIR)/%.i : %.c | $(SRC_BUILD_DIRS)
+$(BUILD_DIR)/ultra/%.i : ultra/%.c | $(SRC_BUILD_DIRS)
 	$(CPP) $(CPPFLAGS) $< -o $@
 
-$(BUILD_DIR)/%.s : $(BUILD_DIR)/%.i %.c
+$(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS)
+	$(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
+
+$(BUILD_DIR)/$(SRC_DIR)/rocket/%.i : $(SRC_DIR)/rocket/%.c | $(SRC_BUILD_DIRS)
+	$(CPP) $(CPPFLAGS) $< -o $@
+
+$(BUILD_DIR)/$(SRC_DIR)/rocket/%.s : $(BUILD_DIR)/$(SRC_DIR)/rocket/%.i $(SRC_DIR)/rocket/%.c
+	$(CC) $(CFLAGS) $(WARNFLAGS) $(OPTFLAGS) $< -o $@ || rm -f $@
+
+$(BUILD_DIR)/$(SRC_DIR)/lib/codeseg1/%.i : $(SRC_DIR)/lib/codeseg1/%.c | $(SRC_BUILD_DIRS)
+	$(CPP) $(CPPFLAGS) $< -o $@
+	
+$(BUILD_DIR)/$(SRC_DIR)/lib/codeseg1/%.s : $(BUILD_DIR)/$(SRC_DIR)/lib/codeseg1/%.i $(SRC_DIR)/lib/codeseg1/%.c
 	$(CC) $(CFLAGS) $(WARNFLAGS) $(OPTFLAGS) $< -o $@ || rm -f $@
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
 	
-$(BUILD_DIR)/%.o : %.s | $(ASM_BUILD_DIRS)
+$(BUILD_DIR)/%.o : %.s | $(ASM_BUILD_DIRS) $(SRC_BUILD_DIRS)
 	$(AS) $(ASFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o : %.bin | $(BIN_BUILD_DIR)
@@ -98,10 +113,13 @@ $(ELF) : $(OBJS) $(BUILD_DIR)/$(LD_SCRIPT)
 
 $(Z64) : $(ELF)
 	$(OBJCOPY) $(Z64OFLAGS) $< $@
+	
+$(BUILD_DIR)/ultra/%.o: OPTFLAGS := -O3
 
 # $(BUILD_DIR)/src/lib/codeseg1/codeseg1_35.s: OPTFLAGS := -O0
 # $(BUILD_DIR)/src/lib/codeseg1/codeseg1_35.s: WARNFLAGS := 
 $(BUILD_DIR)/src/lib/codeseg1/codeseg1_97.s: CC := tools/sn/gcc-2.8.0/cc1
+# $(BUILD_DIR)/$(SRC_DIR)/ultra/src/io/devmgr.o: OPTFLAGS := -O1
 # $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.s: CC := tools/sn/gnun64280/cc1n64.exe
 # $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.s: CC := /mnt/c/n64/n64sdk/ultra/GCC/MIPSE/BIN/CC1.EXE
 # $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.o: AS := ../papermario/tools/linux/mips-nintendo-nu64-as
@@ -138,7 +156,7 @@ check: $(Z64)
 	@$(DIFF) $(BASEROM) $(Z64) && printf "OK\n"
 
 setup:
-	tools/splat/split.py baserom.$(VERSION).z64 tools/NSUE.00.yaml .
+	tools/splat/split.py --rom baserom.$(VERSION).z64 tools/NSUE.00.yaml --outdir .
 
 # tools/splat/split.py baserom.us.z64 tools/NSUE.00.yaml .
 

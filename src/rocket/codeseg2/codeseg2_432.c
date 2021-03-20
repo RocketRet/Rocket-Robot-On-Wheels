@@ -16,10 +16,10 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_432", func_80098F94);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_432", func_8009904C);
 
-f32 __sinf(f32);
+f32 sinf(f32);
 
 f32 func_8009911C(f32 arg0) {
-    return __sinf(arg0);
+    return sinf(arg0);
 }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_432", func_8009913C);
