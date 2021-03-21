@@ -116,18 +116,6 @@ $(Z64) : $(ELF)
 	
 $(BUILD_DIR)/ultra/%.o: OPTFLAGS := -O3
 
-# $(BUILD_DIR)/src/lib/codeseg1/codeseg1_35.s: OPTFLAGS := -O0
-# $(BUILD_DIR)/src/lib/codeseg1/codeseg1_35.s: WARNFLAGS := 
-$(BUILD_DIR)/src/lib/codeseg1/codeseg1_97.s: CC := tools/sn/gcc-2.8.0/cc1
-# $(BUILD_DIR)/$(SRC_DIR)/ultra/src/io/devmgr.o: OPTFLAGS := -O1
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.s: CC := tools/sn/gnun64280/cc1n64.exe
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.s: CC := /mnt/c/n64/n64sdk/ultra/GCC/MIPSE/BIN/CC1.EXE
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.o: AS := ../papermario/tools/linux/mips-nintendo-nu64-as
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.o: ASFLAGS := -G0 -EB -I. -Iinclude -O0 -mcpu=vr4300 -g
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.o: AS := /mnt/c/sn_n64/bin/asn64.exe
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.o: ASFLAGS := /l
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0.s: OPTFLAGS := -O0
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0.s: CC := ../papermario/tools/linux/cc1
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_144.s: CC := tools/gcc/mips-cc1
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_148.s: CC := tools/gcc/mips-cc1 -fkeep-static-consts -msplit-addresses
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_221.s: CC := tools/gcc/mips-cc1
@@ -144,7 +132,6 @@ $(BUILD_DIR)/src/lib/codeseg1/codeseg1_97.s: CC := tools/sn/gcc-2.8.0/cc1
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_434.s: ASFLAGS := -G0 -EB -mabi=32 -I. -Iinclude -O1
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_235.s: CC := tools/sn/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_378.s: OPTFLAGS := -O2 -g
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0.s: CC := tools/sn/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_3.s: CC := tools/sn/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_378.s: CC := tools/sn/gcc-2.7.2/cc1
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_225.s: OPTFLAGS := -O3 -g0

@@ -3,41 +3,29 @@
 #include <mus/player.h>
 #include <mus/player_fifo.h>
 
-#define mus_last_fxtype D_800BD300
-extern int D_800BD300;
+extern int mus_last_fxtype;
 
-#define mus_songfxchange_flag D_800BD2FC
-extern musBool D_800BD2FC;
+extern musBool mus_songfxchange_flag;
 
-#define mus_default_bank D_800BD2F8
-extern ptr_bank_t *D_800BD2F8;
+extern ptr_bank_t *mus_default_bank;
 
-#define libmus_fxheader_current D_800BD304
-extern fx_header_t *D_800BD304;
+extern fx_header_t *libmus_fxheader_current;
 
-#define libmus_fxheader_single D_800BD308
-extern fx_header_t *D_800BD308;
+extern fx_header_t *libmus_fxheader_single;
 
-#define mus_channels D_800BD2D8
-extern channel_t *D_800BD2D8;
+extern channel_t *mus_channels;
 
-#define max_channels D_800BD2C8
-extern int D_800BD2C8;
+extern int max_channels;
 
-#define mus_init_bank D_800BD2F4
-extern ptr_bank_t *D_800BD2F4;
+extern ptr_bank_t *mus_init_bank;
 
-#define mus_channels2 D_800BD2DC
-extern channel_t *D_800BD2DC;
+extern channel_t *mus_channels2;
 
-#define jumptable D_800187D0
-extern command_func_t D_800187D0[];
+extern command_func_t jumptable[];
 
-#define mus_master_volume_effects D_800BD2E8
-extern unsigned short D_800BD2E8;
+extern unsigned short mus_master_volume_effects;
 
-#define mus_master_volume_songs D_800BD2EA
-extern unsigned short D_800BD2EA;
+extern unsigned short mus_master_volume_songs;
 
 extern int __MusIntFifoAddCommand(fifo_t *command);
 extern unsigned long __MusIntFindChannelAndStart(fx_header_t *header, int number, int volume, int pan, int priority);
@@ -1006,8 +994,6 @@ int MusFxBankNumberOfEffects(void *ifxbank)
    return (((fx_header_t *)ifxbank)->number_of_effects);
 }
 
-#define libmus_fxheader_current D_800BD304
-
 /*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
   [API FUNCTION]
   MusFxBankSetCurrent(ifxbank)
@@ -1200,8 +1186,7 @@ unsigned short *MusHandleWaveAddress(musHandle handle)
    return (NULL);
 }
 
-#define marker_callback D_800BD30C
-extern LIBMUScb_marker D_800BD30C;
+extern LIBMUScb_marker marker_callback;
 
 /*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
   [API FUNCTION]

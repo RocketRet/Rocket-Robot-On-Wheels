@@ -5,8 +5,7 @@
 #include <mus/libmus.h>
 #include <mus/player.h>
 
-#define mus_voices D_800BD2CC
-extern ALVoice *D_800BD2CC;
+extern ALVoice *mus_voices;
 
 INCLUDE_ASM(s32, "lib/codeseg1/player", __MusIntMain);
 

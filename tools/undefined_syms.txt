@@ -8,7 +8,6 @@ gScheduler = 0x80017E18;
 _bssStart = 0x800AF860;
 _bssEnd = 0x800C00A0;
 _dataEndRom = 0xB00B0460;
-gThread1 = 0x800AF860;
 gDisplayListStart = 0x800A5DAC;
 gDisplayListHead = 0x800A5DB0;
 D_800A5DA8 = 0x800A5DA8;

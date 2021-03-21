@@ -14,6 +14,7 @@ options:
   symbol_addrs_path: tools/symbol_addrs.txt
   undefined_syms_auto_path: tools/undefined_syms_auto.txt
   undefined_funcs_auto_path: tools/undefined_funcs_auto.txt
+  hi_lo_max_distance: 20
 segments:
   - name: header
     type: header
@@ -171,7 +172,7 @@ segments:
     - [0x00F130, c, ../ultra/src/io/pigetcmdq]
     - [0x00F150, c, ../ultra/src/os/jammesg]
     - [0x00F290, c, lib/codeseg1/udivmoddi4]
-    - [0x00F8D0, c, lib/codeseg1/pfsisplug] # regalloc
+    - [0x00F8D0, c, lib/codeseg1/pfsisplug] # ../ultra/src/io/pfsisplug] # regalloc
     - [0x00FBB0, c, ../ultra/src/io/crc]
     - [0x00FC60, c, ../ultra/src/io/contramwrite]
     - [0x010020, c, ../ultra/src/io/contramread]
@@ -233,10 +234,12 @@ segments:
     - [0x018880, c, ../ultra/src/audio/synallocfx]
     - [0x018920, c, ../ultra/src/audio/copy]
     - [0x018960, c, ../ultra/src/n_audio/n_mainbus]
-    - [0x0189E0, bin, empty]
+    - [0x0189E0, .data, rocket/codeseg0/codeseg0]
     - [0x018CC0, bin, n_aspMain_data]
     - [0x018F70, bin, f3dex2_data]
-    - [0x019390, bin] # data
+    - [0x019390, bin] # data (not referenced by anything?)
+    - [0x0193A0, .data, ../ultra/src/io/pimgr]
+    - [0x0193D0, .data, lib/codeseg1/player_commands]
     - [0x019490, .data, ../ultra/src/os/initialize]
     - [0x0194B0, .data, ../ultra/src/io/controller]
     - [0x0194C0, .data, ../ultra/src/gu/random]
@@ -726,4 +729,12 @@ segments:
     - [0x09FC70, bin]
     - [0x0B0460, bin, content]
   - [0xBCC610, bin]
+  - name: bss
+    type: code
+    start: 0xC00000
+    vram: 0x800AF860
+    subsections:
+    - [0xC00000, .bss, rocket/codeseg0/codeseg0, 0xC880] # 0x800AF860
+    - [0xC00000, .bss, ../ultra/src/io/pimgr, 0x11D0]    # 0x800BC0E0
+    - [0xC00000, .bss, lib/codeseg1/player_api, 0x11D0]  # 0x800BD2B0
   - [0xC00000]

@@ -439,14 +439,18 @@ SECTIONS
         BUILD_DIR/src/../ultra/src/audio/copy.o(.text);
         ___ultra_src_n_audio_n_mainbus_c = .;
         BUILD_DIR/src/../ultra/src/n_audio/n_mainbus.o(.text);
-        empty_bin = .;
-        BUILD_DIR/bin/empty.o(.data);
+        rocket_codeseg0_codeseg0_c = .;
+        BUILD_DIR/src/rocket/codeseg0/codeseg0.o(.data);
         n_aspMain_data_bin = .;
         BUILD_DIR/bin/n_aspMain_data.o(.data);
         f3dex2_data_bin = .;
         BUILD_DIR/bin/f3dex2_data.o(.data);
         codesegs0_1_19390_bin = .;
         BUILD_DIR/bin/codesegs0_1_19390.o(.data);
+        ___ultra_src_io_pimgr_c = .;
+        BUILD_DIR/src/../ultra/src/io/pimgr.o(.data);
+        lib_codeseg1_player_commands_c = .;
+        BUILD_DIR/src/lib/codeseg1/player_commands.o(.data);
         ___ultra_src_os_initialize_c = .;
         BUILD_DIR/src/../ultra/src/os/initialize.o(.data);
         ___ultra_src_io_controller_c = .;
@@ -1422,6 +1426,15 @@ SECTIONS
         bin_BCC610_bin = .;
         BUILD_DIR/bin/bin_BCC610.o(.data);
     SPLAT_END_SEG(data_BCC610, 0xC00000)
+    
+    SPLAT_BEGIN_SEG(code_bss, 0xC00000, 0x800AF860, SUBALIGN(16))
+        rocket_codeseg0_codeseg0_c = .;
+        BUILD_DIR/src/rocket/codeseg0/codeseg0.o(.bss);
+        ___ultra_src_io_pimgr_c = .;
+        BUILD_DIR/src/../ultra/src/io/pimgr.o(.bss);
+        lib_codeseg1_player_api_c = .;
+        BUILD_DIR/src/lib/codeseg1/player_api.o(.bss);
+    SPLAT_END_SEG(code_bss, 0xC00000)
     /DISCARD/ :
     {
         *(*);

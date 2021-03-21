@@ -466,9 +466,8 @@ static unsigned char *Fsweep(channel_t *cp, unsigned char *ptr)
 }
 
 #define SUPPORT_FXCHANGE
-#define mus_songfxchange_flag D_800BD2FC
 
-extern musBool D_800BD2FC;
+extern musBool mus_songfxchange_flag;
 
 /* Command : Change FX type
    Format  : Cchangefx, fxtype */
@@ -487,8 +486,7 @@ static unsigned char *Fchangefx(channel_t *cp, unsigned char *ptr)
   return (ptr);
 }
 
-#define marker_callback D_800BD30C
-extern LIBMUScb_marker D_800BD30C;
+extern LIBMUScb_marker marker_callback;
 
 /* Command : Marker definition
 	Format  : Cmarker, number, <rest length> or Cmarker, number, <rest&0x7f00>, <rest&0xff> */
@@ -526,7 +524,65 @@ extern unsigned char *D_800BD2D0;
 
 void func_8000516C(s32 arg0, unsigned char arg1)
 {
-    D_800BD2D0[arg0] = arg1;
+  D_800BD2D0[arg0] = arg1;
 }
 
-INCLUDE_ASM(s32, "lib/codeseg1/player_commands", func_80005180);
+extern s32 D_800BD2D4;
+
+void func_80005180()
+{
+  int i;
+  for (i = 0; i < D_800BD2D4; i++)
+  {
+    D_800BD2D0[i] = 0x80;
+  }
+}
+
+command_func_t jumptable[]=
+{
+  { Fstop },		   //80
+  { Fwave },		   //81
+  { Fport },		   //82
+  { Fportoff },		//83
+  { Fdefa },		   //84
+  { Ftempo },		   //85
+  { Fcutoff },		   //86
+  { Fendit }, 		   //87
+  { Fvibup },		   //88
+  { Fvibdown },		//89
+  { Fviboff },		   //8a
+  { Flength }, 		//8b
+  { Fignore }, 		//8c
+  { Ftrans }, 		   //8d
+  { Fignore_trans }, //8e
+  { Fdistort },		//8f
+  { Fenvelope },		//90
+  { Fenvoff },		   //91
+  { Fenvon }, 		   //92
+  { Ftroff }, 		   //93
+  { Ftron },  		   //94
+  { Ffor }, 		   //95
+  { Fnext },		   //96
+  { Fwobble }, 		//97
+  { Fwobbleoff }, 	//98
+  { Fvelon }, 		   //99
+  { Fveloff }, 		//9a
+  { Fvelocity }, 		//9b
+  { Fpan }, 		   //9c
+  { Fstereo }, 		//9d
+  { Fdrums }, 		   //9e
+  { Fdrumsoff }, 		//9f
+  { Fprint }, 		   //a0
+  { Fgoto }, 		   //a1
+  { Freverb }, 		//a2
+  { FrandNote }, 		//a3
+  { FrandVolume },	//a4
+  { FrandPan },		//a5
+  { Fvolume },		   //a6
+  { Fstartfx },		//a7
+  { Fbendrange },		//a8
+  { Fsweep },		   //a9
+  { Fchangefx },		//aa
+  { Fmarker },		   // ab
+  { Flength0 },		// ac
+};

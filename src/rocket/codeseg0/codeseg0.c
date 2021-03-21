@@ -2,6 +2,7 @@
 #include <ultra64.h>
 #include <PR/sched.h>
 #include <macros.h>
+#include <types.h>
 
 struct unkD_800A6380 {
     s32 unk0;
@@ -16,30 +17,30 @@ extern u32 D_8009FE10;
 extern u32 D_8009F094;
 extern u32 D_800AB9C8;
 
-// static bss
-extern OSThread gThread1; // 0x800AF860
-extern OSThread D_800AFA10; // 0x800AFA10 // thread 6
-extern OSThread D_800AFBC0; // 0x800AFBC0 // thread 7
-extern u8 gIdleThreadStack[0x1000]; // 0x800AFD70
-extern u8 gThread6Stack[0x1000]; // 0x800B0D70
-extern u8 gThread7Stack[0x8000]; // 0x800B1D70
-extern OSMesg D_800B9D70[8]; // 0x800B9D70
-extern OSMesg D_800B9D90[200]; // 0x800B9D90
-extern OSMesgQueue D_800BA0B0; // 0x800BA0B0
-extern OSMesg D_800BA0C8; // 0x800BA0C8
-extern OSMesg D_800BA0CC; // 0x800BA0CC
-extern u8 gSchedStack[OS_SC_STACKSIZE]; // 0x800BA0D0
-extern OSScClient D_800BC0D0; // 0x800BC0D0
-// end static bss (0x800BC0D8, padded to 0x800BC0E0)
-
 // bss
-extern u32 D_80017DE0; // 0x80017DE0
-extern OSMesgQueue D_80017DE4; // 0x80017DE4
-extern OSMesgQueue D_80017DFC; // 0x80017DFC
-extern OSMesgQueue *gSchedMesgQueue; // 0x80017E14
-extern OSSched gScheduler; // 0x80017E18
-extern OSMesgQueue D_800180A0; // 0x800180A0
-// end bss (0x800180B8, padded to 0x800180C0)
+static OSThread gThread1; // 0x800AF860
+static OSThread D_800AFA10; // 0x800AFA10 // thread 6
+static OSThread D_800AFBC0; // 0x800AFBC0 // thread 7
+static u8 gIdleThreadStack[0x1000]; // 0x800AFD70
+static u8 gThread6Stack[0x1000]; // 0x800B0D70
+static u8 gThread7Stack[0x8000]; // 0x800B1D70
+static OSMesg D_800B9D70[8]; // 0x800B9D70
+static OSMesg D_800B9D90[200]; // 0x800B9D90
+static OSMesgQueue D_800BA0B0; // 0x800BA0B0
+static OSMesg D_800BA0C8; // 0x800BA0C8
+static OSMesg D_800BA0CC; // 0x800BA0CC
+static u8 gSchedStack[OS_SC_STACKSIZE]; // 0x800BA0D0
+static OSScClient D_800BC0D0; // 0x800BC0D0
+// end bss (0x800BC0D8, padded to 0x800BC0E0)
+
+// data
+u32 D_80017DE0 = 2; // 0x80017DE0
+OSMesgQueue D_80017DE4 = {}; // 0x80017DE4
+OSMesgQueue D_80017DFC = {}; // 0x80017DFC
+OSMesgQueue *gSchedMesgQueue = NULL; // 0x80017E14
+OSSched gScheduler = {}; // 0x80017E18
+OSMesgQueue D_800180A0 = {}; // 0x800180A0
+// end data (0x800180B8, padded to 0x800180C0)
 
 
 extern u8 _bssStart[];
@@ -60,12 +61,12 @@ void func_80000DD0()
     bssStart = _bssStart;
     oneMB = (u8 *)0x80100000;
     numBytes = bssStart - oneMB;
-    start = _dataEndRom - numBytes;
+    start = (uintptr_t)_dataEndRom - numBytes;
     if (numBytes > 0)
     {
         osInvalDCache(oneMB, numBytes);
         osPiRawStartDma(0, start, oneMB, numBytes);
-        while (osPiGetStatus() & 5);
+        while (osPiGetStatus() & (PI_STATUS_DMA_BUSY | PI_STATUS_ERROR));
     }
 }
 
@@ -80,12 +81,12 @@ void game_init()
     bssStart = _bssStart;
     oneMB = (u8 *)0x80100000;
     numBytes = bssStart - oneMB;
-    start = _dataEndRom - numBytes;
+    start = (uintptr_t)_dataEndRom - numBytes;
     if (numBytes > 0)
     {
         osInvalDCache(oneMB, numBytes);
         osPiRawStartDma(0, start, oneMB, numBytes);
-        while (osPiGetStatus() & 5);
+        while (osPiGetStatus() & (PI_STATUS_DMA_BUSY | PI_STATUS_ERROR));
     }
     osCreateThread(&gThread1, 1, thread1_idle, NULL, &gIdleThreadStack[0x1000], 10);
     osStartThread(&gThread1);
@@ -201,3 +202,5 @@ void create_scheduler()
     gSchedMesgQueue = osScGetCmdQ(&gScheduler);
     return;
 }
+
+// INCLUDE_ASM(s32, "rocket/codeseg0/codeseg0", create_scheduler);
