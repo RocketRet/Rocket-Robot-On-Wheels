@@ -3,15 +3,9 @@
 #include <PR/sched.h>
 #include <macros.h>
 #include <types.h>
+#include <libmus.h>
 
-struct unkD_800A6380 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    u16 unkC;
-};
-
-extern struct unkD_800A6380 D_800A6380;
+extern struct ControllerData gControllerData;
 extern u32 D_800A638C;
 extern u32 D_8009FE10;
 extern u32 D_8009F094;
@@ -103,6 +97,94 @@ void thread1_idle(void *arg0)
     while (1);
 }
 
+void create_scheduler(void);
+void func_80001248(void *arg0);
+
+extern void *D_800AAF6C, *D_800AAF70;
+extern s32 D_800AF5F0;
+
+// TODO WIP
+// void thread6_unk(void *arg0)
+// {
+//     OSMesg mesg;
+//     u32 s2;
+//     s32 s1;
+//     s32 s6;
+//     s32 s4;
+//     s32 s3;
+//     s32 outMesg[3];
+//     create_scheduler();
+//     s2 = 0;
+//     s1 = 1;
+//     s3 = 1;
+//     osCreateMesgQueue(&D_800180A0, &D_800BA0CC, 1);
+//     if (osTvType == OS_TV_PAL)
+//     {
+//         s4 = 1;
+//     }
+//     else
+//     {
+//         s4 = 0;
+//     }
+//     osCreateThread(&D_800AFBC0, 7, func_80001248, NULL, &gThread7Stack[0x2000], 8);
+//     osStartThread(&D_800AFBC0);
+//     while (1)
+//     {
+//         osRecvMesg(&D_80017DE4, &mesg, OS_MESG_BLOCK);
+//         switch ((int)mesg)
+//         {
+//             case 2:
+//                 s1--;
+//                 break;
+//             case 3:
+//                 s2++;
+//                 break;
+//             case 4:
+//                 func_80074C88(&D_800AB9C8, 5);
+//                 MusStop(MUSFLAG_EFFECTS | MUSFLAG_SONGS, 0);
+//                 s4 = 1;
+//                 break;
+//             case 0xFF:
+//                 break;
+//             case 0:
+//                 if (s3 || !s1)
+//                     continue;
+//         }
+//         if (s1 == 0)
+//         {
+//             if (s4)
+//             {
+//                 bzero(D_800AAF6C, 0x25800);
+//                 osWritebackDCache(D_800AAF6C, 0x25800);
+//                 bzero(D_800AAF70, 0x25800);
+//                 osWritebackDCache(D_800AAF70, 0x25800);
+//                 if (__osSpSetPc(0) == -1)
+//                 {
+//                     MusStop(MUSFLAG_EFFECTS | MUSFLAG_SONGS, 0);
+//                 }
+//             }
+//             else if (!s3 && D_800AF5F0 != -1)
+//             {
+//                 outMesg[0] = 1;
+//                 s3 = 1;
+//                 osSendMesg(&D_800180A0, outMesg, OS_MESG_NOBLOCK);
+//                 continue;
+//             }
+//         }
+//         if (s2 < D_80017DE0 || 1 < s1 || s3 || D_800AF5F0 != NULL)
+//         {
+//             continue;
+//         }
+//         outMesg[0] = 0;
+//         if (!s4)
+//         {
+//             s1++;
+//         }
+//         s3 = 1;
+//         osSendMesg(&D_800180A0, outMesg, OS_MESG_NOBLOCK);
+//     }
+// }
+
 INCLUDE_ASM(void, "rocket/codeseg0/codeseg0", thread6_unk, void *);
 
 void func_8001DE00(void);
@@ -114,7 +196,7 @@ void func_8008FC1C(void);
 void func_80061C18(void);
 void func_80099A34(void);
 
-void func_8004E64C(void);
+void read_controller_noblock(void);
 void func_80046CBC(void);
 void func_80037E60(void *, s32);
 void func_8007F22C(void *);
@@ -154,14 +236,14 @@ extern f32 D_80000500; // 1.0f / 6.0f
 //         else
 //         {
 //             func_8008FC1C();
-//             if (D_800A6380.unkC)
+//             if (gControllerData.buttonHeld)
 //             {
 //                 func_80099A34();
 //             }
 //             func_80061C18();
 //             if (sp18[2] == 0)
 //             {
-//                 func_8004E64C();
+//                 read_controller_noblock();
 //                 func_80046CBC();
 //                 func_80037E60(&D_8009FE10, sp18[1]);
 //                 func_8007F22C(&D_8009F094);
@@ -177,7 +259,7 @@ extern f32 D_80000500; // 1.0f / 6.0f
 //     return;
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg0/codeseg0", func_80001248);
+INCLUDE_ASM(void, "rocket/codeseg0/codeseg0", func_80001248, void*);
 
 void create_scheduler()
 {

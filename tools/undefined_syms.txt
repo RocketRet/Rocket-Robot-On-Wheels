@@ -98,3 +98,4 @@ BigRoomParams = 0x800196D8;
 EffectList = 0x80019864;
 EffectCount = 0x80019860;
 n_syn = 0x80019934;
+D_8001D800 = 0x8001D800;

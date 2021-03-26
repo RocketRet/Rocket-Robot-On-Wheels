@@ -270,6 +270,8 @@ segments:
     vram: 0x80019FB0
     subsections:
     - [0x01ABB0, bin] # rodata
+    # - [0x01E400, .rodata, rocket/codeseg2/codeseg2_403]
+    - [0x01E420, bin] # rodata (should actually be 0x01E480)
     - [0x01EA00, c, rocket/codeseg2/codeseg2_0]
     - [0x01EA50, c, rocket/codeseg2/codeseg2_1]
     - [0x01EAD0, c, rocket/codeseg2/codeseg2_2]

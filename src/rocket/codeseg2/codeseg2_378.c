@@ -6,6 +6,11 @@ struct unkfunc_80088980 {
     s16 unk16;
 };
 
+extern u32 gTextScissorLeft;
+extern u32 gTextScissorTop;
+extern u32 gTextScissorRight;
+extern u32 gTextScissorBottom;
+
 void func_80088980(struct unkfunc_80088980 *arg0, s16 arg1)
 {
     arg0->unk16 = arg1;
@@ -17,25 +22,27 @@ void func_80088988(s16 *arg0, s16 arg1, s16 arg2)
     arg0[1] = arg2;
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_378", func_80088994);
+void set_text_scissor(s32 left, s32 right, s32 top, s32 bottom)
+{
+    gTextScissorLeft = left;
+    gTextScissorTop = top;
+    gTextScissorRight = right;
+    gTextScissorBottom = bottom;
+}
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_378", func_800889B8);
 
 extern u16 D_800ADAF8;
-extern u32 D_800E5088;
-extern u32 D_800E508C;
-extern u32 gScreenWidth;
-extern u32 gScreenHeight;
 
 void func_80089D5C(Gfx **dlPtr)
 {
     Gfx *head = *dlPtr;
 
     D_800ADAF8 = 0;
-    D_800E5088 = 0;
-    D_800E508C = 0;
-    gScreenWidth = 320;
-    gScreenHeight = 240;
+    gTextScissorLeft = 0;
+    gTextScissorTop = 0;
+    gTextScissorRight = 320;
+    gTextScissorBottom = 240;
     gDPPipeSync(head++);
     gDPSetCycleType(head++, G_CYC_1CYCLE);
     gSPTexture(head++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -52,4 +59,20 @@ void func_80089D5C(Gfx **dlPtr)
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_378", func_80089F18);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_378", func_8008AAEC);
+
+void func_8008AAEC(Gfx **dlHead)
+{
+    Gfx *newHead = *dlHead;
+    gSPTexture(newHead++, 0x8000, 0x8000, 0, 0, G_OFF);
+    gDPSetCombineMode(newHead++, G_CC_SHADE, G_CC_SHADE);
+    if (D_800ADAF8 & 1)
+    {
+        gDPSetRenderMode(newHead++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+    }
+    if (D_800ADAF8 & 2)
+    {
+        gDPSetAlphaCompare(newHead++, G_AC_NONE);
+    }
+    gSPEndDisplayList(newHead++);
+    *dlHead = newHead;
+}

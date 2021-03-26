@@ -1,16 +1,11 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <types.h>
 
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_302", func_80075100);
 
-struct unkD_800A5DA8 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-};
-
-extern struct unkD_800A5DA8 D_800A5DA8;
+extern struct GfxContext D_800A5DA8; // 0x10 bytes
 
 #define MACRO_FUNC_800751D8(x) (((x) + 0xF < 0) ? (x) + 0x1E : (x) + 0xF)
 
@@ -26,11 +21,11 @@ int func_800615D4();
 void func_800751D8(s32 **arg0, s32 arg1)
 {
     s32 *s1;
-    s32 *s2;
+    Gfx **s2;
     s32 var4;
     func_80061574();
     s1 = &D_800A5DA8.unk0;
-    s2 = &D_800A5DA8.unk8;
+    s2 = &D_800A5DA8.dlHead;
     func_80046268(s2);
     func_80046354(0xFF, 0x80, 0, 0xFF);
     func_8004632C(arg0[4], arg0[5]);

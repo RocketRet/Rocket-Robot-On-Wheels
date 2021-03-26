@@ -16,6 +16,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_44", func_8002AF64);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_44", func_8002B124);
 
+// This is getting a booster pack
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_44", func_8002B1BC);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_44", func_8002B2F4);

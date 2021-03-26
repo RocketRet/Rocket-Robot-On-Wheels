@@ -35,7 +35,7 @@ struct ControllerData {
     /* 0x00 */ f32 x;
     /* 0x04 */ f32 y;
     /* 0x08 */ f32 vec3f_magnitude;
-    /* 0x0C */ s16 buttonHeld;
+    /* 0x0C */ u16 buttonHeld;
     /* 0x0E */ s16 buttonPressed;
     /* 0x10 */ s16 buttonReleased;
 };

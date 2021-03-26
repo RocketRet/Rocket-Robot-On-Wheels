@@ -10,13 +10,13 @@ fi
 
 SRC_BASE=$(echo "$2" | cut -f 1 -d '.')
 
-grep -Fq $3 src/$1/$2
+grep -Fq $3 src/rocket/$1/$2
 GREP_RET=$?
 if [ $GREP_RET -eq 2 ]; then
     echo "Invalid parameters"
     exit 1
 elif [ $GREP_RET -eq 1 ]; then
-    echo "Function $3 not in file src/$1/$2"
+    echo "Function $3 not in file src/rocket/$1/$2"
     exit 1
 fi
 

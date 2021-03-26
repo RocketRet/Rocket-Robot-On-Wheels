@@ -34,7 +34,7 @@ extern u64 D_800C0860[OS_YIELD_DATA_SIZE];
 extern OSMesgQueue D_80017DE4;
 
 
-// void func_800473F0()
+// void schedule_gfx_task()
 // {
 //     struct unk800473F0 sp10;
 //     struct unk800473F0 sp18;
@@ -112,4 +112,4 @@ extern OSMesgQueue D_80017DE4;
 //     osSendMesg(gSchedMesgQueue, curTask, OS_MESG_BLOCK);
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_151", func_800473F0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_151", schedule_gfx_task);

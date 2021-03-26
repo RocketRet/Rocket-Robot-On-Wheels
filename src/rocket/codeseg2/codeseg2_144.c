@@ -46,10 +46,10 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_144", func_80046200);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_144", func_80046268);
 
-void func_800462E4(s32 *arg0)
+void func_800462E4(Gfx **dlHead)
 {
-    func_8008AAEC();
-    (*arg0) -= 8;
+    func_8008AAEC(dlHead);
+    (*dlHead)--;
 }
 
 void func_80046318(s32 arg0, s32 arg1)

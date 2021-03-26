@@ -3,12 +3,23 @@
 #include <types.h>
 
 
-extern u32 D_800E4824;
+extern struct ControllerData gControllerData;
+extern u32 gControllerReadStarted;
 extern OSMesgQueue D_800A63A8;
 extern u32 D_800A6378;
 extern u32 D_800A637C;
+extern OSMesg D_800E4820;
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", func_8004E4E0);
+extern u8 D_800A5FC0[MAXCONTROLLERS];
+
+void setup_si_mesg_queue()
+{
+    OSContStatus stat[4];
+    osCreateMesgQueue(&D_800A63A8, &D_800E4820, 1);
+    osSetEventMesg(OS_EVENT_SI, &D_800A63A8, 1);
+    osContInit(&D_800A63A8, &D_800A5FC0[0], &stat[0]);
+    func_8004E548(1);
+}
 
 void func_8004E548(u32 arg0)
 {
@@ -21,8 +32,6 @@ void func_8004E574(s32 arg0)
     D_800A637C &= ~arg0;
     func_8004E5A4();
 }
-
-extern struct ControllerData D_800A6380;
 
 void func_8004E5A4()
 {
@@ -50,33 +59,33 @@ void func_8004E5A4()
 
 s32 func_8004E60C()
 {
-    s32 ret = D_800E4824;
+    s32 ret = gControllerReadStarted;
     if (ret == 0)
     {
         osContStartReadData(&D_800A63A8);
         ret = 1;
-        D_800E4824 = 1;
+        gControllerReadStarted = 1;
     }
     return ret;
 }
 
-void func_8004E64C()
+void read_controller_noblock()
 {
-    if (D_800E4824)
+    if (gControllerReadStarted)
     {
         if (osRecvMesg(&D_800A63A8, NULL, OS_MESG_NOBLOCK) == 0)
         {
-            func_8004E6D4();
+            get_controller_data();
         }
     }
 }
 
-void func_8004E694()
+void read_controller_block()
 {
-    if (D_800E4824)
+    if (gControllerReadStarted)
     {
         osRecvMesg(&D_800A63A8, NULL, OS_MESG_BLOCK);
-        func_8004E6D4();
+        get_controller_data();
     }
 }
 
@@ -91,12 +100,12 @@ struct unkD_800A5FC4
 extern struct unkD_800A5FC4 D_800A5FC4[MAXCONTROLLERS];
 
 // TODO finish this
-// void func_8004E6D4()
+// void get_controller_data()
 // {
 //     OSContPad pads[MAXCONTROLLERS];
     
 //     osContGetReadData(pads);
-//     D_800E4824 = 0;
+//     gControllerReadStarted = 0;
 //     if (pads[0].errno == 0)
 //     {
 //         s32 i;
@@ -123,7 +132,7 @@ extern struct unkD_800A5FC4 D_800A5FC4[MAXCONTROLLERS];
 //     }
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", func_8004E6D4);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", get_controller_data);
 
 void clear_buttons_pressed(struct ControllerData *contData, u32 buttons)
 {

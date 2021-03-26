@@ -40,24 +40,28 @@ ELF := $(Z64:.z64=.elf)
 # Tools
 CPP := mips-linux-gnu-cpp
 CC := tools/sn/gcc-2.8.0-rocket/cc1
+CC27 := tools/gcc-2.7.2/cc1
 AS := mips-linux-gnu-as
 OBJCOPY := mips-linux-gnu-objcopy
-LD := mips-n64-ld
+LD := mips-linux-gnu-ld
+STRIP := mips-linux-gnu-strip
 WINE := wine
 EXEW32 := exew32.exe
 KMCGCCBINDIR := $(KMCGCCDIR)/mipse/bin
 KMC_CC := $(WINE) $(EXEW32) gcc
+KMC_AS := $(WINE) $(EXEW32) as
 
 export gccdir = $(KMCGCCDIR)
 export WINEPATH := $(KMCGCCBINDIR)
 
 # Flags
-CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -Iultra/src/audio -Iultra/src/n_audio -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64 -DSUPPORT_NAUDIO -DN_MICRO
+CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -Iultra/src/audio -Iultra/src/n_audio -Iinclude/mus -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64 -DSUPPORT_NAUDIO -DN_MICRO
 CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32 -msplit-addresses -mgas -mrnames
 KMC_CFLAGS := -c -G0 -mgp32 -mfp32 -mips3
+CC27_FLAGS := -G0 -mgp32 -mfp32 -mips3 # For ditching kmc
 WARNFLAGS := -Wuninitialized -Wshadow -Wall
 OPTFLAGS := -O2
-ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I. -Iinclude -O1
+ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I. -Iinclude -O1 --no-construct-floats
 BINOFLAGS := -I binary -O elf32-big
 CPP_LDFLAGS := -P -Wno-trigraphs -DBUILD_DIR=$(BUILD_DIR)
 LDFLAGS := -T $(BUILD_DIR)/$(LD_SCRIPT) -mips3 --accept-unknown-input-arch --no-check-sections -T tools/undefined_syms.txt -T tools/undefined_syms_auto.txt
@@ -83,6 +87,14 @@ $(BUILD_DIR)/ultra/%.i : ultra/%.c | $(SRC_BUILD_DIRS)
 
 $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS)
 	$(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
+	$(STRIP) $@ -N $(<:.i=.c)
+	
+# For exploring ditching kmc gcc
+# $(BUILD_DIR)/ultra/%.s : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS)
+# 	$(CC27) $(CC27_FLAGS) $(OPTFLAGS) $< -o $@
+
+# $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.s | $(SRC_BUILD_DIRS)
+# 	$(KMC_AS) -G0 -EB -mcpu=vr4300 -mips3 -O2 $< -o $@
 
 $(BUILD_DIR)/$(SRC_DIR)/rocket/%.i : $(SRC_DIR)/rocket/%.c | $(SRC_BUILD_DIRS)
 	$(CPP) $(CPPFLAGS) $< -o $@
@@ -115,6 +127,9 @@ $(Z64) : $(ELF)
 	$(OBJCOPY) $(Z64OFLAGS) $< $@
 	
 $(BUILD_DIR)/ultra/%.o: OPTFLAGS := -O3
+# $(BUILD_DIR)/ultra/%.s: OPTFLAGS := -O3 # For ditching kmc gcc
+# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_403.s: CFLAGS += -mno-split-addresses
+# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.s: CFLAGS += -mno-split-addresses
 
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_144.s: CC := tools/gcc/mips-cc1
 # $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_148.s: CC := tools/gcc/mips-cc1 -fkeep-static-consts -msplit-addresses

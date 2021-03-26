@@ -504,6 +504,8 @@ SECTIONS
     SPLAT_BEGIN_SEG(code_codeseg2, 0x1ABB0, 0x80019FB0, SUBALIGN(16))
         codeseg2_1ABB0_bin = .;
         BUILD_DIR/bin/codeseg2_1ABB0.o(.data);
+        codeseg2_1E420_bin = .;
+        BUILD_DIR/bin/codeseg2_1E420.o(.data);
         rocket_codeseg2_codeseg2_0_c = .;
         BUILD_DIR/src/rocket/codeseg2/codeseg2_0.o(.text);
         rocket_codeseg2_codeseg2_1_c = .;
