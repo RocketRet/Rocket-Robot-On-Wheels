@@ -3,38 +3,35 @@
 #include <macros.h>
 #include <types.h>
 
-extern struct GfxContext D_800A5DA8;
-extern struct GfxTask* D_800A5DBC;
+extern struct GfxContext gGfxContext;
+extern struct GfxTask* gCurGfxTask;
 
-extern void *D_800AAF68;
+extern void *gDepthBuffer;
 
-void func_80046D20()
+void update_gfx_context()
 {
-    D_800A5DA8 = D_800A5DBC->ctx;
+    gGfxContext = gCurGfxTask->ctx;
 }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_150", func_80046D58);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_150", func_80046FBC);
 
-// TODO regalloc
-// void func_8004721C()
-// {
-//     gDPSetDepthImage(D_800A5DA8.dlHead++, OS_K0_TO_PHYSICAL(D_800AAF68));
-//     gDPPipeSync(D_800A5DA8.dlHead++);
-//     gDPSetRenderMode(D_800A5DA8.dlHead++, G_RM_NOOP, G_RM_NOOP2);
-//     gDPSetCycleType(D_800A5DA8.dlHead++, G_CYC_FILL);
-//     gDPSetColorImage(D_800A5DA8.dlHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(D_800AAF68));
-//     gDPSetFillColor(D_800A5DA8.dlHead++, GPACK_ZDZ(G_MAXFBZ, 0) << 16 | GPACK_ZDZ(G_MAXFBZ, 0));
-//     gDPFillRectangle(D_800A5DA8.dlHead++, 18, 14, 301, 225);
-//     gDPPipeSync(D_800A5DA8.dlHead++);
-//     gDPSetColorImage(D_800A5DA8.dlHead++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(D_800A5DBC->framebuffer));
-//     gDPSetCombineKey(D_800A5DA8.dlHead++, G_CK_NONE);
-//     gDPSetAlphaCompare(D_800A5DA8.dlHead++, G_AC_THRESHOLD);
-//     gDPSetTexturePersp(D_800A5DA8.dlHead++, G_TP_PERSP);
-//     gDPSetTextureDetail(D_800A5DA8.dlHead++, G_TD_CLAMP);
-//     gDPSetTextureConvert(D_800A5DA8.dlHead++, G_TC_FILT);
-//     gDPPipelineMode(D_800A5DA8.dlHead++, G_PM_1PRIMITIVE);
-// }
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_150", func_8004721C);
+void clear_depth_buffer()
+{
+    gDPSetDepthImage(NEXT_GFX(gGfxContext.dlHead), OS_K0_TO_PHYSICAL(gDepthBuffer));
+    gDPPipeSync(NEXT_GFX(gGfxContext.dlHead));
+    gDPSetRenderMode(NEXT_GFX(gGfxContext.dlHead), G_RM_NOOP, G_RM_NOOP2);
+    gDPSetCycleType(NEXT_GFX(gGfxContext.dlHead), G_CYC_FILL);
+    gDPSetColorImage(NEXT_GFX(gGfxContext.dlHead), G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(gDepthBuffer));
+    gDPSetFillColor(NEXT_GFX(gGfxContext.dlHead), GPACK_ZDZ(G_MAXFBZ, 0) << 16 | GPACK_ZDZ(G_MAXFBZ, 0));
+    gDPFillRectangle(NEXT_GFX(gGfxContext.dlHead), 18, 14, 301, 225);
+    gDPPipeSync(NEXT_GFX(gGfxContext.dlHead));
+    gDPSetColorImage(NEXT_GFX(gGfxContext.dlHead), G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, OS_K0_TO_PHYSICAL(gCurGfxTask->framebuffer));
+    gDPSetCombineKey(NEXT_GFX(gGfxContext.dlHead), G_CK_NONE);
+    gDPSetAlphaCompare(NEXT_GFX(gGfxContext.dlHead), G_AC_THRESHOLD);
+    gDPSetTextureDetail(NEXT_GFX(gGfxContext.dlHead), G_TD_CLAMP);
+    gDPSetTexturePersp(NEXT_GFX(gGfxContext.dlHead), G_TP_PERSP);
+    gDPSetTextureConvert(NEXT_GFX(gGfxContext.dlHead), G_TC_FILT);
+    gDPPipelineMode(NEXT_GFX(gGfxContext.dlHead), G_PM_NPRIMITIVE);
+}

@@ -21,8 +21,14 @@ struct GfxContext {
 struct GfxTask {
     void *framebuffer;
     struct GfxContext ctx;
-    u8 unk14[0x110];
-    u8 unk124[0xC];
+    u32 unk14;
+    u8 filler[0x120 - 0x14 - 0x04];
+    u16 unk120;
+    u16 unk122;
+    u16 unk124;
+    u16 unk126;
+    struct GfxTask *unk128;
+    u32 unk12C;
     OSScTask schedTask;
 };
 

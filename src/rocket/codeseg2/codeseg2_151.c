@@ -10,9 +10,9 @@ struct unk800473F0 {
     u8 unk3;
 };
 
-extern struct GfxContext D_800A5DA8; // 0x10 bytes
+extern struct GfxContext gGfxContext; // 0x10 bytes
 extern struct unk800473F0 D_800A5DB8; // 0x04 bytes
-extern struct GfxTask* D_800A5DBC; // 0x04 bytes
+extern struct GfxTask* gCurGfxTask; // 0x04 bytes
 
 extern u32* D_800AAF7C;
 extern u32 D_800AAF84;
@@ -39,10 +39,10 @@ extern OSMesgQueue D_80017DE4;
 //     struct unk800473F0 sp10;
 //     struct unk800473F0 sp18;
 //     struct unk800473F0 sp20;
-//     struct GfxTask *ctx = D_800A5DBC;
+//     struct GfxTask *ctx = gCurGfxTask;
 //     OSScTask *curTask = &ctx->schedTask;
-//     gDPFullSync(D_800A5DA8.dlHead++);
-//     gSPEndDisplayList(D_800A5DA8.dlHead++);
+//     gDPFullSync(gGfxContext.dlHead++);
+//     gSPEndDisplayList(gGfxContext.dlHead++);
 
 
 //     if ((D_800A5DB8.unk0 & 0xF) )
@@ -97,7 +97,7 @@ extern OSMesgQueue D_80017DE4;
 //     curTask->list.t.dram_stack = D_800C0460;
 //     curTask->list.t.dram_stack_size = SP_DRAM_STACK_SIZE8;
 //     curTask->list.t.data_ptr = &ctx->unk14;
-//     curTask->list.t.data_size = (uintptr_t)D_800A5DA8.dlHead - (uintptr_t)D_800A5DA8.dlStart;
+//     curTask->list.t.data_size = (uintptr_t)gGfxContext.dlHead - (uintptr_t)gGfxContext.dlStart;
 //     curTask->list.t.yield_data_ptr = D_800C0860;
 //     curTask->list.t.yield_data_size = OS_YIELD_DATA_SIZE;
 //     // curTask->next = NULL;
@@ -106,8 +106,8 @@ extern OSMesgQueue D_80017DE4;
 //     curTask->msg = ctx->unk124;
 //     curTask->framebuffer = ctx->framebuffer;
 //     osWritebackDCache(ctx, sizeof(struct GfxTask));
-//     osWritebackDCache(D_800A5DA8.dlStart, (uintptr_t)D_800A5DA8.dlHead - (uintptr_t)D_800A5DA8.dlStart);
-//     osWritebackDCache(D_800A5DA8.unkC, (uintptr_t)D_800A5DA8.dlStart + (uintptr_t)D_800A5DA8.unk0 - (uintptr_t)D_800A5DA8.unkC);
+//     osWritebackDCache(gGfxContext.dlStart, (uintptr_t)gGfxContext.dlHead - (uintptr_t)gGfxContext.dlStart);
+//     osWritebackDCache(gGfxContext.unkC, (uintptr_t)gGfxContext.dlStart + (uintptr_t)gGfxContext.unk0 - (uintptr_t)gGfxContext.unkC);
 //     osWritebackDCache(D_800AAF7C, D_800AAF84);
 //     osSendMesg(gSchedMesgQueue, curTask, OS_MESG_BLOCK);
 // }

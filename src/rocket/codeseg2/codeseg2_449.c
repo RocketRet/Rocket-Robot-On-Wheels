@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <types.h>
 
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_449", func_8009C730);
@@ -32,4 +33,27 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_449", func_8009D84C);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_449", func_8009D898);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_449", func_8009DA54);
+extern struct unkD_800ADAD0 *D_800ADAD0;
+
+struct unkfunc_800338D0 {
+    u8 padding[0x258];
+    s32 unk258;
+    u8 padding2[0x260 - 0x258 - 0x04];
+    s32 unk260;
+    u8 padding3[0x26D - 0x260 - 0x04];
+    u8 unk26D;
+};
+
+void func_8009DA54(struct unkfunc_800338D0 *arg0, s32 arg1, Gfx* arg2)
+{
+    if (arg0->unk26D == 0 && arg0->unk260 == 0)
+    {
+        arg0->unk258 = D_800ADAD0[arg1].unk0;
+        gSPDisplayList(arg2, func_800922C4(&arg0->unk258, 1));
+    }
+    else
+    {
+        func_80086310(arg0, arg1, arg2);
+    }
+}
+

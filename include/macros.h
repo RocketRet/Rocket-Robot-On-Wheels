@@ -1,6 +1,11 @@
 #ifndef __MACROS_H__
 #define __MACROS_H__
 
+#define RAM_END 0x80400000
+#define FRAMEBUFFER_BYTES ((SCREEN_WIDTH) * (SCREEN_HEIGHT) * 2)
+
+#define NEXT_GFX(gfx) (++gfx - 1)
+
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
 

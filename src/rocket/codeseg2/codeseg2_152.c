@@ -16,30 +16,34 @@ extern Vec3f D_800A5DC0;
 
 extern Gfx *gDisplayListHead;
 
-extern struct GfxContext D_800A5DA8;
+extern struct GfxContext gGfxContext;
 
-// TODO regalloc
+struct test {
+    f32 a;
+    f32 b;
+    f32 c;
+};
+
+// TODO float load
 // void load_translation_mtx(f32 *translation)
 // {
 //     Mtx m;
 //     f32 scale;
 //     Mtx *m2;
 //     VEC3F_COPY(D_800A5DC0, translation);
-//     m2 = --D_800A5DA8.unkC;
+//     m2 = --gGfxContext.unkC;
 //     scale = D_8001B434;
 //     guTranslate(m2, translation[0] * D_8001B430, translation[1] * D_8001B430, translation[2] * D_8001B430);
 //     guScale(&m, scale, scale, scale);
 //     guMtxCatL(&m, m2, m2);
-//     gSPMatrix(D_800A5DA8.dlHead++, m2, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_PUSH);
+//     gSPMatrix(++gGfxContext.dlHead - 1, m2, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_PUSH);
 // }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_152", load_translation_mtx);
 
 void pop_matrix()
 {
-    // Ugly, but matches
-    D_800A5DA8.dlHead++;
-    gSPPopMatrix(D_800A5DA8.dlHead - 1, G_MTX_MODELVIEW);
+    gSPPopMatrix(++gGfxContext.dlHead - 1, G_MTX_MODELVIEW);
 }
 
 struct unkfunc_800477D8_inner {
@@ -57,7 +61,7 @@ struct unkfunc_800477D8 {
     struct unkfunc_800477D8_inner unkC;
 };
 
-// TODO regalloc
+// TODO float load, regalloc
 // void func_800477D8(struct unkfunc_800477D8 *arg0, Vec3f arg1, struct unkfunc_800477D8_inner arg2)
 // {
 //     s32 i;

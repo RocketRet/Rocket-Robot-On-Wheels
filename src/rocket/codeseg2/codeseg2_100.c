@@ -2,7 +2,7 @@
 #include <ultra64.h>
 #include <types.h>
 
-extern struct GfxContext D_800A5DA8;
+extern struct GfxContext gGfxContext;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_100", func_80039F80);
 
@@ -27,7 +27,7 @@ extern struct unkD_8009F094 D_8009F094;
 
 // void func_8003B144(s32 arg0)
 // {
-//     gSPSetLights1(D_800A5DA8.dlHead++, (*D_8009F094.light));
+//     gSPSetLights1(gGfxContext.dlHead++, (*D_8009F094.light));
 // }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_100", func_8003B144);
