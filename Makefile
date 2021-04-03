@@ -40,25 +40,19 @@ ELF := $(Z64:.z64=.elf)
 # Tools
 CPP := mips-linux-gnu-cpp
 CC := tools/sn/gcc-2.8.0-rocket/cc1
-CC27 := tools/gcc-2.7.2/cc1
 AS := mips-linux-gnu-as
 OBJCOPY := mips-linux-gnu-objcopy
 LD := mips-linux-gnu-ld
 STRIP := mips-linux-gnu-strip
-WINE := wine
-EXEW32 := exew32.exe
-KMCGCCBINDIR := $(KMCGCCDIR)/mipse/bin
-KMC_CC := $(WINE) $(EXEW32) gcc
-KMC_AS := $(WINE) $(EXEW32) as
+KMC_CC := tools/kmc/gcc
 
-export gccdir = $(KMCGCCDIR)
-export WINEPATH := $(KMCGCCBINDIR)
+export N64ALIGN := ON
+export VR4300MUL := ON
 
 # Flags
 CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -Iultra/src/audio -Iultra/src/n_audio -Iinclude/mus -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64 -DSUPPORT_NAUDIO -DN_MICRO
 CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32 -msplit-addresses -mgas -mrnames
-KMC_CFLAGS := -c -G0 -mgp32 -mfp32 -mips3
-CC27_FLAGS := -G0 -mgp32 -mfp32 -mips3 # For ditching kmc
+KMC_CFLAGS := -c -G0  -mgp32 -mfp32 -mips3
 WARNFLAGS := -Wuninitialized -Wshadow -Wall
 OPTFLAGS := -O2
 ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I. -Iinclude -O1 --no-construct-floats
@@ -88,13 +82,6 @@ $(BUILD_DIR)/ultra/%.i : ultra/%.c | $(SRC_BUILD_DIRS)
 $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS)
 	$(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
 	$(STRIP) $@ -N $(<:.i=.c)
-	
-# For exploring ditching kmc gcc
-# $(BUILD_DIR)/ultra/%.s : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS)
-# 	$(CC27) $(CC27_FLAGS) $(OPTFLAGS) $< -o $@
-
-# $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.s | $(SRC_BUILD_DIRS)
-# 	$(KMC_AS) -G0 -EB -mcpu=vr4300 -mips3 -O2 $< -o $@
 
 $(BUILD_DIR)/$(SRC_DIR)/rocket/%.i : $(SRC_DIR)/rocket/%.c | $(SRC_BUILD_DIRS)
 	$(CPP) $(CPPFLAGS) $< -o $@

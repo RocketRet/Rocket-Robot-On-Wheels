@@ -7,3 +7,6 @@
 [submodule "ultra"]
 	path = ultra
 	url = https://github.com/RocketRet/libreultra.git
+[submodule "kmc"]
+	path = tools/kmc
+	url = https://github.com/Mr-Wiseguy/kmc-gcc-wrapper.git
