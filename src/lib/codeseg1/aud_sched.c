@@ -1,9 +1,39 @@
-#include <include_asm.h>
-#include <ultra64.h>
-#include <PR/sched.h>
 
+/*************************************************************
+
+  aud_sched.c : Nintendo 64 Music Tools Programmers Library
+  (c) Copyright 1997/1998, Software Creations (Holdings) Ltd.
+
+  Version 3.14
+
+  Music library scheduler functions.
+
+**************************************************************/
+
+/* include configuartion */
+#include <include_asm.h>
+#include "libmus_config.h"
+
+/* include system headers */
+#include <ultra64.h>
+#include <sched.h>
+
+/* include other header files */
+#include "libmus.h"
+#include "lib_memory.h"
+
+/* include current header file */
+#include "aud_sched.h"
+
+/* internal macros */
 #define QUEUE_SIZE	4
 
+/* internal function prototypes */
+static void __OsSchedInstall(void);
+static void __OsSchedWaitFrame(void);
+static void __OsSchedDoTask(musTask *task);
+
+/* internal data structures */
 typedef struct
 {
 	OSScClient	client;
@@ -13,62 +43,123 @@ typedef struct
 	OSMesg		task_messages[QUEUE_SIZE];
 } ossched_workspace_t;
 
-extern OSSched *audio_sched;
+extern OSSched *audio_sched; // TODO bss
 extern ossched_workspace_t *sched_mem;
-
-void __MusIntSchedInit(void *arg0)
-{
-    audio_sched = arg0;
-}
-
-void __OsSchedInstall()
-{
-    sched_mem = __MusIntMemMalloc(sizeof(ossched_workspace_t));
-    osCreateMesgQueue(&sched_mem->frame_queue, &sched_mem->frame_messages[0], QUEUE_SIZE);
-    osCreateMesgQueue(&sched_mem->task_queue, &sched_mem->task_messages[0], QUEUE_SIZE);
-    osScAddClient(audio_sched, &sched_mem->client, &sched_mem->frame_queue);
-}
-
-void __OsSchedWaitFrame()
-{
-    OSScMsg *mesg;
-    do {
-        osRecvMesg(&sched_mem->frame_queue, (OSMesg *)&mesg, OS_MESG_BLOCK);
-        osRecvMesg(&sched_mem->frame_queue, NULL, OS_MESG_NOBLOCK);
-    } while (mesg->type != OS_SC_RETRACE_MSG);
-}
-
+// static musSched	default_sched = { __OsSchedInstall, __OsSchedWaitFrame, __OsSchedDoTask }; // TODO data
+// musSched *__libmus_current_sched=&default_sched;
 extern u8 _binary_bin_rspboot_code_bin_start[];
 extern u8 _binary_bin_rspboot_code_bin_end[];
 
-void __OsSchedDoTask(s32 *arg0)
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [EXTERNAL FUNCTION]
+  __MusIntSchedInit(sched)
+
+  [Parameters]
+  sched			adress of OSSched structure 
+
+  [Explanation]
+  Initialise scheduler support functions.
+
+  [Return value]
+  NONE
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+void __MusIntSchedInit(void *sched)
 {
-    OSScTask t;
-    u8 padding[0x10]; // Why is this needed?
-    OSScMsg message;
-
-    t.next  = 0;
-    t.msgQ  = &sched_mem->task_queue;
-    t.msg   = &message;
-    t.flags = OS_SC_NEEDS_RSP;
-
-    t.list.t.data_ptr = (void*)arg0[0];
-    t.list.t.data_size = (void*)arg0[1];
-    t.list.t.type = M_AUDTASK;
-    t.list.t.ucode_boot = &_binary_bin_rspboot_code_bin_start;
-    t.list.t.ucode_boot_size = _binary_bin_rspboot_code_bin_end - _binary_bin_rspboot_code_bin_start;
-    t.list.t.flags = 0;
-    t.list.t.ucode = (void*)arg0[2];
-    t.list.t.ucode_data = (void*)arg0[3];
-    t.list.t.ucode_size = SP_UCODE_SIZE;
-    t.list.t.ucode_data_size = SP_UCODE_DATA_SIZE;
-    t.list.t.dram_stack = NULL;
-    t.list.t.dram_stack_size = 0x0;
-    t.list.t.output_buff = NULL;
-    t.list.t.output_buff_size = NULL;
-    t.list.t.yield_data_ptr = NULL;
-    t.list.t.yield_data_size = 0x0;
-
-    osSendMesg(osScGetCmdQ(audio_sched), (OSMesg)&t, OS_MESG_BLOCK);
-    osRecvMesg(&sched_mem->task_queue, NULL, OS_MESG_BLOCK);
+	audio_sched = (OSSched *)sched;
 }
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [CALLBACK FUNCTION]
+  __OsSchedInstall()
+
+  [Explanation]
+  Default scheduler 'install' function. Called once when audio thread first starts.
+
+  [Return value]
+  NONE
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+static void __OsSchedInstall(void)
+{
+	sched_mem = __MusIntMemMalloc(sizeof(ossched_workspace_t));
+	osCreateMesgQueue(&sched_mem->frame_queue, &sched_mem->frame_messages[0], QUEUE_SIZE);
+  	osCreateMesgQueue(&sched_mem->task_queue, &sched_mem->task_messages[0], QUEUE_SIZE);
+
+   osScAddClient(audio_sched, &sched_mem->client, &sched_mem->frame_queue);
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [CALLBACK FUNCTION]
+  __OsSchedWaitFrame()
+
+  [Explanation]
+  Default scheduler 'waitframe' function. Called in audio thread mail loop to wait
+  for vsync message.
+
+  [Return value]
+  NONE
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+static void __OsSchedWaitFrame(void)
+{
+   OSScMsg *message;
+
+	do
+	{
+		osRecvMesg(&sched_mem->frame_queue, (OSMesg *)&message, OS_MESG_BLOCK);
+		osRecvMesg(&sched_mem->frame_queue, NULL, OS_MESG_NOBLOCK);	/* bin any missed syncs! <- only happens if a higher priority thread takes a huge amount of time */
+	} while (message->type!=OS_SC_RETRACE_MSG);
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [EXTERNAL FUNCTION]
+  __OsSchedDoTask(task)
+
+  [Parameters]
+  task			address of task descriptor structure
+
+  [Explanation]
+  Default scheduler 'dotask' function. Called to process the given task as an RSP
+  task and wait for its completion.
+
+  [Return value]
+  NONE
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+static void __OsSchedDoTask(musTask *task)
+{
+   OSScTask t;
+    u8 padding[0x10]; // Why is this needed?
+   OSScMsg message;
+
+   t.next      = 0;
+   t.msgQ      = &sched_mem->task_queue;
+   t.msg       = &message;
+   t.flags     = OS_SC_NEEDS_RSP;
+    
+   t.list.t.data_ptr    = task->data;
+   t.list.t.data_size   = task->data_size;
+   t.list.t.type  = M_AUDTASK;
+   t.list.t.ucode_boot = (u64 *)_binary_bin_rspboot_code_bin_start;
+   t.list.t.ucode_boot_size = ((int) _binary_bin_rspboot_code_bin_end - (int) _binary_bin_rspboot_code_bin_start);
+   t.list.t.flags  = 0;
+   t.list.t.ucode = (u64 *) task->ucode;
+   t.list.t.ucode_data = (u64 *) task->ucode_data;
+   t.list.t.ucode_size = 4096;
+   t.list.t.ucode_data_size = SP_UCODE_DATA_SIZE;
+   t.list.t.dram_stack = (u64 *) NULL;
+   t.list.t.dram_stack_size = 0;
+   t.list.t.output_buff = (u64 *) NULL;
+   t.list.t.output_buff_size = 0;
+   t.list.t.yield_data_ptr = NULL;
+   t.list.t.yield_data_size = 0;
+
+   osSendMesg(osScGetCmdQ(audio_sched), (OSMesg) &t, OS_MESG_BLOCK);    
+	osRecvMesg(&sched_mem->task_queue, NULL, OS_MESG_BLOCK);
+}
+
+
+
+/* end of file */

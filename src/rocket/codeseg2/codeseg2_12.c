@@ -1,7 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
-
+// Plays the sound for warping in or out of an area
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_12", func_80020050);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_12", func_800200F4);

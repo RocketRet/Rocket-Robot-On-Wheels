@@ -60,7 +60,7 @@ struct unkD_800ADAD0_sub {
 
 struct unkD_800ADAD0 {
     struct unkD_800ADAD0_sub *unk0;
-    s32 unk4;
+    u32 unk4;
     Gfx *unk8;
     s32 unkC;
 };

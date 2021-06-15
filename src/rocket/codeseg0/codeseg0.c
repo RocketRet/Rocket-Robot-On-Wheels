@@ -284,5 +284,3 @@ void create_scheduler()
     gSchedMesgQueue = osScGetCmdQ(&gScheduler);
     return;
 }
-
-// INCLUDE_ASM(s32, "rocket/codeseg0/codeseg0", create_scheduler);

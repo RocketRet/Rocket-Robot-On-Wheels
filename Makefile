@@ -77,7 +77,7 @@ $(BUILD_ROOT) $(BUILD_DIR) $(SRC_DIR) $(SRC_BUILD_DIRS) $(ASM_BUILD_DIRS) $(BIN_
 	$(MKDIR) $@
 
 $(BUILD_DIR)/ultra/%.i : ultra/%.c | $(SRC_BUILD_DIRS)
-	$(CPP) $(CPPFLAGS) $< -o $@
+	$(CPP) $(CPPFLAGS) -D__FILE__=\"$(notdir $<)\" -Wno-builtin-macro-redefined $< -o $@
 
 $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS)
 	$(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@

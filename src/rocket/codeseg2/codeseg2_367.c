@@ -6,6 +6,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_367", func_80084A00);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_367", func_80084A88);
 
+// Can play the enter vehicle and exit vehicle sounds
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_367", func_80084AC4);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_367", func_80084E14);

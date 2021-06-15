@@ -6,6 +6,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004C800);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004CC38);
 
+// plays camera sounds
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004CEB8);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D058);

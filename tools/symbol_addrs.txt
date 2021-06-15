@@ -98,7 +98,6 @@ __scTaskReady = 0x80003B7C; // !
 osScRemoveClient = 0x800036F0; // !
 __scSchedule = 0x80003E98; // !
 osCreateMesgQueue = 0x800046C0; // !
-__OsSchedDoTask = 0x8000CD7C; // !
 audio_sched = 0x800BEB10;
 sched_mem = 0x800BEB14;
 gScheduler = 0x80017E18;
