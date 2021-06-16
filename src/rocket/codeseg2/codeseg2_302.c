@@ -9,21 +9,21 @@ extern struct GfxContext gGfxContext; // 0x10 bytes
 
 #define MACRO_FUNC_800751D8(x) (((x) + 0xF < 0) ? (x) + 0x1E : (x) + 0xF)
 
-int func_80061574();
+int push_second_heap_state();
 int func_80046268();
 int func_80046354();
 int func_8004632C();
 int func_80046318();
 int func_800463B4();
 int func_800462E4();
-int func_800615D4();
+int pop_second_heap_state();
 
 void func_800751D8(s32 **arg0, s32 arg1)
 {
     s32 *s1;
     Gfx **s2;
     s32 var4;
-    func_80061574();
+    push_second_heap_state();
     s1 = &gGfxContext.unk0;
     s2 = &gGfxContext.dlHead;
     func_80046268(s2);
@@ -33,7 +33,7 @@ void func_800751D8(s32 **arg0, s32 arg1)
     func_80046318(arg0[1][2], var4 >> 4);
     func_800463B4(s1, arg1, 0, 0, 0);
     func_800462E4(s2);
-    func_800615D4();
+    pop_second_heap_state();
 }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_302", func_8007529C);

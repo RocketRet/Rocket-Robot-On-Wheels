@@ -30,7 +30,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_144", func_80046200);
 // TODO float load
 // {
 //     func_80089D5C();
-//     D_800A5C3C.unk34 = func_800615A4(0x3C00);
+//     D_800A5C3C.unk34 = alloc_second_heap(0x3C00);
 //     D_800C0440.unk10 = D_8001B420;
 //     D_800C0440.unk14 = D_8001B420;
 //     D_800A5C3C.unk28 = 0;

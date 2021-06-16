@@ -29,7 +29,7 @@ extern char D_B09C01A0[];
 
 extern s32 D_800AF328[];
 
-void func_80061740();
+void dma_read();
 void func_8008FC14();
 void func_80091C98();
 
@@ -47,8 +47,8 @@ void func_80091C98();
 //     }
 //     D_800E598C = -1;
 
-//     func_80061740(D_800AF328[0], fxBank, D_800AF328[1] - D_800AF328[0]);
-//     func_80061740(D_800AF328[2], ptrBank, D_800AF328[3] - D_800AF328[2]);
+//     dma_read(D_800AF328[0], fxBank, D_800AF328[1] - D_800AF328[0]);
+//     dma_read(D_800AF328[2], ptrBank, D_800AF328[3] - D_800AF328[2]);
 
 //     bzero(&config, sizeof(musConfig));
 

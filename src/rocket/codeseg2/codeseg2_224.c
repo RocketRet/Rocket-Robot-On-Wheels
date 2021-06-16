@@ -8,7 +8,7 @@ extern u32 D_800E4DA8;
 void do_dma_read(u32 romAddr, void *ramAddr, s32 length);
 
 // Not even close yet
-// void func_80061740(u32 arg0, u32 arg1, s32 arg2)
+// void dma_read(u32 arg0, u32 arg1, s32 arg2)
 // {
 //     s32 s1;
 //     while (1)
@@ -34,4 +34,4 @@ void do_dma_read(u32 romAddr, void *ramAddr, s32 length);
 //     }
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_224", func_80061740);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_224", dma_read);

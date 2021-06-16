@@ -72,25 +72,25 @@ void *main_alloc_bzero(s32 size)
     return addr;
 }
 
-void func_80061574()
+void push_second_heap_state()
 {
     D_800E48C0[++D_800E48B8] = D_800E48B0;
 }
 
-s32 func_800615A4(s32 arg0)
+void *alloc_second_heap(u32 len)
 {
-    if (arg0 == 0)
+    if (len == 0)
     {
         return 0;
     }
     else
     {
-        D_800E48B0 -= ALIGN(arg0, 8); 
+        D_800E48B0 -= ALIGN(len, 8); 
         return D_800E48B0;
     }
 }
 
-void func_800615D4()
+void pop_second_heap_state()
 {
     D_800E48B0 = D_800E48C0[D_800E48B8--];
 }

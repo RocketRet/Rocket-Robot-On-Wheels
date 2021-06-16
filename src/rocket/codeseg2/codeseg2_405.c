@@ -1,6 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 #include <types.h>
+#include <mem.h>
 
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_80092050);
@@ -86,7 +87,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800926B8);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_80093DDC);
 
-void func_80093F48(s32 arg0, s32 arg1, s32 *arg2)
+void asset_handler_copy(u32 assetAddress, UNUSED struct AssetHandlerHeader *header, struct Asset *asset)
 {
-    func_80061740(arg0, arg2[4], arg2[2]);
+    dma_read(assetAddress, asset->data1, asset->header.data1Len);
 }
