@@ -87,7 +87,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800926B8);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_80093DDC);
 
-void asset_handler_copy(u32 assetAddress, UNUSED struct TextureCompressionHeader *header, struct Texture *asset)
+void texture_handler_copy(u32 assetAddress, UNUSED struct TextureCompressionHeader *header, struct Texture *asset)
 {
     dma_read(assetAddress, asset->imageData, asset->header.imageBytes);
 }

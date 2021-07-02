@@ -48,7 +48,7 @@ extern s32 textureTableAddress;
 extern s32 textureTableLength;
 
 extern u8 _dataEndRom[];
-extern void (*assetHandlers[])(s32, struct TextureCompressionHeader*, struct Texture*);
+extern void (*textureHandlers[])(s32, struct TextureCompressionHeader*, struct Texture*);
 extern struct DecompressionParams compressionParamsTable[2];
 
 void *main_alloc_copy(s32 size, u8 *src);

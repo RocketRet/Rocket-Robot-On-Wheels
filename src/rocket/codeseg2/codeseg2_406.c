@@ -4,7 +4,7 @@
 
 extern struct DecompressionParams compressionParamsTable[];
 
-void asset_handler_decompress(u32 assetAddress, struct TextureCompressionHeader *header, struct Texture *asset)
+void texture_handler_decompress(u32 assetAddress, struct TextureCompressionHeader *header, struct Texture *asset)
 {
     void *compressedData;
 
@@ -18,7 +18,7 @@ void asset_handler_decompress(u32 assetAddress, struct TextureCompressionHeader 
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_406", func_80094004);
 
-struct Texture *dma_read_asset(u32 *param_1)
+struct Texture *dma_read_texture(u32 *param_1)
 {
     struct Texture *asset;
     struct TextureCompressionHeader compressionParamsTable;
@@ -35,7 +35,7 @@ struct Texture *dma_read_asset(u32 *param_1)
     assetAddress += sizeof(struct TextureCompressionHeader);
 
     asset->imageData = main_alloc_nozero(asset->header.imageBytes);
-    assetHandlers[compressionParamsTable.handlerIndex](assetAddress, &compressionParamsTable, asset);
+    textureHandlers[compressionParamsTable.handlerIndex](assetAddress, &compressionParamsTable, asset);
     assetAddress += compressionParamsTable.compressedLength;
     if (asset->header.paletteBytes > 0)
     {
@@ -45,7 +45,7 @@ struct Texture *dma_read_asset(u32 *param_1)
     return asset;
 }
 
-void adjust_asset_table(void)
+void adjust_texture_table(void)
 {
     int iVar1;
     u32 *piVar2;
@@ -61,7 +61,7 @@ void adjust_asset_table(void)
     }
 }
 
-void reset_asset_table()
+void reset_texture_table()
 {
     textureTable = NULL;
 }
