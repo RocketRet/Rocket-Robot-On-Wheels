@@ -35,7 +35,7 @@ void func_80057B38(Vec3f arg0, f32 *arg1, f32 *arg2)
 extern Vec3f D_800AF77C;
 extern Vec3f D_800AF788;
 
-void func_80056FA0(f32, s32 *, Mtx3f);
+void mtx3f_rotate_axis(f32, s32 *, Mtx3f);
 
 // TODO reorder
 // void func_80057BAC(f32 arg0, f32 arg1, Mtx3f out)
@@ -43,8 +43,8 @@ void func_80056FA0(f32, s32 *, Mtx3f);
 //     s32 i, j;
 //     Mtx3f mat1;
 //     Mtx3f mat2;
-//     func_80056FA0(arg0, D_800AF788, mat1);
-//     func_80056FA0(-arg1, D_800AF77C, mat2);
+//     mtx3f_rotate_axis(arg0, D_800AF788, mat1);
+//     mtx3f_rotate_axis(-arg1, D_800AF77C, mat2);
 
 //     for (i = 2; i >= 0; i--)
 //     {

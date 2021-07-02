@@ -8,31 +8,32 @@ extern f32 D_8001BA18;
 
 f32 vec3f_magnitude();
 void vec3f_scale(f32, f32*, f32*);
-void func_80056FA0(f32, f32*, f32*);
+void mtx3f_rotate_axis(f32, f32*, f32*);
 
 // TODO float load
-// void func_800570D0(Vec3f in, Mtx3f out)
+// void mtx3f_axis_angle(Vec3f in, Mtx3f out)
 // {
 //     float magnitude;
 //     Vec3f normalized;
 
 //     magnitude = vec3f_magnitude(in);
-//     if (D_8001BA10 < magnitude) {
-//         vec3f_scale(D_8001BA14 / magnitude, in, normalized);
-//         func_80056FA0(magnitude, normalized, out);
+//     if (magnitude > D_8001BA10) { // magnitude > 1E-4
+//         vec3f_scale(D_8001BA14 / magnitude, in, normalized); // vec3f_scale(1 / magnitude, in, normalized)
+//         mtx3f_rotate_axis(magnitude, normalized, out);
 //     }
 //     else {
-//         bzero(out, 0x24);
-//         out[0][0] = out[1][1] = out[2][2] = D_8001BA18;
+//         // build identity matrix
+//         bzero(out, sizeof(Mtx3f));
+//         out[0][0] = out[1][1] = out[2][2] = D_8001BA18; // 1.0f
 //     }
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_203", func_800570D0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_203", mtx3f_axis_angle);
 
 extern f32 D_8001BA1C;
 
 // TODO float load
-// void func_80057174(Vec3f translation, Mtx3f rotation, Mtx4f out)
+// void mtx4f_compose(Vec3f translation, Mtx3f rotation, Mtx4f out)
 // {
 //     s32 i,j;
 //     for (i = 0; i < 3; i++)
@@ -53,7 +54,7 @@ extern f32 D_8001BA1C;
 //     out[3][3] = 1.0f;
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_203", func_80057174);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_203", mtx4f_compose);
 
 void mtx4f_decompose(Mtx4f in, Vec3f translation, Mtx3f rotation)
 {

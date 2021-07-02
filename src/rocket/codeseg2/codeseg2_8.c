@@ -16,7 +16,7 @@ void func_8001FAB0(struct unkfunc_8001FAF4 *arg0, s32 *arg1)
 {
     s32 auStack48[10];
 
-    func_800570D0(arg1, auStack48);
+    mtx3f_axis_angle(arg1, auStack48);
     arg0->unk0->unk5C(arg0, auStack48);
     return;
 }
@@ -29,7 +29,7 @@ void func_8001FAB0(struct unkfunc_8001FAF4 *arg0, s32 *arg1)
 //     auStack48[0] = arg1;
 //     auStack48[1] = arg2;
 //     auStack48[2] = arg3;
-//     func_800570D0(auStack48 + 0,auStack48 + 4);
+//     mtx3f_axis_angle(auStack48 + 0,auStack48 + 4);
 //     arg0->unk0->unk5C(arg0, auStack48 + 3); // changing this to be 4 messes everything up, but should be correct
 // }
 

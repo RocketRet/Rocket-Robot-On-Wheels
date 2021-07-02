@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <mem.h>
 
 struct unkfunc_8001DFD0 {
     u8 padding[0xE0];
@@ -36,10 +37,9 @@ void func_8001DFD0(struct unkfunc_8001DFD0 *arg0)
 struct unkfunc_8001E044 {
     struct unkfunc_8001E044_inner *unk0;
     u8 padding[0x18 - 0x04];
-    s32 unk18;
-    u8 padding2[0x3C - 0x18 - 0x04];
-    s32 unk3C;
-    u8 padding3[0xF4 - 0x3C - 0x04];
+    Mtx3f unk18;
+    Vec3f unk3C;
+    u8 padding3[0xF4 - 0x3C - 0x0C];
     void *unkF4;
     s32 unkF8;
 };
@@ -51,44 +51,36 @@ struct unkfunc_8001E044_inner {
     void (*unk68)(struct unkfunc_8001E044*, s32, void*, s32);
 };
 
-void *main_alloc_copy(s32 size, u8 *src);
-
-extern s32 compressionParamsTable;
-
-void *alloc_second_heap(s32);
-void decompress(s32 *, s32, s32 *, s32, void*);
+void func_80085D04(u8 **dataPtrPtr, Vec3f arg1, Mtx3f arg2);
 
 // TODO function call load order
-// void func_8001E044(struct unkfunc_8001E044 *arg0, s32 arg1, s32 *arg2, s32 arg3)
+// void func_8001E044(struct unkfunc_8001E044 *arg0, s32 arg1, u8 *dataPtr, s32 arg3)
 // {
-//     s32 s0;
-//     void *s1;
-//     s32 s2;
+//     s32 decompressedSize;
+//     void *decompressedBytes;
+//     s32 compressedSize;
 //     s32 s3;
 //     void *s5;
 
-//     func_80085D04(&arg2, &arg0->unk3C, &arg0->unk18);
-//     func_80085C68(&arg2, arg0);
+//     func_80085D04(&dataPtr, &arg0->unk3C, &arg0->unk18);
+//     func_80085C68(&dataPtr, arg0);
 //     push_second_heap_state();
 //     s5 = alloc_second_heap(0x5000);
 
 //     arg0->unkF4 = s5;
 
-//     arg2 = (s32*)ALIGN(arg2, 4);
-//     arg2 += 1;
-//     s3 = *(arg2 - 1);
-//     arg2 += 1;
-//     s0 = *(arg2 - 1);
-//     arg2 += 1;
-//     s2 = *(arg2 - 1);
+//     dataPtr = (u8*)ALIGN(dataPtr, 4);
+//     s3 = read_u32(&dataPtr);
+//     decompressedSize = read_u32(&dataPtr);
+//     compressedSize = read_u32(&dataPtr);
 
-//     s1 = alloc_second_heap(s0);
+//     decompressedBytes = alloc_second_heap(decompressedSize);
 
-//     decompress(&compressionParamsTable, s2, arg2, s0, s1);
+//     decompress(&compressionParamsTable[0], compressedSize, dataPtr, decompressedSize, decompressedBytes);
 
-//     arg0->unk0->unk68(arg0, s0, s1, s3);
+//     arg0->unk0->unk68(arg0, decompressedSize, decompressedBytes, s3); // always func_800864A8 from testing, which calls push_second_heap_state
 
-//     arg2 = (s32*)((u8*)arg2 + s2);
+//     dataPtr += compressedSize;
 
 //     if (arg0->unkF8 > 0)
 //     {

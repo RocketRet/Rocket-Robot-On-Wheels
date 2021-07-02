@@ -2,33 +2,35 @@
 #include <ultra64.h>
 #include <macros.h>
 
-extern f64 D_8001DB80;
-extern f32 D_8001DB88;
-extern f64 D_8001DB90;
+extern f64 D_8001DB80; // 1.0
+extern f32 D_8001DB88; // pi
+extern f64 D_8001DB90; // 0.5
 
 extern f32 sinf(f32);
 
 // TODO almost
-// void func_800991C0(f32 arg0, f32 *arg1, f32 *arg2, f32 *arg3)
+// void get_sin_cos(f32 angle, f32 *sinOut, f32 *cosOut)
 // {
-//     f32 sinVal = sinf(arg0); // f0
-//     f32 fvar2;
-//     f64 fvar4;
-//     fvar4 = D_8001DB80 - sinVal * sinVal;
-//     *arg1 = sinVal;
+//     f32 sinVal;
+//     f64 cosVal;
+//     s32 negativeCos;
+//     sinVal = sinf(angle); // f0
+//     *sinOut = sinVal;
 //     // fvar2 = ;
-//     fvar2 = (absf(arg0) / D_8001DB88) + D_8001DB90;
-//     if ((s32)(fvar2) & 1)
+//     cosVal = sqrtf(D_8001DB80 - sinVal * sinVal); // cos = sqrt(1.0 - sin^2(angle))
+//     // negativeCos = 
+//     // *cosOut = negativeCos ? -cosVal : cosVal;
+//     if ((s32)((absf(angle) / D_8001DB88) + D_8001DB90) & 1)
 //     {
-//         *arg2 = -fvar4;
+//         *cosOut = -cosVal;
 //     }
 //     else
 //     {
-//         *arg2 = fvar4;
+//         *cosOut = cosVal;
 //     }
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", func_800991C0);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", get_sin_cos);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", func_80099264);
 

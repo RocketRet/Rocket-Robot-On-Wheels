@@ -38,7 +38,7 @@ static __inline__ __const__ f32 __inline_sqrtf (f32 in)
 static __inline__ __const__ f64 __inline_sqrt (f64 in)
 {
     float out;
-    __asm__("sqrt.s %0,%1" : "=f" (out) : "f" (in));
+    __asm__("sqrt.d %0,%1" : "=f" (out) : "f" (in));
     return out;
 }
 

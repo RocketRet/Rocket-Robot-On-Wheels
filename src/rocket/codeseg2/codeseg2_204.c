@@ -6,16 +6,16 @@ extern f64 D_8001BA20;
 extern f64 D_8001BA28;
 extern f32 D_8001BA30;
 
-void func_80098990(f32, f32);
+f32 clampf_abs(f32, f32);
 
 // TODO float load
-// void func_80057280(f32 *arg0)
+// f32 func_80057280(Mtx3f arg0)
 // {
-//     f32 sum = arg0[0] + arg0[4] + arg0[8];
-//     func_80098990((sum - D_8001BA20) * D_8001BA28, D_8001BA30);
+//     f32 sum = arg0[0][0] + arg0[1][1] + arg0[2][2];
+//     return clampf_abs((sum - D_8001BA20) * D_8001BA28, D_8001BA30); //clampf_abs((sum - 1.0) * 0.5, 1)
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_204", func_80057280);
+INCLUDE_ASM(f32, "rocket/codeseg2/codeseg2_204", func_80057280, f32, f32);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_204", func_800572D8);
 
@@ -29,13 +29,13 @@ void func_8005759C(Vec3f arg0, Vec3f arg1)
     vec3f_scale(sp20, sp10, arg1);
 }
 
-void func_800575DC(f32 *arg0)
+void func_800575DC(Mtx3f arg0)
 {
     vec3f_normalize(&arg0[0]);
-    vec3f_cross_product(&arg0[0], &arg0[3], &arg0[6]);
-    vec3f_normalize(&arg0[6]);
-    vec3f_cross_product(&arg0[6], &arg0[0], &arg0[3]);
-    vec3f_normalize(&arg0[3]);
+    vec3f_cross_product(&arg0[0], &arg0[1], &arg0[2]);
+    vec3f_normalize(&arg0[2]);
+    vec3f_cross_product(&arg0[2], &arg0[0], &arg0[1]);
+    vec3f_normalize(&arg0[1]);
 }
 
 void vec3f_transpose_rotate(Mtx3f mat, Vec3f in, Vec3f out)
