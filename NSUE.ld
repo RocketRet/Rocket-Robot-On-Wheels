@@ -445,8 +445,8 @@ SECTIONS
         BUILD_DIR/bin/n_aspMain_data.o(.data);
         f3dex2_data_bin = .;
         BUILD_DIR/bin/f3dex2_data.o(.data);
-        codesegs0_1_19390_bin = .;
-        BUILD_DIR/bin/codesegs0_1_19390.o(.data);
+        ___ultra_src_sched_sched_c = .;
+        BUILD_DIR/src/../ultra/src/sched/sched.o(.data);
         ___ultra_src_io_pimgr_c = .;
         BUILD_DIR/src/../ultra/src/io/pimgr.o(.data);
         lib_codeseg1_player_commands_c = .;

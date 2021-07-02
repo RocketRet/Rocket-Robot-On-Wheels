@@ -237,7 +237,7 @@ segments:
     - [0x0189E0, .data, rocket/codeseg0/codeseg0]
     - [0x018CC0, bin, n_aspMain_data]
     - [0x018F70, bin, f3dex2_data]
-    - [0x019390, bin] # data (not referenced by anything?)
+    - [0x019390, .data, ../ultra/src/sched/sched]
     - [0x0193A0, .data, ../ultra/src/io/pimgr]
     - [0x0193D0, .data, lib/codeseg1/player_commands]
     - [0x019490, .data, ../ultra/src/os/initialize]
