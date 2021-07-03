@@ -46,20 +46,71 @@ struct ControllerData {
     /* 0x10 */ s16 buttonReleased;
 };
 
-struct unkD_800ADAD0_sub {
-    u32 unk0;
-    u32 unk4;
-    u32 unk8;
+struct TextureHeader {
+    u16 width;
+    u16 height;
+    u8 imSize;   // G_IM_SIZ_x
+    u8 imFormat; // G_IM_FMT_x
+    u16 bytesPerRow;
+    u32 imageBytes;
+    u16 paletteBytes;
+    u16 unkE;
+};
+
+struct Texture {
+    struct TextureHeader header;
+    void *imageData;
+    void *paletteData;
+};
+
+struct TextureCompressionHeader {
+    u8 handlerIndex;
+    u8 compressionParams;
+    u8 unk2;
+    u8 unk3;
+    u32 compressedLength;
+};
+
+struct DecompressionParams {
+    u32 lengthOffset;
+    u32 negativeShift; // unused
+    u32 shift;
+    u32 mask;
+};
+
+struct unkfunc_80093DDC {
+    u8 unk0_4 : 4;
+    u8 unk0_0 : 4;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+};
+
+struct TextureGroupHeader {
+    struct unkfunc_80093DDC unk4;
+    u16 unk8;
+    u16 unkA;
     u32 unkC;
     u32 unk10;
-    s16 unk14;
-    s16 unk16;
+    u8 unk14;
+    u8 numTextures;
+    u8 unk16;
+    u8 unk17;
     u32 unk18;
     u32 unk1C;
 };
 
+struct TextureGroup {
+    u32 romAddress;
+    struct TextureGroupHeader header;
+    u8 widthPower;  // Width as a power of two (rounded up)
+    u8 heightPower; // Height as a power of two (rounded up)
+    u16 unk22; // probably just alignment padding
+    struct Texture **textures;
+};
+
 struct unkD_800ADAD0 {
-    struct unkD_800ADAD0_sub *unk0;
+    struct TextureGroup *textureGroup;
     u32 unk4;
     Gfx *unk8;
     s32 unkC;
@@ -97,6 +148,37 @@ struct unkfunc_8009C28C {
     u8 padding2[0x3A8 - 0x328 - (0x8 * 4)];
     s32 unk3A8;
     s32 unk3AC[0x08]; // TODO real array length
+};
+
+struct unkfunc_8001E044 {
+    struct unkfunc_8001E044_inner *unk0;
+    u8 padding[0x0C - 0x00 - 0x04];
+    u32 unkC;
+    u8 padding2[0x18 - 0x0C - 0x04];
+    Mtx3f unk18;
+    Vec3f unk3C;
+    u8 padding3[0xF4 - 0x3C - 0x0C];
+    void *unkF4;
+    s32 unkF8;
+    u8 padding4[0x114 - 0xF8 - 0x04];
+    s32 unk114;
+    u8 padding5[0x14C - 0x114 - 0x04];
+    s32 unk14C;
+};
+
+struct unkfunc_8001E044_2 {
+    struct unkfunc_8001E044_inner *unk0;
+    u8 padding[0x24 - 0x00 - 0x04];
+    u32 unk24;
+    u32 unk28;
+    u32 unk2C;
+};
+
+struct unkfunc_8001E044_inner {
+    u8 padding[0x40];
+    void (*unk40)(struct unkfunc_8001E044*);
+    u8 padding2[0x68 - 0x40 - 0x04];
+    void (*unk68)(struct unkfunc_8001E044*, s32, void*, s32);
 };
 
 #endif

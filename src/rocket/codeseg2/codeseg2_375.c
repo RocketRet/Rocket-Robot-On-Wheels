@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include <mem.h>
 
 u32 func_80086400(u8 **arg0)
 {
@@ -48,8 +49,6 @@ struct unkD_800AC7F0 {
 
 extern struct unkD_800AC7F0 *D_800AC7F0[];
 
-void *main_alloc_bzero(s32);
-
 // TODO typing
 struct unkD_800AC7F0 **func_800872F8(s32 arg0, s32 arg1, s32 arg2)
 {
@@ -85,8 +84,82 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_800875E8);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087BF8);
 
+struct unkfunc_80087D4C {
+    u8 padding[0x18];
+    Vec3f unk18;
+    Mtx3f unk24;
+    u32 unk48;
+    u32 unk4C;
+    f32 unk50[6];
+};
+
+// TODO couple instructions out of order
+#ifdef NON_MATCHING
+void func_80087D4C(struct unkfunc_80087D4C *arg0, s32 arg1, u8 *dataPtr) {
+    Vec3f axis;
+    u8 *endPtr;
+
+    read_vec3f(&dataPtr, arg0->unk18);
+    read_vec3f(&dataPtr, axis);
+    mtx3f_axis_angle(axis, arg0->unk24);
+    // arg2 = arg2 + 2;
+    // arg2 = temp_v1 + 4;
+    arg0->unk48 = READ_VALUE(dataPtr, s16);
+    dataPtr = ALIGN_PTR(dataPtr, 4);
+    // arg2 = arg2 + 8;
+    arg0->unk50[0] = READ_VALUE(dataPtr, f32);
+    arg0->unk50[1] = READ_VALUE(dataPtr, f32);
+    arg0->unk50[2] = READ_VALUE(dataPtr, f32);
+    arg0->unk50[3] = READ_VALUE(dataPtr, f32);
+    arg0->unk50[4] = READ_VALUE(dataPtr, f32);
+    arg0->unk50[5] = READ_VALUE(dataPtr, f32);
+    dataPtr = ALIGN_PTR(dataPtr, 4) + 4;
+    endPtr = &dataPtr[READ_VALUE(dataPtr, u32)] - 8;
+    while (endPtr != dataPtr) {
+        dataPtr = ALIGN(dataPtr, 2);
+        func_80085978(READ_VALUE(dataPtr, u16), &dataPtr, arg0);
+    }
+    pop_second_heap_state();
+}
+#else
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087D4C);
+#endif
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087E88);
+void func_80087E88(struct unkfunc_80087D4C *arg0, s32 arg1, u8 *dataPtr) {
+    f32 *vecPtr;
+    s32 i;
+    u8 *endPtr;
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087F58);
+    dataPtr = ALIGN_PTR(dataPtr, 4);
+
+    vecPtr = arg0->unk18;
+    
+    for (i = 0; i < 3; i++) {
+        vecPtr[i] = READ_VALUE(dataPtr, f32);
+    }
+
+    dataPtr = ALIGN_PTR(dataPtr, 4) + 4;
+    endPtr = dataPtr + READ_VALUE(dataPtr, u32) - 8;
+    while (endPtr != dataPtr) {
+        dataPtr = ALIGN_PTR(dataPtr, 2);
+        func_80085978(READ_VALUE(dataPtr, u16), &dataPtr, arg0);
+    }
+    pop_second_heap_state();
+}
+
+extern s32 *D_800ADAC8;
+extern s32 D_800ADACC;
+
+s32 func_80087F58(s32 arg0) {
+    s32 phi_v1 = D_800ADACC;
+    s32 *phi_a1 = D_800ADAC8;
+
+    while (--phi_v1 >= 0) {
+        if (phi_a1[0] == arg0) {
+            return phi_a1[1];
+        }
+        phi_a1 += 2;
+    }
+    return 0;
+}
+

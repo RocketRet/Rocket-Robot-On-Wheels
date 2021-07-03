@@ -81,7 +81,22 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_370", func_800856AC);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_370", func_80085978);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_370", func_80085C68);
+void func_80085C68(u8 **dataPtrPtr, struct unkfunc_8001E044 *arg1)
+{
+    u8 *curPtr;
+
+    *dataPtrPtr = ALIGN_PTR(*dataPtrPtr, 4);
+    *dataPtrPtr += 4;
+    curPtr = *dataPtrPtr + READ_VALUE(*dataPtrPtr, u32) - 8;
+    while (curPtr != *dataPtrPtr) {
+        u16 val;
+        *dataPtrPtr = ALIGN_PTR(*dataPtrPtr, 2);
+        val = READ_VALUE(*dataPtrPtr, u16);
+        func_80085978(val, dataPtrPtr, arg1);
+    }
+}
+
+void mtx3f_axis_angle(Vec3f, Mtx3f);
 
 void func_80085D04(u8 **dataPtrPtr, Vec3f arg1, Mtx3f arg2)
 {

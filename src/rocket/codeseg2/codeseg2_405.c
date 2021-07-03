@@ -66,6 +66,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800922C4);
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800923E8);
 
 // wip long function
+// probably the function that creates a displaylist from a texture group
 // void func_800926B8(s32 arg0, struct unkD_800ADAD0 *arg1, s32 *arg2)
 // {
 //     gDPPipeSync(arg1->unk8++);
@@ -84,6 +85,61 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800923E8);
 // }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800926B8);
+
+extern struct unkD_800ADAD0 *D_800ADAD0;
+
+// wip
+// struct unkfunc_80093DDC *func_80093DDC(struct unkfunc_80093DDC *arg0, s32 arg1) {
+//     struct unkfunc_80093DDC d;
+//     struct unkfunc_80093DDC c;
+//     struct unkfunc_80093DDC b;
+//     struct unkfunc_80093DDC a;
+//     struct unkfunc_80093DDC *temp_v1_2;
+//     s32 temp_v1;
+//     struct unkD_800ADAD0 *temp_a0;
+//     s8 phi_v1;
+//     struct TextureGroup *textureGroup;
+
+//     temp_a0 = &D_800ADAD0[arg1];
+//     textureGroup = temp_a0->textureGroup;
+//     temp_v1 = ((u32)textureGroup) & 0xF0000000;
+//     if (temp_v1 == 0) {
+//         temp_v1_2 = &b;
+//         b.unk0_0 = 2;
+//         b.unk0_4 = 1;
+//         // sp20 = (((sp20 & 0xF0FFFFFF) | 0x2000000) & 0xFFFFFFF) | 0x10000000;
+//         temp_v1_2->unk1 = 1;
+//         temp_v1_2->unk2 = 1;
+//         a = b;
+//         if (a.unk2 == 5) {
+//             phi_v1 = 7;
+//         } else if (a.unk2 == 3) {
+//             phi_v1 = 5;
+//         } else if (a.unk2 == 4) {
+//             phi_v1 = 6;
+//         } else if (a.unk0_4 == 2) {
+//             phi_v1 = 4;
+//         } else if (a.unk2 == 2) {
+//             phi_v1 = 3;
+//         } else if (a.unk1 == 2) {
+//             phi_v1 = 2;
+//         } else if (a.unk2 == 1) {
+//             phi_v1 = 1;
+//         } else {
+//             phi_v1 = 0;
+//         }
+//         b.unk3 = phi_v1;
+//         c = b;
+//         d = b;
+//     } else {
+//         if (temp_v1 != 0x80000000) {
+//             textureGroup = load_texture_group(temp_a0);
+//         }
+//         d = textureGroup->header.unk4;
+//     }
+//     *arg0 = d;
+//     return arg0;
+// }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_80093DDC);
 

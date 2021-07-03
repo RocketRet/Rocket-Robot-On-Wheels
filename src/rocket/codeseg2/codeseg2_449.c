@@ -48,7 +48,7 @@ void func_8009DA54(struct unkfunc_800338D0 *arg0, s32 arg1, Gfx* arg2)
 {
     if (arg0->unk26D == 0 && arg0->unk260 == 0)
     {
-        arg0->unk258 = D_800ADAD0[arg1].unk0;
+        arg0->unk258 = D_800ADAD0[arg1].textureGroup;
         gSPDisplayList(arg2, func_800922C4(&arg0->unk258, 1));
     }
     else

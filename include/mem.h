@@ -4,44 +4,13 @@
 #include <ultra64.h>
 #include <types.h>
 
+#define READ_VALUE(x, type) ({x += sizeof(type); *(type*)(x - sizeof(type));})
 static inline u32 read_u32(u8 **ptr) { *ptr += sizeof(u32); return *(u32*)(*ptr - sizeof(u32)); }
+static inline u16 read_u16(u8 **ptr) { *ptr += sizeof(u16); return *(u16*)(*ptr - sizeof(u16)); }
 static inline f32 read_f32(u8 **ptr) { *ptr += sizeof(f32); return *(f32*)(*ptr - sizeof(f32)); }
 void read_vec3f(u8 **ptr, Vec3f out);
 
-// #define READ_VAL(ptr, type) { *ptr += sizeof(type); *(type*)((u8*)*ptr - sizeof(type)); }
-
-struct TextureHeader {
-    u16 width;
-    u16 height;
-    u8 imSize;   // G_IM_SIZ_x
-    u8 imFormat; // G_IM_FMT_x
-    u16 bytesPerRow;
-    u32 imageBytes;
-    u16 paletteBytes;
-    u16 unkE;
-};
-
-struct Texture {
-    struct TextureHeader header;
-    void *imageData;
-    void *paletteData;
-};
-
-struct TextureCompressionHeader {
-    u8 handlerIndex;
-    u8 compressionParams;
-    u8 unk2;
-    u8 unk3;
-    u32 compressedLength;
-};
-
-
-struct DecompressionParams {
-    u32 lengthOffset;
-    u32 negativeShift; // unused
-    u32 shift;
-    u32 mask;
-};
+#define	ALIGN_PTR(s, align) (void *)(((u32)(s) + ((align)-1)) & ~((align)-1))
 
 extern struct Texture **textureTable;
 extern s32 textureTableAddress;
@@ -59,5 +28,8 @@ void *alloc_second_heap(u32 len);
 void decompress(struct DecompressionParams *arg0, u32 compressedSize, u8 *src, u32 uncompressedSize, u8 *dst);
 void push_second_heap_state();
 void pop_second_heap_state();
+
+struct Texture *load_texture(struct Texture **param_1);
+struct TextureGroup *load_texture_group(struct TextureGroup **arg0);
 
 #endif
