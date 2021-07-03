@@ -43,7 +43,7 @@ struct DecompressionParams {
     u32 mask;
 };
 
-extern u32 *textureTable;
+extern struct Texture **textureTable;
 extern s32 textureTableAddress;
 extern s32 textureTableLength;
 
@@ -57,5 +57,7 @@ void *main_alloc_nozero(u32 len);
 void dma_read(u32 romAddr, void *ramAddr, u32 len);
 void *alloc_second_heap(u32 len);
 void decompress(struct DecompressionParams *arg0, u32 compressedSize, u8 *src, u32 uncompressedSize, u8 *dst);
+void push_second_heap_state();
+void pop_second_heap_state();
 
 #endif
