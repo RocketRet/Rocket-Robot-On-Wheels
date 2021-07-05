@@ -39,23 +39,23 @@ void func_80085D04(u8 **dataPtrPtr, Vec3f arg1, Mtx3f arg2);
 
 // TODO function call load order
 #ifdef NON_MATCHING
-void func_8001E044(struct unkfunc_8001E044 *arg0, s32 arg1, u8 *dataPtr, s32 arg3)
+void func_8001E044(struct Model *arg0, s32 arg1, u8 *dataPtr, s32 arg3)
 {
     s32 decompressedSize;
     void *decompressedBytes;
     s32 compressedSize;
-    s32 s3;
-    void *s5;
+    s32 vertexStorageFlags;
+    struct Submodel *submodelBuffer;
 
     func_80085D04(&dataPtr, &arg0->unk3C, &arg0->unk18);
     func_80085C68(&dataPtr, arg0);
     push_second_heap_state();
-    s5 = alloc_second_heap(0x5000);
+    submodelBuffer = alloc_second_heap(512 * sizeof(struct Submodel));
 
-    arg0->unkF4 = s5;
+    arg0->submodels = submodelBuffer;
 
     dataPtr = ALIGN_PTR(dataPtr, 4);
-    s3 = READ_VALUE(dataPtr, u32);
+    vertexStorageFlags = READ_VALUE(dataPtr, u32);
     decompressedSize = READ_VALUE(dataPtr, u32);
     compressedSize = READ_VALUE(dataPtr, u32);
 
@@ -63,13 +63,13 @@ void func_8001E044(struct unkfunc_8001E044 *arg0, s32 arg1, u8 *dataPtr, s32 arg
 
     decompress(&compressionParamsTable[0], compressedSize, dataPtr, decompressedSize, decompressedBytes);
 
-    arg0->unk0->unk68(arg0, decompressedSize, decompressedBytes, s3); // always func_800864A8 from testing, which calls push_second_heap_state
+    arg0->unk0->unk68(arg0, decompressedSize, decompressedBytes, vertexStorageFlags); // always func_800864A8 from testing
 
     dataPtr += compressedSize;
 
-    if (arg0->unkF8 > 0)
+    if (arg0->numSubmodels > 0)
     {
-        arg0->unkF4 = main_alloc_copy(arg0->unkF8 * 40, s5);
+        arg0->submodels = main_alloc_copy(arg0->numSubmodels * sizeof(struct Submodel), submodelBuffer);
     }
 
     pop_second_heap_state();

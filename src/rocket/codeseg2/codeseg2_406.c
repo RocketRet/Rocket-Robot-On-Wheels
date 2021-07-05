@@ -16,13 +16,13 @@ void texture_handler_decompress(u32 assetAddress, struct TextureCompressionHeade
     pop_second_heap_state();
 }
 
-struct TextureGroup *load_texture_group(struct TextureGroup **arg0) {
+struct TextureGroup *load_texture_group(struct unkD_800ADAD0 *arg0) {
     u32 curRomAddr;
     s32 curDimension;
     struct TextureGroup *textureGroup;
     s32 i;
 
-    curRomAddr = (u32)*arg0;
+    curRomAddr = (u32)arg0->textureGroup;
     textureGroup = main_alloc_bzero(sizeof(struct TextureGroup));
 
     dma_read(curRomAddr, (void*)((u32)textureGroup + 4), sizeof(struct TextureGroupHeader));
@@ -61,9 +61,9 @@ struct TextureGroup *load_texture_group(struct TextureGroup **arg0) {
         curDimension = curDimension >> 1;
         textureGroup->heightPower++;
     }
-    textureGroup->unk22 = (s16) (((textureGroup->header.unk8 & 2) == 0) * 2);
-    textureGroup->romAddress = (u32)*arg0;
-    *arg0 = textureGroup;
+    textureGroup->unk22 = (textureGroup->header.unk8 & 2) ? 0 : 2;
+    textureGroup->romAddress = (u32)arg0->textureGroup;
+    arg0->textureGroup = textureGroup;
     return textureGroup;
 }
 

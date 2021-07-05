@@ -14,14 +14,14 @@ struct unkfunc_80079CA0 {
 Gfx *func_800922C4(struct unkD_800ADAD0 *, s32);
 
 void func_80079CA0(struct unkfunc_80079CA0 *arg0, s32 arg1, Gfx *arg2) {
-    struct TextureGroup **temp_a0;
+    struct unkD_800ADAD0 *temp_a0;
     s32 maskedAddress;
     struct TextureGroup *prevTextureGroup;
     struct TextureGroup *textureGroup;
 
     if (arg1 != -1) {
-        temp_a0 = &D_800ADAD0[arg1].textureGroup;
-        prevTextureGroup = *temp_a0;
+        temp_a0 = &D_800ADAD0[arg1];
+        prevTextureGroup = temp_a0->textureGroup;
         maskedAddress = (u32)prevTextureGroup & 0xF0000000;
         if (maskedAddress != 0) {
             if (maskedAddress == 0x80000000) {

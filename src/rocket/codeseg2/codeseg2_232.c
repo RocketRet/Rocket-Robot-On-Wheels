@@ -4,7 +4,7 @@
 s32 D_800AC2E0;
 s32 D_800A58F0;
 
-void func_80078244(s32, s32, f32);
+// void func_80078244(s32, s32, f32);
 
 // TODO float arg
 // void func_80063840(s32 arg0)

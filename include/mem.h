@@ -30,6 +30,6 @@ void push_second_heap_state();
 void pop_second_heap_state();
 
 struct Texture *load_texture(struct Texture **param_1);
-struct TextureGroup *load_texture_group(struct TextureGroup **arg0);
+struct TextureGroup *load_texture_group(struct unkD_800ADAD0 *arg0);
 
 #endif

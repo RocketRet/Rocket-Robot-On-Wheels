@@ -1,6 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
-
+#include <types.h>
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_4", func_8001E330);
 
@@ -22,18 +22,13 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_4", func_8001F2A4);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_4", func_8001F36C);
 
-struct unkfunc_8001F4DC{
-    u8 padding[0xEC];
-    void *unkEC;
-};
-
 void *main_alloc_bzero(s32);
 
-void func_8001F4DC(struct unkfunc_8001F4DC *arg0)
+void alloc_vertex_data_storage(struct Model *model)
 {
-    if (arg0->unkEC == NULL)
+    if (model->vertexDataStorage == NULL)
     {
-        arg0->unkEC = main_alloc_bzero(0x30);
+        model->vertexDataStorage = main_alloc_bzero(sizeof(struct VertexDataStorage));
     }
 }
 

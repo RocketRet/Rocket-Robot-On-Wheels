@@ -105,7 +105,7 @@ struct TextureGroup {
     struct TextureGroupHeader header;
     u8 widthPower;  // Width as a power of two (rounded up)
     u8 heightPower; // Height as a power of two (rounded up)
-    u16 unk22; // probably just alignment padding
+    u16 unk22;
     struct Texture **textures;
 };
 
@@ -150,17 +150,60 @@ struct unkfunc_8009C28C {
     s32 unk3AC[0x08]; // TODO real array length
 };
 
-struct unkfunc_8001E044 {
+struct VertexDataStorage {
+    s32 unk0; // vertex count
+    s32 unk4; // num vertex colors
+    void *unk8; // vertex colors
+    s32 unkC; // num vertex positions
+    void *unk10; // vertex positions
+    s16 *unk14; // vertex position indices
+    s32 unk18; // num texture coords
+    void *unk1C; // texture coords
+    s16 *unk20; // texture coord indices
+    s32 unk24;
+    s32 unk28;
+    s32 unk2C;
+};
+
+struct Submodel {
+    s32 unk0;
+    struct unkfunc_80093DDC unk4;
+    f32 unk8;
+    f32 unkC;
+    f32 unk10;
+    f32 unk14;
+    f32 unk18;
+    f32 unk1C;
+    u8 unk20;
+    u8 unk21;
+    u8 unk22;
+    u8 unk23;
+    f32 unk24;
+};
+
+struct Model {
     struct unkfunc_8001E044_inner *unk0;
     u8 padding[0x0C - 0x00 - 0x04];
     u32 unkC;
     u8 padding2[0x18 - 0x0C - 0x04];
     Mtx3f unk18;
     Vec3f unk3C;
-    u8 padding3[0xF4 - 0x3C - 0x0C];
-    void *unkF4;
-    s32 unkF8;
-    u8 padding4[0x114 - 0xF8 - 0x04];
+    u8 padding3[0xE0 - 0x3C - 0x0C];
+    s16 unkE0;
+    s16 unkE2;
+    u32 unkE4;
+    u32 unkE8;
+    struct VertexDataStorage *vertexDataStorage;
+    u8 padding3_2[0xF4 - 0xEC - 0x04];
+    struct Submodel *submodels;
+    s32 numSubmodels;
+    s32 unkFC;
+    f32 unk100;
+    u8 padding4[0x110 - 0x100 - 0x04];
+    u8 unk110;
+    u8 unk111;
+    u8 unk112;
+    u8 unk113;
     s32 unk114;
     u8 padding5[0x14C - 0x114 - 0x04];
     s32 unk14C;
@@ -176,9 +219,9 @@ struct unkfunc_8001E044_2 {
 
 struct unkfunc_8001E044_inner {
     u8 padding[0x40];
-    void (*unk40)(struct unkfunc_8001E044*);
+    void (*unk40)(struct Model*);
     u8 padding2[0x68 - 0x40 - 0x04];
-    void (*unk68)(struct unkfunc_8001E044*, s32, void*, s32);
+    void (*unk68)(struct Model*, s32, void*, s32);
 };
 
 #endif

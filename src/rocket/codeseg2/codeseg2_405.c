@@ -90,10 +90,10 @@ extern struct unkD_800ADAD0 *D_800ADAD0;
 
 // wip
 // struct unkfunc_80093DDC *func_80093DDC(struct unkfunc_80093DDC *arg0, s32 arg1) {
-//     struct unkfunc_80093DDC d;
-//     struct unkfunc_80093DDC c;
-//     struct unkfunc_80093DDC b;
-//     struct unkfunc_80093DDC a;
+//     struct unkfunc_80093DDC sp10;
+//     struct unkfunc_80093DDC sp18;
+//     struct unkfunc_80093DDC sp20;
+//     struct unkfunc_80093DDC sp28;
 //     struct unkfunc_80093DDC *temp_v1_2;
 //     s32 temp_v1;
 //     struct unkD_800ADAD0 *temp_a0;
@@ -104,40 +104,39 @@ extern struct unkD_800ADAD0 *D_800ADAD0;
 //     textureGroup = temp_a0->textureGroup;
 //     temp_v1 = ((u32)textureGroup) & 0xF0000000;
 //     if (temp_v1 == 0) {
-//         temp_v1_2 = &b;
-//         b.unk0_0 = 2;
-//         b.unk0_4 = 1;
+//         temp_v1_2 = &sp20;
+//         sp20.unk0_0 = 2;
+//         sp20.unk0_4 = 1;
 //         // sp20 = (((sp20 & 0xF0FFFFFF) | 0x2000000) & 0xFFFFFFF) | 0x10000000;
 //         temp_v1_2->unk1 = 1;
 //         temp_v1_2->unk2 = 1;
-//         a = b;
-//         if (a.unk2 == 5) {
+//         sp28 = sp20;
+//         if (sp28.unk2 == 5) {
 //             phi_v1 = 7;
-//         } else if (a.unk2 == 3) {
+//         } else if (sp28.unk2 == 3) {
 //             phi_v1 = 5;
-//         } else if (a.unk2 == 4) {
+//         } else if (sp28.unk2 == 4) {
 //             phi_v1 = 6;
-//         } else if (a.unk0_4 == 2) {
+//         } else if (sp28.unk0_4 == 2) {
 //             phi_v1 = 4;
-//         } else if (a.unk2 == 2) {
+//         } else if (sp28.unk2 == 1) {
 //             phi_v1 = 3;
-//         } else if (a.unk1 == 2) {
+//         } else if (sp28.unk1 == 2) {
 //             phi_v1 = 2;
-//         } else if (a.unk2 == 1) {
-//             phi_v1 = 1;
 //         } else {
-//             phi_v1 = 0;
+//             phi_v1 = sp28.unk1 == 1;
 //         }
-//         b.unk3 = phi_v1;
-//         c = b;
-//         d = b;
+//         sp20.unk3 = phi_v1;
+//         sp18 = sp20;
+//         sp10 = sp20;
+//         *arg0 = sp10;
 //     } else {
 //         if (temp_v1 != 0x80000000) {
-//             textureGroup = load_texture_group(temp_a0);
+//             textureGroup = load_texture_group(textureGroup);
 //         }
-//         d = textureGroup->header.unk4;
+//         sp10 = textureGroup->header.unk4;
+//         *arg0 = sp10;
 //     }
-//     *arg0 = d;
 //     return arg0;
 // }
 

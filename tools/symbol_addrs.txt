@@ -612,3 +612,4 @@ mtx3f_axis_angle = 0x800570D0; // !
 mtx4f_compose = 0x80057174; // !
 clampf_abs = 0x80098990; // !
 load_texture_group = 0x80094004; // !
+alloc_vertex_data_storage = 0x8001F4DC; // !
