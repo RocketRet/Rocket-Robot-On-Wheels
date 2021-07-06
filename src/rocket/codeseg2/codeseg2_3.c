@@ -39,7 +39,7 @@ void func_80085D04(u8 **dataPtrPtr, Vec3f arg1, Mtx3f arg2);
 
 // TODO function call load order
 #ifdef NON_MATCHING
-void func_8001E044(struct Model *arg0, s32 arg1, u8 *dataPtr, s32 arg3)
+void func_8001E044(struct Model *arg0, s32 arg1, u8 *dataPtr)
 {
     s32 decompressedSize;
     void *decompressedBytes;

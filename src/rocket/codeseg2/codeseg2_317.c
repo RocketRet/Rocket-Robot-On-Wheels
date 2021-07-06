@@ -1,8 +1,41 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
+struct unkD_800ADAD8 {
+    u16 unk0;
+    u16 unk2;
+    u32 unk4;
+};
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_80079EA0);
+extern u32 D_800ADADC;
+extern struct unkD_800ADAD8 *D_800ADAD8;
+
+// Does a binary search through D_800ADAD8, but seems to be unused
+s32 func_80079EA0(s32 arg0) {
+    s32 temp_v0;
+    s32 max;
+    s32 min;
+
+    max = D_800ADADC - 1;
+    min = 0;
+    while (1) {
+        s32 midpoint;
+        if (max < min) {
+            break;
+        }
+
+        midpoint = (max + min) / 2;
+
+        if (D_800ADAD8[midpoint].unk0 == arg0) {
+            return midpoint;
+        } else if (D_800ADAD8[midpoint].unk0 < arg0) {
+            min = midpoint + 1;
+        } else {
+            max = midpoint - 1;
+        }
+    }
+    return -1;
+}
 
 struct unkfunc_80079F08 {
     u8 padding[0x48];

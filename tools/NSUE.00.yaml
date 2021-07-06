@@ -271,6 +271,8 @@ segments:
     subsections:
     - [0x01ABB0, bin] # rodata
     # - [0x01E400, .rodata, rocket/codeseg2/codeseg2_403]
+    # - [0x01E2C0, .rodata, rocket/codeseg2/codeseg2_375]
+    - [0x01E300, bin]
     - [0x01E420, bin] # rodata (should actually be 0x01E480)
     - [0x01EA00, c, rocket/codeseg2/codeseg2_0]
     - [0x01EA50, c, rocket/codeseg2/codeseg2_1]
@@ -646,8 +648,7 @@ segments:
     - [0x086950, c, rocket/codeseg2/codeseg2_371]
     - [0x086A90, c, rocket/codeseg2/codeseg2_372]
     - [0x086F10, c, rocket/codeseg2/codeseg2_373]
-    - [0x086F70, c, rocket/codeseg2/codeseg2_374]
-    - [0x087000, c, rocket/codeseg2/codeseg2_375]
+    - [0x086F70, c, rocket/codeseg2/codeseg2_375]
     - [0x088BA0, c, rocket/codeseg2/codeseg2_376]
     - [0x088D50, c, rocket/codeseg2/codeseg2_377]
     - [0x089580, c, rocket/codeseg2/codeseg2_378]

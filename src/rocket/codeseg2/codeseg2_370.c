@@ -29,20 +29,17 @@ struct unkfunc_800856AC {
 
 // void func_800856AC()
 // {
-//     struct {
-//         u32 unk0;
-//         u32 unk4;
-//     } buffer;
+//     u32 buffer[2];
 //     u32 addr0 = _dataEndRom;
 //     u32 addr;
 //     struct unkfunc_800856AC *stuff;
 //     push_second_heap_state();
 //     addr = ALIGN((u32)_dataEndRom + 4, 4);
-//     dma_read(addr, &buffer, 8);
-//     buffer.unk4 -= 8;
+//     dma_read(addr, buffer, 8);
+//     buffer[1] -= 8;
 //     addr += 8;
-//     stuff = alloc_second_heap(buffer.unk4);
-//     dma_read(addr, stuff, buffer.unk4);
+//     stuff = alloc_second_heap(buffer[1]);
+//     dma_read(addr, stuff, buffer[1]);
 //     if (stuff->unk0 != 0x121)
 //     {
 //         D_800ADACC = 0;

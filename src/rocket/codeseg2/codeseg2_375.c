@@ -2,6 +2,11 @@
 #include <ultra64.h>
 #include <mem.h>
 #include <types.h>
+#include <macros.h>
+
+const f32 D_8001D6C0 = 3.40282346638529E38f;
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80086370);
 
 u32 func_80086400(u8 **arg0)
 {
@@ -38,22 +43,83 @@ s32 func_80086468(u8 **arg0)
     return ret;
 }
 
-void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3);
 
 struct ModelData {
     u32 unk0;
     Gfx *unk4;
     Gfx *unk8;
     Gfx *unkC;
+    u32 unk10;
+    u32 unk14;
+    u32 unk18[2][3];
 };
 
 extern f32 D_8001D6C4;
+// const f32 D_8001D6C4 = 3.40282346638529E38f;
 extern Vec3f D_800AF794;
 
+static inline s16 read_unaligned_s16(u8 **dataPtr)
+{
+    s32 b1, b2;
+    s16 x;
+    b1 = *(*dataPtr)++;
+    b2 = *(*dataPtr)++;
+    x = b1 << 8 | b2;
+    return x;
+}
+
+static inline f32 read_unaligned_f32(u8 **dataPtr)
+{
+    f32 ret;
+    s32 i;
+    u8 *curPtr = (u8*)&ret;
+    u8 *curDataPtr = *dataPtr;
+    for (i = 3; i != -1; i--)
+    {
+        *(curPtr)++ = *(curDataPtr)++;
+        *dataPtr = curDataPtr;
+    }
+    return ret;
+}
+
+// static inline s32 read_unaligned_u8(u8 **dataPtr)
+// {
+//     s32 ret = **dataPtr;
+//     *dataPtr++;// = *dataPtr + 1;
+//     return ret;
+// }
+
+
+
+#define read_unaligned_u8(dataPtr) \
+    ({s32 ret = **(&dataPtr); (*(&dataPtr))++; ret; })
+
+#define read_u8_out(out, dataPtr) \
+    {(out) = **(&dataPtr); (*(&dataPtr))++; }
+
+#define read_f32_out(out, dataPtr) { \
+    f32 ret; \
+    s32 i; \
+    u8 *curPtr = (u8*)&out; \
+    for (i = 3; i != -1; i--) \
+    { \
+        *(curPtr)++ = *(*(&dataPtr))++; \
+    } \
+    out = ret; \
+}
+
+#define VEC2S_COPY(dst, src) __builtin_memcpy((dst), (src), sizeof(s16) * 2);
+#define VEC3S_COPY(dst, src) __builtin_memcpy((dst), (src), sizeof(s16) * 3);
+
+struct DataPtr {
+    u8 *ptr;
+};
+// void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, u8 arg3);
+
 #ifdef NON_MATCHING
-void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3) {
+void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3) {
     Vtx *vertexBuffer;
-    u32 vertexCount;
+    s32 vertexCount;
     u8 sp58[4];
     s32 iCmd1;
     struct unkfunc_80093DDC sp48;
@@ -65,40 +131,43 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
     u8 *dataPtr;
     struct ModelData curModel;
     f32 temp_f20;
-    u8 curByteCmd1;
-    u8 v0Cmd8;
-    u8 numTriangles;
-    u8 curCommand;
+    s32 curByteCmd1;
+    s32 v0Cmd8;
+    s32 v1Cmd8;
+    s32 numTriangles;
+    u32 curCommand;
     u8 *gfxBuffer;
-    void *curSubmodelCmd7;
-    void *prevSubmodelCmd7;
-    void *curSubmodelCmd0;
+    struct Submodel *curSubmodelCmd7;
+    struct Submodel *prevSubmodelCmd7;
+    struct Submodel *curSubmodelCmd0;
     s32 vertexIndex;
     Vtx *curVertex;
     s8 phi_v1;
     s32 phi_a0_7;
     s32 num2Triangles;
-    s16 numVertexPositions;
-    s16 numVertexColors;
+    s32 numVertexPositions;
+    s32 numVertexColors;
     u32 s1;
     s16 *textureCoordBuffer;
     s16 *positionIndexBuffer;
-    s16 numTextureCoords;
-    u8 *vertexColors;
+    s32 numTextureCoords;
+    u8 (*vertexColors)[3];
     s16 *vertexPositions;
-    void *textureCoords;
+    s16 *textureCoords;
 
     vertexPositions = NULL;
     textureCoords = NULL;
     vertexColors = NULL;
     positionIndexBuffer = NULL;
+    textureCoordBuffer = NULL;
     vertexBuffer = NULL;
     dataPtr = decompressedBytes;
     if (decompressedSize != 0) {
         push_second_heap_state();
-        numVertexPositions = read_unaligned_s16(dataPtr); // vertex position count
-        arg0->unkE0 =  read_unaligned_s16(dataPtr);
-        arg0->unk100 = read_unaligned_f32(dataPtr);
+        numVertexPositions = read_unaligned_s16(&dataPtr); // vertex position count
+        arg0->unkE0 =  read_unaligned_s16(&dataPtr);
+        read_f32_out(arg0->unk100, dataPtr);
+        // arg0->unk100 = read_unaligned_f32(&dataPtr);
         // Read vertex positions
         if (numVertexPositions > 0) {
             u32 vertexPositionBytes;
@@ -115,7 +184,7 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
             dataPtr += vertexPositionBytes;
         }
         // Read texture coords
-        numTextureCoords = read_unaligned_s16(dataPtr);
+        numTextureCoords = read_unaligned_s16(&dataPtr);
         if (numTextureCoords > 0) {
             u32 textureCoordBytes;
             textureCoordBytes = numTextureCoords * (2 * sizeof(s16));
@@ -131,7 +200,7 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
             dataPtr += textureCoordBytes;
         }
         // Read vertex colors/normals
-        numVertexColors = read_unaligned_s16(dataPtr);
+        numVertexColors = read_unaligned_s16(&dataPtr);
         if (numVertexColors > 0) {
             u32 vertexColorBytes;
             vertexColorBytes = numVertexColors * (3 * sizeof(s8));
@@ -146,7 +215,7 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
             memmove(vertexColors, dataPtr, vertexColorBytes);
             dataPtr += vertexColorBytes;
         }
-        vertexCount = read_unaligned_s16(dataPtr);
+        vertexCount = read_unaligned_s16(&dataPtr);
         vertexBuffer = main_alloc_nozero(vertexCount * sizeof(Vtx));
         if (arg3 & 0x01) {
             arg0->vertexDataStorage->unk14 = main_alloc_nozero(vertexCount * sizeof(s16));
@@ -163,72 +232,100 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
             arg0->vertexDataStorage->unk0 = main_alloc_nozero(vertexCount);
             bzero(arg0->vertexDataStorage->unk0, vertexCount);
         }
-        curVertex = &vertexBuffer[0];
         vertexIndex = 0;
         // Construct vertices
-        while (vertexIndex < vertexCount) {
-            s16 positionIndex;
+        while (1) {
+            s32 positionIndex;
             s16 *temp_v0_7;
-            s16 vertexFlag;
+            s32 vertexFlag;
+            u16 *flagPtr;
+            if (vertexIndex >= vertexCount) break;
             // Copy position
-            positionIndex = read_unaligned_s16(dataPtr);
+            positionIndex = read_unaligned_s16(&dataPtr);
             temp_v0_7 = &vertexPositions[positionIndex * 3];
-            VEC3S_COPY(curVertex->v.ob, temp_v0_7);
+            VEC3S_COPY(vertexBuffer[vertexIndex].v.ob, temp_v0_7);
+            flagPtr = &vertexBuffer[vertexIndex].v.ob[0] + 3;
             if (positionIndexBuffer != NULL) {
                 *positionIndexBuffer = positionIndex;
-                positionIndexBuffer += 2;
+                positionIndexBuffer++;
             }
             // Copy texture coords
-            curVertex->v.tc[1] = 0;
-            curVertex->v.tc[0] = 0;
+            vertexBuffer[vertexIndex].v.tc[1] = 0;
+            vertexBuffer[vertexIndex].v.tc[0] = 0;
             if (numTextureCoords > 0) {
                 s16 textureCoordIndex;
-                textureCoordIndex = read_unaligned_s16(dataPtr);
+                textureCoordIndex = read_unaligned_s16(&dataPtr);
                 if (textureCoordIndex != -1) {
-                    VEC2S_COPY(curVertex->v.tc, &textureCoords[textureCoordIndex * 2]);
+                    VEC2S_COPY(vertexBuffer[vertexIndex].v.tc, &textureCoords[textureCoordIndex * 2]);
                 }
                 if (textureCoordBuffer != NULL) {
                     *textureCoordBuffer = textureCoordIndex;
-                    textureCoordBuffer += 2;
+                    textureCoordBuffer++;
                 }
             }
             // Copy vertex colors/normals
-            vertexFlag = read_unaligned_s16(dataPtr);
-            curVertex->v.flag = vertexFlag;
+            vertexFlag = read_unaligned_s16(&dataPtr);
+            // vertexBuffer[vertexIndex].v.flag = vertexFlag;
+            *flagPtr = vertexFlag;
             if (vertexFlag == -1) {
-                curVertex->v.cn[0] = *dataPtr++;
-                curVertex->v.cn[1] = *dataPtr++;
-                curVertex->v.cn[2] = *dataPtr++;
-                curVertex->v.cn[3] = 0xFF;
-            } else {
-                curVertex->v.cn[0] = vertexColors[vertexFlag * 3 + 0];
-                curVertex->v.cn[1] = vertexColors[vertexFlag * 3 + 1];
-                curVertex->v.cn[2] = vertexColors[vertexFlag * 3 + 2];
-                curVertex->v.cn[3] = *dataPtr++;
+                u8 *ptr = dataPtr;
+                vertexBuffer[vertexIndex].v.cn[0] = ptr[1]; //read_unaligned_u8(&dataPtr);
+                dataPtr = ptr + 2;
+                vertexBuffer[vertexIndex].v.cn[1] = ptr[2]; //read_unaligned_u8(&dataPtr);
+                dataPtr = ptr + 3;
+                vertexBuffer[vertexIndex].v.cn[2] = ptr[3]; //read_unaligned_u8(&dataPtr);
+                dataPtr = ptr + 4;
+                vertexBuffer[vertexIndex].v.cn[3] = 0xFF;
+            } else { 
+                // *flagPtr = vertexFlag;
+                vertexBuffer[vertexIndex].v.cn[0] = vertexColors[vertexFlag][0];
+                vertexBuffer[vertexIndex].v.cn[1] = vertexColors[vertexFlag][1];
+                vertexBuffer[vertexIndex].v.cn[2] = vertexColors[vertexFlag][2];
+                vertexBuffer[vertexIndex].v.cn[3] = *dataPtr++; //read_unaligned_u8(&dataPtr);
             }
             vertexIndex++;
-            curVertex++;
         }
+        curVertex = &vertexBuffer[0];
         // read two bytes dictating how many gfx commands to allocate
-        curModel.unk0 = read_unaligned_s16(dataPtr) * sizeof(Gfx);
+        curModel.unk0 = read_unaligned_s16(&dataPtr) * sizeof(Gfx);
         // allocate the gfx commands
         gfxBuffer = main_alloc_nozero(curModel.unk0);
         temp_f20 = D_8001D6C4;
-        curModel.unk4 = gfxBuffer;
-        curModel.unk8 = gfxBuffer;
+        curModel.unk4 = (Gfx*)gfxBuffer;
+        curModel.unk8 = (Gfx*)gfxBuffer;
         curModel.unkC = (Gfx*)((u8*)gfxBuffer + curModel.unk0);
-        while ((curCommand = *dataPtr++) != 0xD) {
-            curCommand = *dataPtr++;
+        while (1) {
+            struct ModelData *md = &curModel;
+            read_u8_out(curCommand, dataPtr);
+            // curCommand = **(&dataPtr);
+            // (*(&dataPtr))++; // god
+            if (curCommand == 0xD) break;
             switch (curCommand) {
                 case 0:
                     if (arg0->numSubmodels > 0) {
-                        gSPEndDisplayList(curModel.unk8++);
+                        gSPEndDisplayList(md->unk8++);
                     }
                     sp40.unk0_4 = 0;
                     sp40.unk0_0 = 0;
                     sp40.unk1 = 0;
                     sp40.unk2 = 0;
                     sp48 = sp40;
+                    // if (sp48.unk2 == 5) {
+                    //     phi_v1 = 7;
+                    // } else if (sp48.unk2 == 3) {
+                    //     phi_v1 = 5;
+                    // } else if (sp48.unk2 == 4) {
+                    //     phi_v1 = 6;
+                    // } else if (sp48.unk0_4 == 2) {
+                    //     phi_v1 = 4;
+                    // } else if (sp48.unk2 == 2) {
+                    //     phi_v1 = 3;
+                    // } else if (sp48.unk1 == 2) {
+                    //     phi_v1 = 2;
+                    // } else {
+                    //     phi_v1 = sp48.unk2 == 1;
+                    // }
+                    //         if (sp28.unk2 == 5) {
                     if (sp48.unk2 == 5) {
                         phi_v1 = 7;
                     } else if (sp48.unk2 == 3) {
@@ -237,34 +334,34 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
                         phi_v1 = 6;
                     } else if (sp48.unk0_4 == 2) {
                         phi_v1 = 4;
-                    } else if (sp48.unk2 == 2) {
+                    } else if (sp48.unk2 == 1) {
                         phi_v1 = 3;
-                    } else {
+                    } else if (sp48.unk1 == 2) {
                         phi_v1 = 2;
-                        if (sp48.unk1 != 2) {
-                            phi_v1 = sp48.unk2 == 1;
-                        }
+                    } else {
+                        phi_v1 = sp48.unk1 == 1;
                     }
                     sp40.unk3 = phi_v1;
                     sp38 = sp40;
                     curSubmodelCmd0 = &arg0->submodels[arg0->numSubmodels]; // size 0x28 bytes
-                    curSubmodelCmd0->unk0 = curModel.unk8;
+                    curSubmodelCmd0->unk0 = md->unk8;
                     curSubmodelCmd0->unk4 = sp38;
                     curSubmodelCmd0->unk10 = arg0->unk100;
-                    curSubmodelCmd0->unk14 = D_800AF794[0];
-                    curSubmodelCmd0->unk18 = D_800AF794[1];
-                    curSubmodelCmd0->unk1C = D_800AF794[2];
-                    curSubmodelCmd0->unk24 = 2.0f;
+                    VEC3F_COPY(curSubmodelCmd0->unk14, D_800AF794);
+                    // curSubmodelCmd0->unk14[0] = D_800AF794[0];
+                    // curSubmodelCmd0->unk14[1] = D_800AF794[1];
+                    // curSubmodelCmd0->unk14[2] = D_800AF794[2];
+                    *(u32*)(&curSubmodelCmd0->unk24) = 0x40000000;
                     curSubmodelCmd0->unk8 = temp_f20;
                     curSubmodelCmd0->unkC = temp_f20;
                     curSubmodelCmd0->unk20 = 0;
                     curSubmodelCmd0->unk21 = 0;
                     curSubmodelCmd0->unk22 = arg0->unk110;
-                    curSubmodelCmd0->unk10 = read_unaligned_f32(dataPtr);
-                    curSubmodelCmd0->unk14 = read_unaligned_f32(dataPtr);
-                    curSubmodelCmd0->unk18 = read_unaligned_f32(dataPtr);
-                    curSubmodelCmd0->unk1C = read_unaligned_f32(dataPtr);
-                    curSubmodelCmd0->unk24 = read_unaligned_f32(dataPtr);
+                    curSubmodelCmd0->unk10 = read_unaligned_f32(&dataPtr);
+                    curSubmodelCmd0->unk14[0] = read_unaligned_f32(&dataPtr);
+                    curSubmodelCmd0->unk14[1] = read_unaligned_f32(&dataPtr);
+                    curSubmodelCmd0->unk14[2] = read_unaligned_f32(&dataPtr);
+                    curSubmodelCmd0->unk24 = read_unaligned_f32(&dataPtr);
                     break;
                 case 1:
                     iCmd1 = 0;
@@ -274,23 +371,27 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
                     } while (curByteCmd1 != 0);
                     break;
                 case 2:
-                    arg0->submodels[arg0->numSubmodels - 1].unk8 = read_unaligned_f32(dataPtr);
+                    arg0->submodels[arg0->numSubmodels - 1].unk8 = read_unaligned_f32(&dataPtr);
                     break;
                 case 3:
-                    arg0->submodels[arg0->numSubmodels - 1].unkC = read_unaligned_f32(dataPtr);
+                    arg0->submodels[arg0->numSubmodels - 1].unkC = read_unaligned_f32(&dataPtr);
                     break;
                 case 4:
                     arg0->submodels[arg0->numSubmodels - 1].unk20 = *dataPtr++;
                     break;
-                case 5: // Set lighting
-                    gSPSetGeometryMode(curModel.unk8++, G_LIGHTING);
+                case 12:
+                    arg0->submodels[arg0->numSubmodels - 1].unk22 = *dataPtr++;
+                    arg0->unk110 |= 0x1000;
                     break;
-                case 6: // Clear lighting
-                    gSPClearGeometryMode(curModel.unk8++, G_LIGHTING);
+                case 8:
+                    v0Cmd8 = *dataPtr++;
+                    v1Cmd8 = *dataPtr++;
+                    gSPVertex(curModel.unk8++, curVertex, v0Cmd8, v1Cmd8);
+                    curVertex += v0Cmd8;
                     break;
                 case 7:
                     sp28 = arg0->submodels[arg0->numSubmodels - 1].unk4; // 4 byte struct copy
-                    s1 = read_unaligned_s16(dataPtr);
+                    s1 = read_unaligned_s16(&dataPtr);
                     func_80093DDC(&sp38, s1);
                     sp30 = sp38; // 4 byte struct copy
                     if (sp28.unk0_0 != 0 && sp28.unk0_4 != 0 && sp28.unk1 != 0 && sp28.unk2 != 0) {
@@ -309,10 +410,8 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
                             curSubmodelCmd7->unk0 = curModel.unk8;
                             curSubmodelCmd7->unk4 = sp40; // 4 byte struct copy
                             curSubmodelCmd7->unk10 = arg0->unk100;
-                            curSubmodelCmd7->unk14 = D_800AF794.unk0;
-                            curSubmodelCmd7->unk18 = D_800AF794.unk4;
-                            curSubmodelCmd7->unk1C = D_800AF794.unk8;
-                            curSubmodelCmd7->unk24 = 0x40000000;
+                            VEC3F_COPY(curSubmodelCmd7->unk14, D_800AF794);
+                            *(u32*)(&curSubmodelCmd7->unk24) = 0x40000000; // gross
                             curSubmodelCmd7->unk8 = temp_f20;
                             curSubmodelCmd7->unkC = temp_f20;
                             curSubmodelCmd7->unk20 = 0;
@@ -320,10 +419,8 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
                             curSubmodelCmd7->unk22 = arg0->unk110;
                             prevSubmodelCmd7 = curSubmodelCmd7 - 1; // size 0x28 bytes
                             curSubmodelCmd7->unk10 = prevSubmodelCmd7->unk10;
-                            curSubmodelCmd7->unk14 = prevSubmodelCmd7->unk14;
-                            curSubmodelCmd7->unk18 = prevSubmodelCmd7->unk18;
-                            curSubmodelCmd7->unk1C = prevSubmodelCmd7->unk1C;
-                            curSubmodelCmd7->unk24 = prevSubmodelCmd7->unk24;
+                            VEC3F_COPY(curSubmodelCmd7->unk14, prevSubmodelCmd7->unk14);
+                            *(u32*)(&curSubmodelCmd7->unk24) = *(u32*)(&prevSubmodelCmd7->unk24);
                         } else {
                             arg0->submodels[arg0->numSubmodels - 1].unk4 = sp30; // 4 byte struct copy
                         }
@@ -332,55 +429,48 @@ void func_800864A8(struct unkfunc_8001E044 *arg0, s32 decompressedSize, u8 *deco
                     }
                     arg0->unk0->unk6C(arg0, s1, curModel.unk8++);
                     break;
-                case 8:
-                    v0Cmd8 = *dataPtr++;
-                    gSPVertex(curModel.unk8++, vertexBuffer, v0Cmd8, *dataPtr++);
-                    break;
                 case 9:
                     numTriangles = *dataPtr++;
                     if (numTriangles & 1) {
                         s32 i;
                         s32 triangleIndices;
-                        triangleIndices = read_unaligned_s16(dataPtr);
-                        i = 0;
-                        do {
-                            curModel.unk18[i] = triangleIndices & 0x1F;
-                            triangleIndices >>= 5;
-                            i++;
-                        } while (i < 3);
-                        gSP1Triangle(curModel.unk8++, curModel.unk18[0], curModel.unk18[1], curModel.unk18[2]);
                         numTriangles--;
+                        triangleIndices = read_unaligned_s16(&dataPtr);
+                        for (i = 0; i < 3; i++, triangleIndices >>= 5) {
+                            curModel.unk18[0][i] = triangleIndices & 0x1F;
+                        }
+                        gSP1Triangle(curModel.unk8++, curModel.unk18[0][0], curModel.unk18[0][1], curModel.unk18[0][2], 0);
                     }
                     num2Triangles = numTriangles / 2;
-                    while (num2Triangles > 0) {
+                    while (1) {
                         s32 i, j;
                         i = 0;
-                        while (i < 2) {
-                            s32 triangleIndices = read_unaligned_s16(dataPtr);
-                            j = 0;
-                            do {
-                                curModel.unk18[3 & i + j] = triangleIndices & 0x1F;
-                                triangleIndices >>= 5;
-                                j++;
-                            } while (j < 3);
-                            i += 1;
+                        if (num2Triangles <= 0) break;
+                        for (i = 0; i < 2; i++) {
+                            s32 triangleIndices = read_unaligned_s16(&dataPtr);
+                            for (j = 0; j < 3; j++, triangleIndices >>= 5) {
+                                curModel.unk18[i][j] = triangleIndices & 0x1F;
+                            }
                         }
-                        gSP2Triangles(curModel.unk8++, curModel.unk18[0], curModel.unk18[1], curModel.unk18[2], 0, curModel.unk18[3], curModel.unk18[4], curModel.unk18[5]);
+                        gSP2Triangles(curModel.unk8++, curModel.unk18[0][0], curModel.unk18[0][1], curModel.unk18[0][2], 0, curModel.unk18[1][0], curModel.unk18[1][1], curModel.unk18[1][2], 0);
                         num2Triangles--;
                     }
                     break;
-                case 10:
-                    dataPtr += 2;
+                case 5: // Set lighting
+                    gSPSetGeometryMode(curModel.unk8++, G_LIGHTING);
+                    break;
+                case 6: // Clear lighting
+                    gSPClearGeometryMode(curModel.unk8++, G_LIGHTING);
                     break;
                 case 11:
                     arg0->submodels[arg0->numSubmodels - 1].unk21 = 1;
                     break;
-                case 12:
-                    arg0->submodels[arg0->numSubmodels - 1].unk22 = *dataPtr++;
-                    arg0->unk110 |= 0x1000;
+                case 10:
+                    dataPtr += 2;
                     break;
             }
         }
+        after:
         gSPEndDisplayList(curModel.unk8++);
         pop_second_heap_state();
         arg0->unkE8 = vertexBuffer;
