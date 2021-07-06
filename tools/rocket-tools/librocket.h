@@ -43,6 +43,7 @@ struct DecompressionParams {
 };
 
 extern struct DecompressionParams decompressionParamsTable[2];
+int compress(struct DecompressionParams *params, uint32_t decompressedSize, uint8_t *src, uint8_t **dst, int lookahead);
 void decompress(struct DecompressionParams *params, uint32_t compressedSize, uint8_t *src, uint32_t uncompressedSize, uint8_t *dst);
 unsigned int get_texture_address(FILE *romFile, unsigned int assetIndex);
 void read_texture_headers(FILE *romFile, struct Texture *asset, struct TextureCompressionHeader *handlerHeader, unsigned int assetIndex);

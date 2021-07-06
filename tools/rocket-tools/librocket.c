@@ -3,6 +3,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+#define DIVIDE_ROUND_UP(a, b) (((a) + (b) - 1) / (b))
+#define NEAREST_MULTIPLE(a, b) (((a) + (b) - 1) & ~((b) - 1))
+
 typedef int32_t s32;
 typedef uint32_t u32;
 typedef uint16_t u16;
@@ -12,6 +17,177 @@ struct DecompressionParams decompressionParamsTable[2] = {
     {3, 10, 6, 0x3F},
     {3, 11, 5, 0x1F}
 };
+
+struct CompressionWindow {
+    uint16_t length;
+    uint16_t offset;
+};
+
+
+// minOffset and maxOffset are both positive, but go backwards
+// i.e. minOffset = 0 and maxOffset = 10 means look up to 10 bytes before the current position
+static int find_windows(struct CompressionWindow *windows, struct CompressionWindow **bestWindow, uint8_t *input, int curPosition, int minOffset, int maxOffset, int maxLength, int lookahead)
+{
+    int numWindows = 0;
+    int bestLength = 0;
+    uint8_t *curOutput;
+    uint8_t *curWindowPos;
+    uint8_t *lastWindowPos;
+
+    maxOffset = MIN(curPosition, maxOffset);
+    curOutput = input + curPosition;
+    curWindowPos = curOutput - maxOffset;
+    lastWindowPos = curOutput - minOffset;
+
+    while (curWindowPos <= lastWindowPos)
+    {
+        int curLength = 0;
+        uint8_t *curInputByte = curWindowPos;
+        uint8_t *curOutputByte = curOutput;
+        while (*curInputByte == *curOutputByte && curLength < maxLength && (lookahead || curInputByte < curOutput))
+        {
+            curInputByte++;
+            curOutputByte++;
+            curLength++;
+        }
+        if (curLength >= 3)
+        {
+            windows[numWindows].length = curLength;
+            windows[numWindows].offset = curOutput - curWindowPos;
+            if (curLength > bestLength)
+            {
+                *bestWindow = &windows[numWindows];
+                bestLength = curLength;
+            }
+            numWindows++;
+        }
+        curWindowPos++;
+    }
+    return numWindows;
+}
+
+static void put_bit(uint8_t **byteBuffer, uint32_t *bufferLength, uint32_t index, int val)
+{
+    uint32_t byteIndex = index / 8;
+    uint32_t bitIndex = index % 8;
+
+    if (byteIndex > *bufferLength)
+    {
+        *bufferLength *= 2;
+        *byteBuffer = realloc(*byteBuffer, *bufferLength);
+    }
+
+    if (val)
+    {
+        (*byteBuffer)[byteIndex] |= 0x80 >> bitIndex;
+    }
+}
+
+// dst is caller-freed memory!
+int compress(struct DecompressionParams *params, uint32_t decompressedSize, uint8_t *src, uint8_t **dst, int lookahead)
+{
+    uint8_t *outputPtr, *inputPtr;
+    uint32_t i;
+    uint32_t compressedSize;
+
+    // Calculate max offset and length from the given compression parameters
+    uint32_t maxOffset = 0xFFFF >> params->shift;
+    uint32_t maxLength = params->mask + params->lengthOffset - 1;
+
+    // Initialize the layout byte array (may get reallocated later on by put_bit)
+    uint32_t layoutBitIndex = 0;
+    uint32_t layoutByteCount = 16;
+    uint8_t *layoutBytes = malloc(layoutByteCount);
+
+    // Worst (or best?) case scenario where a window is found for every position
+    struct CompressionWindow *windowBuffer = calloc(MIN(maxOffset, decompressedSize), sizeof(struct CompressionWindow));
+    struct CompressionWindow *foundWindows = calloc(decompressedSize, sizeof(struct CompressionWindow));
+    int windowsFound = 0;
+    // Find windows for compression
+    i = 0;
+    while (i < decompressedSize) 
+    {
+        // Look for the best window at this given position
+        struct CompressionWindow *bestWindow;
+        int numWindows = find_windows(windowBuffer, &bestWindow, src, i, 1, maxOffset, MIN(maxLength, decompressedSize - i), lookahead);
+
+        // If any were found, encode that info into the layout bytes 
+        if (numWindows > 0)
+        {
+            i += bestWindow->length;
+            put_bit(&layoutBytes, &layoutByteCount, layoutBitIndex, 1);
+            foundWindows[layoutBitIndex] = *bestWindow;
+            layoutBitIndex++;
+            windowsFound++;
+        }
+        // Otherwise, set the window length of this layout bit to zero to indicate no window found
+        else
+        {
+            i++;
+            put_bit(&layoutBytes, &layoutByteCount, layoutBitIndex, 0);
+            foundWindows[layoutBitIndex].length = 0;
+            layoutBitIndex++;
+        }
+    }
+
+    free(windowBuffer);
+
+    // Assemble compressed output
+    compressedSize =
+        // 1 byte for every 8 layout bits
+        DIVIDE_ROUND_UP(layoutBitIndex, 8) +
+        // 2 bytes for each window
+        windowsFound * 2 +
+        // 1 byte for every position where a window wasn't found
+        layoutBitIndex - windowsFound;
+        // Simplifies to:
+        // DIVIDE_ROUND_UP(layoutBitIndex, 8) +
+        // windowsFound + layoutBitIndex;
+    *dst = malloc(compressedSize);
+    outputPtr = &(*dst)[0];
+    inputPtr = &src[0];
+
+    // Write each layout byte and the subsequent data corresponding to it
+    for (i = 0; i <= layoutBitIndex / 8; i++)
+    {
+        uint32_t j;
+
+        // Write the current layout byte to the output
+        *outputPtr = layoutBytes[i];
+        outputPtr++;
+        // Write either the window or the original byte for each of the 8 layout bits
+        for (j = i * 8; j < MIN(i * 8 + 8, layoutBitIndex); j++)
+        {
+            struct CompressionWindow *curWindow = &foundWindows[j];
+            // If a window was found for this position, write it
+            if (curWindow->length > 0)
+            {
+                // Pack the length and offset into the window bytes based on the current compression parameters
+                unsigned int outputLength = curWindow->length - params->lengthOffset + 1;
+                unsigned int outputOffset = curWindow->offset;
+                unsigned int outputWindow = (outputOffset << params->shift) | outputLength;
+                // Write the window to the output
+                outputPtr[0] = (outputWindow >> 8) & 0xFF;
+                outputPtr[1] = (outputWindow >> 0) & 0xFF;
+                outputPtr += 2;
+                // Skip ahead in the input by the length of the window
+                inputPtr += curWindow->length;
+            }
+            else
+            {
+                // Write a byte directly from the input to the output
+                *outputPtr = *inputPtr;
+                outputPtr += 1;
+                inputPtr += 1;
+            }
+        }
+    }
+
+    free(layoutBytes);
+    free(foundWindows);
+
+    return compressedSize;
+}
 
 // Decompiled from the game
 void decompress(struct DecompressionParams *params, uint32_t compressedSize, uint8_t *src, uint32_t uncompressedSize, uint8_t *dst)
