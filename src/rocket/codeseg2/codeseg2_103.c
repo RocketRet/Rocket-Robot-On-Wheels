@@ -8,13 +8,15 @@ struct unkfunc_8003CBD0 {
 
 extern f32 D_8001AE90;
 
-// TODO float load
-// void func_8003CBD0(struct unkfunc_8003CBD0 *arg0)
-// {
-//     func_800263B4();
-//     arg0->unk230 = D_8001AE90;    
-// }
-
+// float load
+#ifdef NON_MATCHING
+void func_8003CBD0(struct unkfunc_8003CBD0 *arg0)
+{
+    func_800263B4();
+    arg0->unk230 = D_8001AE90;    
+}
+#else
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_103", func_8003CBD0);
+#endif
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_103", func_8003CC04);

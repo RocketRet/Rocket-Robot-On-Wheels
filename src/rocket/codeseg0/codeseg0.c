@@ -210,56 +210,58 @@ void func_8004E60C(void);
 
 extern f32 D_80000500; // 1.0f / 6.0f
 
-// TODO float load
-// void func_80001248(void *arg0)
-// {
-//     f32 f20;
-//     s16 sp10[2];
-//     s32 *sp18; // OSMesg
+// float load
+#ifdef NON_MATCHING
+void func_80001248(void *arg0)
+{
+    f32 f20;
+    s16 sp10[2];
+    s32 *sp18; // OSMesg
 
-//     func_8001DE00();
-//     func_80041908();
-//     func_800638EC(0);
-//     sp10[0] = 0xFF;
-//     osSendMesg(&D_80017DE4, &sp10, OS_MESG_BLOCK);
-//     f20 = D_80000500;
-//     while (1)
-//     {
-//         osRecvMesg(&D_800180A0, &sp18, OS_MESG_BLOCK);
-//         if (sp18[0] != 0)
-//         {
-//             if (sp18[0] == 1)
-//             {
-//                 func_800954FC();
-//             }
-//         }
-//         else
-//         {
-//             func_8008FC1C();
-//             if (gControllerData.buttonHeld)
-//             {
-//                 func_80099A34();
-//             }
-//             func_80061C18();
-//             if (sp18[2] == 0)
-//             {
-//                 read_controller_noblock();
-//                 func_80046CBC();
-//                 func_80037E60(&D_8009FE10, sp18[1]);
-//                 func_8007F22C(&D_8009F094);
-//             }
-//             func_80075100(sp18[1] * f20);
-//             func_80074ADC(&D_800AB9C8, sp18[1] * f20);
-//             func_8004ED04();
-//             func_8004E60C();
-//         }
-//         sp10[0] = 0xFF;
-//         osSendMesg(&D_80017DE4, &sp10, OS_MESG_BLOCK);
-//     }
-//     return;
-// }
-
+    func_8001DE00();
+    func_80041908();
+    func_800638EC(0);
+    sp10[0] = 0xFF;
+    osSendMesg(&D_80017DE4, &sp10, OS_MESG_BLOCK);
+    f20 = D_80000500;
+    while (1)
+    {
+        osRecvMesg(&D_800180A0, &sp18, OS_MESG_BLOCK);
+        if (sp18[0] != 0)
+        {
+            if (sp18[0] == 1)
+            {
+                func_800954FC();
+            }
+        }
+        else
+        {
+            func_8008FC1C();
+            if (gControllerData.buttonHeld)
+            {
+                func_80099A34();
+            }
+            func_80061C18();
+            if (sp18[2] == 0)
+            {
+                read_controller_noblock();
+                func_80046CBC();
+                func_80037E60(&D_8009FE10, sp18[1]);
+                func_8007F22C(&D_8009F094);
+            }
+            func_80075100(sp18[1] * f20);
+            func_80074ADC(&D_800AB9C8, sp18[1] * f20);
+            func_8004ED04();
+            func_8004E60C();
+        }
+        sp10[0] = 0xFF;
+        osSendMesg(&D_80017DE4, &sp10, OS_MESG_BLOCK);
+    }
+    return;
+}
+#else
 INCLUDE_ASM(void, "rocket/codeseg0/codeseg0", func_80001248, void*);
+#endif
 
 void create_scheduler()
 {

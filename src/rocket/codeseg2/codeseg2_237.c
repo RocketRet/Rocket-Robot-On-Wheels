@@ -26,23 +26,25 @@ struct unkfunc_80065194 {
 
 extern const f32 D_8001C574;
 
-// TODO float load
-// void func_80065194(struct unkfunc_80065194 *arg0)
-// {
-//     s32 var;
-//     func_80083734();
-//     // index[array] again
-//     arg0->unk264[arg0->unk268->unk24C] = arg0;
-//     var = 6;
-//     if (arg0->unk264 & 1)
-//     {
-//         var = 5;
-//     }
-//     func_800652F4(arg0, var);
-//     arg0->unk244 = D_8001C574;
-// }
-
+// float load
+#ifdef NON_MATCHING
+void func_80065194(struct unkfunc_80065194 *arg0)
+{
+    s32 var;
+    func_80083734();
+    // index[array] again
+    arg0->unk264[arg0->unk268->unk24C] = arg0;
+    var = 6;
+    if (arg0->unk264 & 1)
+    {
+        var = 5;
+    }
+    func_800652F4(arg0, var);
+    arg0->unk244 = D_8001C574;
+}
+#else
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_237", func_80065194);
+#endif
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_237", func_800651F8);
 

@@ -14,6 +14,7 @@ options:
   symbol_addrs_path: tools/symbol_addrs.txt
   undefined_syms_auto_path: tools/undefined_syms_auto.txt
   undefined_funcs_auto_path: tools/undefined_funcs_auto.txt
+  do_c_func_detection: no
   hi_lo_max_distance: 20
 segments:
   - name: header
@@ -730,14 +731,45 @@ segments:
     - [0x09F640, c, rocket/codeseg2/codeseg2_454]
     - [0x09FA60, c, rocket/codeseg2/codeseg2_455]
     - [0x09FC70, bin]
-    - [0x0B0460, bin, content]
-  - [0xBCC610, bin]
-  - name: bss
+    - [0x0AFF20, .data, rocket/codeseg2/codeseg2_395]
+    - [0x0B0000, bin]
+    - [0x0B0460, .bss, rocket/codeseg0/codeseg0, 0xC880] # 0x800AF860
+    - [0x0B0460, .bss, ../ultra/src/io/pimgr, 0x11D0]    # 0x800BC0E0
+    - [0x0B0460, .bss, lib/codeseg1/player_api, 0x11D0]  # 0x800BD2B0
+  - name: assets
     type: code
-    start: 0xC00000
-    vram: 0x800AF860
+    start: 0x0B0460
     subsections:
-    - [0xC00000, .bss, rocket/codeseg0/codeseg0, 0xC880] # 0x800AF860
-    - [0xC00000, .bss, ../ultra/src/io/pimgr, 0x11D0]    # 0x800BC0E0
-    - [0xC00000, .bss, lib/codeseg1/player_api, 0x11D0]  # 0x800BD2B0
+    - [0x0B0460, bin, assets]
+  - name: audio
+    type: code
+    start: 0x9B6420
+    subsections:
+    - [0x9B6420, bin, fxbank]
+    - [0x9B77F0, bin, ptrbank]
+    - [0x9C01A0, bin, wavebank]
+    - [0xB7ED90, bin, song00]
+    - [0xB85720, bin, song01]
+    - [0xB87D50, bin, song02]
+    - [0xB8A010, bin, song03]
+    - [0xB8D350, bin, song04]
+    - [0xB904C0, bin, song05]
+    - [0xB933F0, bin, song06]
+    - [0xB97820, bin, song07]
+    - [0xB99820, bin, song08]
+    - [0xB9ACB0, bin, song09]
+    - [0xB9C8C0, bin, song0A]
+    - [0xB9E610, bin, song0B]
+    - [0xBA1970, bin, song0C]
+    - [0xBA38E0, bin, song0D]
+    - [0xBA5580, bin, song0E]
+    - [0xBA6780, bin, song0F]
+    - [0xBA85B0, bin, song10]
+    - [0xBAC500, bin, song11]
+    - [0xBAFBD0, bin, song12]
+    - [0xBB6730, bin, song13]
+    - [0xBBBF50, bin, song14]
+    - [0xBC2BE0, bin, song15]
+    - [0xBC4AC0, bin, song16]
+  - [0xBC6610, bin]
   - [0xC00000]

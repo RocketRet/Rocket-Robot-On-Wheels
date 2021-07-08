@@ -13,7 +13,7 @@ extern u8 _dataEndRom[];
 
 extern u32 D_800ADAC8;
 extern u32 D_800ADACC;
-extern u32 D_800ADAD0;
+extern u32 materialTable;
 extern u32 D_800ADAD4;
 extern u32 D_800ADAD8;
 extern u32 D_800ADADC;
@@ -45,7 +45,7 @@ struct unkfunc_800856AC {
 //         D_800ADACC = 0;
 //         textureTableLength = 0;
 //         D_800ADAD4 = 0;
-//         D_800ADAD0 = NULL;
+//         materialTable = NULL;
 //         D_800ADAC8 = NULL;
 //         textureTableAddress = 0;
 //     }
@@ -61,7 +61,7 @@ struct unkfunc_800856AC {
 //         textureTableLength = stuff->unkA;
 
 //         temp_a0_2 = func_800613F8(D_800ADAD4 * 0x10);
-//         D_800ADAD0 = temp_a0_2;
+//         materialTable = temp_a0_2;
 //         bzero(temp_a0_2, D_800ADAD4 * 0x10);
         
 //         temp_a0_2 = func_800613F8(D_800ADADC * 0x8);

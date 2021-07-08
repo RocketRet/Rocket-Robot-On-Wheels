@@ -8,28 +8,30 @@ extern f32 D_8001DCD4;
 
 void vec3f_scale(f32, Vec3f, Vec3f);
 
-// TODO regalloc
-// f32 vec3f_safe_normalize(Vec3f in, Vec3f out)
-// {
-//     f32 magSq;
-//     f32 mag;
-//     f32 ret;
+// float load, regalloc
+#ifdef NON_MATCHING
+f32 vec3f_safe_normalize(Vec3f in, Vec3f out)
+{
+    f32 magSq;
+    f32 mag;
+    f32 ret;
 
-//     magSq = in[0] * in[0] + in[1] * in[1] + in[2] * in[2];
-//     mag = sqrtf(magSq);
-//     if (mag > D_8001DCD0)
-//     {
-//         vec3f_scale(D_8001DCD4 / mag, in, out);
-//     }
-//     else
-//     {
-//         VEC3F_COPY(out, in);
-//     }
+    magSq = in[0] * in[0] + in[1] * in[1] + in[2] * in[2];
+    mag = sqrtf(magSq);
+    if (mag > D_8001DCD0)
+    {
+        vec3f_scale(D_8001DCD4 / mag, in, out);
+    }
+    else
+    {
+        VEC3F_COPY(out, in);
+    }
 
-//     return mag;
-// }
-
+    return mag;
+}
+#else
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_439", vec3f_safe_normalize);
+#endif
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_439", func_8009AA68);
 

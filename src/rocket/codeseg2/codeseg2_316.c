@@ -3,34 +3,34 @@
 #include <types.h>
 #include <mem.h>
 
-extern struct unkD_800ADAD0 *D_800ADAD0;
+extern struct MaterialGfx *materialTable;
 
 struct unkfunc_80079CA0 {
     void *unk0;
     u8 padding[0x27C - 0x04];
-    struct unkD_800ADAD0 unk27C;
+    struct MaterialGfx unk27C;
 };
 
-Gfx *func_800922C4(struct unkD_800ADAD0 *, s32);
+Gfx *func_800922C4(struct MaterialGfx *, s32);
 
 void func_80079CA0(struct unkfunc_80079CA0 *arg0, s32 arg1, Gfx *arg2) {
-    struct unkD_800ADAD0 *temp_a0;
+    struct MaterialGfx *temp_a0;
     s32 maskedAddress;
-    struct TextureGroup *prevTextureGroup;
-    struct TextureGroup *textureGroup;
+    struct TexturedMaterial *prevTextureGroup;
+    struct TexturedMaterial *materialData;
 
     if (arg1 != -1) {
-        temp_a0 = &D_800ADAD0[arg1];
-        prevTextureGroup = temp_a0->textureGroup;
+        temp_a0 = &materialTable[arg1];
+        prevTextureGroup = temp_a0->materialData;
         maskedAddress = (u32)prevTextureGroup & 0xF0000000;
         if (maskedAddress != 0) {
             if (maskedAddress == 0x80000000) {
-                textureGroup = prevTextureGroup;
+                materialData = prevTextureGroup;
             } else {
-                textureGroup = load_texture_group(temp_a0);
+                materialData = load_textured_material(temp_a0);
             }
-            if (textureGroup->header.numTextures > 1) {
-                arg0->unk27C.textureGroup = D_800ADAD0[arg1].textureGroup;
+            if (materialData->header.numTextures > 1) {
+                arg0->unk27C.materialData = materialTable[arg1].materialData;
                 gSPDisplayList(arg2, func_800922C4(&arg0->unk27C, 1));
             } else {
                 func_80086310(arg0, arg1, arg2);

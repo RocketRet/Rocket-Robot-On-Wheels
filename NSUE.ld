@@ -1420,23 +1420,82 @@ SECTIONS
         BUILD_DIR/src/rocket/codeseg2/codeseg2_455.o(.text);
         codeseg2_9FC70_bin = .;
         BUILD_DIR/bin/codeseg2_9FC70.o(.data);
-        content_bin = .;
-        BUILD_DIR/bin/content.o(.data);
-    SPLAT_END_SEG(code_codeseg2, 0xBCC610)
-    
-    SPLAT_BEGIN_SEG(data_BCC610, 0xBCC610, 0xBCC610, SUBALIGN(16))
-        bin_BCC610_bin = .;
-        BUILD_DIR/bin/bin_BCC610.o(.data);
-    SPLAT_END_SEG(data_BCC610, 0xC00000)
-    
-    SPLAT_BEGIN_SEG(code_bss, 0xC00000, 0x800AF860, SUBALIGN(16))
+        rocket_codeseg2_codeseg2_395_c = .;
+        BUILD_DIR/src/rocket/codeseg2/codeseg2_395.o(.data);
+        codeseg2_B0000_bin = .;
+        BUILD_DIR/bin/codeseg2_B0000.o(.data);
         rocket_codeseg0_codeseg0_c = .;
         BUILD_DIR/src/rocket/codeseg0/codeseg0.o(.bss);
         ___ultra_src_io_pimgr_c = .;
         BUILD_DIR/src/../ultra/src/io/pimgr.o(.bss);
         lib_codeseg1_player_api_c = .;
         BUILD_DIR/src/lib/codeseg1/player_api.o(.bss);
-    SPLAT_END_SEG(code_bss, 0xC00000)
+    SPLAT_END_SEG(code_codeseg2, 0xB0460)
+    
+    SPLAT_BEGIN_SEG(code_assets, 0xB0460, 0xB0460, SUBALIGN(16))
+        assets_bin = .;
+        BUILD_DIR/bin/assets.o(.data);
+    SPLAT_END_SEG(code_assets, 0x9B6420)
+    
+    SPLAT_BEGIN_SEG(code_audio, 0x9B6420, 0x9B6420, SUBALIGN(16))
+        fxbank_bin = .;
+        BUILD_DIR/bin/fxbank.o(.data);
+        ptrbank_bin = .;
+        BUILD_DIR/bin/ptrbank.o(.data);
+        wavebank_bin = .;
+        BUILD_DIR/bin/wavebank.o(.data);
+        song00_bin = .;
+        BUILD_DIR/bin/song00.o(.data);
+        song01_bin = .;
+        BUILD_DIR/bin/song01.o(.data);
+        song02_bin = .;
+        BUILD_DIR/bin/song02.o(.data);
+        song03_bin = .;
+        BUILD_DIR/bin/song03.o(.data);
+        song04_bin = .;
+        BUILD_DIR/bin/song04.o(.data);
+        song05_bin = .;
+        BUILD_DIR/bin/song05.o(.data);
+        song06_bin = .;
+        BUILD_DIR/bin/song06.o(.data);
+        song07_bin = .;
+        BUILD_DIR/bin/song07.o(.data);
+        song08_bin = .;
+        BUILD_DIR/bin/song08.o(.data);
+        song09_bin = .;
+        BUILD_DIR/bin/song09.o(.data);
+        song0A_bin = .;
+        BUILD_DIR/bin/song0A.o(.data);
+        song0B_bin = .;
+        BUILD_DIR/bin/song0B.o(.data);
+        song0C_bin = .;
+        BUILD_DIR/bin/song0C.o(.data);
+        song0D_bin = .;
+        BUILD_DIR/bin/song0D.o(.data);
+        song0E_bin = .;
+        BUILD_DIR/bin/song0E.o(.data);
+        song0F_bin = .;
+        BUILD_DIR/bin/song0F.o(.data);
+        song10_bin = .;
+        BUILD_DIR/bin/song10.o(.data);
+        song11_bin = .;
+        BUILD_DIR/bin/song11.o(.data);
+        song12_bin = .;
+        BUILD_DIR/bin/song12.o(.data);
+        song13_bin = .;
+        BUILD_DIR/bin/song13.o(.data);
+        song14_bin = .;
+        BUILD_DIR/bin/song14.o(.data);
+        song15_bin = .;
+        BUILD_DIR/bin/song15.o(.data);
+        song16_bin = .;
+        BUILD_DIR/bin/song16.o(.data);
+    SPLAT_END_SEG(code_audio, 0xBC6610)
+    
+    SPLAT_BEGIN_SEG(data_BC6610, 0xBC6610, 0xBC6610, SUBALIGN(16))
+        bin_BC6610_bin = .;
+        BUILD_DIR/bin/bin_BC6610.o(.data);
+    SPLAT_END_SEG(data_BC6610, 0xC00000)
     /DISCARD/ :
     {
         *(*);

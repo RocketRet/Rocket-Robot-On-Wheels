@@ -16,16 +16,16 @@ void texture_handler_decompress(u32 assetAddress, struct TextureCompressionHeade
     pop_second_heap_state();
 }
 
-struct TextureGroup *load_texture_group(struct unkD_800ADAD0 *arg0) {
-    u32 curRomAddr;
+struct TexturedMaterial *load_textured_material(struct MaterialGfx *material) {
+    uintptr_t curRomAddr;
     s32 curDimension;
-    struct TextureGroup *textureGroup;
+    struct TexturedMaterial *textureGroup;
     s32 i;
 
-    curRomAddr = (u32)arg0->textureGroup;
-    textureGroup = main_alloc_bzero(sizeof(struct TextureGroup));
+    curRomAddr = material->materialData;
+    textureGroup = main_alloc_bzero(sizeof(struct TexturedMaterial));
 
-    dma_read(curRomAddr, (void*)((u32)textureGroup + 4), sizeof(struct TextureGroupHeader));
+    dma_read(curRomAddr, &textureGroup->header, sizeof(struct TextureGroupHeader));
     curRomAddr += sizeof(struct TextureGroupHeader);
     textureGroup->textures = main_alloc_bzero(textureGroup->header.numTextures * sizeof(struct Texture *));
     
@@ -39,7 +39,7 @@ struct TextureGroup *load_texture_group(struct unkD_800ADAD0 *arg0) {
         dma_read(curRomAddr, &curTextureIndex, sizeof(curTextureIndex));
         curRomAddr += sizeof(curTextureIndex);
         
-        // curGroupTexturePointer = &s0->textures[i];
+        // curGroupTexturePointer = &textureGroup->textures[i];
         curGroupTexturePointer = (struct Texture**)(i * 4 + (u32)textureGroup->textures); // Doesn't match as an array index or pointer arithmetic
         
         if ((((u32)textureTable[curTextureIndex]) & 0xF0000000) == 0x80000000) {
@@ -62,36 +62,36 @@ struct TextureGroup *load_texture_group(struct unkD_800ADAD0 *arg0) {
         textureGroup->heightPower++;
     }
     textureGroup->unk22 = (textureGroup->header.unk8 & 2) ? 0 : 2;
-    textureGroup->romAddress = (u32)arg0->textureGroup;
-    arg0->textureGroup = textureGroup;
+    textureGroup->romAddress = material->materialData;
+    material->materialData = (uintptr_t)textureGroup;
     return textureGroup;
 }
 
-struct Texture *load_texture(struct Texture **param_1)
+struct Texture *load_texture(struct MaterialGfx *material)
 {
-    struct Texture *asset;
+    struct Texture *texture;
     struct TextureCompressionHeader compressionHeader;
     u32 curRomAddr;
 
-    curRomAddr = (u32)*param_1;
+    curRomAddr = material->materialData;
     
-    asset = main_alloc_bzero(sizeof(struct Texture));
+    texture = main_alloc_bzero(sizeof(struct Texture));
 
-    dma_read(curRomAddr, asset, sizeof(struct TextureHeader));
+    dma_read(curRomAddr, texture, sizeof(struct TextureHeader));
     curRomAddr += sizeof(struct TextureHeader);
 
     dma_read(curRomAddr, &compressionHeader, sizeof(struct TextureCompressionHeader));
     curRomAddr += sizeof(struct TextureCompressionHeader);
 
-    asset->imageData = main_alloc_nozero(asset->header.imageBytes);
-    textureHandlers[compressionHeader.handlerIndex](curRomAddr, &compressionHeader, asset);
+    texture->imageData = main_alloc_nozero(texture->header.imageBytes);
+    textureHandlers[compressionHeader.handlerIndex](curRomAddr, &compressionHeader, texture);
     curRomAddr += compressionHeader.compressedLength;
-    if (asset->header.paletteBytes > 0)
+    if (texture->header.paletteBytes > 0)
     {
-        asset->paletteData = main_alloc_nozero(asset->header.paletteBytes);
-        dma_read(curRomAddr, asset->paletteData, asset->header.paletteBytes);
+        texture->paletteData = main_alloc_nozero(texture->header.paletteBytes);
+        dma_read(curRomAddr, texture->paletteData, texture->header.paletteBytes);
     }
-    return asset;
+    return texture;
 }
 
 void adjust_texture_table(void)

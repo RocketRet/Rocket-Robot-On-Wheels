@@ -29,7 +29,7 @@ void decompress(struct DecompressionParams *arg0, u32 compressedSize, u8 *src, u
 void push_second_heap_state();
 void pop_second_heap_state();
 
-struct Texture *load_texture(struct Texture **param_1);
-struct TextureGroup *load_texture_group(struct unkD_800ADAD0 *arg0);
+struct Texture *load_texture(struct MaterialGfx *material);
+struct TexturedMaterial *load_textured_material(struct MaterialGfx *arg0);
 
 #endif

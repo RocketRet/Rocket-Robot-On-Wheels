@@ -68,25 +68,27 @@ void vec3f_cross_product(Vec3f, Vec3f, Vec3f);
 f32 vec3f_safe_normalize(Vec3f in, Vec3f out);
 f32 vec3f_magnitude(Vec3f);
 
-// TODO float load
-// void func_80057C6C(Vec3f *arg0, Mtx3f arg1)
-// {
-//     f32 mag = vec3f_magnitude(arg0);
-//     if (mag < D_8001BA78)
-//     {
-//         bzero(arg1, sizeof(Mtx3f));
-//         arg1[0][0] = arg1[1][1] = arg1[2][2] = D_8001BA7C;
-//     }
-//     else
-//     {
-//         vec3f_scale(D_8001BA80 / mag, arg0, arg1[0]);
-//         vec3f_cross_product(D_800AF788, arg1[0], arg1[1]);
-//         vec3f_safe_normalize(arg1[1], D_800AF77C);
-//         vec3f_cross_product(arg1[0], arg1[1], arg1[2]);
-//     }
-// }
-
+// float load
+#ifdef NON_MATCHING
+void func_80057C6C(Vec3f *arg0, Mtx3f arg1)
+{
+    f32 mag = vec3f_magnitude(arg0);
+    if (mag < D_8001BA78)
+    {
+        bzero(arg1, sizeof(Mtx3f));
+        arg1[0][0] = arg1[1][1] = arg1[2][2] = D_8001BA7C;
+    }
+    else
+    {
+        vec3f_scale(D_8001BA80 / mag, arg0, arg1[0]);
+        vec3f_cross_product(D_800AF788, arg1[0], arg1[1]);
+        vec3f_safe_normalize(arg1[1], D_800AF77C);
+        vec3f_cross_product(arg1[0], arg1[1], arg1[2]);
+    }
+}
+#else
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_208", func_80057C6C);
+#endif
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_208", func_80057D28);
 

@@ -13,8 +13,8 @@ struct unkfunc_8002E45C {
     s32 unk240;
 };
 
-void func_8002E45C(struct unkfunc_8002E45C *arg0)
+void func_8002E45C(struct unkfunc_8002E45C *arg0, s32 arg1, u8 *dataPtr)
 {
     arg0->unk240 = 0xC7;
-    func_800875E8();
+    func_800875E8(arg0, arg1, dataPtr);
 }

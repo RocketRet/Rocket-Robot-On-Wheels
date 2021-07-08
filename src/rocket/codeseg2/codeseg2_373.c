@@ -2,16 +2,16 @@
 #include <ultra64.h>
 #include <types.h>
 
-extern struct unkD_800ADAD0 *D_800ADAD0;
+extern struct MaterialGfx *materialTable;
 
-Gfx *func_800922C4(struct unkD_800ADAD0 *, s32);
+Gfx *func_800922C4(struct MaterialGfx *, s32);
 
 void func_80086310(s32 arg0, s32 arg1, Gfx *arg2)
 {
     if (arg1 != -1)
     {
-        struct unkD_800ADAD0 *tmp = &D_800ADAD0[arg1];
-        Gfx *g = tmp->unk8;
+        struct MaterialGfx *tmp = &materialTable[arg1];
+        Gfx *g = tmp->gfx;
         if (g == 0)
         {
             g = func_800922C4(tmp, 0);

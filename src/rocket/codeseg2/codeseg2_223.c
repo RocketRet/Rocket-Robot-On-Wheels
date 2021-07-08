@@ -95,39 +95,41 @@ void pop_second_heap_state()
     D_800E48B0 = D_800E48C0[D_800E48B8--];
 }
 
-// TODO regalloc
-// void memcpy(u8 *dst, u8 *src, s32 count)
-// {
-//     if (count >= 100 && ((uintptr_t)src & 3) == ((uintptr_t)dst & 3))
-//     {
-//         s32 byteCopies = (4 - ((uintptr_t)src & 3)) & 3;
-//         s32 dwordCopies = (u32)(count - byteCopies) / 8;
-//         s32 byteCopies2 = (count - byteCopies) & 7;
-//         for (;--byteCopies >= 0;)
-//         {
-//             *dst++ = *src++;
-//         }
-//         for (;--dwordCopies >= 0;)
-//         {
-//             *(u64*)dst = *(u64*)src;
-//             dst += 8;
-//             src += 8;
-//         }
-//         for (; --byteCopies2 >= 0;)
-//         {
-//             *dst++ = *src++;
-//         }
-//     }
-//     else
-//     {
-//         while (--count >= 0)
-//         {
-//             *dst++ = *src++;
-//         }
-//     }
-// }
-
+// regalloc
+#ifdef NON_MATCHING
+void memcpy(u8 *dst, u8 *src, s32 count)
+{
+    if (count >= 100 && ((uintptr_t)src & 3) == ((uintptr_t)dst & 3))
+    {
+        s32 byteCopies = (4 - ((uintptr_t)src & 3)) & 3;
+        s32 dwordCopies = (u32)(count - byteCopies) / 8;
+        s32 byteCopies2 = (count - byteCopies) & 7;
+        for (;--byteCopies >= 0;)
+        {
+            *dst++ = *src++;
+        }
+        for (;--dwordCopies >= 0;)
+        {
+            *(u64*)dst = *(u64*)src;
+            dst += 8;
+            src += 8;
+        }
+        for (; --byteCopies2 >= 0;)
+        {
+            *dst++ = *src++;
+        }
+    }
+    else
+    {
+        while (--count >= 0)
+        {
+            *dst++ = *src++;
+        }
+    }
+}
+#else
 INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_223", memcpy, u8*, u8*, s32);
+#endif
 
 void memmove(u8 *dst, u8 *src, s32 count)
 {

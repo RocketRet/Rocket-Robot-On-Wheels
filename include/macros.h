@@ -1,6 +1,8 @@
 #ifndef __MACROS_H__
 #define __MACROS_H__
 
+#define ROMADDR(x) ((u32)x + 0xB0000000)
+
 #define RAM_END 0x80400000
 #define FRAMEBUFFER_BYTES ((SCREEN_WIDTH) * (SCREEN_HEIGHT) * 2)
 

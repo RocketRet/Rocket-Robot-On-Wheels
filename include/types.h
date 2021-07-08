@@ -100,8 +100,8 @@ struct TextureGroupHeader {
     u32 unk1C;
 };
 
-struct TextureGroup {
-    u32 romAddress;
+struct TexturedMaterial {
+    uintptr_t romAddress;
     struct TextureGroupHeader header;
     u8 widthPower;  // Width as a power of two (rounded up)
     u8 heightPower; // Height as a power of two (rounded up)
@@ -109,11 +109,11 @@ struct TextureGroup {
     struct Texture **textures;
 };
 
-struct unkD_800ADAD0 {
-    struct TextureGroup *textureGroup;
-    u32 unk4;
-    Gfx *unk8;
-    s32 unkC;
+struct MaterialGfx {
+    uintptr_t materialData; // ROM address of textured material data, RAM address of TexturedMaterial struct, or color of solid shaded material (00RRGGBB)
+    u32 gfxCount; // Number of Gfx commands, or zero if not loaded
+    Gfx *gfx; // Pointer to Gfx command array
+    struct MaterialGfx **unkC;
 };
 
 struct unkfunc_80091F54 {

@@ -5,7 +5,7 @@
 #ifndef INCLUDE_ASM
 #define INCLUDE_ASM(TYPE, FOLDER, NAME, ARGS...) \
   TYPE NAME(ARGS);\
-  __asm__( ".include \"asm/nonmatchings/"FOLDER"/"#NAME".s\"\nglabel "#NAME"_end\n.set reorder\n.set at");
+  __asm__( ".section .text\n.include \"asm/nonmatchings/"FOLDER"/"#NAME".s\"\nglabel "#NAME"_end\n.set reorder\n.set at");
 #endif
 __asm__( ".include \"include/macro.inc\"\n");
 #else

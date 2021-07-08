@@ -8,14 +8,16 @@ extern f32 D_8001BA30;
 
 f32 clampf_abs(f32, f32);
 
-// TODO float load
-// f32 func_80057280(Mtx3f arg0)
-// {
-//     f32 sum = arg0[0][0] + arg0[1][1] + arg0[2][2];
-//     return clampf_abs((sum - D_8001BA20) * D_8001BA28, D_8001BA30); //clampf_abs((sum - 1.0) * 0.5, 1)
-// }
-
-INCLUDE_ASM(f32, "rocket/codeseg2/codeseg2_204", func_80057280, f32, f32);
+// float load
+#ifdef NON_MATCHING
+f32 func_80057280(Mtx3f arg0)
+{
+    f32 sum = arg0[0][0] + arg0[1][1] + arg0[2][2];
+    return clampf_abs((sum - D_8001BA20) * D_8001BA28, D_8001BA30); //clampf_abs((sum - 1.0) * 0.5, 1)
+}
+#else
+INCLUDE_ASM(f32, "rocket/codeseg2/codeseg2_204", func_80057280, Mtx3f);
+#endif
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_204", func_800572D8);
 
