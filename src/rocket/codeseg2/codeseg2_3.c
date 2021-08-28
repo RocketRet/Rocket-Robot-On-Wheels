@@ -37,8 +37,6 @@ void func_8001DFD0(struct unkfunc_8001DFD0 *arg0)
 
 void func_80085D04(u8 **dataPtrPtr, Vec3f arg1, Mtx3f arg2);
 
-// TODO function call load order
-#ifdef NON_MATCHING
 void func_8001E044(struct Model *arg0, s32 arg1, u8 *dataPtr)
 {
     s32 decompressedSize;
@@ -46,26 +44,28 @@ void func_8001E044(struct Model *arg0, s32 arg1, u8 *dataPtr)
     s32 compressedSize;
     s32 vertexStorageFlags;
     struct Submodel *submodelBuffer;
+    u8 **dataPtrPtr = &dataPtr; // Needed for matching, can't just reference directly
+    // The use of a pointer to dataPtr to match seems to be a recurring theme
 
-    func_80085D04(&dataPtr, &arg0->unk3C, &arg0->unk18);
-    func_80085C68(&dataPtr, arg0);
+    func_80085D04(dataPtrPtr, &arg0->unk3C, &arg0->unk18);
+    func_80085C68(dataPtrPtr, arg0);
     push_second_heap_state();
     submodelBuffer = alloc_second_heap(512 * sizeof(struct Submodel));
 
     arg0->submodels = submodelBuffer;
 
-    dataPtr = ALIGN_PTR(dataPtr, 4);
-    vertexStorageFlags = READ_VALUE(dataPtr, u32);
-    decompressedSize = READ_VALUE(dataPtr, u32);
-    compressedSize = READ_VALUE(dataPtr, u32);
+    *dataPtrPtr = ALIGN_PTR(*dataPtrPtr, 4);
+    vertexStorageFlags = READ_VALUE(*dataPtrPtr, u32);
+    decompressedSize = READ_VALUE(*dataPtrPtr, u32);
+    compressedSize = READ_VALUE(*dataPtrPtr, u32);
 
     decompressedBytes = alloc_second_heap(decompressedSize);
 
-    decompress(&compressionParamsTable[0], compressedSize, dataPtr, decompressedSize, decompressedBytes);
+    decompress(&compressionParamsTable[0], compressedSize, *dataPtrPtr, decompressedSize, decompressedBytes);
 
     arg0->unk0->unk68(arg0, decompressedSize, decompressedBytes, vertexStorageFlags); // always func_800864A8 from testing
 
-    dataPtr += compressedSize;
+    *dataPtrPtr += compressedSize;
 
     if (arg0->numSubmodels > 0)
     {
@@ -80,9 +80,6 @@ void func_8001E044(struct Model *arg0, s32 arg1, u8 *dataPtr)
         arg0->unk0->unk40(arg0);
     }
 }
-#else
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E044);
-#endif
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E198);
 

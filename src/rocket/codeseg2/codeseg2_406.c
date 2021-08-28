@@ -71,7 +71,7 @@ struct Texture *load_texture(struct MaterialGfx *material)
 {
     struct Texture *texture;
     struct TextureCompressionHeader compressionHeader;
-    u32 curRomAddr;
+    uintptr_t curRomAddr;
 
     curRomAddr = material->materialData;
     
@@ -106,7 +106,7 @@ void adjust_texture_table(void)
     iVar1 = textureTableLength;
     for (iVar3 = 0; iVar3 < iVar1; iVar3++)
     {
-        piVar2[iVar3] = (struct Texture *)((u32)piVar2[iVar3] + (u32)_dataEndRom);
+        piVar2[iVar3] = (struct Texture *)((uintptr_t)piVar2[iVar3] + (uintptr_t)_dataEndRom);
     }
 }
 

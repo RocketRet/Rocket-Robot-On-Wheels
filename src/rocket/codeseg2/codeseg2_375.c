@@ -482,48 +482,233 @@ void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedByt
 INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_375", func_800864A8, struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3);
 #endif
 
-struct unkD_800AC7F0 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-    void (*unk10)();
-};
+extern struct unkfunc_8001E044_inner *D_800AC7F0[];
 
-extern struct unkD_800AC7F0 *D_800AC7F0[];
-
-// TODO typing
-struct unkD_800AC7F0 **func_800872F8(s32 arg0, s32 arg1, s32 arg2)
+struct Model *func_800872F8(s32 arg0, void *arg1, s32 arg2)
 {
-    struct unkD_800AC7F0 **ret;
-    struct unkD_800AC7F0 *var;
+    struct Model *ret;
+    struct unkfunc_8001E044_inner *var;
 
     var = D_800AC7F0[arg0];
     ret = main_alloc_bzero(var->unkC);
-    *ret = var;
+    ret->unk0 = var;
     var->unk10(ret, arg1, arg2);
     return ret;
 }
 
-// TODO typing
-struct unkD_800AC7F0 **func_80087374(s32 **arg0, s32 arg1, s32 arg2)
+// TODO arg0 typing
+struct Model *func_80087374(s32 **arg0, s32 arg1, s32 arg2)
 {
-    struct unkD_800AC7F0 **ret;
-    struct unkD_800AC7F0 *var;
+    struct Model *ret;
+    struct unkfunc_8001E044_inner *var;
 
     var = D_800AC7F0[(*arg0)[1]];
     ret = main_alloc_bzero(var->unkC);
-    *ret = var;
+    ret->unk0 = var;
     var->unk10(ret, arg1, arg2);
-    (*ret)[3].unk10(ret, arg0);
+    ret->unk0->unk4C(ret, arg0);
     return ret;
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087418);
+struct DataAndHeader {
+    u8 *dataPtr;
+    u32 pad;
+    u32 header[2];
+};
+
+struct Model *func_80087418(u32 *romPtr, struct unkfunc_800882B8 *arg1, s32 arg2) {
+    struct DataAndHeader sp10;
+    s32 temp_s4;
+    s32 dataLen;
+    void *temp_a1;
+    struct unkfunc_8001E044_inner *handler;
+    void *temp_v0;
+    struct Model *model;
+    u8 **test = &sp10.dataPtr;
+
+    push_second_heap_state();
+    *romPtr = ALIGN(*romPtr, 4);
+    dma_read(*romPtr, sp10.header, 8);
+    *romPtr += 8;
+    dataLen = sp10.header[1] - 8;
+    *test = alloc_second_heap(dataLen);
+    dma_read(*romPtr, *test, dataLen);
+    *romPtr += dataLen;
+    handler = D_800AC7F0[READ_VALUE(*test, s32)];
+    temp_s4 = READ_VALUE(*test, s32);
+    model = main_alloc_bzero(handler->unkC);
+    model->unk0 = handler;
+    handler->unk10(model, arg1, arg2);
+    model->unk8 = arg1->unk38++;
+    model->unk4 = temp_s4;
+    model->unk0->unk20(model, romPtr, *test);
+    return model;
+}
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087554);
 
+#ifdef NON_MATCHING
+void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
+    // Do I think they used a union? No
+    // Can I match it without one? Also no
+    union {
+        Vec3f vec;
+        struct DataAndHeader data;
+    } sp18;
+    f32 temp_f0;
+    s32 temp_s3;
+    s32 temp_s5_2;
+    s32 temp_fp;
+    s32 temp_s3_3;
+    s32 temp_v0_10;
+    s32 temp_v1_4;
+    u32 temp_s0_2;
+    u32 temp_s2;
+    u8 *temp_s0;
+    u8 *temp_s1;
+    s32 *temp_s0_3;
+    s32 *temp_s3_2;
+    struct Submodel *temp_s5;
+    s32 phi_a3;
+    s32 phi_a1_2;
+    s32 phi_a2_3;
+    s32 phi_s5;
+    u32 *romPtr;
+
+    romPtr = &romAddr;
+    temp_fp = READ_VALUE(dataPtr, s32);
+    read_vec3f(&dataPtr, arg0->unk3C);
+    read_vec3f(&dataPtr, sp18.vec);
+    mtx3f_axis_angle(sp18.vec, arg0->unk18);
+    dataPtr = ALIGN_PTR(dataPtr, 4);
+    dataPtr += 4; // skip record type
+    temp_s0 = dataPtr + READ_VALUE(dataPtr, u32) - 8; // read record length
+    while (dataPtr != temp_s0) {
+        s32 val;
+        dataPtr = ALIGN_PTR(dataPtr, 2);
+        val = READ_VALUE(dataPtr, u16);
+        func_80085978(val, &dataPtr, arg0);
+    }
+    push_second_heap_state();
+    // submodelBuffer = alloc_second_heap(512 * sizeof(struct Submodel));
+    temp_s5 = alloc_second_heap(512 * sizeof(struct Submodel));
+    arg0->submodels = temp_s5;
+    dataPtr = ALIGN_PTR(dataPtr, 4);
+    arg0->unk110 = READ_VALUE(dataPtr, s16);
+    temp_s3 = READ_VALUE(dataPtr, s16);
+    temp_s0_2 = READ_VALUE(dataPtr, s32);
+    temp_s2 = READ_VALUE(dataPtr, s32);
+    temp_s1 = alloc_second_heap(temp_s0_2);
+    decompress(compressionParamsTable, temp_s2, dataPtr, temp_s0_2, temp_s1);
+    arg0->unk0->unk68(arg0, temp_s0_2, temp_s1, temp_s3);
+    temp_v1_4 = arg0->numSubmodels;
+    dataPtr += temp_s2;
+    if (temp_v1_4 > 0) {
+        arg0->submodels = main_alloc_copy(temp_v1_4 * sizeof(struct Submodel), (u8 *) temp_s5);
+    } else {
+        arg0->submodels = NULL;
+    }
+    pop_second_heap_state();
+    dataPtr = ALIGN_PTR(dataPtr, 2);
+    if (READ_VALUE(dataPtr, s16) != 0) {
+        struct unkVertexDataStorage28 *phi_a2;
+        alloc_vertex_data_storage(arg0);
+        arg0->vertexDataStorage->unk28 = main_alloc_nozero(arg0->numSubmodels * sizeof(struct unkVertexDataStorage28));
+        phi_a2 = arg0->vertexDataStorage->unk28;
+        for (phi_a3 = 0; phi_a3 < arg0->numSubmodels; phi_a3++) {
+            phi_a2->unk0 = 0;
+            phi_a2->unk4 = READ_VALUE(dataPtr, s16);
+            phi_a2->unk8 = READ_VALUE(dataPtr, s16);
+            phi_a2->unkC = READ_VALUE(dataPtr, s16);
+            phi_a2++;
+        }
+    }
+    dataPtr = ALIGN_PTR(dataPtr, 4);
+    if (((u32*)dataPtr)[0] == 0xF) {
+        dataPtr += 8;
+        dataPtr = ALIGN_PTR(dataPtr, 4);
+        arg0->unk124 = READ_VALUE(dataPtr, f32);
+        arg0->unk128 = READ_VALUE(dataPtr, f32);
+        arg0->unk12C = READ_VALUE(dataPtr, f32);
+        arg0->unk120 = READ_VALUE(dataPtr, f32);
+    }
+    dataPtr = ALIGN_PTR(dataPtr, 4);
+    if (((u32*)dataPtr)[1] >= 9) {
+        dataPtr += 0x8;
+        temp_s0_3 = &arg0->unk140;
+        temp_s3_2 = &arg0->unk158;
+        arg0->unk112_7 = READ_VALUE(dataPtr, s16);
+        temp_s5_2 = READ_VALUE(dataPtr, s16);
+        dataPtr = ALIGN_PTR(dataPtr, 4);
+        temp_v0_10 = READ_VALUE(dataPtr, s32);
+        arg0->unk140 = temp_v0_10;
+        arg0->unk144 = main_alloc_nozero(temp_v0_10 * sizeof(Vec3f));
+        dataPtr = ALIGN_PTR(dataPtr, 4);
+        for (phi_a2_3 = 0; phi_a2_3 < *temp_s0_3; phi_a2_3++) {
+            for (phi_a1_2 = 0; phi_a1_2 < 3; phi_a1_2++) {
+                arg0->unk144[phi_a2_3][phi_a1_2] = READ_VALUE(dataPtr, f32);
+            }
+        }
+        func_80085E90(&dataPtr, temp_s0_3);
+        if (arg0->unk112_7) {
+            __builtin_memcpy(&temp_s3_2[0], &temp_s0_3[0], 4 * sizeof(s32));
+            __builtin_memcpy(&temp_s3_2[4], &temp_s0_3[4], 2 * sizeof(s32));
+        } else {
+            func_80046AAC(temp_s3_2, temp_s0_3);
+        }
+        func_800861A8(&dataPtr, &arg0->unk158, &arg0->unk178, &arg0->unk17C, &arg0->unk180);
+        if (temp_s5_2 != 0) {
+            alloc_vertex_data_storage(arg0);
+            arg0->vertexDataStorage->unk24 = main_alloc_copy(arg0->unk178 * 2, dataPtr);
+            dataPtr += arg0->unk178 * 2;
+        }
+        dataPtr = ALIGN_PTR(dataPtr, 4);
+        temp_f0 = READ_VALUE(dataPtr, f32);
+        arg0->unk170 = temp_f0;
+        arg0->unk174 = temp_f0;
+    }
+    pop_second_heap_state();
+    if (arg0->unk0->unk40 != 0) {
+        arg0->unk0->unk40(arg0);
+    }
+    VEC3F_COPY(arg0->unk134, arg0->unk6C);
+    if (arg0->unk10 == 0) {
+        func_80026FB4(arg0->unkC, arg0);
+    }
+    phi_s5 = 0;
+    while (1) {
+        // struct DataAndHeader sp18_;
+        struct Model *curModel;
+        struct unkfunc_8001E044_inner *temp_s1_2;
+        u32 dataLen2;
+        struct unkfunc_800882B8 * temp_s2_2;
+        u8 **test = &sp18.data.dataPtr;
+        if (phi_s5 >= temp_fp) {
+            break;
+        }
+        temp_s2_2 = arg0->unkC;
+        push_second_heap_state();
+        *romPtr = ALIGN(*romPtr, 4);
+        dma_read(*romPtr, sp18.data.header, 8);
+        *romPtr += 8;
+        dataLen2 = sp18.data.header[1] - 8;
+        *test = alloc_second_heap(dataLen2);
+        dma_read(*romPtr, *test, dataLen2);
+        *romPtr += dataLen2;
+        temp_s1_2 = D_800AC7F0[READ_VALUE(*test, s32)];
+        temp_s3_3 = READ_VALUE(*test, s32);
+        curModel = main_alloc_bzero(temp_s1_2->unkC);
+        curModel->unk0 = temp_s1_2;
+        curModel->unk0->unk10(curModel, temp_s2_2, arg0);
+        curModel->unk8 = temp_s2_2->unk38++;
+        curModel->unk4 = temp_s3_3;
+        curModel->unk0->unk20(curModel, romPtr, *test); // func_8001E044 potentially
+        phi_s5++;
+    }
+}
+#else
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_800875E8);
+#endif
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087BF8);
 

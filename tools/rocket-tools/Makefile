@@ -2,7 +2,7 @@ CPPFLAGS := -I..
 CFLAGS := -O3
 CC := gcc
 
-PROGRAMS := extract_texture
+PROGRAMS := extract_texture extract_scene
 
 all: $(PROGRAMS)
 clean:

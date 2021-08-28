@@ -11,6 +11,11 @@ typedef u32 ptrdiff_t;
 #include <stdint.h>
 #endif
 
+struct RecordHeader {
+    u32 type;
+    u32 length;
+};
+
 struct GfxContext {
     u32 unk0;
     Gfx *dlStart;
@@ -150,6 +155,13 @@ struct unkfunc_8009C28C {
     s32 unk3AC[0x08]; // TODO real array length
 };
 
+struct unkVertexDataStorage28 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+};
+
 struct VertexDataStorage {
     u8 *unk0; // 1 byte per vertex? not used?
     s32 unk4; // num vertex colors
@@ -160,8 +172,8 @@ struct VertexDataStorage {
     s32 unk18; // num texture coords
     void *unk1C; // texture coords
     s16 *unk20; // texture coord indices
-    s32 unk24;
-    s32 unk28;
+    s16 *unk24;
+    struct unkVertexDataStorage28 *unk28;
     s32 unk2C;
 };
 
@@ -179,15 +191,27 @@ struct Submodel {
     f32 unk24;
 };
 
+struct unkfunc_800882B8 {
+    u8 padding1[0x38];
+    s32 unk38;
+    u8 padding2[0x134 - 0x38 - 0x04];
+    s32 unk134;
+    s32 unk138;
+    s32 unk13C;
+};
+
 struct Model {
     /* 0x000 */ struct unkfunc_8001E044_inner *unk0;
     /* 0x004 */ s32 unk4;
     /* 0x008 */ s32 unk8;
-    /* 0x00C */ u32 unkC;
-    /* 0x010 */ u8 padding2[0x18 - 0x0C - 0x04];
+    /* 0x00C */ struct unkfunc_800882B8 *unkC;
+    /* 0x010 */ s32 unk10;
+    /* 0x014 */ s32 unk14;
     /* 0x018 */ Mtx3f unk18;
     /* 0x03C */ Vec3f unk3C;
-    /* 0x048 */ u8 padding3[0xE0 - 0x3C - 0x0C];
+    /* 0x048 */ u8 padding3[0x6C - 0x3C - 0x0C];
+    /* 0x06C */ Vec3f unk6C;
+    /* 0x078 */ u8 padding3_1[0xE0 - 0x6C - 0x0C];
     /* 0x0E0 */ s16 unkE0;
     /* 0x0E2 */ s16 unkE2;
     /* 0x0E4 */ u32 unkE4;
@@ -199,13 +223,33 @@ struct Model {
     /* 0x0FC */ s32 unkFC;
     /* 0x100 */ f32 unk100;
     /* 0x104 */ u8 padding4[0x110 - 0x100 - 0x04];
-    /* 0x110 */ u8 unk110;
+    /* 0x110 */ s8 unk110;
     /* 0x111 */ u8 unk111;
-    /* 0x112 */ u8 unk112;
+    /* 0x112 */ int unk112_7 : 1;
+    /* 0x112 */ int unk112_0 : 7;
     /* 0x113 */ u8 unk113;
     /* 0x114 */ s32 unk114;
-    /* 0x118 */ u8 padding5[0x14C - 0x114 - 0x04];
+    /* 0x118 */ s32 unk118;
+    /* 0x11C */ s32 unk11C;
+    /* 0x120 */ f32 unk120;
+    /* 0x124 */ f32 unk124;
+    /* 0x128 */ f32 unk128;
+    /* 0x12C */ f32 unk12C;
+    /* 0x130 */ f32 unk130;
+    /* 0x134 */ Vec3f unk134;
+    /* 0x140 */ s32 unk140;
+    /* 0x144 */ Vec3f *unk144;
+    /* 0x148 */ s32 unk148;
     /* 0x14C */ s32 unk14C;
+    /* 0x150 */ s32 unk150;
+    /* 0x154 */ s32 unk154;
+    /* 0x158 */ s32 unk158;
+    /* 0x15C */ u8 padding5[0x170 - 0x158 - 0x04];
+    /* 0x170 */ f32 unk170;
+    /* 0x174 */ f32 unk174;
+    /* 0x178 */ s32 unk178;
+    /* 0x17C */ s32 unk17C;
+    /* 0x180 */ s32 unk180;
 };
 
 struct unkfunc_8001E044_2 {
@@ -228,7 +272,10 @@ struct unkfunc_8001E044_inner {
     void (*unk20)(struct Model*, void*, s32);
     u8 padding1[0x40 - 0x20 - 0x04];
     void (*unk40)(struct Model*);
-    u8 padding2[0x68 - 0x40 - 0x04];
+    s32 unk44;
+    s32 unk48;
+    void (*unk4C)(struct Model*, void*);
+    u8 padding2[0x68 - 0x4C - 0x04];
     void (*unk68)(struct Model*, s32, void*, s32);
     void (*unk6C)(struct Model*, s32, Gfx *);
 };
