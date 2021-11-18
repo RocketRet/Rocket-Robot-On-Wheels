@@ -197,7 +197,7 @@ struct unkfunc_800882B8 {
     u8 padding2[0x134 - 0x38 - 0x04];
     s32 unk134;
     s32 unk138;
-    s32 unk13C;
+    s32 *unk13C;
 };
 
 struct Model {

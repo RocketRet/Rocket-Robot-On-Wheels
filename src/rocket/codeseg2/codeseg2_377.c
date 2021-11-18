@@ -48,20 +48,19 @@ void func_800882B8(struct unkfunc_800882B8 *arg0, u32 romAddr, s32 arg2) {
         arg0->unk134 = phi_a0_2;
         arg0->unk138 = READ_VALUE(a, s32);
         if (arg0->unk138 > 0) {
-            s32 *phi_a0;
-            phi_a0 = main_alloc_nozero(arg0->unk138 * 4);
-            phi_v1 = arg0->unk138 - 1;
-            arg0->unk13C = phi_a0;
-            while (phi_v1 >= 0) {
-                *phi_a0 = READ_VALUE(sp10.dataPtr, s32);
-                phi_a0++;
-                phi_v1--;
+            s32 i;
+            s32 *phi_a0 = arg0->unk13C = main_alloc_nozero(arg0->unk138 * 4);
+            
+            for (i = arg0->unk138 - 1; i >= 0; i--) {
+                *phi_a0++ = READ_VALUE(sp10.dataPtr, s32);
             }
         }
     } else {
         s32 toSkip;
-        sp10.dataPtr += sizeof(s32);
-        sp10.dataPtr += READ_VALUE(sp10.dataPtr, s32)* sizeof(s32);
+        READ_VALUE(sp10.dataPtr, s32);
+        toSkip = READ_VALUE(sp10.dataPtr, s32);
+        // sp10.dataPtr += sizeof(s32);
+        sp10.dataPtr = (s32*)sp10.dataPtr + toSkip;
     }
 
     pop_second_heap_state();

@@ -315,8 +315,8 @@ SECTIONS
         BUILD_DIR/src/../ultra/src/os/jammesg.o(.text);
         lib_codeseg1_udivmoddi4_c = .;
         BUILD_DIR/src/lib/codeseg1/udivmoddi4.o(.text);
-        lib_codeseg1_pfsisplug_c = .;
-        BUILD_DIR/src/lib/codeseg1/pfsisplug.o(.text);
+        ___ultra_src_io_pfsisplug_c = .;
+        BUILD_DIR/src/../ultra/src/io/pfsisplug.o(.text);
         ___ultra_src_io_crc_c = .;
         BUILD_DIR/src/../ultra/src/io/crc.o(.text);
         ___ultra_src_io_contramwrite_c = .;

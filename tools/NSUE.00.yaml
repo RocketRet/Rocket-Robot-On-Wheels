@@ -173,7 +173,7 @@ segments:
     - [0x00F130, c, ../ultra/src/io/pigetcmdq]
     - [0x00F150, c, ../ultra/src/os/jammesg]
     - [0x00F290, c, lib/codeseg1/udivmoddi4]
-    - [0x00F8D0, c, lib/codeseg1/pfsisplug] # ../ultra/src/io/pfsisplug] # regalloc
+    - [0x00F8D0, c, ../ultra/src/io/pfsisplug]
     - [0x00FBB0, c, ../ultra/src/io/crc]
     - [0x00FC60, c, ../ultra/src/io/contramwrite]
     - [0x010020, c, ../ultra/src/io/contramread]
