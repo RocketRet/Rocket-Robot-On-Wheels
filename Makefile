@@ -137,6 +137,7 @@ check: $(Z64)
 
 setup:
 	tools/splat/split.py tools/NSUE.00.yaml
+	make -C tools/kmc
 	git checkout -q $(ASM_DIR)
 
 .SUFFIXES:
