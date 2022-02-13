@@ -732,12 +732,12 @@ SECTIONS
         tools/../build/us/src/rocket/codeseg2/codeseg2_455.o(.text);
         codeseg2_TEXT_END = .;
         codeseg2_DATA_START = .;
-        _9FC70 = .;
-        tools/../build/us/bin/9FC70.o(.data);
+        all_data_data = .;
+        tools/../build/us/asm/data/all_data.data.o(.data);
         rocket_codeseg2_codeseg2_395 = .;
         tools/../build/us/src/rocket/codeseg2/codeseg2_395.o(.data);
-        B0000 = .;
-        tools/../build/us/bin/B0000.o(.data);
+        all_data_2_data = .;
+        tools/../build/us/asm/data/all_data_2.data.o(.data);
         codeseg2_DATA_END = .;
         codeseg2_BSS_START = .;
         tools/../build/us/src/rocket/codeseg0/codeseg0.o(.bss);

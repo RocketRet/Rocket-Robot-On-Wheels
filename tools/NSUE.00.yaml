@@ -696,9 +696,9 @@ segments:
     - [0x09EAA0, c, rocket/codeseg2/codeseg2_452]
     - [0x09FA60, c, rocket/codeseg2/codeseg2_455]
 
-    - [0x09FC70, bin] # data
+    - [0x09FC70, data, all_data] # data
     - [0x0AFF20, .data, rocket/codeseg2/codeseg2_395]
-    - [0x0B0000, bin]
+    - [0x0B0000, data, all_data_2]
     - [0x0B0460, .bss, rocket/codeseg0/codeseg0]    # 0x800AF860 - 0x800BC0D8
     - [0x0B0460, .bss, ../ultra/src/io/pimgr]       # 0x800BC0E0 - 0x800BD2B0
     - [0x0B0460, .bss, lib/codeseg1/player]         # 0x800BD2B0 - 0x800BD374

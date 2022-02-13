@@ -1,8 +1,8 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
-s32 D_800AC2E0;
-s32 D_800A58F0;
+extern s32 D_800AC2E0;
+extern s32 D_800A58F0;
 
 // void func_80078244(s32, s32, f32);
 
@@ -44,7 +44,7 @@ struct unkD_800ABC90 {
     s32 unk48;
 };
 
-struct unkD_800ABC90 D_800ABC90;
+extern struct unkD_800ABC90 D_800ABC90;
 
 void func_80041A54(void);
 void func_80078244(s32, s32, f32);
