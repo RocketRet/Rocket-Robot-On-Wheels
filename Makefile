@@ -61,7 +61,8 @@ ifneq ($(IS_WSL),)
 CC1N64 := ./sn/cc1n64.exe
 ASN64 := ./sn/asn64.exe
 else
-# TODO wine
+CC1N64 := wine ./sn/cc1n64.exe
+ASN64 := wine ./sn/asn64.exe
 endif
 
 # Flags
