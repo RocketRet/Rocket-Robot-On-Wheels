@@ -45,7 +45,6 @@ SN_OBJS := $(SN_LNKS:.obj=.o)
 
 # Tools
 CPP := mips-linux-gnu-cpp
-CCN64 := ./sn/ccn64.exe
 AS := mips-linux-gnu-as
 OBJCOPY := mips-linux-gnu-objcopy
 LD := mips-linux-gnu-ld
@@ -55,22 +54,20 @@ KMC_CC := tools/kmc/gcc
 export N64ALIGN := ON
 export VR4300MUL := ON
 
-# Set the SN_PATH variable so ccn64.exe can find sn.ini
-export SN_PATH := ./sn
-
 PROC_VERSION != uname -a
 IS_WSL := $(findstring microsoft,$(PROC_VERSION)) $(findstring Microsoft,$(PROC_VERSION))
 
 ifneq ($(IS_WSL),)
-# Add SN_PATH to the env variables that WSL passes to Windows via WSLENV
-export WSLENV := SN_PATH/w
+CC1N64 := ./sn/cc1n64.exe
+ASN64 := ./sn/asn64.exe
 else
 # TODO wine
 endif
 
 # Flags
 CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -Iultra/src/audio -Iultra/src/n_audio -Iinclude/mus -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64 -DSUPPORT_NAUDIO -DN_MICRO
-CCN64_CFLAGS := -G0 -mcpu=vr4300 -mips3 -mhard-float -meb
+CC1N64_CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mhard-float -meb
+ASN64FLAGS := -q -G0
 KMC_CFLAGS := -c -G0  -mgp32 -mfp32 -mips3
 WARNFLAGS := -Wuninitialized -Wshadow -Wall
 OPTFLAGS := -O2
@@ -105,8 +102,8 @@ $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS)
 $(SN_LNKS) : $(BUILD_DIR)/%.obj : %.c | $(SRC_BUILD_DIRS)
 	@printf "Compiling $<\r\n"
 	@$(CPP) $(CPPFLAGS) $< -o $@.i
-	@$(CCN64) $(CCN64_CFLAGS) $(CPPFLAGS) $(OPTFLAGS) -S $@.i -o $@.s
-	@$(CCN64) $(CCN64_CFLAGS) $(CPPFLAGS) $(OPTFLAGS) -c $@.s -o $@
+	@$(CC1N64) $(CC1N64_CFLAGS) $(OPTFLAGS) $@.i -o $@.s
+	@$(ASN64) $(ASN64FLAGS) $@.s -o $@
 
 $(SN_OBJS) : $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.obj
 	@printf "Running obj parser on $< $<\r\n"
