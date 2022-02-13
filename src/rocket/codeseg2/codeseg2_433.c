@@ -20,7 +20,7 @@ extern f32 sinf(f32);
 //     cosVal = sqrtf(D_8001DB80 - sinVal * sinVal); // cos = sqrt(1.0 - sin^2(angle))
 //     // negativeCos = 
 //     // *cosOut = negativeCos ? -cosVal : cosVal;
-//     if ((s32)((absf(angle) / D_8001DB88) + D_8001DB90) & 1)
+//     if ((s32)((fabsf(angle) / D_8001DB88) + D_8001DB90) & 1)
 //     {
 //         *cosOut = -cosVal;
 //     }

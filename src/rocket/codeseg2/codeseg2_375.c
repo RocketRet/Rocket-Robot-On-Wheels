@@ -4,7 +4,7 @@
 #include <types.h>
 #include <macros.h>
 
-const f32 D_8001D6C0 = 3.40282346638529E38f;
+// const f32 D_8001D6C0 = 3.40282346638529E38f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80086370);
 
@@ -512,8 +512,10 @@ struct Model *func_80087374(s32 **arg0, s32 arg1, s32 arg2)
 
 struct DataAndHeader {
     u8 *dataPtr;
-    u32 pad;
-    u32 header[2];
+    struct {
+        u32 signature;
+        u32 dataLength;
+    } header __attribute__((aligned(8)));
 };
 
 struct Model *func_80087418(u32 *romPtr, struct unkfunc_800882B8 *arg1, s32 arg2) {
@@ -524,24 +526,24 @@ struct Model *func_80087418(u32 *romPtr, struct unkfunc_800882B8 *arg1, s32 arg2
     struct unkfunc_8001E044_inner *handler;
     void *temp_v0;
     struct Model *model;
-    u8 **test = &sp10.dataPtr;
+    u8 **dataPtrPtr = &sp10.dataPtr;
 
     push_second_heap_state();
     *romPtr = ALIGN(*romPtr, 4);
-    dma_read(*romPtr, sp10.header, 8);
+    dma_read(*romPtr, &sp10.header, 8);
     *romPtr += 8;
-    dataLen = sp10.header[1] - 8;
-    *test = alloc_second_heap(dataLen);
-    dma_read(*romPtr, *test, dataLen);
+    dataLen = sp10.header.dataLength - 8;
+    sp10.dataPtr = alloc_second_heap(dataLen);
+    dma_read(*romPtr, sp10.dataPtr, dataLen);
     *romPtr += dataLen;
-    handler = D_800AC7F0[READ_VALUE(*test, s32)];
-    temp_s4 = READ_VALUE(*test, s32);
+    handler = D_800AC7F0[READ_VALUE(dataPtrPtr, s32)];
+    temp_s4 = READ_VALUE(dataPtrPtr, s32);
     model = main_alloc_bzero(handler->unkC);
     model->unk0 = handler;
     handler->unk10(model, arg1, arg2);
     model->unk8 = arg1->unk38++;
     model->unk4 = temp_s4;
-    model->unk0->unk20(model, romPtr, *test);
+    model->unk0->unk20(model, romPtr, *dataPtrPtr);
     return model;
 }
 
@@ -551,10 +553,10 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087554);
 void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
     // Do I think they used a union? No
     // Can I match it without one? Also no
-    union {
+    // union {
         Vec3f vec;
         struct DataAndHeader data;
-    } sp18;
+    // } sp18;
     f32 temp_f0;
     s32 temp_s3;
     s32 temp_s5_2;
@@ -573,20 +575,21 @@ void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
     s32 phi_a1_2;
     s32 phi_a2_3;
     s32 phi_s5;
+    s32 val;
     u32 *romPtr;
 
     romPtr = &romAddr;
-    temp_fp = READ_VALUE(dataPtr, s32);
+    temp_fp = READ_VALUE(&dataPtr, s32);
     read_vec3f(&dataPtr, arg0->unk3C);
-    read_vec3f(&dataPtr, sp18.vec);
-    mtx3f_axis_angle(sp18.vec, arg0->unk18);
+    read_vec3f(&dataPtr, vec);
+    mtx3f_axis_angle(vec, arg0->unk18);
     dataPtr = ALIGN_PTR(dataPtr, 4);
     dataPtr += 4; // skip record type
-    temp_s0 = dataPtr + READ_VALUE(dataPtr, u32) - 8; // read record length
+    temp_s0 = dataPtr + READ_VALUE(&dataPtr, u32) - 8; // read record length
     while (dataPtr != temp_s0) {
         s32 val;
         dataPtr = ALIGN_PTR(dataPtr, 2);
-        val = READ_VALUE(dataPtr, u16);
+        val = READ_VALUE(&dataPtr, u16);
         func_80085978(val, &dataPtr, arg0);
     }
     push_second_heap_state();
@@ -594,10 +597,11 @@ void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
     temp_s5 = alloc_second_heap(512 * sizeof(struct Submodel));
     arg0->submodels = temp_s5;
     dataPtr = ALIGN_PTR(dataPtr, 4);
-    arg0->unk110 = READ_VALUE(dataPtr, s16);
-    temp_s3 = READ_VALUE(dataPtr, s16);
-    temp_s0_2 = READ_VALUE(dataPtr, s32);
-    temp_s2 = READ_VALUE(dataPtr, s32);
+    val = READ_VALUE(&dataPtr, s16);
+    arg0->unk110 = val;
+    temp_s3 = READ_VALUE(&dataPtr, s16);
+    temp_s0_2 = READ_VALUE(&dataPtr, s32);
+    temp_s2 = READ_VALUE(&dataPtr, s32);
     temp_s1 = alloc_second_heap(temp_s0_2);
     decompress(compressionParamsTable, temp_s2, dataPtr, temp_s0_2, temp_s1);
     arg0->unk0->unk68(arg0, temp_s0_2, temp_s1, temp_s3);
@@ -610,16 +614,16 @@ void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
     }
     pop_second_heap_state();
     dataPtr = ALIGN_PTR(dataPtr, 2);
-    if (READ_VALUE(dataPtr, s16) != 0) {
+    if (READ_VALUE(&dataPtr, s16) != 0) {
         struct unkVertexDataStorage28 *phi_a2;
         alloc_vertex_data_storage(arg0);
         arg0->vertexDataStorage->unk28 = main_alloc_nozero(arg0->numSubmodels * sizeof(struct unkVertexDataStorage28));
         phi_a2 = arg0->vertexDataStorage->unk28;
         for (phi_a3 = 0; phi_a3 < arg0->numSubmodels; phi_a3++) {
             phi_a2->unk0 = 0;
-            phi_a2->unk4 = READ_VALUE(dataPtr, s16);
-            phi_a2->unk8 = READ_VALUE(dataPtr, s16);
-            phi_a2->unkC = READ_VALUE(dataPtr, s16);
+            phi_a2->unk4 = READ_VALUE(&dataPtr, s16);
+            phi_a2->unk8 = READ_VALUE(&dataPtr, s16);
+            phi_a2->unkC = READ_VALUE(&dataPtr, s16);
             phi_a2++;
         }
     }
@@ -627,26 +631,26 @@ void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
     if (((u32*)dataPtr)[0] == 0xF) {
         dataPtr += 8;
         dataPtr = ALIGN_PTR(dataPtr, 4);
-        arg0->unk124 = READ_VALUE(dataPtr, f32);
-        arg0->unk128 = READ_VALUE(dataPtr, f32);
-        arg0->unk12C = READ_VALUE(dataPtr, f32);
-        arg0->unk120 = READ_VALUE(dataPtr, f32);
+        arg0->unk124 = READ_VALUE(&dataPtr, f32);
+        arg0->unk128 = READ_VALUE(&dataPtr, f32);
+        arg0->unk12C = READ_VALUE(&dataPtr, f32);
+        arg0->unk120 = READ_VALUE(&dataPtr, f32);
     }
     dataPtr = ALIGN_PTR(dataPtr, 4);
     if (((u32*)dataPtr)[1] >= 9) {
         dataPtr += 0x8;
         temp_s0_3 = &arg0->unk140;
         temp_s3_2 = &arg0->unk158;
-        arg0->unk112_7 = READ_VALUE(dataPtr, s16);
-        temp_s5_2 = READ_VALUE(dataPtr, s16);
+        arg0->unk112_7 = READ_VALUE(&dataPtr, s16);
+        temp_s5_2 = READ_VALUE(&dataPtr, s16);
         dataPtr = ALIGN_PTR(dataPtr, 4);
-        temp_v0_10 = READ_VALUE(dataPtr, s32);
+        temp_v0_10 = READ_VALUE(&dataPtr, s32);
         arg0->unk140 = temp_v0_10;
         arg0->unk144 = main_alloc_nozero(temp_v0_10 * sizeof(Vec3f));
         dataPtr = ALIGN_PTR(dataPtr, 4);
         for (phi_a2_3 = 0; phi_a2_3 < *temp_s0_3; phi_a2_3++) {
             for (phi_a1_2 = 0; phi_a1_2 < 3; phi_a1_2++) {
-                arg0->unk144[phi_a2_3][phi_a1_2] = READ_VALUE(dataPtr, f32);
+                arg0->unk144[phi_a2_3][phi_a1_2] = READ_VALUE(&dataPtr, f32);
             }
         }
         func_80085E90(&dataPtr, temp_s0_3);
@@ -663,7 +667,7 @@ void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
             dataPtr += arg0->unk178 * 2;
         }
         dataPtr = ALIGN_PTR(dataPtr, 4);
-        temp_f0 = READ_VALUE(dataPtr, f32);
+        temp_f0 = READ_VALUE(&dataPtr, f32);
         arg0->unk170 = temp_f0;
         arg0->unk174 = temp_f0;
     }
@@ -682,21 +686,21 @@ void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
         struct unkfunc_8001E044_inner *temp_s1_2;
         u32 dataLen2;
         struct unkfunc_800882B8 * temp_s2_2;
-        u8 **test = &sp18.data.dataPtr;
+        u8 **test = &data.dataPtr;
         if (phi_s5 >= temp_fp) {
             break;
         }
         temp_s2_2 = arg0->unkC;
         push_second_heap_state();
         *romPtr = ALIGN(*romPtr, 4);
-        dma_read(*romPtr, sp18.data.header, 8);
+        dma_read(*romPtr, &data.header, 8);
         *romPtr += 8;
-        dataLen2 = sp18.data.header[1] - 8;
+        dataLen2 = data.header.dataLength - 8;
         *test = alloc_second_heap(dataLen2);
         dma_read(*romPtr, *test, dataLen2);
         *romPtr += dataLen2;
-        temp_s1_2 = D_800AC7F0[READ_VALUE(*test, s32)];
-        temp_s3_3 = READ_VALUE(*test, s32);
+        temp_s1_2 = D_800AC7F0[READ_VALUE(test, s32)];
+        temp_s3_3 = READ_VALUE(test, s32);
         curModel = main_alloc_bzero(temp_s1_2->unkC);
         curModel->unk0 = temp_s1_2;
         curModel->unk0->unk10(curModel, temp_s2_2, arg0);
@@ -721,6 +725,8 @@ struct unkfunc_80087D4C {
     f32 unk50[6];
 };
 
+void mtx3f_axis_angle(Vec3f, Mtx3f);
+
 // TODO couple instructions out of order
 #ifdef NON_MATCHING
 void func_80087D4C(struct unkfunc_80087D4C *arg0, s32 arg1, u8 *dataPtr) {
@@ -730,22 +736,21 @@ void func_80087D4C(struct unkfunc_80087D4C *arg0, s32 arg1, u8 *dataPtr) {
     read_vec3f(&dataPtr, arg0->unk18);
     read_vec3f(&dataPtr, axis);
     mtx3f_axis_angle(axis, arg0->unk24);
-    // arg2 = arg2 + 2;
-    // arg2 = temp_v1 + 4;
-    arg0->unk48 = READ_VALUE(dataPtr, s16);
+
+    arg0->unk48 = READ_VALUE(&dataPtr, s16);
     dataPtr = ALIGN_PTR(dataPtr, 4);
-    // arg2 = arg2 + 8;
-    arg0->unk50[0] = READ_VALUE(dataPtr, f32);
-    arg0->unk50[1] = READ_VALUE(dataPtr, f32);
-    arg0->unk50[2] = READ_VALUE(dataPtr, f32);
-    arg0->unk50[3] = READ_VALUE(dataPtr, f32);
-    arg0->unk50[4] = READ_VALUE(dataPtr, f32);
-    arg0->unk50[5] = READ_VALUE(dataPtr, f32);
+
+    arg0->unk50[0] = READ_VALUE(&dataPtr, f32);
+    arg0->unk50[1] = READ_VALUE(&dataPtr, f32);
+    arg0->unk50[2] = READ_VALUE(&dataPtr, f32);
+    arg0->unk50[3] = READ_VALUE(&dataPtr, f32);
+    arg0->unk50[4] = READ_VALUE(&dataPtr, f32);
+    arg0->unk50[5] = READ_VALUE(&dataPtr, f32);
     dataPtr = ALIGN_PTR(dataPtr, 4) + 4;
-    endPtr = &dataPtr[READ_VALUE(dataPtr, u32)] - 8;
+    endPtr = &dataPtr[READ_VALUE(&dataPtr, u32)] - 8;
     while (endPtr != dataPtr) {
         dataPtr = ALIGN(dataPtr, 2);
-        func_80085978(READ_VALUE(dataPtr, u16), &dataPtr, arg0);
+        func_80085978(READ_VALUE(&dataPtr, u16), &dataPtr, arg0);
     }
     pop_second_heap_state();
 }
@@ -763,14 +768,14 @@ void func_80087E88(struct unkfunc_80087D4C *arg0, s32 arg1, u8 *dataPtr) {
     vecPtr = arg0->unk18;
     
     for (i = 0; i < 3; i++) {
-        vecPtr[i] = READ_VALUE(dataPtr, f32);
+        vecPtr[i] = READ_VALUE(&dataPtr, f32);
     }
 
     dataPtr = ALIGN_PTR(dataPtr, 4) + 4;
-    endPtr = dataPtr + READ_VALUE(dataPtr, u32) - 8;
+    endPtr = dataPtr + READ_VALUE(&dataPtr, u32) - 8;
     while (endPtr != dataPtr) {
         dataPtr = ALIGN_PTR(dataPtr, 2);
-        func_80085978(READ_VALUE(dataPtr, u16), &dataPtr, arg0);
+        func_80085978(READ_VALUE(&dataPtr, u16), &dataPtr, arg0);
     }
     pop_second_heap_state();
 }

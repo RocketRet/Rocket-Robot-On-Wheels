@@ -1,21 +1,3 @@
-#include <include_asm.h>
-#include <ultra64.h>
-#include <mus/player_fifo.h>
-#include <mus/player.h>
-
-#define static
-#define SUPPORT_FXCHANGE
-
-#define fifo_start D_800BD310
-extern int D_800BD310;
-#define fifo_current D_800BD314
-extern int D_800BD314;
-#define fifo_limit D_800BD318
-extern int D_800BD318;
-#define fifo_addr D_800BD31C
-extern fifo_t *D_800BD31C;
-
-extern void __MusIntHandleSetFlag(unsigned long handle, unsigned long clear, unsigned long set);
 
 /*************************************************************
 
@@ -29,11 +11,11 @@ extern void __MusIntHandleSetFlag(unsigned long handle, unsigned long clear, uns
 **************************************************************/
 
 
-// static int fifo_start;
-// static int fifo_current;
-// static int fifo_limit;
+static int fifo_start;
+static int fifo_current;
+static int fifo_limit;
 
-// static fifo_t *fifo_addr;
+static fifo_t *fifo_addr;
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
   [INTERNAL FUNCTION]
@@ -152,24 +134,21 @@ static void __MusIntFifoProcessCommand(fifo_t *command)
   0 if the fifo list is full, <>0 if the command was stored.
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
 
-// TODO different compiler, bnez delay slot
-// static int __MusIntFifoAddCommand(fifo_t *command)
-// {
-//   int index;
+static int __MusIntFifoAddCommand(fifo_t *command)
+{
+  int index;
 
-//   index = (fifo_current+1)%fifo_limit;
-//   if (index==fifo_start)
-//   {
-// #ifdef _AUDIODEBUG
-//     osSyncPrintf("PLAYER_FIFO.C: Fifo is full ignoring last command!\n");
-// #endif
-//     return (0);
-//   }
-//   __MusIntMemMove(&fifo_addr[fifo_current], command, sizeof(fifo_t));
-//   fifo_current = index;
-//   return (1);
-// }
-
-INCLUDE_ASM(s32, "lib/codeseg1/player_fifo", __MusIntFifoAddCommand);
+  index = (fifo_current+1)%fifo_limit;
+  if (index==fifo_start)
+  {
+#ifdef _AUDIODEBUG
+    osSyncPrintf("PLAYER_FIFO.C: Fifo is full ignoring last command!\n");
+#endif
+    return (0);
+  }
+  __MusIntMemMove(&fifo_addr[fifo_current], command, sizeof(fifo_t));
+  fifo_current = index;
+  return (1);
+}
 
 /* end of file */

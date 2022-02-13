@@ -6,17 +6,15 @@ BASEROM := baserom.$(VERSION).z64
 BUILD_ROOT := build
 ROM_SIZE := 0xC00000
 
-# TODO add check for extraction being complete
-
 RFILTER_OUT = $(foreach v,$(2),$(if $(findstring $(1),$(v)),,$(v)))
-# $(call RFILTER_OUT,g, seven eight nine ten)
-# Folders
 BUILD_DIR := $(BUILD_ROOT)/$(VERSION)
 SRC_DIR := src
 ASM_DIR := asm
 BIN_DIR := bin
 LIBULTRA_DIRS := audio gu io n_audio os sched
-SRC_DIRS := $(shell find $(SRC_DIR)/ -type d) $(addprefix ultra/src/,$(LIBULTRA_DIRS))
+ROCKET_SRC_DIRS   := $(shell find $(SRC_DIR)/ -type d)
+LIBULTRA_SRC_DIRS := $(addprefix ultra/src/,$(LIBULTRA_DIRS))
+SRC_DIRS := $(ROCKET_SRC_DIRS) $(LIBULTRA_SRC_DIRS)
 ASM_DIRS := $(call RFILTER_OUT,nonmatching,$(shell find $(ASM_DIR)/ -type d))
 SRC_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(SRC_DIRS)) # Don't search libultra dirs, but generate them for manual specifying of libultra asm files
 ASM_BUILD_DIRS := $(addprefix $(BUILD_DIR)/,$(ASM_DIRS) $(LIBULTRA_DIRS))
@@ -24,7 +22,9 @@ BIN_BUILD_DIR := $(BUILD_DIR)/$(BIN_DIR)
 KMCGCCDIR := tools/kmc/gcc
 
 # Files
+FILTERED_OUT_SRCS := src/lib/codeseg1/player_commands.c src/lib/codeseg1/player_api.c src/lib/codeseg1/player_fifo.c
 C_SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+C_SRCS := $(filter-out $(FILTERED_OUT_SRCS),$(C_SRCS))
 C_ASMS := $(addprefix $(BUILD_DIR)/, $(C_SRCS:.c=.s))
 C_OBJS := $(C_ASMS:.s=.o)
 LIBULTRA_ASMS := gu/libm_vals.s
@@ -37,9 +37,15 @@ LD_SCRIPT := NSUE.ld
 Z64 := $(BUILD_DIR)/$(TARGET).z64
 ELF := $(Z64:.z64=.elf)
 
+LIBULTRA_SRCS := $(foreach dir,$(LIBULTRA_SRC_DIRS),$(wildcard $(dir)/*.c))
+SN_SRCS := $(foreach dir,$(shell find $(SRC_DIR)/rocket/ -type d) $(shell find $(SRC_DIR)/lib/ -type d),$(wildcard $(dir)/*.c))
+SN_SRCS := $(filter-out $(FILTERED_OUT_SRCS),$(SN_SRCS))
+SN_LNKS := $(addprefix $(BUILD_DIR)/, $(SN_SRCS:.c=.obj))
+SN_OBJS := $(SN_LNKS:.obj=.o)
+
 # Tools
 CPP := mips-linux-gnu-cpp
-CC := tools/sn/gcc-2.8.0-rocket/cc1
+CCN64 := ./sn/ccn64.exe
 AS := mips-linux-gnu-as
 OBJCOPY := mips-linux-gnu-objcopy
 LD := mips-linux-gnu-ld
@@ -49,9 +55,22 @@ KMC_CC := tools/kmc/gcc
 export N64ALIGN := ON
 export VR4300MUL := ON
 
+# Set the SN_PATH variable so ccn64.exe can find sn.ini
+export SN_PATH := ./sn
+
+PROC_VERSION != uname -a
+IS_WSL := $(findstring microsoft,$(PROC_VERSION)) $(findstring Microsoft,$(PROC_VERSION))
+
+ifneq ($(IS_WSL),)
+# Add SN_PATH to the env variables that WSL passes to Windows via WSLENV
+export WSLENV := SN_PATH/w
+else
+# TODO wine
+endif
+
 # Flags
 CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -Iultra/src/audio -Iultra/src/n_audio -Iinclude/mus -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64 -DSUPPORT_NAUDIO -DN_MICRO
-CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mgp32 -mfp32 -msplit-addresses -mgas -mrnames
+CCN64_CFLAGS := -G0 -mcpu=vr4300 -mips3 -mhard-float -meb
 KMC_CFLAGS := -c -G0  -mgp32 -mfp32 -mips3
 WARNFLAGS := -Wuninitialized -Wshadow -Wall
 OPTFLAGS := -O2
@@ -83,17 +102,15 @@ $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS)
 	$(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
 	$(STRIP) $@ -N $(<:.i=.c)
 
-$(BUILD_DIR)/$(SRC_DIR)/rocket/%.i : $(SRC_DIR)/rocket/%.c | $(SRC_BUILD_DIRS)
-	$(CPP) $(CPPFLAGS) $< -o $@
+$(SN_LNKS) : $(BUILD_DIR)/%.obj : %.c | $(SRC_BUILD_DIRS)
+	@printf "Compiling $<\r\n"
+	@$(CPP) $(CPPFLAGS) $< -o $@.i
+	@$(CCN64) $(CCN64_CFLAGS) $(CPPFLAGS) $(OPTFLAGS) -S $@.i -o $@.s
+	@$(CCN64) $(CCN64_CFLAGS) $(CPPFLAGS) $(OPTFLAGS) -c $@.s -o $@
 
-$(BUILD_DIR)/$(SRC_DIR)/rocket/%.s : $(BUILD_DIR)/$(SRC_DIR)/rocket/%.i $(SRC_DIR)/rocket/%.c
-	$(CC) $(CFLAGS) $(WARNFLAGS) $(OPTFLAGS) $< -o $@ || rm -f $@
-
-$(BUILD_DIR)/$(SRC_DIR)/lib/codeseg1/%.i : $(SRC_DIR)/lib/codeseg1/%.c | $(SRC_BUILD_DIRS)
-	$(CPP) $(CPPFLAGS) $< -o $@
-	
-$(BUILD_DIR)/$(SRC_DIR)/lib/codeseg1/%.s : $(BUILD_DIR)/$(SRC_DIR)/lib/codeseg1/%.i $(SRC_DIR)/lib/codeseg1/%.c
-	$(CC) $(CFLAGS) $(WARNFLAGS) $(OPTFLAGS) $< -o $@ || rm -f $@
+$(SN_OBJS) : $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.obj
+	@printf "Running obj parser on $< $<\r\n"
+	@tools/psyq-obj-parser $< -o $@ -b -n > /dev/null
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
@@ -114,29 +131,6 @@ $(Z64) : $(ELF)
 	$(OBJCOPY) $(Z64OFLAGS) $< $@
 	
 $(BUILD_DIR)/ultra/%.o: OPTFLAGS := -O3
-# $(BUILD_DIR)/ultra/%.s: OPTFLAGS := -O3 # For ditching kmc gcc
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_403.s: CFLAGS += -mno-split-addresses
-# $(BUILD_DIR)/src/rocket/codeseg0/codeseg0_0.s: CFLAGS += -mno-split-addresses
-
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_144.s: CC := tools/gcc/mips-cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_148.s: CC := tools/gcc/mips-cc1 -fkeep-static-consts -msplit-addresses
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_221.s: CC := tools/gcc/mips-cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_225.s: CC := tools/gcc/mips-cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_225.s: CC := tools/gcc-2.7.2/cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_237.s: CC := tools/sn/gcc-2.7.2/cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_237.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_208.s: CC := tools/sn/gcc-2.7.2/cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_208.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_103.s: CC := tools/sn/gcc-2.7.2/cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_103.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_434.s: CC := tools/sn/gcc-2.7.2/cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_434.s: CFLAGS := -quiet -G0 -mips3 -mgp32 -mfp32 -mgas
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_434.s: ASFLAGS := -G0 -EB -mabi=32 -I. -Iinclude -O1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_235.s: CC := tools/sn/gcc-2.7.2/cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_378.s: OPTFLAGS := -O2 -g
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_3.s: CC := tools/sn/gcc-2.7.2/cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_378.s: CC := tools/sn/gcc-2.7.2/cc1
-# $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_225.s: OPTFLAGS := -O3 -g0
 
 clean:
 	$(RMDIR) $(BUILD_ROOT)
@@ -145,9 +139,8 @@ check: $(Z64)
 	@$(DIFF) $(BASEROM) $(Z64) && printf "OK\n"
 
 setup:
-	tools/splat/split.py --rom baserom.$(VERSION).z64 tools/NSUE.00.yaml --outdir .
-
-# tools/splat/split.py baserom.us.z64 tools/NSUE.00.yaml .
+	tools/splat/split.py tools/NSUE.00.yaml
+	git checkout -q $(ASM_DIR)
 
 .SUFFIXES:
 MAKEFLAGS += --no-builtin-rules

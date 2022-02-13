@@ -19,6 +19,7 @@ extern struct GfxTask* gCurGfxTask;
 // void func_80046CBC();
 void update_gfx_context();
 void func_80046D58();
+void func_80046CBC();
 
 void func_80046B40()
 {
@@ -54,36 +55,34 @@ void func_80046B40()
     schedule_gfx_task();
 }
 
+struct unkD_8009F094_inner {
+    u8 padding[0x128];
+    s32 unk128[1];
+};
+
 struct unkD_8009F094 {
-    u8 padding[0x124];
+    struct unkD_8009F094_inner *unk0;
+    u8 padding[0x120];
     s32 unk124;
     s32 unk128;
 };
 
-extern struct unkD_8009F094 *D_8009F094;
+extern struct unkD_8009F094 D_8009F094;
 
 extern s32 D_800AAF7C;
 
-// void *func_80046CBC(void) {
-//     s32 temp_v1;
-//     s32 temp_v1_2;
-//     u32 temp_v0;
-//     void *phi_return;
+void func_80046CBC(void) {
+    s32 temp_v1_2;
 
-//     temp_v0 = gCurGfxTask + 0x188;
-//     gCurGfxTask = temp_v0;
-//     if (temp_v0 >= (u32) D_800C1770) {
-//         gCurGfxTask = (u32) (D_800C1770 - 0x310);
-//     }
-//     if (D_8009F094 != 0) {
-//         temp_v1_2 = D_8009F094[gCurGfxTask->unk120].unk128;
-//         phi_return = &D_800AAF7C;
-//         if (temp_v1_2 != 0) {
-//             D_800AAF7C = temp_v1_2;
-//             phi_return = &D_800AAF7C;
-//         }
-//     }
-//     return phi_return;
-// }
+    if (++gCurGfxTask >= (u32) &D_800C1460[2]) {
+        gCurGfxTask = &D_800C1460[0];
+    }
+    if (D_8009F094.unk0 != 0) {
+        temp_v1_2 = D_8009F094.unk0->unk128[gCurGfxTask->unk120];
+        if (temp_v1_2 != 0) {
+            D_800AAF7C = temp_v1_2;
+        }
+    }
+}
 
-INCLUDE_ASM(void*, "rocket/codeseg2/codeseg2_149", func_80046CBC);
+// INCLUDE_ASM(void*, "rocket/codeseg2/codeseg2_149", func_80046CBC);

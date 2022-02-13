@@ -10,3 +10,9 @@ void func_800454B0(f32 *arg0, s32 arg1, u8 *dataPtr)
 }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_138", func_800454D8);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_138", func_80045580);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_138", func_80045628);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_138", func_8004570C);

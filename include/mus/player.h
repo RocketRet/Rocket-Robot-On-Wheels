@@ -214,12 +214,12 @@ typedef struct
   unsigned char		*for_stackpb	[FORNEXT_DEPTH];
   unsigned short	for_vol_count	[FORNEXT_DEPTH];
   unsigned short	for_pb_count	[FORNEXT_DEPTH];
-  // unsigned char		for_count	[FORNEXT_DEPTH];	
-  // unsigned char		for_volume	[FORNEXT_DEPTH];
-  float		        for_pitchbend	[FORNEXT_DEPTH];
+  unsigned char		for_count	[FORNEXT_DEPTH];	
+  unsigned char		for_volume	[FORNEXT_DEPTH];
+  unsigned char		for_pitchbend	[FORNEXT_DEPTH];
 
 #ifndef SUPPORT_EFFECTS
-  // unsigned char padding[4]; /* pad for data cache */
+  unsigned char padding[4]; /* pad for data cache */
 #else
   unsigned long		effect_type;
   float			specialvib_amount;

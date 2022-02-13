@@ -9,6 +9,5 @@ struct unkfunc_800261B0 {
 
 void func_800261B0(struct unkfunc_800261B0 *arg0, s32 arg1)
 {
-    // index[array] again
-    arg0->unk18++[arg0->unk1C] = arg1;
+    arg0->unk1C[arg0->unk18++] = arg1;
 }

@@ -1,8 +1,33 @@
-#include <include_asm.h>
-#include <ultra64.h>
-#include <mus/player.h>
 
-#define static
+/********************************************************************
+
+  player_commands.c : Nintendo 64 Music Tools Programmers Library
+  (c) Copyright 1997/1998, Software Creations (Holdings) Ltd.
+
+  Version 3.14
+
+  Music player command functions. This file is included in the
+  'player.c' file directly.
+
+*********************************************************************/
+
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  Music Tools Sound Data Command Functions
+
+  [Parameters]
+  cp		address of music player channel
+  ptr		address of sound data
+
+  [Explanation]
+  Command functions for the commands embedded in the Music Tools sound data.
+
+  [Return value]
+  address of sound data after the command
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+/* NOTE THESE FUNCTIONS ARE ENTERED WITH THE POINTER ALREADY BEING ADVANCED PAST
+   THE COMMAND <cmd> VALUE */
 
 /* Fstop - stop data processing   
  * Format: <cmd>
@@ -41,9 +66,8 @@ static unsigned char *Fwave(channel_t *cp, unsigned char *ptr)
  */
 static unsigned char *Fport(channel_t *cp, unsigned char *ptr)
 {
-  int val = *ptr++;
-  cp->port = val;
-  if (val)
+  cp->port = *ptr++;
+  if (cp->port)
     cp->port_base = cp->base_note;
   return (ptr);
 }
@@ -57,9 +81,106 @@ static unsigned char *Fportoff(channel_t *cp, unsigned char *ptr)
   return (ptr);
 }
 
-INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Fdefa);
+/* Fdefa - set envelope
+ * Format: <cmd> <speed> <initial volume> <attack speed> <peak volume> 
+ *               <decay speed> <sustain volume> <release speed>
+ */
+static unsigned char *Fdefa(channel_t *cp, unsigned char *ptr)
+{
+  unsigned char value;
 
-INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Ftempo);
+  // get envelope speed...
+  value = *ptr++;
+  if (value==0)	// cannot be zero!!!
+    value=1;
+  cp->env_speed = value;
+  cp->env_speed_calc = 1024/value;
+  
+  // get envelope initial volume level...
+  cp->env_init_vol = *ptr++;
+  
+  // get attack speed...
+  value = *ptr++;
+#ifdef _AUDIODEBUG
+  if (value==0)
+  {
+    osSyncPrintf("PLAYER_COMMANDS.C: Fdefa() attempting to set speed of zero.\n");
+    value=1;      
+  }
+#endif
+  cp->env_attack_speed = value;
+
+  // get peak volume...
+  cp->env_max_vol = *ptr++;
+
+  // get attack precalc value...
+  cp->env_attack_calc  = (1.0 / ((float)value)) * ((float)(cp->env_max_vol-cp->env_init_vol));
+
+  // get decay speed...
+  value = *ptr++;  
+#ifdef _AUDIODEBUG
+  if (value==0)
+  {
+    osSyncPrintf("PLAYER_COMMANDS.C: Fdefa() attempting to set decay speed of zero.\n");
+    value=1;      
+  }
+#endif
+  cp->env_decay_speed = value;
+
+  // get sustain volume level...
+  cp->env_sustain_vol = *ptr++;
+
+  // get sustain precalc value...
+  cp->env_decay_calc = (1.0 / ((float)value)) * ((float)(cp->env_sustain_vol-cp->env_max_vol));
+
+  // get release speed...
+  value = *ptr++;
+#ifdef _AUDIODEBUG
+  if (value==0)
+  {
+    osSyncPrintf("PLAYER_COMMANDS.C: Fdefa() attempting to set release speed of zero.\n");
+    value=1;      
+  }
+#endif
+  cp->env_release_speed = value;
+  cp->env_release_calc = 1.0 / ((float)value);
+     
+  return (ptr);
+}	
+
+/* Ftempo - set tempo
+ * Format: <cmd> <tempo>
+ */
+static unsigned char *Ftempo(channel_t *cp, unsigned char *ptr)
+{
+// tempo   = bpm
+// fps     = mus_vsyncs_per_second
+// 120 bpm = 96 fps
+// therefore tempo = bmp(required)/120*96/mus_vsyncs_per_second
+
+  channel_t *sp;
+  int	i;
+  int	temp, temp2;  
+
+  temp	= (*ptr++)*256*96/120/mus_vsyncs_per_second;	
+  temp2  = (temp*cp->temscale)>>7;
+   if (cp->fx_addr)
+  {
+    cp->channel_tempo=temp;
+  }
+  else
+  {
+    for	(i=0, sp=mus_channels;i<max_channels;i++,sp++)
+    {
+      if (sp->song_addr==cp->song_addr)
+      {
+	sp->channel_tempo_save=temp;
+	sp->channel_tempo=temp2;
+      }
+    }
+  }
+  return (ptr);
+}
 
 /* Ftempo - set endit value
  * Format: <cmd> <endit>
@@ -86,9 +207,6 @@ static unsigned char *Fcutoff(channel_t *cp, unsigned char *ptr)
   return (ptr);
 }
 
-extern f64 D_80000518; // 50.0
-extern f64 D_80000520; // (2*3.1415926)
-
 /* Fvibup - set positive vibrato
  * Format: <cmd> <delay> <speed> <amount>
  */
@@ -97,13 +215,10 @@ static unsigned char *Fvibup(channel_t *cp, unsigned char *ptr)
 
   cp->vib_delay = *ptr++;
   cp->vib_speed = *ptr++;
-  cp->vib_amount = ((float)*ptr++)/D_80000518;
-  cp->vib_precalc = D_80000520/(float)cp->vib_speed;
+  cp->vib_amount = ((float)*ptr++)/50.0;
+  cp->vib_precalc = (2*3.1415926)/(float)cp->vib_speed;
   return (ptr);
 }
-
-extern f64 D_80000528; // 50.0
-extern f64 D_80000530; // (2*3.1415926)
 
 /* Fvibdown - set negative vibrato
  * Format: <cmd> <delay> <speed> <amount>
@@ -112,8 +227,8 @@ static unsigned char *Fvibdown(channel_t *cp, unsigned char *ptr)
 {
   cp->vib_delay = *ptr++;
   cp->vib_speed = *ptr++;
-  cp->vib_amount = (-((float)*ptr++))/D_80000528;
-  cp->vib_precalc = D_80000530/(float)cp->vib_speed;
+  cp->vib_amount = (-((float)*ptr++))/50.0;
+  cp->vib_precalc = (2*3.1415926)/(float)cp->vib_speed;
   return (ptr);
 }
 
@@ -172,8 +287,6 @@ static unsigned char *Fignore_trans(channel_t *cp, unsigned char *ptr)
   return (ptr);
 }
 
-extern f64 D_80000538; // 100.0
-
 /* Fdistort - set distortion value
  * Format: <cmd> <distort>
  */
@@ -185,7 +298,7 @@ static unsigned char *Fdistort(channel_t *cp, unsigned char *ptr)
   c = (int)(*ptr++);
   if(c&0x80)
     c |= 0xffffff00;	// signed chars don't work
-  f = (float)(c)/D_80000538;
+  f = (float)(c)/100.0;
 
   cp->freqoffset -= cp->distort;
   cp->freqoffset += f;
@@ -247,9 +360,57 @@ static unsigned char *Ftron(channel_t *cp, unsigned char *ptr)
   return (ptr);
 }
 
-INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Ffor);
+/* Ffor - start for-next loop (count of 0xFF is infinite)
+ * Format: <cmd> <count>
+ */
+static unsigned char *Ffor(channel_t *cp, unsigned char *ptr)
+{
+  int index;
 
-INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Fnext);
+  index = cp->for_stack_count;
+  cp->for_count[index] = *ptr++;
+  cp->for_stack[index] = ptr;
+  cp->for_stackvol[index] = cp->pvolume;
+  cp->for_stackpb[index] = cp->ppitchbend;
+  cp->for_volume[index] = cp->volume;
+  cp->for_pitchbend[index] = cp->pitchbend;
+  cp->for_vol_count[index] = cp->cont_vol_repeat_count;
+  cp->for_pb_count[index] = cp->cont_pb_repeat_count;
+  cp->for_stack_count++;
+  return (ptr);
+}
+
+/* Fnext - end for-next loop (count of 0xFF is infinite)
+ * Format: <cmd>
+ */
+static unsigned char *Fnext (channel_t *cp, unsigned char *ptr)
+{
+  int index;
+
+  index = cp->for_stack_count-1;
+  /* infinite loop? */
+  if (cp->for_count[index]!=0xff)
+  { /* still looping? */
+    if (--(cp->for_count[index])==0)
+    {
+      cp->for_stack_count = index;
+      index = -1;
+    }
+  }
+  /* unstack pointers if necessary */
+  if (index>-1)
+  {
+    ptr = cp->for_stack[index];
+    cp->pvolume = cp->for_stackvol[index];
+    cp->ppitchbend = cp->for_stackpb[index];
+    cp->volume = cp->for_volume[index];
+    cp->pitchbend = cp->for_pitchbend[index];
+    cp->cont_vol_repeat_count = cp->for_vol_count[index];
+    cp->cont_pb_repeat_count = cp->for_pb_count[index];
+    cp->pitchbend_precalc = cp->pitchbend*cp->bendrange;
+  }
+  return (ptr);
+}
 
 /* Fwobble - define wobble settings
  * Format: <cmd> <amount> <on speed> <off speed>
@@ -443,16 +604,48 @@ static unsigned char *Fvolume(channel_t *cp, unsigned char *ptr)
   return (ptr);
 }
 
-INCLUDE_ASM(s32, "lib/codeseg1/player_commands", Fstartfx);
+/* Fstartfx - start sound effect
+ * Format: <cmd> <number>
+ */
+static unsigned char *Fstartfx(channel_t *cp, unsigned char *ptr)
+{
+   int i, number;
+   channel_t *sp;
+   unsigned long new_handle;
 
-extern f64 D_80000548; // (1.0/64.0)
+   number = *ptr++;
+   if (number>=0x80)
+      number = ((number&0x7f)<<8)+*ptr++;
+
+   /* increase priority */
+   cp->priority++;
+	/* start sub effect */
+   new_handle = __MusIntFindChannelAndStart(cp->fx_addr, number, cp->volscale, cp->panscale, cp->priority);
+   /* decrease priority back to normal */
+   cp->priority--;
+	/* copy handle and sample bank setting */
+   if (new_handle)
+   {
+      for (i=0, sp=mus_channels; i<max_channels; i++, sp++)
+      {
+         if (sp->handle == new_handle)
+         {
+            sp->handle=cp->handle;
+            sp->sample_bank = cp->sample_bank;
+         }
+      }
+   }
+   return (ptr);
+}
+
+
 
 /* Fbendrange - set bend range
  * Format: <cmd> <bend range>
  */
 static unsigned char *Fbendrange(channel_t *cp, unsigned char *ptr)
 {
-  cp->bendrange = (float)(*ptr++)*D_80000548;
+  cp->bendrange = (float)(*ptr++)*(1.0/64.0);
   cp->pitchbend_precalc = cp->pitchbend*cp->pitchbend;
   return (ptr);
 }
@@ -464,10 +657,6 @@ static unsigned char *Fsweep(channel_t *cp, unsigned char *ptr)
   cp->sweep_speed = *ptr++;
   return (ptr);
 }
-
-#define SUPPORT_FXCHANGE
-
-extern musBool mus_songfxchange_flag;
 
 /* Command : Change FX type
    Format  : Cchangefx, fxtype */
@@ -485,8 +674,6 @@ static unsigned char *Fchangefx(channel_t *cp, unsigned char *ptr)
 
   return (ptr);
 }
-
-extern LIBMUScb_marker marker_callback;
 
 /* Command : Marker definition
 	Format  : Cmarker, number, <rest length> or Cmarker, number, <rest&0x7f00>, <rest&0xff> */
@@ -520,14 +707,10 @@ static unsigned char *Flength0(channel_t *cp, unsigned char *ptr)
 	return (ptr);
 }
 
-extern unsigned char *D_800BD2D0;
-
 void func_8000516C(s32 arg0, unsigned char arg1)
 {
   D_800BD2D0[arg0] = arg1;
 }
-
-extern s32 D_800BD2D4;
 
 void func_80005180()
 {

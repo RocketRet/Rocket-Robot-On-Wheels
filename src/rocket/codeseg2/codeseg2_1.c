@@ -38,8 +38,6 @@ struct unkfunc_8001DE50_arg1 {
 
 void func_80056BD0(void*);
 
-// regalloc
-#ifdef NON_MATCHING
 void func_8001DE50(struct unkfunc_8001DE50_arg0 *arg0, struct unkfunc_8001DE50_arg1 *arg1)
 {
     struct unkfunc_8001DE50_arg0 *t0 = arg0;
@@ -48,6 +46,3 @@ void func_8001DE50(struct unkfunc_8001DE50_arg0 *arg0, struct unkfunc_8001DE50_a
     MTX3F_COPY(t0->unk20, arg1->unk18);
     func_80056BD0(&t0->unk50);
 }
-#else
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_1", func_8001DE50);
-#endif

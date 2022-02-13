@@ -80,3 +80,24 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007A2BC);
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007A568);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007A5CC);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007A660);
+
+s32 func_8007A92C(s32 *arg0)
+{
+    return (arg0[0x12] == 2 || arg0[0x19] != -1);
+}
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007A958);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007A9C0);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007AA58);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007AB98);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007AD18);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007B198);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_317", func_8007B308);

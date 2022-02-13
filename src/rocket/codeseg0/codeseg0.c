@@ -12,19 +12,19 @@ extern u32 D_8009F094;
 extern u32 D_800AB9C8;
 
 // bss
-static OSThread gThread1; // 0x800AF860
-static OSThread D_800AFA10; // 0x800AFA10 // thread 6
-static OSThread D_800AFBC0; // 0x800AFBC0 // thread 7
-static u8 gIdleThreadStack[0x1000]; // 0x800AFD70
-static u8 gThread6Stack[0x1000]; // 0x800B0D70
-static u8 gThread7Stack[0x8000]; // 0x800B1D70
-static OSMesg D_800B9D70[8]; // 0x800B9D70
-static OSMesg D_800B9D90[200]; // 0x800B9D90
-static OSMesgQueue D_800BA0B0; // 0x800BA0B0
-static OSMesg D_800BA0C8; // 0x800BA0C8
-static OSMesg D_800BA0CC; // 0x800BA0CC
-static u8 gSchedStack[OS_SC_STACKSIZE]; // 0x800BA0D0
-static OSScClient D_800BC0D0; // 0x800BC0D0
+OSThread gThread1; // 0x800AF860
+OSThread D_800AFA10; // 0x800AFA10 // thread 6
+OSThread D_800AFBC0; // 0x800AFBC0 // thread 7
+u8 gIdleThreadStack[0x1000]; // 0x800AFD70
+u8 gThread6Stack[0x1000]; // 0x800B0D70
+u8 gThread7Stack[0x8000]; // 0x800B1D70
+OSMesg D_800B9D70[8]; // 0x800B9D70
+OSMesg D_800B9D90[200]; // 0x800B9D90
+OSMesgQueue D_800BA0B0; // 0x800BA0B0
+OSMesg D_800BA0C8; // 0x800BA0C8
+OSMesg D_800BA0CC; // 0x800BA0CC
+u8 gSchedStack[OS_SC_STACKSIZE]; // 0x800BA0D0
+OSScClient D_800BC0D0; // 0x800BC0D0
 // end bss (0x800BC0D8, padded to 0x800BC0E0)
 
 // data
@@ -206,15 +206,8 @@ void func_80074ADC(void *, f32);
 void func_8004ED04(void);
 void func_8004E60C(void);
 
-
-
-extern f32 D_80000500; // 1.0f / 6.0f
-
-// float load
-#ifdef NON_MATCHING
 void func_80001248(void *arg0)
 {
-    f32 f20;
     s16 sp10[2];
     s32 *sp18; // OSMesg
 
@@ -222,11 +215,10 @@ void func_80001248(void *arg0)
     func_80041908();
     func_800638EC(0);
     sp10[0] = 0xFF;
-    osSendMesg(&D_80017DE4, &sp10, OS_MESG_BLOCK);
-    f20 = D_80000500;
+    osSendMesg(&D_80017DE4, (OSMesg)&sp10, OS_MESG_BLOCK);
     while (1)
     {
-        osRecvMesg(&D_800180A0, &sp18, OS_MESG_BLOCK);
+        osRecvMesg(&D_800180A0, (OSMesg)&sp18, OS_MESG_BLOCK);
         if (sp18[0] != 0)
         {
             if (sp18[0] == 1)
@@ -249,8 +241,8 @@ void func_80001248(void *arg0)
                 func_80037E60(&D_8009FE10, sp18[1]);
                 func_8007F22C(&D_8009F094);
             }
-            func_80075100(sp18[1] * f20);
-            func_80074ADC(&D_800AB9C8, sp18[1] * f20);
+            func_80075100(sp18[1] * (1.0f / 60.0f));
+            func_80074ADC(&D_800AB9C8, sp18[1] * (1.0f / 60.0f));
             func_8004ED04();
             func_8004E60C();
         }
@@ -259,9 +251,6 @@ void func_80001248(void *arg0)
     }
     return;
 }
-#else
-INCLUDE_ASM(void, "rocket/codeseg0/codeseg0", func_80001248, void*);
-#endif
 
 void create_scheduler()
 {

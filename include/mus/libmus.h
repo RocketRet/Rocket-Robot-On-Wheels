@@ -31,6 +31,7 @@ typedef struct
   int		thread_priority;
   unsigned char	*heap;
   int		heap_length;
+  int unk18;
 
   unsigned char	*ptr;
   unsigned char	*wbk;
@@ -45,9 +46,6 @@ typedef struct
   int 		syn_retraceCount;
   int		syn_num_dma_bufs;
   int		syn_dma_buf_size;
-
-// Special Addition
-  OSPiHandle	*diskrom_handle;
 } musConfig;
 
 /* enabled/disable flag */

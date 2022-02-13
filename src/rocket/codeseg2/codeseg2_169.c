@@ -147,3 +147,17 @@ void func_8004E92C()
 }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", func_8004E938);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", func_8004EAA0);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", func_8004EC08);
+
+struct unkfunc_8004EC64 {
+    u8 padding[0x18];
+    s32 unk18;
+};
+
+void func_8004EC64(struct unkfunc_8004EC64 *arg0)
+{
+    arg0->unk18 = 1;
+}

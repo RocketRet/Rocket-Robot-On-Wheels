@@ -35,10 +35,10 @@ enum
   FIFOCMD_LAST
 };
 
-// static void	__MusIntFifoOpen(int commands);
-// static void __MusIntFifoProcess(void);
-// static void __MusIntFifoProcessCommand(fifo_t *command);
-// static int	__MusIntFifoAddCommand(fifo_t *command);
+static void	__MusIntFifoOpen(int commands);
+static void __MusIntFifoProcess(void);
+static void __MusIntFifoProcessCommand(fifo_t *command);
+static int	__MusIntFifoAddCommand(fifo_t *command);
 
 
 #endif /* _PLAYER_FIFO_H_ */

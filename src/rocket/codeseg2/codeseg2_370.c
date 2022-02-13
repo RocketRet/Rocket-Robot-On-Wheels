@@ -84,11 +84,11 @@ void func_80085C68(u8 **dataPtrPtr, struct Model *arg1)
 
     *dataPtrPtr = ALIGN_PTR(*dataPtrPtr, 4);
     *dataPtrPtr += 4;
-    curPtr = *dataPtrPtr + READ_VALUE(*dataPtrPtr, u32) - 8;
+    curPtr = *dataPtrPtr + READ_VALUE(dataPtrPtr, u32) - 8;
     while (curPtr != *dataPtrPtr) {
         u16 val;
         *dataPtrPtr = ALIGN_PTR(*dataPtrPtr, 2);
-        val = READ_VALUE(*dataPtrPtr, u16);
+        val = READ_VALUE(dataPtrPtr, u16);
         func_80085978(val, dataPtrPtr, arg1);
     }
 }

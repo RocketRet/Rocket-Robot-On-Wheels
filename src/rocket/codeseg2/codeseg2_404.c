@@ -13,8 +13,7 @@ extern s32 D_800AF4E0;
 
 void func_80091F40(struct unkfunc_80091F54 *arg0, s32 arg1)
 {
-    // index[array] again
-    arg1[arg0->unk318] = 1;
+    arg0->unk318[arg1] = 1;
 }
 
 void func_80091F54(s32 arg0)
@@ -40,8 +39,7 @@ void func_80091F54(s32 arg0)
 
                 for (i = 0; i < 4; i++)
                 {
-                    // index[array] again
-                    D_800AF44C[i][var.unk18] = 1;
+                    var.unk18[D_800AF44C[i]] = 1;
                 }
 
                 i = 0;
@@ -49,8 +47,7 @@ void func_80091F54(s32 arg0)
                 {
                     if (i >= 0x21)
                         break;
-                    // index[array] again
-                    D_800AF45C[i++][var.unk318] = 1;
+                    var.unk318[D_800AF45C[i++]] = 1;
                 }
 
                 func_80091BFC(&var);

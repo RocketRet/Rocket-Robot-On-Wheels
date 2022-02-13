@@ -44,7 +44,7 @@ static __inline__ __const__ f64 __inline_sqrt (f64 in)
     return out;
 }
 
-#define absf __inline_absf
+#define fabsf __inline_absf
 
 static __inline__ __const__ f32 __inline_absf (f32 in)
 {

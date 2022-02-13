@@ -1,41 +1,115 @@
-#include <include_asm.h>
-#include <ultra64.h>
-#include <mus/player.h>
-#include <mus/player_fifo.h>
 
-extern int mus_last_fxtype;
+/***************************************************************
 
-extern musBool mus_songfxchange_flag;
+  player_api.c : Nintendo 64 Music Tools Programmers Library
+  (c) Copyright 1997/1998, Software Creations (Holdings) Ltd.
 
-extern ptr_bank_t *mus_default_bank;
+  Version 3.14
 
-extern fx_header_t *libmus_fxheader_current;
+  Music library Application Programming Interface. This file 
+  is included in the 'player.c' file directly.
 
-extern fx_header_t *libmus_fxheader_single;
+****************************************************************/
 
-extern channel_t *mus_channels;
 
-extern int max_channels;
+/*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
+  [API FUNCTION]
+  MusInitialize(config)
 
-extern ptr_bank_t *mus_init_bank;
+  [Parameters]
+  config       address of configuration structure
 
-extern channel_t *mus_channels2;
+  [Explanation]
+  Initialise the music player and the audio manager.
 
-extern command_func_t jumptable[];
+  [Return value]
+  amount of memory used from the audio heap
+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*/
+// Special Addition
+extern OSPiHandle *diskrom_handle;
 
-extern unsigned short mus_master_volume_effects;
+int MusInitialize(musConfig *config)
+{
+	ALVoiceConfig vc;  
+	int i;
 
-extern unsigned short mus_master_volume_songs;
+	/* set DDROM handle */
+	// diskrom_handle = config->diskrom_handle;
 
-extern int __MusIntFifoAddCommand(fifo_t *command);
-extern unsigned long __MusIntFindChannelAndStart(fx_header_t *header, int number, int volume, int pan, int priority);
-extern unsigned long __MusIntStartEffect(channel_t *cp, fx_header_t *header, int number, int volume, int pan, int priority);
-extern void __MusIntRemapPtrBank(char *pptr, char *wptr);
-extern musHandle __MusIntStartSong(void *addr);
-extern void __MusIntProcessContinuousVolume(channel_t *cp);
-extern void __MusIntProcessContinuousPitchBend(channel_t *cp);
+	/* main control flag */
+	__muscontrol_flag = config->control_flag;
 
-INCLUDE_ASM(int, "lib/codeseg1/player_api", MusInitialize, musConfig*);
+	/* copy player settings first */
+	max_channels = config->channels+MAX_SONGS;
+
+	/* get video refresh rate */
+	if (osTvType==0)
+		mus_vsyncs_per_second = 50;
+	else
+		mus_vsyncs_per_second = 60;
+	mus_next_frame_time = 1000000/mus_vsyncs_per_second;
+
+	/* initialise heap */
+	__MusIntMemInit(config->heap, config->heap_length);
+
+	/* initialise audio scheduler functions */
+	__MusIntSchedInit(config->sched);
+
+	/* claim and clear memory for voices and channels */
+	mus_voices = __MusIntMemMalloc((max_channels-MAX_SONGS)*sizeof(ALVoice));
+	mus_channels = __MusIntMemMalloc(max_channels*sizeof(channel_t));
+  // Start custom stuff
+  D_800BD2D4 = config->unk18;
+  D_800BD2D0 = __MusIntMemMalloc(D_800BD2D4);
+  func_80005180();
+  // End custom stuff
+	mus_channels2 = mus_channels+MAX_SONGS;
+	__MusIntFifoOpen(config->fifo_length);
+
+	/* initialse default sample bank */
+	mus_default_bank = mus_init_bank = NULL;
+	if (config->ptr && config->wbk)
+		MusPtrBankInitialize(config->ptr, config->wbk);
+
+	/* initialise default sound effect bank */
+	libmus_fxheader_current = libmus_fxheader_single = NULL;
+	if (config->default_fxbank)
+		MusFxBankInitialize(config->default_fxbank);
+
+	/* disable marker callback function */
+	marker_callback=NULL;
+
+	/* initialise audio thread */
+	mus_last_fxtype = AL_FX_BIGROOM;
+   __MusIntAudManInit(config, mus_vsyncs_per_second, mus_last_fxtype);
+
+	/* set volumes to maxiumum level */
+	MusSetMasterVolume(MUSFLAG_EFFECTS|MUSFLAG_SONGS, 0x7fff);
+
+	/* initialise player vars */
+	mus_current_handle = 1;
+	mus_random_seed = 0x12345678;
+
+	/* sign into the synthesis driver */
+	plr_player.next       = NULL;
+	plr_player.handler    = __MusIntMain;
+	plr_player.clientData = &plr_player;
+	alSynAddPlayer(&__libmus_alglobals.drvr, &plr_player);
+  
+	/* reset channels */
+	for(i=0; i<max_channels; i++)
+	{
+		mus_channels[i].playing = 0;
+		__MusIntInitialiseChannel(&mus_channels[i]);
+    
+		vc.unityPitch = 0;
+		vc.priority = config->thread_priority;
+		vc.fxBus = 0;
+		if (i>=MAX_SONGS)    
+			alSynAllocVoice(&__libmus_alglobals.drvr, &mus_voices[i-MAX_SONGS], &vc);
+	}
+	return (__MusIntMemRemaining());
+}	
 
 /*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
   [API FUNCTION]
@@ -102,105 +176,104 @@ musHandle MusStartSong(void *addr)
   sound handle
 *+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*/
 
-// musHandle MusStartSongFromMarker(void *addr, int marker)
-// {
-// 	musHandle handle;
-// 	unsigned char command, *ptr;
-// 	int i, note;
-// 	channel_t *cp;
+musHandle MusStartSongFromMarker(void *addr, int marker)
+{
+	musHandle handle;
+	unsigned char command, *ptr;
+	int i, note;
+	channel_t *cp;
 
-// 	handle = __MusIntStartSong(addr);
+	handle = __MusIntStartSong(addr);
 
-// 	/* skip to correct marker */
-// 	for (i=0, cp=mus_channels; i<max_channels; i++, cp++)
-// 	{
-// 		if (cp->handle==handle && cp->song_addr==(song_t *)addr && (cp->pdata))
-// 		{
-// 			/* skip to marker */
-// 			while (cp->pdata)
-// 			{
-// 				/* commands must be processed */
-// 				ptr = cp->pdata;
-// 				if (*ptr>=128)
-// 				{
-// 					if (*ptr==Cmarker && *(ptr+1)==marker)
-// 						break;
+	/* skip to correct marker */
+	for (i=0, cp=mus_channels; i<max_channels; i++, cp++)
+	{
+		if (cp->handle==handle && cp->song_addr==(song_t *)addr && (cp->pdata))
+		{
+			/* skip to marker */
+			while (cp->pdata)
+			{
+				/* commands must be processed */
+				ptr = cp->pdata;
+				if (*ptr>=128)
+				{
+					if (*ptr==Cmarker && *(ptr+1)==marker)
+						break;
 
-// 					command = *ptr++;
-// #ifdef _AUDIODEBUG
-// 					if(command >= Clast)
-// 					{
-// 						osSyncPrintf("PLAYER_API.C: Channel %d is corrupt (command=%02x)\n",i,command);
-// 						cp->pdata = NULL;
-// 						break;
-// 					}    
-// #endif
-// 					cp->pdata = (jumptable[command&0x7f].func)(cp, ptr);
-// 					continue;
-// 				}
-// 				note=*(cp->pdata++);
-// 				/* velocity must be processed */
-// 				if(cp->velocity_on)
-// 				{
-// 					cp->velocity = *(cp->pdata++);
-// 					if (cp->velocity>=0x80)
-// 					{
-// 						cp->velocity&=0x7f;
-// 						cp->velocity_on=0;
-// 						cp->default_velocity = cp->velocity;
-// 					}
-// 				}
-// 				else
-// 				{
-// 					cp->velocity = cp->default_velocity;
-// 				}
-// 				/* get length for continuous data update */
-// 				if (cp->fixed_length && !cp->ignore)
-// 				{
-// 					cp->length = cp->fixed_length;
-// 				}
-// 				else
-// 				{
-// 					cp->ignore = 0;
-// 					command = *(cp->pdata++);
-// 					if (command < 128)
-// 						cp->length = command;
-// 					else
-// 						cp->length = ((int)(command&0x7f)<<8)+*(cp->pdata++);
-// 				}
-// 				cp->channel_frame += cp->length*256;
-// 			}
+					command = *ptr++;
+#ifdef _AUDIODEBUG
+					if(command >= Clast)
+					{
+						osSyncPrintf("PLAYER_API.C: Channel %d is corrupt (command=%02x)\n",i,command);
+						cp->pdata = NULL;
+						break;
+					}    
+#endif
+					cp->pdata = (jumptable[command&0x7f].func)(cp, ptr);
+					continue;
+				}
+				note=*(cp->pdata++);
+				/* velocity must be processed */
+				if(cp->velocity_on)
+				{
+					cp->velocity = *(cp->pdata++);
+					if (cp->velocity>=0x80)
+					{
+						cp->velocity&=0x7f;
+						cp->velocity_on=0;
+						cp->default_velocity = cp->velocity;
+					}
+				}
+				else
+				{
+					cp->velocity = cp->default_velocity;
+				}
+				/* get length for continuous data update */
+				if (cp->fixed_length && !cp->ignore)
+				{
+					cp->length = cp->fixed_length;
+				}
+				else
+				{
+					cp->ignore = 0;
+					command = *(cp->pdata++);
+					if (command < 128)
+						cp->length = command;
+					else
+						cp->length = ((int)(command&0x7f)<<8)+*(cp->pdata++);
+				}
+				cp->channel_frame += cp->length*256;
+			}
 
-// 			cp->note_end_frame = cp->channel_frame;
-// 			if (cp->pdata)
-// 			{
-// 				/* get marker delay vaule */
-// 				ptr = cp->pdata+2;
-// 				note=*ptr++;
-// 				if (note>=0x80)
-// 				{
-// 					note &= 0x7f;
-// 					note <<= 8;
-// 					note |= *ptr++;
-// 				}
-// 				cp->channel_frame -= note*256;
-// 				cp->count = 0;
-// 				cp->length = note;
-// 				cp->pdata = ptr;
-// 			}
-// 			cp->note_start_frame = cp->channel_frame;
-// 			/* advance through volume data */
-//     		if(cp->pvolume)
-//       		__MusIntProcessContinuousVolume(cp);
-// 			/* advance through pitchbend data */
-//     		if(cp->ppitchbend)
-//       		__MusIntProcessContinuousPitchBend(cp);
-// 		}
-// 	}
-// 	MusHandleUnPause(handle);
-// 	return (handle);
-// }
-INCLUDE_ASM(musHandle, "lib/codeseg1/player_api", MusStartSongFromMarker, void *addr, int marker);
+			cp->note_end_frame = cp->channel_frame;
+			if (cp->pdata)
+			{
+				/* get marker delay vaule */
+				ptr = cp->pdata+2;
+				note=*ptr++;
+				if (note>=0x80)
+				{
+					note &= 0x7f;
+					note <<= 8;
+					note |= *ptr++;
+				}
+				cp->channel_frame -= note*256;
+				cp->count = 0;
+				cp->length = note;
+				cp->pdata = ptr;
+			}
+			cp->note_start_frame = cp->channel_frame;
+			/* advance through volume data */
+    		if(cp->pvolume)
+      		__MusIntProcessContinuousVolume(cp);
+			/* advance through pitchbend data */
+    		if(cp->ppitchbend)
+      		__MusIntProcessContinuousPitchBend(cp);
+		}
+	}
+	MusHandleUnPause(handle);
+	return (handle);
+}
 
 /*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
   [API FUNCTION]

@@ -9,3 +9,19 @@ void func_8006FE70(s32 arg0)
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_8006FE94);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_8006FFD4);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_80070190);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_800701FC);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_80070254);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_800702A8);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_800702E4);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_8007038C);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_80070438);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_283", func_8007060C);

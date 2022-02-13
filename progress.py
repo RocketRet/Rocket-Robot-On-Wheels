@@ -20,51 +20,66 @@ def get_matching_stats():
         print(f"Error: Could not run objdump on {elf_path} - make sure that the project is built")
         sys.exit(1)
 
-    sizes = {}
-    starts = {}
-    ends = {}
     funcs_matched = 0
     funcs_unmatched = 0
     total_matched = 0
     total_unmatched = 0
+    next_nonmatched = False
 
+    nonmatchings = set()
+
+    # Pass 1: get all nonmatchings
     for line in nm_lines:
-        if "g     F .code" in line or "g     F *ABS*	" in line:
+        if "g     F ." in line or "g     F *ABS*	" in line:
             components = line.split()
             size = int(components[4], 16)
             name = components[5]
-            total_matched += size
-            funcs_matched += 1
-        elif "g       .code" in line:
+            if name.endswith("_NONMATCHING"):
+                nonmatchings.add(name[:-12])
+
+    # Pass 2: sum size of nonmatchings
+    for line in nm_lines:
+        if "g     F ." in line or "g     F *ABS*	" in line:
             components = line.split()
-            addr = int(components[0], 16)
-            name = components[4]
-            startAddr = 0
-            endAddr = 0
-            if name.endswith("_end"):
-                name = name[:-4]
-                endAddr = int(components[0], 16)
-                ends[name] = endAddr
-                if name in starts:
-                    startAddr = starts[name]
-            else:
-                startAddr = int(components[0], 16)
-                starts[name] = startAddr
-                if name in ends:
-                    endAddr = ends[name]
-            if startAddr != 0 and endAddr != 0:
-                size = endAddr - startAddr
+            size = int(components[4], 16)
+            name = components[5]
+            if name in nonmatchings:
                 total_unmatched += size
                 funcs_unmatched += 1
-
+            elif not name.endswith("_NONMATCHING"):
+                # TODO calculate matched functions using ctags to find total and subtract nonmatchings instead of this
+                # This method misses static functions
+                funcs_matched += 1
+                total_matched += size
 
     return funcs_matched, funcs_unmatched, total_matched, total_unmatched
 
 def main(args):
+    total_size = (
+        # Add code segments
+          (0x002090 - 0x0019D0) # codeseg0
+        + (0x0189E0 - 0x004150) # codeseg1
+        + (0x09FC70 - 0x01EA00) # codeseg2
+        # Subtract asm files
+        - (0x004D50 - 0x004CB0) # bzero
+        - (0x004F10 - 0x004EB0) # padding
+        - (0x005130 - 0x0050B0) # writebackdcache
+        - (0x008A80 - 0x0089D0) # invaldcache
+        - (0x00B370 - 0x00B340) # writebackdcacheall
+        - (0x00B9F0 - 0x00B950) # setintmask
+        - (0x00BE60 - 0x00BE20) # interrupt
+        - (0x00C7F0 - 0x00BEA0) # exceptasm
+        - (0x00E560 - 0x00E530) # getsr, setsr, setfpccsr
+        - (0x00E740 - 0x00E660) # invalicache, maptlbrdb
+        - (0x00E7F0 - 0x00E7E0) # getcount
+        - (0x010AC0 - 0x0107A0) # bcopy
+        - (0x015520 - 0x015460) # probetlb
+        - (0x015550 - 0x015540) # setcompare
+    )
     funcs_matched, funcs_unmatched, total_matched, total_unmatched = get_matching_stats()
 
     funcs_total = funcs_matched + funcs_unmatched
-    total_size = total_matched + total_unmatched
+    total_matched = total_size - total_unmatched
 
     funcs_matching_ratio = (funcs_matched / funcs_total) * 100
     matching_ratio = (total_matched / total_size) * 100

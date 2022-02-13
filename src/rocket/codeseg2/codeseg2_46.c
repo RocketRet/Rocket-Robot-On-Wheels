@@ -19,3 +19,49 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002BB84);
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002BFE4);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C064);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C0A0);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C0E0);
+
+struct unkfunc_8002C154 {
+    u8 padding[0x230];
+    u32 unk230;
+    f32 unk234;
+};
+
+extern f32 D_8009FE14;
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C120);
+
+// TODO reorder
+// void func_8002C154(struct unkfunc_8002C154 *arg0, s32 arg1)
+// {
+//     if (arg1 != arg0->unk230)
+//     {
+//         arg0->unk230 = arg1;
+//         arg0->unk234 = D_8009FE14;
+//     }
+// }
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C154);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C174);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C25C);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C320);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C390);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C468);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C4F0);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C63C);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C77C);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002CC44);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002CCCC);

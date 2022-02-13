@@ -6,7 +6,6 @@
 #ifdef NON_MATCHING
 void decompress(struct DecompressionParams *arg0, u32 compressedSize, u8 *src, u32 uncompressedSize, u8 *dst)
 {
-    u8 bVar2;
     s32 uVar5;
     u8 *srcEnd;
     u8 *dstEnd;
@@ -14,7 +13,7 @@ void decompress(struct DecompressionParams *arg0, u32 compressedSize, u8 *src, u
 
     srcEnd = src + compressedSize;
     dstEnd = dst + uncompressedSize;
-    do
+    while (1)
     {
         if (src >= srcEnd)
             return;
@@ -22,7 +21,15 @@ void decompress(struct DecompressionParams *arg0, u32 compressedSize, u8 *src, u
         layoutBits = *src++;
         while (1)
         {
-            if (uVar5 < 0 || src >= srcEnd || dst >= dstEnd)
+            if (uVar5 < 0)
+            {
+                break;
+            }
+            if (src >= srcEnd)
+            {
+                return;
+            }
+            if (dst >= dstEnd)
             {
                 break;
             }
@@ -48,7 +55,8 @@ void decompress(struct DecompressionParams *arg0, u32 compressedSize, u8 *src, u
             }
             uVar5 = uVar5 - 1;
         }
-    } while (1);
+        uVar5 = 7;
+    }
 }
 #else
 INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_427", decompress, struct DecompressionParams *, u32, u8 *, u32, u8 *);

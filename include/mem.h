@@ -4,7 +4,7 @@
 #include <ultra64.h>
 #include <types.h>
 
-#define READ_VALUE(x, type) ({x += sizeof(type); *(type*)(x - sizeof(type));})
+#define READ_VALUE(x, type) ({*x += sizeof(type); *(type*)(*x - sizeof(type));})
 static inline u32 read_u32(u8 **ptr) { *ptr += sizeof(u32); return *(u32*)(*ptr - sizeof(u32)); }
 static inline u16 read_u16(u8 **ptr) { *ptr += sizeof(u16); return *(u16*)(*ptr - sizeof(u16)); }
 static inline f32 read_f32(u8 **ptr) { *ptr += sizeof(f32); return *(f32*)(*ptr - sizeof(f32)); }

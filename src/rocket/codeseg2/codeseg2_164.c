@@ -23,3 +23,11 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D0FC);
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D1F8);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D294);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D2F0);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D720);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D87C);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D91C);

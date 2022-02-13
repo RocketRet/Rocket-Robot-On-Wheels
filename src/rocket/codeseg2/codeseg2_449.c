@@ -57,3 +57,5 @@ void func_8009DA54(struct unkfunc_800338D0 *arg0, s32 arg1, Gfx* arg2)
     }
 }
 
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_449", func_8009DAD0);
+

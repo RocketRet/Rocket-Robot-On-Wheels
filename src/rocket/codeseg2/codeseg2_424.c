@@ -33,3 +33,7 @@ void func_800977A8(struct unkfunc_800977A8 *arg0)
 {
     arg0->unk62 = 0;
 }
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_424", func_800977B0);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_424", func_80097D7C);
