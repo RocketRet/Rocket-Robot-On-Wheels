@@ -10,3 +10,6 @@
 [submodule "kmc"]
 	path = tools/kmc
 	url = https://github.com/Mr-Wiseguy/kmc-gcc-wrapper.git
+[submodule "tools/rocket-tools/lib/fmtlib"]
+	path = tools/rocket-tools/lib/fmtlib
+	url = https://github.com/fmtlib/fmt.git

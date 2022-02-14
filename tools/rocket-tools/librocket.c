@@ -74,7 +74,7 @@ static void put_bit(uint8_t **byteBuffer, uint32_t *bufferLength, uint32_t index
     if (byteIndex > *bufferLength)
     {
         *bufferLength *= 2;
-        *byteBuffer = realloc(*byteBuffer, *bufferLength);
+        *byteBuffer = (uint8_t*)realloc(*byteBuffer, *bufferLength);
     }
 
     if (val)
@@ -97,11 +97,11 @@ int compress(struct DecompressionParams *params, uint32_t decompressedSize, uint
     // Initialize the layout byte array (may get reallocated later on by put_bit)
     uint32_t layoutBitIndex = 0;
     uint32_t layoutByteCount = 16;
-    uint8_t *layoutBytes = malloc(layoutByteCount);
+    uint8_t *layoutBytes = (uint8_t*)malloc(layoutByteCount);
 
     // Worst (or best?) case scenario where a window is found for every position
-    struct CompressionWindow *windowBuffer = calloc(MIN(maxOffset, decompressedSize), sizeof(struct CompressionWindow));
-    struct CompressionWindow *foundWindows = calloc(decompressedSize, sizeof(struct CompressionWindow));
+    struct CompressionWindow *windowBuffer = (struct CompressionWindow *)calloc(MIN(maxOffset, decompressedSize), sizeof(struct CompressionWindow));
+    struct CompressionWindow *foundWindows = (struct CompressionWindow *)calloc(decompressedSize, sizeof(struct CompressionWindow));
     int windowsFound = 0;
     // Find windows for compression
     i = 0;
@@ -143,7 +143,7 @@ int compress(struct DecompressionParams *params, uint32_t decompressedSize, uint
         // Simplifies to:
         // DIVIDE_ROUND_UP(layoutBitIndex, 8) +
         // windowsFound + layoutBitIndex;
-    *dst = malloc(compressedSize);
+    *dst = (uint8_t*)malloc(compressedSize);
     outputPtr = &(*dst)[0];
     inputPtr = &src[0];
 
@@ -282,13 +282,13 @@ void read_texture(void *texData, void *palData, FILE *romFile, unsigned int text
     }
     else
     {
-        uint8_t *compressionBuffer = malloc(handlerHeader.compressedLength);
+        uint8_t *compressionBuffer = (uint8_t*)malloc(handlerHeader.compressedLength);
         readAmount = fread(compressionBuffer, 1, handlerHeader.compressedLength, romFile);
         decompress(&decompressionParamsTable[handlerHeader.compressionParams],
             handlerHeader.compressedLength,
             compressionBuffer,
             asset.header.imageBytes,
-            texData);
+            (uint8_t*)texData);
         free(compressionBuffer);
     }
     if (palData != NULL && asset.header.paletteBytes > 0)
@@ -318,7 +318,7 @@ void swap_words(void *data, unsigned int numBytes, unsigned int bytesPerRow)
 void flip_rows(void *data, unsigned int height, unsigned int bytesPerRow)
 {
     uint32_t i;
-    uint8_t *tempRowData = malloc(bytesPerRow);
+    uint8_t *tempRowData = (uint8_t*)malloc(bytesPerRow);
     uint8_t *data8 = (uint8_t *)data;
     for (i = 0; i < height / 2; i++)
     {
