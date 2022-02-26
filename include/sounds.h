@@ -27,6 +27,7 @@ typedef enum {
     SFX_PAUSE_CONTROLS = 0x27,
     SFX_PAUSE_HINT = 0x28,
     SFX_CAMERA = 0x29,
+    SFX_CAMERA_STUCK = 0x2A,
 
     SFX_BEE = 0x2C,
 

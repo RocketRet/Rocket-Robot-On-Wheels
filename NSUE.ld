@@ -427,7 +427,7 @@ SECTIONS
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_367.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_368.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_370.rodata.o(.rodata);
-        tools/../build/us/asm/data/rocket/codeseg2/codeseg2_375.rodata.o(.rodata);
+        tools/../build/us/src/rocket/codeseg2/codeseg2_375.o(.rdata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_378.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_380.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_392.rodata.o(.rodata);
