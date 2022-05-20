@@ -8,25 +8,24 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_133", func_800442F4);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_133", func_80044D78);
 
-extern f32 D_8009FE14;
-
 struct unkfunc_800451D0 {
     u8 padding[0x260];
     s32 unk260;
     f32 unk264;
 };
 
-// TODO reorder
-// void func_800451D0(struct unkfunc_800451D0 *arg0, s32 arg1)
-// {
-//     if (arg1 != arg0->unk260)
-//     {
-//         arg0->unk260 = arg1;
-//         arg0->unk264 = D_8009FE14;
-//     }
-// }
+extern struct {
+    f32 unk0;
+} D_8009FE14;
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_133", func_800451D0);
+void func_800451D0(struct unkfunc_800451D0 *arg0, s32 arg1)
+{
+    if (arg1 != arg0->unk260)
+    {
+        arg0->unk260 = arg1;
+        arg0->unk264 = D_8009FE14.unk0;
+    }
+}
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_133", func_800451F0);
 

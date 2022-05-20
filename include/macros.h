@@ -1,15 +1,22 @@
 #ifndef __MACROS_H__
 #define __MACROS_H__
 
+#ifndef FLT_MAX
+#define FLT_MAX 3.4028235e38f
+#endif
+
 #define ROMADDR(x) ((u32)x + 0xB0000000)
 
 #define RAM_END 0x80400000
-#define FRAMEBUFFER_BYTES ((SCREEN_WIDTH) * (SCREEN_HEIGHT) * 2)
+#define FRAMEBUFFER_BYTES ((SCREEN_WIDTH) * (SCREEN_HEIGHT) * sizeof(u16))
 
 #define NEXT_GFX(gfx) (++gfx - 1)
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
+
+#define SQUARED(x) \
+    ((x) * (x))
 
 #define VEC3F_COPY(dst, src) \
     __builtin_memcpy(dst, src, 3 * sizeof(f32))
@@ -26,6 +33,9 @@
 
 #define MTX3F_COPY(dst, src) \
     __builtin_memcpy(dst, src, 9 * sizeof(f32))
+
+#define VEC3F_MAG_SQUARED(x) \
+    ((x)[0] * (x)[0] + (x)[1] * (x)[1] + (x)[2] * (x)[2])
 
 #define sqrtf __inline_sqrtf
 #define sqrt __inline_sqrt

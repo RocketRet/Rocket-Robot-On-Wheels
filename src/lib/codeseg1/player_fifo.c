@@ -4,7 +4,7 @@
   player_fifo.c : Nintendo 64 Music Tools Programmers Library
   (c) Copyright 1997/1998, Software Creations (Holdings) Ltd.
 
-  Version 3.14
+  Version ???
 
   Music library fifo functions.
 

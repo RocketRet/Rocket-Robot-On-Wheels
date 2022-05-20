@@ -30,21 +30,20 @@ struct unkfunc_8002C154 {
     f32 unk234;
 };
 
-extern f32 D_8009FE14;
+extern struct {
+    f32 unk0;
+} D_8009FE14;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C120);
 
-// TODO reorder
-// void func_8002C154(struct unkfunc_8002C154 *arg0, s32 arg1)
-// {
-//     if (arg1 != arg0->unk230)
-//     {
-//         arg0->unk230 = arg1;
-//         arg0->unk234 = D_8009FE14;
-//     }
-// }
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C154);
+void func_8002C154(struct unkfunc_8002C154 *arg0, s32 arg1)
+{
+    if (arg1 != arg0->unk230)
+    {
+        arg0->unk230 = arg1;
+        arg0->unk234 = D_8009FE14.unk0;
+    }
+}
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C174);
 

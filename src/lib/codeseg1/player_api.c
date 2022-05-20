@@ -4,7 +4,7 @@
   player_api.c : Nintendo 64 Music Tools Programmers Library
   (c) Copyright 1997/1998, Software Creations (Holdings) Ltd.
 
-  Version 3.14
+  Version ???
 
   Music library Application Programming Interface. This file 
   is included in the 'player.c' file directly.
@@ -1166,8 +1166,7 @@ void *MusFxBankGetPtrBank(void *ifxbank)
    return (((fx_header_t *)ifxbank)->ptr_addr);
 }
 
-#define __libmus_current_sched D_8001988C
-extern musSched *D_8001988C;
+extern musSched *__libmus_current_sched;
 
 /*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*
   [API FUNCTION]

@@ -200,6 +200,20 @@ struct unkfunc_800882B8 {
     s32 *unk13C;
 };
 
+struct unkfunc_8001E248 {
+    u8 pad[0x24];
+    s32 unk24;
+    s32 unk28;
+};
+
+struct ModelUnkInner {
+    struct unkfunc_8001E248* unk0;
+    s32 unk4;
+    f32 unk8;
+    f32 unkC;
+    s32 unk10;
+};
+
 struct Model {
     /* 0x000 */ struct unkfunc_8001E044_inner *unk0;
     /* 0x004 */ s32 unk4;
@@ -220,7 +234,7 @@ struct Model {
     /* 0x0F0 */ Gfx *unkF0;
     /* 0x0F4 */ struct Submodel *submodels;
     /* 0x0F8 */ s32 numSubmodels;
-    /* 0x0FC */ s32 unkFC;
+    /* 0x0FC */ struct ModelUnkInner* unkFC;
     /* 0x100 */ f32 unk100;
     /* 0x104 */ u8 padding4[0x110 - 0x100 - 0x04];
     /* 0x110 */ s8 unk110;

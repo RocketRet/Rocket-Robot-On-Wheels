@@ -1,30 +1,165 @@
-#include <include_asm.h>
+
+/************************************************************
+
+  lib_memory.c : Nintendo 64 Music Tools Programmers Library
+  (c) Copyright 1997/1998, Software Creations (Holdings) Ltd.
+
+  Version ?
+
+  Music library memory management functions.
+
+*************************************************************/
+
+/* include configuartion */
+#include "libmus_config.h"
+
+/* include system headers */
 #include <ultra64.h>
+#ifndef SUPPORT_NAUDIO
+  #include <libaudio.h>
+#else
+  #include <n_libaudio_sc.h>
+  #include <n_libaudio_sn_sc.h>
+#endif
 
+/* include current header file */
+#include "lib_memory.h"
 
-INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemInit);
+/* internal workspace */
+static ALHeap audio_heap;
 
-INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemMalloc);
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [EXTERNAL FUNCTION]
+  __MusIntMemInit(addr, length)
 
-INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemRemaining);
+  [Parameters]
+  addr			address of memory to be used as audio heap
+  length		size of memory to be used as audio heap (in bytes)
 
-s32 D_800BEB20;
+  [Explanation]
+  Initialise audio heap.
 
-s32 *__MusIntMemGetHeapAddr()
+  [Return value]
+  NONE
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+void __MusIntMemInit(void *addr, int length)
 {
-    return &D_800BEB20;
+	__MusIntMemSet(addr, 0, length);
+	alHeapInit(&audio_heap, addr, length);
 }
 
-// void __MusIntMemSet(u8 *arg0, u8 arg1, s32 arg2)
-// {
-//     u8 *v0 = arg2;
-//     while (v0-- != -1)
-//     {
-//         *arg0 = arg1;
-//         arg0++;
-//     }
-// }
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [EXTERNAL FUNCTION]
+  __MusIntMemMalloc(length)
 
-INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemSet);
+  [Parameters]
+  length		number of bytes required
 
-INCLUDE_ASM(s32, "lib/codeseg1/lib_memory", __MusIntMemMove);
+  [Explanation]
+  Claim a number of bytes from the audio heap. This memory must be cache aligned.
+
+  [Return value]
+  Address of memory block.
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+void *__MusIntMemMalloc(int length)
+{
+	return (alHeapAlloc(&audio_heap, 1, length));
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [EXTERNAL FUNCTION]
+  __MusIntMemRemaining()
+
+  [Explanation]
+  Get the number of bytes remaining in the audio heap.
+
+  [Return value]
+  Number of bytes remaining in the audio heap.
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+int __MusIntMemRemaining(void)
+{
+	return (audio_heap.cur-audio_heap.base);
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [EXTERNAL FUNCTION]
+  __MusIntGetHeapAddr()
+
+  [Explanation]
+  Get the address of the audio heap configuration structure.
+
+  [Return value]
+  Address of audio heap configuration structure.
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+ALHeap *__MusIntMemGetHeapAddr(void)
+{
+	return (&audio_heap);
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [EXTERNAL FUNCTION]
+  __MusIntMemSet(addr, value, length)
+
+  [Parameters]
+  dest			address of memory block
+  value			value to set
+  length		size of memory block
+
+  [Explanation]
+  Set a memory block to the specified value.
+
+  [Return value]
+  NONE
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+void __MusIntMemSet(void *dest, unsigned char value, int length)
+{
+  unsigned char *a;
+
+  a = dest;
+  while (length--)
+    *a++=value;
+}
+
+/*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
+  [EXTERNAL FUNCTION]
+  __MusIntMemMove(dest, src, length)
+
+  [Parameters]
+  dest			address of destination memory block
+  src			address of source memory block
+  length		size of memory block
+
+  [Explanation]
+  Move a memory block from one place to another. This function is none destructive.
+
+  [Return value]
+  NONE
+*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*/
+
+void __MusIntMemMove(void *dest, void *src, int length)
+{
+	unsigned char *a, *b;
+
+	a = dest;
+	b = src;
+	if (b<a)
+	{
+		a+=length;
+		b+=length;
+		while (length--)
+			*--a = *--b;
+	}
+	else
+	{
+		while (length--)
+			*a++=*b++;
+	}
+}
+
+
+/* end of file */

@@ -108,7 +108,7 @@ $(SN_LNKS) : $(BUILD_DIR)/%.obj : %.c | $(SRC_BUILD_DIRS)
 
 $(SN_OBJS) : $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.obj
 	@printf "Running obj parser on $< $<\r\n"
-	@tools/psyq-obj-parser $< -o $@ -b -n > /dev/null
+	tools/psyq-obj-parser $< -o $@ -b -n > /dev/null
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@

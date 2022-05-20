@@ -1,12 +1,19 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
+#include "codeseg2.h"
 
 s32 func_80050860(s32 arg0) {
     return arg0;
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_179", func_80050868);
+void func_80050868(struct unkfunc_8001DFD0* arg0, void* arg1, void* arg2) {
+    arg0->unk4 = 0;
+    arg0->unkC = arg1;
+    arg0->unk10 = arg2;
+    arg0->unk8 = -1;
+    func_8008C148(arg1, arg0);
+}
 
 s32 func_800508A4()
 {

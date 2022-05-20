@@ -28,7 +28,7 @@ OSScClient D_800BC0D0; // 0x800BC0D0
 // end bss (0x800BC0D8, padded to 0x800BC0E0)
 
 // data
-u32 D_80017DE0 = 2; // 0x80017DE0
+s32 D_80017DE0 = 2; // 0x80017DE0
 OSMesgQueue D_80017DE4 = {}; // 0x80017DE4
 OSMesgQueue D_80017DFC = {}; // 0x80017DFC
 OSMesgQueue *gSchedMesgQueue = NULL; // 0x80017E14
@@ -103,89 +103,90 @@ void func_80001248(void *arg0);
 extern void *D_800AAF6C, *D_800AAF70;
 extern s32 D_800AF5F0;
 
-// TODO WIP
-// void thread6_unk(void *arg0)
-// {
-//     OSMesg mesg;
-//     u32 s2;
-//     s32 s1;
-//     s32 s6;
-//     s32 s4;
-//     s32 s3;
-//     s32 outMesg[3];
-//     create_scheduler();
-//     s2 = 0;
-//     s1 = 1;
-//     s3 = 1;
-//     osCreateMesgQueue(&D_800180A0, &D_800BA0CC, 1);
-//     if (osTvType == OS_TV_PAL)
-//     {
-//         s4 = 1;
-//     }
-//     else
-//     {
-//         s4 = 0;
-//     }
-//     osCreateThread(&D_800AFBC0, 7, func_80001248, NULL, &gThread7Stack[0x2000], 8);
-//     osStartThread(&D_800AFBC0);
-//     while (1)
-//     {
-//         osRecvMesg(&D_80017DE4, &mesg, OS_MESG_BLOCK);
-//         switch ((int)mesg)
-//         {
-//             case 2:
-//                 s1--;
-//                 break;
-//             case 3:
-//                 s2++;
-//                 break;
-//             case 4:
-//                 func_80074C88(&D_800AB9C8, 5);
-//                 MusStop(MUSFLAG_EFFECTS | MUSFLAG_SONGS, 0);
-//                 s4 = 1;
-//                 break;
-//             case 0xFF:
-//                 break;
-//             case 0:
-//                 if (s3 || !s1)
-//                     continue;
-//         }
-//         if (s1 == 0)
-//         {
-//             if (s4)
-//             {
-//                 bzero(D_800AAF6C, 0x25800);
-//                 osWritebackDCache(D_800AAF6C, 0x25800);
-//                 bzero(D_800AAF70, 0x25800);
-//                 osWritebackDCache(D_800AAF70, 0x25800);
-//                 if (__osSpSetPc(0) == -1)
-//                 {
-//                     MusStop(MUSFLAG_EFFECTS | MUSFLAG_SONGS, 0);
-//                 }
-//             }
-//             else if (!s3 && D_800AF5F0 != -1)
-//             {
-//                 outMesg[0] = 1;
-//                 s3 = 1;
-//                 osSendMesg(&D_800180A0, outMesg, OS_MESG_NOBLOCK);
-//                 continue;
-//             }
-//         }
-//         if (s2 < D_80017DE0 || 1 < s1 || s3 || D_800AF5F0 != NULL)
-//         {
-//             continue;
-//         }
-//         outMesg[0] = 0;
-//         if (!s4)
-//         {
-//             s1++;
-//         }
-//         s3 = 1;
-//         osSendMesg(&D_800180A0, outMesg, OS_MESG_NOBLOCK);
-//     }
-// }
+struct unk_thread6_unk {
+    u32 unk0;
+    u32 unk4;
+    u32 unk8;
+};
 
-INCLUDE_ASM(void, "rocket/codeseg0/codeseg0", thread6_unk, void *);
+void thread6_unk(void* arg0) {
+    struct unk_thread6_unk sp18;
+    s16 *sp28;
+    s32 phi_s5;
+    s32 phi_s3;
+    s32 phi_s1;
+    s32 isPal;
+    s32 phi_s2;
+
+    create_scheduler();
+    isPal = osTvType == OS_TV_PAL;
+    phi_s2 = 0;
+    phi_s1 = 1;
+    phi_s3 = 1;
+    phi_s5 = 0;
+    osCreateMesgQueue(&D_800180A0, &D_800BA0CC, 1);
+    osCreateThread(&D_800AFBC0, 7, func_80001248, NULL, &gThread7Stack[0x8000], 8);
+    osStartThread(&D_800AFBC0);
+    while (1) {
+        osRecvMesg(&D_80017DE4, (OSMesg)&sp28, 1);
+        switch (*sp28) {
+            case 0x1:
+                phi_s2++;
+                break;
+            case 0x2:
+                phi_s1--;
+                break;
+            case 0x4:
+                func_80074C88(&D_800AB9C8, 5);
+                MusStop(3U, 0);
+                isPal = 1;
+                break;
+            case 0xFF:
+                phi_s3 = 0;
+                break;
+        }
+        if (phi_s5 == 0) {
+            if (phi_s3 == 0 && phi_s1 == 0) {
+                phi_s5 = 1;
+            } else {
+                continue;
+            }
+        }
+        if (phi_s1 == 0) {
+            if (isPal) {
+                bzero(D_800AAF6C, FRAMEBUFFER_BYTES);
+                osWritebackDCache(D_800AAF6C, FRAMEBUFFER_BYTES);
+                bzero(D_800AAF70, FRAMEBUFFER_BYTES);
+                osWritebackDCache(D_800AAF70, FRAMEBUFFER_BYTES);
+                if (__osSpSetPc(0) == -1) {
+                    MusStop(MUSFLAG_EFFECTS | MUSFLAG_SONGS, 0);
+                }
+            } else {
+                if (phi_s3 == 0 && D_800AF5F0 != -1) {
+                    sp18.unk0 = 1;
+                    goto send_mesg;
+                }
+            }
+        }
+        if (phi_s2 < D_80017DE0 || phi_s1 >= 2 || phi_s3 || D_800AF5F0 != -1) {
+            continue;
+        }
+        if (phi_s2 > 3) {
+            phi_s2 = 3;
+        }
+        sp18.unk0 = 0;
+        sp18.unk4 = phi_s2;
+        phi_s2 = 0;
+        sp18.unk8 = isPal != 0;
+        if (!sp18.unk8) {
+            phi_s1++;
+        }
+send_mesg:
+        phi_s3 = 1;
+        osSendMesg(&D_800180A0, &sp18, 0);
+        continue;
+    }
+}
 
 void func_8001DE00(void);
 void func_80041908(void);

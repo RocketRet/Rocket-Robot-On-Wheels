@@ -45,8 +45,8 @@ typedef struct {
     ALLink      pFreeList;      /* list of free physical voices         */
     ALLink      pAllocList;     /* list of allocated physical voices    */
     ALLink      pLameList;      /* list of voices ready to be freed     */
-    s32         paramSamples;
-    s32         curSamples;     /* samples from start of game           */
+    s64         paramSamples;
+    s64         curSamples;     /* samples from start of game           */
     ALDMANew    dma;
     ALHeap      *heap;
     struct ALParam_s    *paramList;

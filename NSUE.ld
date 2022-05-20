@@ -44,10 +44,10 @@ SECTIONS
         tools/../build/us/src/lib/codeseg1/player.o(.rdata);
         tools/../build/us/asm/data/lib/codeseg1/codeseg1_63.rodata.o(.rodata);
         tools/../build/us/asm/data/lib/codeseg1/codeseg1_82.rodata.o(.rodata);
-        tools/../build/us/asm/data/lib/codeseg1/player_fx.rodata.o(.rodata);
+        tools/../build/us/src/lib/codeseg1/player_fx.o(.rdata);
         tools/../build/us/asm/data/lib/codeseg1/udivmoddi4.rodata.o(.rodata);
         tools/../build/us/asm/data/lib/codeseg1/codeseg1_158.rodata.o(.rodata);
-        tools/../build/us/asm/data/lib/codeseg1/aud_samples.rodata.o(.rodata);
+        tools/../build/us/src/lib/codeseg1/aud_samples.o(.rdata);
         tools/../build/us/ultra/src/sched/sched.o(.rodata);
         tools/../build/us/ultra/src/gu/perspective.o(.rodata);
         tools/../build/us/ultra/src/gu/sinf.o(.rodata);
@@ -272,8 +272,12 @@ SECTIONS
         tools/../build/us/bin/exceptasm_data.o(.data);
         ___ultra_src_io_piacs = .;
         tools/../build/us/ultra/src/io/piacs.o(.data);
-        _1A270 = .;
-        tools/../build/us/bin/1A270.o(.data);
+        lib_codeseg1_player_fx = .;
+        tools/../build/us/src/lib/codeseg1/player_fx.o(.data);
+        lib_codeseg1_aud_sched = .;
+        tools/../build/us/src/lib/codeseg1/aud_sched.o(.data);
+        lib_codeseg1_aud_thread = .;
+        tools/../build/us/src/lib/codeseg1/aud_thread.o(.data);
         ___ultra_src_os_timerintr = .;
         tools/../build/us/ultra/src/os/timerintr.o(.data);
         ___ultra_src_io_siacs = .;
@@ -294,12 +298,16 @@ SECTIONS
         tools/../build/us/ultra/src/n_audio/n_reverb.o(.data);
         ___ultra_src_n_audio_n_env = .;
         tools/../build/us/ultra/src/n_audio/n_env.o(.data);
-        _1A9A0 = .;
-        tools/../build/us/bin/1A9A0.o(.data);
+        lib_codeseg1_aud_samples = .;
+        tools/../build/us/src/lib/codeseg1/aud_samples.o(.data);
         ___ultra_src_io_aisetnextbuf = .;
         tools/../build/us/ultra/src/io/aisetnextbuf.o(.data);
-        _1A9C0 = .;
-        tools/../build/us/bin/1A9C0.o(.data);
+        ___ultra_src_io_vimodepallan1 = .;
+        tools/../build/us/ultra/src/io/vimodepallan1.o(.data);
+        ___ultra_src_io_vimodempallan1 = .;
+        tools/../build/us/ultra/src/io/vimodempallan1.o(.data);
+        ___ultra_src_io_vimodentsclan1 = .;
+        tools/../build/us/ultra/src/io/vimodentsclan1.o(.data);
         ___ultra_src_audio_env = .;
         tools/../build/us/ultra/src/audio/env.o(.data);
         codesegs0_1_DATA_END = .;
@@ -313,7 +321,7 @@ SECTIONS
     codeseg2_VRAM = ADDR(.codeseg2);
     .codeseg2 0x80019FB0 : AT(codeseg2_ROM_START) SUBALIGN(16)
     {
-        tools/../build/us/asm/data/rocket/codeseg2/codeseg2_3.rodata.o(.rodata);
+        tools/../build/us/src/rocket/codeseg2/codeseg2_3.o(.rdata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_18.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_20.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_23.rodata.o(.rodata);
@@ -739,15 +747,46 @@ SECTIONS
         all_data_2_data = .;
         tools/../build/us/asm/data/all_data_2.data.o(.data);
         codeseg2_DATA_END = .;
-        codeseg2_BSS_START = .;
+    }
+    codeseg2_ROM_END = 0xB0460;
+    __romPos = 0xB0460;
+
+    __romPos = 0xB0460;
+    . = __romPos;
+    codesegs0_1_bss_ROM_START = __romPos;
+    codesegs0_1_bss_VRAM = ADDR(.codesegs0_1_bss);
+    .codesegs0_1_bss 0x800AF860 : AT(codesegs0_1_bss_ROM_START) SUBALIGN(16)
+    {
+        codesegs0_1_bss_DATA_END = .;
+        codesegs0_1_bss_BSS_START = .;
         tools/../build/us/src/rocket/codeseg0/codeseg0.o(.bss);
         tools/../build/us/ultra/src/io/pimgr.o(.bss);
         tools/../build/us/src/lib/codeseg1/player.o(.bss);
         tools/../build/us/ultra/src/os/initialize.o(.bss);
         tools/../build/us/ultra/src/io/conteepread.o(.bss);
-        codeseg2_BSS_END = .;
+        tools/../build/us/ultra/src/io/controller.o(.bss);
+        tools/../build/us/ultra/src/os/seteventmesg.o(.bss);
+        tools/../build/us/ultra/src/io/motor.o(.bss);
+        tools/../build/us/ultra/src/io/vimgr.o(.bss);
+        tools/../build/us/ultra/src/io/sptask.o(.bss);
+        tools/../build/us/ultra/src/io/cartrominit.o(.bss);
+        tools/../build/us/ultra/src/io/leodiskinit.o(.bss);
+        tools/../build/us/ultra/src/io/piacs.o(.bss);
+        tools/../build/us/src/lib/codeseg1/player_fx.o(.bss);
+        tools/../build/us/src/lib/codeseg1/aud_sched.o(.bss);
+        tools/../build/us/src/lib/codeseg1/lib_memory.o(.bss);
+        tools/../build/us/src/lib/codeseg1/aud_thread.o(.bss);
+        tools/../build/us/ultra/src/os/timerintr.o(.bss);
+        tools/../build/us/ultra/src/io/siacs.o(.bss);
+        tools/../build/us/ultra/src/io/pfsisplug.o(.bss);
+        tools/../build/us/ultra/src/os/kdebugserver.o(.bss);
+        tools/../build/us/ultra/src/io/leointerrupt.o(.bss);
+        tools/../build/us/src/lib/codeseg1/aud_dma.o(.bss);
+        tools/../build/us/src/lib/codeseg1/aud_samples.o(.bss);
+        tools/../build/us/ultra/src/io/driverominit.o(.bss);
+        codesegs0_1_bss_BSS_END = .;
     }
-    codeseg2_ROM_END = 0xB0460;
+    codesegs0_1_bss_ROM_END = 0xB0460;
     __romPos = 0xB0460;
 
     __romPos = 0xB0460;

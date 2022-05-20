@@ -49,10 +49,10 @@ segments:
     - [0x001110, .rdata, lib/codeseg1/player]
     - [0x001210, rodata, lib/codeseg1/codeseg1_63]
     - [0x001230, rodata, lib/codeseg1/codeseg1_82]
-    - [0x001250, rodata, lib/codeseg1/player_fx]
+    - [0x001250, .rdata, lib/codeseg1/player_fx]
     - [0x001270, rodata, lib/codeseg1/udivmoddi4]
     - [0x001370, rodata, lib/codeseg1/codeseg1_158]
-    - [0x001390, rodata, lib/codeseg1/aud_samples]
+    - [0x001390, .rdata, lib/codeseg1/aud_samples]
     - [0x0013A0, .rodata, ../ultra/src/sched/sched]
     - [0x0013D0, .rodata, ../ultra/src/gu/perspective]
     - [0x001410, .rodata, ../ultra/src/gu/sinf]
@@ -258,7 +258,9 @@ segments:
     - [0x01A220, .data, ../ultra/src/os/thread]
     - [0x01A240, bin, exceptasm_data]
     - [0x01A260, .data, ../ultra/src/io/piacs]
-    - [0x01A270, bin] # data
+    - [0x01A270, .data, lib/codeseg1/player_fx]
+    - [0x01A480, .data, lib/codeseg1/aud_sched]
+    - [0x01A490, .data, lib/codeseg1/aud_thread]
     - [0x01A4A0, .data, ../ultra/src/os/timerintr]
     - [0x01A4B0, .data, ../ultra/src/io/siacs]
     - [0x01A4C0, .data, ../ultra/src/io/vi]
@@ -269,16 +271,18 @@ segments:
     - [0x01A700, .data, ../ultra/src/n_audio/n_drvrnew]
     - [0x01A890, .data, ../ultra/src/n_audio/n_reverb]
     - [0x01A8A0, .data, ../ultra/src/n_audio/n_env]
-    - [0x01A9A0, bin] # data
+    - [0x01A9A0, .data, lib/codeseg1/aud_samples]
     - [0x01A9B0, .data, ../ultra/src/io/aisetnextbuf]
-    - [0x01A9C0, bin] # data
+    - [0x01A9C0, .data, ../ultra/src/io/vimodepallan1]
+    - [0x01AA10, .data, ../ultra/src/io/vimodempallan1]
+    - [0x01AA60, .data, ../ultra/src/io/vimodentsclan1]
     - [0x01AAB0, .data, ../ultra/src/audio/env]
   - name: codeseg2
     type: code
     start: 0x01ABB0
     vram: 0x80019FB0
     subsegments:
-    - [0x01ABB0, rodata, rocket/codeseg2/codeseg2_3]
+    - [0x01ABB0, .rdata, rocket/codeseg2/codeseg2_3]
     - [0x01AC60, rodata, rocket/codeseg2/codeseg2_18]
     - [0x01AC80, rodata, rocket/codeseg2/codeseg2_20]
     - [0x01AD40, rodata, rocket/codeseg2/codeseg2_23]
@@ -699,12 +703,38 @@ segments:
     - [0x09FC70, data, all_data] # data
     - [0x0AFF20, .data, rocket/codeseg2/codeseg2_395]
     - [0x0B0000, data, all_data_2]
+  - name: codesegs0_1_bss
+    type: code
+    start: 0x0B0460
+    vram: 0x800AF860
+    subsegments:
+    # Codesegs 0/1 bss
     - [0x0B0460, .bss, rocket/codeseg0/codeseg0]    # 0x800AF860 - 0x800BC0D8
     - [0x0B0460, .bss, ../ultra/src/io/pimgr]       # 0x800BC0E0 - 0x800BD2B0
     - [0x0B0460, .bss, lib/codeseg1/player]         # 0x800BD2B0 - 0x800BD374
     - [0x0B0460, .bss, ../ultra/src/os/initialize]  # 0x800BD380 - 0x800BD384
     - [0x0B0460, .bss, ../ultra/src/io/conteepread] # 0x800BD390 - 0x800BD3D0
-    # - [0x0B0460, .bss, ../ultra/src/io/controller]  # 0x800BD3D0 - 
+    - [0x0B0460, .bss, ../ultra/src/io/controller]  # 0x800BD3D0 - 0x800BD480
+    - [0x0B0460, .bss, ../ultra/src/os/seteventmesg]  # 0x800BD480 - 0x800BD500
+    - [0x0B0460, .bss, ../ultra/src/io/motor]  # 0x800BD500 - 0x800BD740
+    - [0x0B0460, .bss, ../ultra/src/io/vimgr]  # 0x800BD740 - 0x800BE960
+    - [0x0B0460, .bss, ../ultra/src/io/sptask]  # 0x800BE960 - 0x800BE9A0
+    - [0x0B0460, .bss, ../ultra/src/io/cartrominit]  # 0x800BE9A0 - 0x800BEA20
+    - [0x0B0460, .bss, ../ultra/src/io/leodiskinit]  # 0x800BEA20 - 0x800BEAB0
+    - [0x0B0460, .bss, ../ultra/src/io/piacs]  # 0x800BEAC0 - 0x800BEAE0
+    - [0x0B0460, .bss, lib/codeseg1/player_fx]  # 0x800BEAE0 - 0x800BEB10
+    - [0x0B0460, .bss, lib/codeseg1/aud_sched]  # 0x800BEB10 - 0x800BEB20
+    - [0x0B0460, .bss, lib/codeseg1/lib_memory]  # 0x800BEB20 - 0x800BEB30
+    - [0x0B0460, .bss, lib/codeseg1/aud_thread]  # 0x800BEB30 - 0x800BED50
+    - [0x0B0460, .bss, ../ultra/src/os/timerintr]  # 0x800BED50 - 0x800BEDB0
+    - [0x0B0460, .bss, ../ultra/src/io/siacs]  # 0x800BEDB0 - 0x800BEDE0
+    - [0x0B0460, .bss, ../ultra/src/io/pfsisplug]  # 0x800BEDE0 - 0x800BEE20
+    - [0x0B0460, .bss, ../ultra/src/os/kdebugserver]  # 0x800BEE20 - 0x800BEFD0
+    - [0x0B0460, .bss, ../ultra/src/io/leointerrupt]  # 0x800BEFD0 - 0x800BFFD0
+    - [0x0B0460, .bss, lib/codeseg1/aud_dma]  # 0x800BFFD0 - 0x800C0010
+    - [0x0B0460, .bss, lib/codeseg1/aud_samples]  # 0x800C0010 - 0x800C0020
+    - [0x0B0460, .bss, ../ultra/src/io/driverominit]  # 0x800C0020 - 0x800C00A0
+    # Codeseg 2 bss
   - name: assets
     type: code
     start: 0x0B0460

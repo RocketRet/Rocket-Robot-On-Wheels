@@ -11,7 +11,6 @@
 **************************************************************/
 
 /* include configuartion */
-#include <include_asm.h>
 #include "libmus_config.h"
 
 /* include system headers */
@@ -43,12 +42,10 @@ typedef struct
 	OSMesg		task_messages[QUEUE_SIZE];
 } ossched_workspace_t;
 
-extern OSSched *audio_sched; // TODO bss
-extern ossched_workspace_t *sched_mem;
-// static musSched	default_sched = { __OsSchedInstall, __OsSchedWaitFrame, __OsSchedDoTask }; // TODO data
-// musSched *__libmus_current_sched=&default_sched;
-extern u8 _binary_bin_rspboot_code_bin_start[];
-extern u8 _binary_bin_rspboot_code_bin_end[];
+static OSSched		*audio_sched;
+static ossched_workspace_t *sched_mem;
+static musSched	default_sched = { __OsSchedInstall, __OsSchedWaitFrame, __OsSchedDoTask };
+musSched *__libmus_current_sched=&default_sched;
 
 
 /*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*
@@ -142,8 +139,8 @@ static void __OsSchedDoTask(musTask *task)
    t.list.t.data_ptr    = task->data;
    t.list.t.data_size   = task->data_size;
    t.list.t.type  = M_AUDTASK;
-   t.list.t.ucode_boot = (u64 *)_binary_bin_rspboot_code_bin_start;
-   t.list.t.ucode_boot_size = ((int) _binary_bin_rspboot_code_bin_end - (int) _binary_bin_rspboot_code_bin_start);
+   t.list.t.ucode_boot = (u64 *)rspbootTextStart;
+   t.list.t.ucode_boot_size = ((int) rspbootTextEnd - (int) rspbootTextStart);
    t.list.t.flags  = 0;
    t.list.t.ucode = (u64 *) task->ucode;
    t.list.t.ucode_data = (u64 *) task->ucode_data;
