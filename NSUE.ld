@@ -6,11 +6,14 @@ SECTIONS
     header_VRAM = ADDR(.header);
     .header : AT(header_ROM_START) SUBALIGN(16)
     {
+        header_TEXT_START = .;
         header_TEXT_END = .;
         header_DATA_START = .;
         header = .;
         tools/../build/us/asm/header.o(.data);
         header_DATA_END = .;
+        header_BSS_START = .;
+        header_BSS_END = .;
     }
     header_ROM_END = 0x40;
     __romPos = 0x40;
@@ -28,6 +31,8 @@ SECTIONS
         boot2 = .;
         tools/../build/us/bin/boot2.o(.data);
         boot_DATA_END = .;
+        boot_BSS_START = .;
+        boot_BSS_END = .;
     }
     boot_ROM_END = 0x1000;
     __romPos = 0x1000;
@@ -40,6 +45,8 @@ SECTIONS
     {
         codesegs0_1_TEXT_START = .;
         tools/../build/us/asm/entry.o(.text);
+        codesegs0_1_TEXT_END = .;
+        codesegs0_1_DATA_START = .;
         tools/../build/us/src/rocket/codeseg0/codeseg0.o(.rdata);
         tools/../build/us/src/lib/codeseg1/player.o(.rdata);
         tools/../build/us/asm/data/lib/codeseg1/codeseg1_63.rodata.o(.rodata);
@@ -51,8 +58,6 @@ SECTIONS
         tools/../build/us/ultra/src/sched/sched.o(.rodata);
         tools/../build/us/ultra/src/gu/perspective.o(.rodata);
         tools/../build/us/ultra/src/gu/sinf.o(.rodata);
-        codesegs0_1_TEXT_END = .;
-        codesegs0_1_DATA_START = .;
         exceptasm_rodata = .;
         tools/../build/us/bin/exceptasm_rodata.o(.data);
         tools/../build/us/ultra/src/io/devmgr.o(.rodata);
@@ -77,6 +82,7 @@ SECTIONS
         tools/../build/us/ultra/src/audio/resample.o(.rodata);
         tools/../build/us/ultra/src/audio/save.o(.rodata);
         tools/../build/us/ultra/src/n_audio/n_resample.o(.rodata);
+        codesegs0_1_DATA_END = .;
         tools/../build/us/src/rocket/codeseg0/codeseg0.o(.text);
         rspboot_code = .;
         tools/../build/us/bin/rspboot_code.o(.data);
@@ -310,7 +316,8 @@ SECTIONS
         tools/../build/us/ultra/src/io/vimodentsclan1.o(.data);
         ___ultra_src_audio_env = .;
         tools/../build/us/ultra/src/audio/env.o(.data);
-        codesegs0_1_DATA_END = .;
+        codesegs0_1_BSS_START = .;
+        codesegs0_1_BSS_END = .;
     }
     codesegs0_1_ROM_END = 0x1ABB0;
     __romPos = 0x1ABB0;
@@ -321,6 +328,9 @@ SECTIONS
     codeseg2_VRAM = ADDR(.codeseg2);
     .codeseg2 0x80019FB0 : AT(codeseg2_ROM_START) SUBALIGN(16)
     {
+        codeseg2_TEXT_START = .;
+        codeseg2_TEXT_END = .;
+        codeseg2_DATA_START = .;
         tools/../build/us/src/rocket/codeseg2/codeseg2_3.o(.rdata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_18.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_20.rodata.o(.rodata);
@@ -461,7 +471,7 @@ SECTIONS
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_451.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_452.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_455.rodata.o(.rodata);
-        codeseg2_TEXT_START = .;
+        codeseg2_DATA_END = .;
         tools/../build/us/src/rocket/codeseg2/codeseg2_0.o(.text);
         tools/../build/us/src/rocket/codeseg2/codeseg2_1.o(.text);
         tools/../build/us/src/rocket/codeseg2/codeseg2_2.o(.text);
@@ -738,15 +748,14 @@ SECTIONS
         tools/../build/us/src/rocket/codeseg2/codeseg2_451.o(.text);
         tools/../build/us/src/rocket/codeseg2/codeseg2_452.o(.text);
         tools/../build/us/src/rocket/codeseg2/codeseg2_455.o(.text);
-        codeseg2_TEXT_END = .;
-        codeseg2_DATA_START = .;
         all_data_data = .;
         tools/../build/us/asm/data/all_data.data.o(.data);
         rocket_codeseg2_codeseg2_395 = .;
         tools/../build/us/src/rocket/codeseg2/codeseg2_395.o(.data);
         all_data_2_data = .;
         tools/../build/us/asm/data/all_data_2.data.o(.data);
-        codeseg2_DATA_END = .;
+        codeseg2_BSS_START = .;
+        codeseg2_BSS_END = .;
     }
     codeseg2_ROM_END = 0xB0460;
     __romPos = 0xB0460;
@@ -757,8 +766,7 @@ SECTIONS
     codesegs0_1_bss_VRAM = ADDR(.codesegs0_1_bss);
     .codesegs0_1_bss 0x800AF860 : AT(codesegs0_1_bss_ROM_START) SUBALIGN(16)
     {
-        codesegs0_1_bss_DATA_END = .;
-        codesegs0_1_bss_BSS_START = .;
+        codesegs0_1_bss_TEXT_START = .;
         tools/../build/us/src/rocket/codeseg0/codeseg0.o(.bss);
         tools/../build/us/ultra/src/io/pimgr.o(.bss);
         tools/../build/us/src/lib/codeseg1/player.o(.bss);
@@ -784,6 +792,10 @@ SECTIONS
         tools/../build/us/src/lib/codeseg1/aud_dma.o(.bss);
         tools/../build/us/src/lib/codeseg1/aud_samples.o(.bss);
         tools/../build/us/ultra/src/io/driverominit.o(.bss);
+        codesegs0_1_bss_TEXT_END = .;
+        codesegs0_1_bss_DATA_START = .;
+        codesegs0_1_bss_DATA_END = .;
+        codesegs0_1_bss_BSS_START = .;
         codesegs0_1_bss_BSS_END = .;
     }
     codesegs0_1_bss_ROM_END = 0xB0460;
@@ -795,11 +807,14 @@ SECTIONS
     assets_VRAM = ADDR(.assets);
     .assets : AT(assets_ROM_START) SUBALIGN(16)
     {
+        assets_TEXT_START = .;
         assets_TEXT_END = .;
         assets_DATA_START = .;
         assets = .;
         tools/../build/us/bin/assets.o(.data);
         assets_DATA_END = .;
+        assets_BSS_START = .;
+        assets_BSS_END = .;
     }
     assets_ROM_END = 0x9B6420;
     __romPos = 0x9B6420;
@@ -810,6 +825,7 @@ SECTIONS
     audio_VRAM = ADDR(.audio);
     .audio : AT(audio_ROM_START) SUBALIGN(16)
     {
+        audio_TEXT_START = .;
         audio_TEXT_END = .;
         audio_DATA_START = .;
         fxbank = .;
@@ -865,6 +881,8 @@ SECTIONS
         song16 = .;
         tools/../build/us/bin/song16.o(.data);
         audio_DATA_END = .;
+        audio_BSS_START = .;
+        audio_BSS_END = .;
     }
     audio_ROM_END = 0xBC6610;
     __romPos = 0xBC6610;
@@ -875,11 +893,14 @@ SECTIONS
     BC6610_VRAM = ADDR(.BC6610);
     .BC6610 : AT(BC6610_ROM_START) SUBALIGN(16)
     {
+        BC6610_TEXT_START = .;
         BC6610_TEXT_END = .;
         BC6610_DATA_START = .;
         BC6610 = .;
         tools/../build/us/bin/BC6610.o(.data);
         BC6610_DATA_END = .;
+        BC6610_BSS_START = .;
+        BC6610_BSS_END = .;
     }
     BC6610_ROM_END = 0xC00000;
     __romPos = 0xC00000;

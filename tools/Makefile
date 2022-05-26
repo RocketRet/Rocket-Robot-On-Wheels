@@ -1,11 +1,15 @@
 HOST_ENV := $(shell uname 2>/dev/null || echo Unknown)
 HOST_ENV := $(patsubst MINGW%,MinGW,$(HOST_ENV))
 
+GCC_272_DIR := gcc-2.7.2
+GCC_272     := $(GCC_272_DIR)/gcc
+GCC_272_AS  := $(GCC_272_DIR)/as
+
 CC           := gcc
 CXX          := g++
 CFLAGS       := -I . -Wall -Wextra -Wno-unused-parameter -O2 -s
 LDFLAGS      := -lm
-ALL_PROGRAMS := iplfontutil armips
+ALL_PROGRAMS := iplfontutil armips $(GCC_272) $(GCC_272_AS)
 
 # Only build armips from tools if it is not found on the system
 ifeq ($(shell which armips 2>/dev/null),)
@@ -13,6 +17,8 @@ ifeq ($(shell which armips 2>/dev/null),)
 else
   BUILD_PROGRAMS := $(filter-out armips,$(ALL_PROGRAMS))
 endif
+
+COMPILE_PROGRAMS := $(filter-out $(GCC_272) $(GCC_272_AS),$(BUILD_PROGRAMS))
 
 default: all
 
@@ -27,6 +33,19 @@ ifeq ($(HOST_ENV),MinGW)
   armips_LDFLAGS += -municode
 endif
 
+$(GCC_272): | $(GCC_272_DIR)
+	wget https://github.com/decompals/mips-gcc-2.7.2/releases/download/main/gcc-2.7.2-linux.tar.gz
+	tar xf gcc-2.7.2-linux.tar.gz -C $(GCC_272_DIR)
+	$(RM) gcc-2.7.2-linux.tar.gz
+
+$(GCC_272_AS): | $(GCC_272_DIR)
+	wget https://github.com/decompals/mips-binutils-2.6/releases/download/main/binutils-2.6-linux.tar.gz
+	tar xf binutils-2.6-linux.tar.gz -C $(GCC_272_DIR)
+	$(RM) binutils-2.6-linux.tar.gz
+
+$(GCC_272_DIR):
+	mkdir -p $@
+
 all: $(BUILD_PROGRAMS)
 
 clean:
@@ -37,6 +56,6 @@ $(1): $($1_SOURCES)
 	$$(CC) $(CFLAGS) $($1_CFLAGS) $$^ -o $$@ $($1_LDFLAGS) $(LDFLAGS)
 endef
 
-$(foreach p,$(BUILD_PROGRAMS),$(eval $(call COMPILE,$(p))))
+$(foreach p,$(COMPILE_PROGRAMS),$(eval $(call COMPILE,$(p))))
 
 .PHONY: all clean default

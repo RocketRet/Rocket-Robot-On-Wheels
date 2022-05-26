@@ -49,7 +49,9 @@ AS := mips-linux-gnu-as
 OBJCOPY := mips-linux-gnu-objcopy
 LD := mips-linux-gnu-ld
 STRIP := mips-linux-gnu-strip
-KMC_CC := tools/kmc/gcc
+KMC_DIR := tools/gcc-2.7.2
+KMC_CC := $(KMC_DIR)/gcc
+KMC_AS := $(KMC_DIR)/as
 
 export N64ALIGN := ON
 export VR4300MUL := ON
@@ -96,8 +98,8 @@ $(BUILD_ROOT) $(BUILD_DIR) $(SRC_DIR) $(SRC_BUILD_DIRS) $(ASM_BUILD_DIRS) $(BIN_
 $(BUILD_DIR)/ultra/%.i : ultra/%.c | $(SRC_BUILD_DIRS)
 	$(CPP) $(CPPFLAGS) -D__FILE__=\"$(notdir $<)\" -Wno-builtin-macro-redefined $< -o $@
 
-$(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS)
-	$(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
+$(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS) $(KMC_CC) $(KMC_AS)
+	export COMPILER_PATH=$(KMC_DIR) && $(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
 	$(STRIP) $@ -N $(<:.i=.c)
 
 $(SN_LNKS) : $(BUILD_DIR)/%.obj : %.c | $(SRC_BUILD_DIRS)
@@ -138,8 +140,13 @@ check: $(Z64)
 
 setup:
 	tools/splat/split.py tools/NSUE.00.yaml
-	make -C tools/kmc
 	git checkout -q $(ASM_DIR)
+
+$(KMC_CC) :
+	$(MAKE) -C tools/ gcc-2.7.2/gcc
+
+$(KMC_AS) :
+	$(MAKE) -C tools/ gcc-2.7.2/as
 
 .SUFFIXES:
 MAKEFLAGS += --no-builtin-rules
