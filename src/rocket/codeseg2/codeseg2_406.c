@@ -23,7 +23,7 @@ struct TexturedMaterial *load_textured_material(struct MaterialGfx *material) {
     s32 i;
 
     curRomAddr = material->materialData;
-    textureGroup = main_alloc_bzero(sizeof(struct TexturedMaterial));
+    textureGroup = (struct TexturedMaterial*)main_alloc_bzero(sizeof(struct TexturedMaterial));
 
     dma_read(curRomAddr, &textureGroup->header, sizeof(struct TextureGroupHeader));
     curRomAddr += sizeof(struct TextureGroupHeader);
@@ -35,7 +35,9 @@ struct TexturedMaterial *load_textured_material(struct MaterialGfx *material) {
         struct Texture *curTexture;
         struct Texture **curGroupTexturePointer;
         u16 curTextureIndex;
-        if (i >= textureGroup->header.numTextures) break;
+        if (i >= textureGroup->header.numTextures) {
+            break;
+        }
         dma_read(curRomAddr, &curTextureIndex, sizeof(curTextureIndex));
         curRomAddr += sizeof(curTextureIndex);
         
@@ -75,7 +77,7 @@ struct Texture *load_texture(struct MaterialGfx *material)
 
     curRomAddr = material->materialData;
     
-    texture = main_alloc_bzero(sizeof(struct Texture));
+    texture = (struct Texture*)main_alloc_bzero(sizeof(struct Texture));
 
     dma_read(curRomAddr, texture, sizeof(struct TextureHeader));
     curRomAddr += sizeof(struct TextureHeader);

@@ -45,7 +45,7 @@ extern struct unkD_8009F094 D_8009F094;
 //     gSPSetLights1(gGfxContext.dlHead++, (*D_8009F094.light));
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_96", func_8003B144);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_96", func_8003B144, s32);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_96", func_8003B298);
 

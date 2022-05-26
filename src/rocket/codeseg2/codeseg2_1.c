@@ -40,9 +40,8 @@ void func_80056BD0(void*);
 
 void func_8001DE50(struct unkfunc_8001DE50_arg0 *arg0, struct unkfunc_8001DE50_arg1 *arg1)
 {
-    struct unkfunc_8001DE50_arg0 *t0 = arg0;
-    t0->unk4 = arg1;
-    VEC3F_COPY(t0->unk8, arg1->unk3C);
-    MTX3F_COPY(t0->unk20, arg1->unk18);
-    func_80056BD0(&t0->unk50);
+    arg0->unk4 = arg1;
+    VEC3F_COPY(arg0->unk8, arg1->unk3C);
+    MTX3F_COPY(arg0->unk20, arg1->unk18);
+    func_80056BD0(&arg0->unk50);
 }

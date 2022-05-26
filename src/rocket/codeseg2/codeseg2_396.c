@@ -110,7 +110,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_396", func_80091220);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_396", func_800912A4);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_396", func_80091304);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_396", func_80091304, s32);
 
 void func_800913F0()
 {

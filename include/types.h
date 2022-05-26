@@ -11,6 +11,11 @@ typedef u32 ptrdiff_t;
 #include <stdint.h>
 #endif
 
+typedef float Vec2f[2];
+typedef float Vec3f[3];
+typedef float Mtx3f[3][3];
+typedef float Mtx4f[4][4];
+
 struct RecordHeader {
     u32 type;
     u32 length;
@@ -24,23 +29,20 @@ struct GfxContext {
 };
 
 struct GfxTask {
-    void *framebuffer;
-    struct GfxContext ctx;
-    u32 unk14;
-    u8 filler[0x120 - 0x14 - 0x04];
-    s16 unk120;
-    u16 unk122;
-    u16 unk124;
-    u16 unk126;
-    struct GfxTask *unk128;
-    u32 unk12C;
-    OSScTask schedTask;
+    /* 0x000 */ void *framebuffer;
+    /* 0x004 */ struct GfxContext ctx;
+    /* 0x014 */ u32 unk14;
+    /* 0x018 */ u8 unk18[0xD8 - 0x14 - 0x04];
+    /* 0x0C0 */ Mtx3f unkD8;
+    /* 0x0FC */ Mtx3f unkFC;
+    /* 0x120 */ s16 unk120;
+    /* 0x122 */ u16 unk122;
+    /* 0x124 */ u16 unk124;
+    /* 0x126 */ u16 unk126;
+    /* 0x128 */ struct GfxTask *unk128;
+    /* 0x12C */ u32 unk12C;
+    /* 0x130 */ OSScTask schedTask;
 };
-
-typedef float Vec2f[2];
-typedef float Vec3f[3];
-typedef float Mtx3f[3][3];
-typedef float Mtx4f[4][4];
 
 struct ControllerData {
     /* 0x00 */ f32 x;
@@ -214,18 +216,34 @@ struct ModelUnkInner {
     s32 unk10;
 };
 
+struct ModelUnkD8 {
+    u8 pad[0x8];
+    Vec3f unk8;
+    u8 pad1[0x20 - 0x8 - sizeof(Vec3f)];
+    Mtx3f unk20;
+    u8 pad2[0x74 - 0x20 - sizeof(Mtx3f)];
+    u32 unk74;
+};
+
 struct Model {
     /* 0x000 */ struct unkfunc_8001E044_inner *unk0;
     /* 0x004 */ s32 unk4;
     /* 0x008 */ s32 unk8;
     /* 0x00C */ struct unkfunc_800882B8 *unkC;
-    /* 0x010 */ s32 unk10;
+    /* 0x010 */ void* unk10;
     /* 0x014 */ s32 unk14;
-    /* 0x018 */ Mtx3f unk18;
-    /* 0x03C */ Vec3f unk3C;
-    /* 0x048 */ u8 padding3[0x6C - 0x3C - 0x0C];
+    /* 0x018 */ Mtx3f rotation;
+    /* 0x03C */ Vec3f position;
+    /* 0x048 */ u8 padding3[0x6C - 0x48];
     /* 0x06C */ Vec3f unk6C;
-    /* 0x078 */ u8 padding3_1[0xE0 - 0x6C - 0x0C];
+    /* 0x078 */ Vec3f velocity;
+    /* 0x084 */ Vec3f angular_velocity;
+    /* 0x090 */ u8 padding3_1[0x9C - 0x90];
+    /* 0x09C */ Vec3f angular_acceleration;
+    /* 0x0A8 */ Vec3f unkA8;
+    /* 0x0B4 */ Mtx3f unkB4;
+    /* 0x0D8 */ struct ModelUnkD8 *unkD8;
+    /* 0x0DC */ u8 padding3_2[0xE0 - 0xDC];
     /* 0x0E0 */ s16 unkE0;
     /* 0x0E2 */ s16 unkE2;
     /* 0x0E4 */ u32 unkE4;
@@ -236,12 +254,10 @@ struct Model {
     /* 0x0F8 */ s32 numSubmodels;
     /* 0x0FC */ struct ModelUnkInner* unkFC;
     /* 0x100 */ f32 unk100;
-    /* 0x104 */ u8 padding4[0x110 - 0x100 - 0x04];
-    /* 0x110 */ s8 unk110;
-    /* 0x111 */ u8 unk111;
-    /* 0x112 */ int unk112_7 : 1;
-    /* 0x112 */ int unk112_0 : 7;
-    /* 0x113 */ u8 unk113;
+    /* 0x104 */ f32 unk104;
+    /* 0x108 */ s32 unk108;
+    /* 0x10C */ u8 padding4[0x110 - 0x10C];
+    /* 0x110 */ u32 unk110;
     /* 0x114 */ s32 unk114;
     /* 0x118 */ s32 unk118;
     /* 0x11C */ s32 unk11C;

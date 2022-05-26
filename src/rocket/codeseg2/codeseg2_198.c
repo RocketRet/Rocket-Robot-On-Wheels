@@ -2,10 +2,18 @@
 #include <ultra64.h>
 #include <types.h>
 
+void sincosf(f32, f32*, f32*);
+f32 fabsf(f32);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_198", func_80056BD0);
+void func_80056BD0(Mtx3f arg0) {
+    bzero(arg0, sizeof(Mtx3f));
+    arg0[0][0] = arg0[1][1] = arg0[2][2] = 1.0f;
+}
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_198", func_80056C10);
+void func_80056C10(Mtx4f arg0) {
+    bzero(arg0, sizeof(Mtx4f));
+    arg0[0][0] = arg0[1][1] = arg0[2][2] = arg0[3][3] = 1.0f;
+}
 
 void mtx3f_concat(Mtx3f a, Mtx3f b, Mtx3f out)
 {
@@ -81,21 +89,31 @@ void mtx3f_transpose(Mtx3f in, Mtx3f out)
     }
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_198", func_80056F50);
+s32 func_80056F50(Mtx3f arg0, Mtx3f arg1) {
+    int i;
+    f32* a = &arg0[0][0];
+    f32* b = &arg1[0][0];
 
-extern f32 D_8001BA0C;
+    i = 0;
+    while (1) {
+        if (i >= 9) {
+            break;
+        }
+        if (fabsf(a[i] - b[i]) > 0.0001f) {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
 
-void get_sin_cos(f32, f32*, f32*);
-
-// float load
-#ifdef NON_MATCHING
 void mtx3f_rotate_axis(f32 angle, Vec3f arg1, Mtx3f out)
 {
     s32 i,j;
     f32 temp, sinVal, cosVal;
 
-    get_sin_cos(angle, &sinVal, &cosVal);
-    temp = D_8001BA0C - cosVal;
+    sincosf(angle, &sinVal, &cosVal);
+    temp = 1.0f - cosVal;
     for (i = 0; i < 3; i++)
     {
         for (j = 0; j < 3; j++)
@@ -124,6 +142,3 @@ void mtx3f_rotate_axis(f32 angle, Vec3f arg1, Mtx3f out)
     out[1][2] += temp;
     out[2][1] -= temp;
 }
-#else
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_198", mtx3f_rotate_axis);
-#endif

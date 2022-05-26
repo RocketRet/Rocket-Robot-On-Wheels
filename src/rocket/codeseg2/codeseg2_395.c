@@ -58,8 +58,8 @@ u32 D_800AF328[][2] = {
 
 s32 D_800AF3F0 = 0;
 
-void dma_read();
-void func_8008FC14();
+void dma_read(u32, void*, u32);
+void func_8008FC14(s32*);
 void func_80091C98();
 
 void func_8008FA88()

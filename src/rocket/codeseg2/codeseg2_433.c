@@ -2,35 +2,26 @@
 #include <ultra64.h>
 #include <macros.h>
 
-extern f64 D_8001DB80; // 1.0
-extern f32 D_8001DB88; // pi
-extern f64 D_8001DB90; // 0.5
-
 extern f32 sinf(f32);
 
-// TODO almost
-// void get_sin_cos(f32 angle, f32 *sinOut, f32 *cosOut)
-// {
-//     f32 sinVal;
-//     f64 cosVal;
-//     s32 negativeCos;
-//     sinVal = sinf(angle); // f0
-//     *sinOut = sinVal;
-//     // fvar2 = ;
-//     cosVal = sqrtf(D_8001DB80 - sinVal * sinVal); // cos = sqrt(1.0 - sin^2(angle))
-//     // negativeCos = 
-//     // *cosOut = negativeCos ? -cosVal : cosVal;
-//     if ((s32)((fabsf(angle) / D_8001DB88) + D_8001DB90) & 1)
-//     {
-//         *cosOut = -cosVal;
-//     }
-//     else
-//     {
-//         *cosOut = cosVal;
-//     }
-// }
+void sincosf(f32 angle, f32 *sinOut, f32 *cosOut)
+{
+    f32 sinVal;
+    f64 cosVal;
+    s32 negativeCos;
+    s32 num_half_rotations;
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", get_sin_cos);
+    sinVal = sinf(angle);
+    *sinOut = sinVal;
+    cosVal = sqrtf(1.0 - sinVal * sinVal);
+    num_half_rotations = (s32)(0.5 + fabsf(angle) / (float)M_PI);
+
+    if (num_half_rotations & 1) {
+        *cosOut = -cosVal;
+    } else {
+        *cosOut = cosVal;
+    }
+}
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", func_80099264);
 
@@ -63,3 +54,5 @@ s32 func_80099BCC(f32 *arg0, f32 arg1)
 {
     return arg0[0] < arg1 && arg1 < arg0[1];
 }
+
+asm(".include \"src/rocket/codeseg2/codeseg2_433_rodata.s\"");

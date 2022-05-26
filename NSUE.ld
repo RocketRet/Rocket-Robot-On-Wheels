@@ -349,7 +349,7 @@ SECTIONS
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_92.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_94.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_96.rodata.o(.rodata);
-        tools/../build/us/asm/data/rocket/codeseg2/codeseg2_103.rodata.o(.rodata);
+        tools/../build/us/src/rocket/codeseg2/codeseg2_103.o(.rdata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_106.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_107.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_109.rodata.o(.rodata);
@@ -379,8 +379,8 @@ SECTIONS
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_190.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_192.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_197.rodata.o(.rodata);
-        tools/../build/us/asm/data/rocket/codeseg2/codeseg2_198.rodata.o(.rodata);
-        tools/../build/us/asm/data/rocket/codeseg2/codeseg2_203.rodata.o(.rodata);
+        tools/../build/us/src/rocket/codeseg2/codeseg2_198.o(.rdata);
+        tools/../build/us/src/rocket/codeseg2/codeseg2_203.o(.rdata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_204.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_207.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_210.rodata.o(.rodata);
@@ -453,7 +453,7 @@ SECTIONS
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_428.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_430.rodata.o(.rodata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_432.rodata.o(.rodata);
-        tools/../build/us/asm/data/rocket/codeseg2/codeseg2_433.rodata.o(.rodata);
+        tools/../build/us/src/rocket/codeseg2/codeseg2_433.o(.rdata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_435.rodata.o(.rodata);
         tools/../build/us/src/rocket/codeseg2/codeseg2_439.o(.rdata);
         tools/../build/us/asm/data/rocket/codeseg2/codeseg2_443.rodata.o(.rodata);

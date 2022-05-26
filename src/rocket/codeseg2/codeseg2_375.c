@@ -730,6 +730,7 @@ struct unkfunc_80087D4C {
 };
 
 void mtx3f_axis_angle(Vec3f, Mtx3f);
+void read_vec3f(u8**, Vec3f);
 
 // TODO couple instructions out of order
 #ifdef NON_MATCHING
@@ -784,18 +785,23 @@ void func_80087E88(struct unkfunc_80087D4C *arg0, s32 arg1, u8 *dataPtr) {
     pop_second_heap_state();
 }
 
-extern s32 *D_800ADAC8;
+struct unkD_800ADAC8 {
+    s32 id;
+    u32 romAddress;
+};
+
+extern struct unkD_800ADAC8 *D_800ADAC8;
 extern s32 D_800ADACC;
 
-s32 func_80087F58(s32 arg0) {
-    s32 phi_v1 = D_800ADACC;
-    s32 *phi_a1 = D_800ADAC8;
+u32 func_80087F58(s32 id) {
+    s32 remaining = D_800ADACC;
+    struct unkD_800ADAC8 *curEntry = D_800ADAC8;
 
-    while (--phi_v1 >= 0) {
-        if (phi_a1[0] == arg0) {
-            return phi_a1[1];
+    while (--remaining >= 0) {
+        if (curEntry->id == id) {
+            return curEntry->romAddress;
         }
-        phi_a1 += 2;
+        curEntry++;
     }
     return 0;
 }

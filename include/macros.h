@@ -5,6 +5,10 @@
 #define FLT_MAX 3.4028235e38f
 #endif
 
+#ifndef INT_MAX
+#define INT_MAX 0x7FFFFFFF
+#endif
+
 #define ROMADDR(x) ((u32)x + 0xB0000000)
 
 #define RAM_END 0x80400000
@@ -30,6 +34,9 @@
     (dst)[0] = (a)[0] - (b)[0]; \
     (dst)[1] = (a)[1] - (b)[1]; \
     (dst)[2] = (a)[2] - (b)[2]
+
+#define VEC3F_DOT(a, b) \
+    ((a)[0] * (b)[0] + (a)[1] * (b)[1] + (a)[2] * (b)[2])
 
 #define MTX3F_COPY(dst, src) \
     __builtin_memcpy(dst, src, 9 * sizeof(f32))
