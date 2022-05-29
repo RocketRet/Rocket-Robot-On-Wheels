@@ -9,7 +9,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_370", func_80085584);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_370", func_8008561C);
 
-extern u8 _dataEndRom[];
+extern u8 _assetsSegmentRomStart[];
 
 extern u32 D_800ADAC8;
 extern u32 D_800ADACC;
@@ -30,11 +30,11 @@ struct unkfunc_800856AC {
 // void func_800856AC()
 // {
 //     u32 buffer[2];
-//     u32 addr0 = _dataEndRom;
+//     u32 addr0 = _assetsSegmentRomStart;
 //     u32 addr;
 //     struct unkfunc_800856AC *stuff;
 //     push_second_heap_state();
-//     addr = ALIGN((u32)_dataEndRom + 4, 4);
+//     addr = ALIGN((u32)_assetsSegmentRomStart + 4, 4);
 //     dma_read(addr, buffer, 8);
 //     buffer[1] -= 8;
 //     addr += 8;

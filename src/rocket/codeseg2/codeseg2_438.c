@@ -3,11 +3,11 @@
 #include <macros.h>
 #include <types.h>
 
-extern Vec3f gZeroVec3f;
+extern Vec3f D_800AF794;
 
 void set_vec3f_zero(Vec3f vec)
 {
-    VEC3F_COPY(vec, gZeroVec3f);
+    VEC3F_COPY(vec, D_800AF794);
 }
 
 void set_vec3f_scalar(Vec3f vec, f32 val)

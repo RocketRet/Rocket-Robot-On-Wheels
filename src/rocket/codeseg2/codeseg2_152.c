@@ -14,8 +14,6 @@ void func_800476A0(Gfx *arg0, Vtx * arg1, u32 arg2, u32 arg3)
 // extern f32 D_8001B448;
 extern Vec3f D_800A5DC0;
 
-extern Gfx *gDisplayListHead;
-
 extern struct GfxContext gGfxContext;
 
 struct test {

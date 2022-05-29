@@ -23,7 +23,7 @@ extern s32 D_800AF4E4;
 
 extern OSSched gScheduler;
 
-extern char D_B09C01A0[];
+extern char _wavebankRomStart[];
 
 s32 D_800AF320 = 0;
 s32 D_800AF324 = 0;
@@ -57,6 +57,9 @@ u32 D_800AF328[][2] = {
 };
 
 s32 D_800AF3F0 = 0;
+s32 D_800AF3F4 = 0;
+s32 D_800AF3F8 = 0;
+s32 D_800AF3FC = 0;
 
 void dma_read(u32, void*, u32);
 void func_8008FC14(s32*);
@@ -100,7 +103,7 @@ void func_8008FA88()
     config.syn_dma_buf_size = 0x800;
 
     MusInitialize(&config);
-    MusPtrBankInitialize(&gAudioPtrBank, D_B09C01A0);
+    MusPtrBankInitialize(&gAudioPtrBank, _wavebankRomStart);
     MusFxBankInitialize(&gAudioFxBank);
     MusFxBankSetPtrBank(&gAudioFxBank, &gAudioPtrBank);
     MusSetMasterVolume(2, 0x5FFF);

@@ -37,11 +37,11 @@ OSMesgQueue D_800180A0 = {}; // 0x800180A0
 // end data (0x800180B8, padded to 0x800180C0)
 
 
-extern u8 _bssStart[];
-extern u8 _bssEnd[];
-extern u8 D_800F6AA0[];
-extern u8 _dataEndRom[];
-extern u8 D_80100000[];
+extern u8 _codesegs0_1SegmentBssStart[];
+extern u8 _codesegs0_1SegmentBssEnd[];
+extern u8 _codeseg2SegmentBssStart[];
+extern u8 _codeseg2SegmentBssEnd[];
+extern u8 _assetsSegmentRomStart[];
 
 void thread1_idle(void *);
 
@@ -51,11 +51,11 @@ void func_80000DD0()
     s32 start;
     u8 *bssStart;
     u8 *oneMB;
-    bzero(_bssEnd, D_800F6AA0 - _bssEnd);
-    bssStart = _bssStart;
+    bzero(_codeseg2SegmentBssStart, _codeseg2SegmentBssEnd - _codeseg2SegmentBssStart);
+    bssStart = _codesegs0_1SegmentBssStart;
     oneMB = (u8 *)0x80100000;
     numBytes = bssStart - oneMB;
-    start = (uintptr_t)_dataEndRom - numBytes;
+    start = (uintptr_t)_assetsSegmentRomStart - numBytes;
     if (numBytes > 0)
     {
         osInvalDCache(oneMB, numBytes);
@@ -71,11 +71,11 @@ void game_init()
     u8 *bssStart;
     u8 *oneMB;
     osInitialize();
-    bzero(_bssEnd, D_800F6AA0 - _bssEnd);
-    bssStart = _bssStart;
+    bzero(_codeseg2SegmentBssStart, _codeseg2SegmentBssEnd - _codeseg2SegmentBssStart);
+    bssStart = _codesegs0_1SegmentBssStart;
     oneMB = (u8 *)0x80100000;
     numBytes = bssStart - oneMB;
-    start = (uintptr_t)_dataEndRom - numBytes;
+    start = (uintptr_t)_assetsSegmentRomStart - numBytes;
     if (numBytes > 0)
     {
         osInvalDCache(oneMB, numBytes);

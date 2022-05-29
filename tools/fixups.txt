@@ -1,0 +1,600 @@
+asm/nonmatchings/rocket/codeseg2/codeseg2_396/func_800907B0.s
+72:   addiu     $2, $3, -2
+77:   lui       $3, %hi(D_800AF3F4)
+94:   lui       $2, %hi(D_800AF3F4)
+123:   lui       $2, %hi(D_800AF3F4)
+129:   lui       $2, %hi(D_800AF3F4)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_140/func_80045C40.s
+21:  lbu        $2, 0x14($2)
+23:   lui       $2, %hi(D_8001B3DC)
+45:  lui        $2, %hi(D_8001B3DC)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_380/func_8008B694.s
+426:  lui        $2, %hi(D_800AF300)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_285/func_80071120.s
+30:  lw         $2, %lo(D_800AB998)($20)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_395/func_8008FC1C.s
+33:  lw         $2, %lo(D_800AF318)($21)
+35:  sw         $2, %lo(D_800AF318)($21)
+46:  lw         $2, %lo(D_800AF314)($19)
+51:  sw         $2, %lo(D_800AF314)($19)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_396/func_80091CD8.s
+44:  lw         $2, %lo(D_800AF320)($20)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_396/func_80091070.s
+19:   lui       $3, %hi(D_800AF320)
+33:  lw         $2, %lo(D_800AF320)($16)
+41:   sw        $2, %lo(D_800AF320)($16)
+42:  lw         $2, %lo(D_800AF320)($16)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_232/func_80063934.s
+23:  lw         $2, %lo(D_8009F094)($17)
+45:  lw         $2, %lo(D_8009F094)($17)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_249/func_8006A8C0.s
+11:  lui        $11, %hi(D_800AB67C)
+60:  lw         $2, %lo(D_800AB67C)($11)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_304/func_80076944.s
+124:  lw         $2, %lo(D_800ABD00)($3)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_452/func_8009E1B0.s
+257:  sw         $0, %lo(D_800AF850)($4)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_66/func_8002F724.s
+215:  lwc1       $f0, %lo(D_8009F98C)($3)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_3/func_80020134.s
+207:  lui        $9, %hi(D_800AF300)
+334:  lw         $2, %lo(D_800AF300)($8)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_285/func_80071A04.s
+172:  lw         $2, %lo(D_800AB998)($19)
+176:  sw         $2, %lo(D_800AB998)($19)
+194:  lw         $2, %lo(D_800AB998)($19)
+197:  sw         $16, %lo(D_800AB998)($19)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_109/func_8003D87C.s
+23:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_109/func_8003DA7C.s
+132:   lui       $2, %hi(D_800A55C0)
+372:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_110/func_8003E750.s
+24:   lui       $5, %hi(D_800AF788)
+112:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_111/func_8003ED98.s
+51:  lui        $5, %hi(D_800AF770)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_115/func_80040A0C.s
+247:  lui        $5, %hi(D_800AF788)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_115/func_8004133C.s
+49:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_22/func_80022080.s
+14:   lui       $4, %hi(D_8009F450)
+27:   lui       $4, %hi(D_8009F450)
+32:  addiu      $4, $4, %lo(D_8009F450)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_23/func_800227FC.s
+17:   lui       $4, %hi(D_8009F450)
+30:   lui       $4, %hi(D_8009F450)
+35:  addiu      $4, $4, %lo(D_8009F450)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_21/func_80021FC8.s
+14:   lui       $4, %hi(D_8009F440)
+27:   lui       $4, %hi(D_8009F440)
+32:  addiu      $4, $4, %lo(D_8009F440)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_23/func_8002243C.s
+25:   lui       $3, %hi(D_8009F440)
+38:   lui       $3, %hi(D_8009F440)
+43:  addiu      $3, $3, %lo(D_8009F440)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_21/func_80021F10.s
+14:   lui       $4, %hi(D_8009F430)
+27:   lui       $4, %hi(D_8009F430)
+32:  addiu      $4, $4, %lo(D_8009F430)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_23/func_800221F0.s
+22:   lui       $4, %hi(D_8009F430)
+35:   lui       $4, %hi(D_8009F430)
+40:  addiu      $4, $4, %lo(D_8009F430)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_224/dma_read.s
+145:   lui       $2, %hi(D_800E4DA8)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_414/func_800954FC.s
+52:   lui       $16, %hi(D_800AF5F0)
+57:   lui       $16, %hi(D_800AF5F0)
+85:   lui       $4, %hi(D_800ABDA8)
+103:  lui        $4, %hi(D_800ABDA8)
+197:  lui        $2, %hi(gPlayerObject)
+208:   lui       $16, %hi(D_8009F094)
+210:   lui       $2, %hi(D_800AF5F0)
+235:  lui        $2, %hi(D_800AF5F0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_308/func_80077B24.s
+18:   lui       $2, %hi(materialTable)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_126/func_80042D1C.s
+36:   lui       $2, %hi(D_800AC1FC)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_128/func_8004354C.s
+16:  lui        $2, %hi(D_800C02A0)
+18:  addiu      $2, $12, %lo(D_800C02A0)
+26:  sw         $0, %lo(D_800C02A0)($12)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_283/func_8006FFD4.s
+23:   lui       $2, %hi(D_8001CAB0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_312/func_800789A8.s
+466:  lui        $2, %hi(jtbl_8001D020)
+727:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_405/func_800926B8.s
+75:   lui       $2, %hi(D_800A539D)
+103:   lui       $2, %hi(D_800A539E)
+161:   lui       $2, %hi(D_800A5399)
+189:   lui       $2, %hi(D_800A539A)
+614:   lui       $2, %hi(D_8001D8A4)
+621:   lui       $2, %hi(D_8001D8A4)
+633:   lui       $2, %hi(D_8001D8A4)
+641:   lui       $2, %hi(D_8001D8A4)
+657:   lui       $2, %hi(D_8001D8A4)
+665:   lui       $2, %hi(D_8001D8A4)
+677:   lui       $2, %hi(D_8001D8A4)
+687:   lui       $2, %hi(D_8001D8A4)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_122/func_80042710.s
+145:   lui       $4, %hi(D_800ABC40)
+155:  lui        $4, %hi(D_800ABD00)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_126/func_8004303C.s
+30:   lui       $2, %hi(D_800AC1FC)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_160/func_8004B8BC.s
+31:  lui        $2, %hi(gPlayerObject)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_176/func_8004F730.s
+81:   lui       $3, %hi(D_800AF794)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_197/func_800568DC.s
+17:   lui       $3, %hi(D_800AA8C4)
+22:   lui       $3, %hi(D_800AA8C4)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_210/func_8005BEF4.s
+21:   lui       $2, %hi(D_800AADC4)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_214/func_8005C868.s
+235:  lui        $5, %hi(D_800AF77C)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_214/func_8005E2A4.s
+82:   lui       $2, %hi(D_800AAEEC)
+87:  addiu      $2, $2, %lo(D_800AAEEC)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_214/func_8005E8A0.s
+44:   lui       $2, %hi(D_800AAF10)
+52:   lui       $2, %hi(D_800AAF04)
+58:   addiu     $2, $2, %lo(D_800AAF04)
+60:  addiu      $2, $2, %lo(D_800AAF10)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_230/func_80062A94.s
+70:   lui       $4, %hi(D_800ABDA8)
+179:   lui       $2, %hi(D_800AAF94)
+191:   lui       $2, %hi(D_800AAF94)
+222:  lui        $2, %hi(D_800AAF94)
+333:   lui       $4, %hi(D_8009F094)
+566:   lui       $2, %hi(gPlayerObject)
+572:   lui       $2, %hi(gPlayerObject)
+582:   lui       $2, %hi(gPlayerObject)
+647:   lui       $4, %hi(D_8009F094)
+655:   lui       $4, %hi(D_8009F094)
+864:   lui       $2, %hi(D_800ABE58)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_228/func_80062160.s
+86:   lui       $3, %hi(D_800AC1C8)
+92:   lui       $3, %hi(D_800AC1C8)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_249/func_8006ABB4.s
+33:   lui       $2, %hi(gPlayerObject)
+60:   lui       $2, %hi(gPlayerObject)
+71:  lui        $2, %hi(gPlayerObject)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_42/func_8002A86C.s
+23:   lui       $2, %hi(gPlayerObject)
+139:   lui       $2, %hi(gPlayerObject)
+143:  lui        $2, %hi(gPlayerObject)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_228/func_80062408.s
+28:   lui       $2, %hi(D_800AC2E0)
+54:   lui       $2, %hi(D_800AC2E0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_23/func_800235DC.s
+929:   lui       $5, %hi(D_800AF794)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_249/func_80069E50.s
+21:   lui       $3, %hi(D_800AB658)
+28:  addiu      $3, $3, %lo(D_800AB658)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_249/func_80069380.s
+9:   lui       $5, %hi(D_800AB638)
+16:   addiu     $5, $5, %lo(D_800AB638)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_270/func_8006C39C.s
+63:   lui       $2, %hi(gPlayerObject)
+89:  lui        $2, %hi(gPlayerObject)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_273/func_8006CA6C.s
+21:  lui        $2, %hi(D_800AB6C0)
+30:   lui       $2, %hi(D_800AB6C0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_276/func_8006D478.s
+174:   lui       $2, %hi(D_800AB7C8)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_300/func_80074DF4.s
+109:   lui       $3, %hi(D_800ABA80)
+112:   lui       $3, %hi(D_800ABA80)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_303/func_80075ABC.s
+16:   lui       $2, %hi(D_800ABEA8)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_308/func_800777B0.s
+166:  lui        $2, %hi(D_800AC05C)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_317/func_8007A2BC.s
+53:   lui       $4, %hi(D_800AC384)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_317/func_8007A9C0.s
+20:   lui       $4, %hi(D_800AC384)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_317/func_8007A23C.s
+16:   lui       $4, %hi(D_800AC384)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_317/func_80079F3C.s
+39:   lui       $4, %hi(D_800ABB30)
+45:   lui       $4, %hi(D_800ABB30)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_396/func_800914DC.s
+212:   lui       $8, %hi(D_800AF440)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_408/func_80094B88.s
+18:   lui       $3, %hi(D_800AF5A0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_410/func_80094C50.s
+60:   lui       $3, %hi(D_800AF5A0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_410/func_80094DDC.s
+122:   lui       $3, %hi(D_800AF5A0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_42/func_8002A7B4.s
+10:   lui       $2, %hi(gPlayerObject)
+16:   lui       $2, %hi(gPlayerObject)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_42/func_8002AAD0.s
+16:   lui       $2, %hi(gPlayerObject)
+22:   lui       $2, %hi(gPlayerObject)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_452/func_8009EA40.s
+70:   lui       $4, %hi(D_800AC2E0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_63/func_8002EB48.s
+242:   lui       $5, %hi(D_800AF788)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_68/func_80031340.s
+23:  lui        $5, %hi(D_800AF788)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_82/func_80035EB0.s
+31:   lui       $18, %hi(gPlayerObject)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_249/func_8006AE88.s
+98:   lui       $2, %hi(D_800E4E60)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_172/func_8004EF60.s
+11:   lui       $2, %hi(D_800A63C0)
+29:  lui        $2, %hi(D_800A63C0)
+37:   lui       $2, %hi(D_800A63C0)
+55:  lui        $2, %hi(D_800A63C0)
+63:   lui       $2, %hi(D_800A63C0)
+81:  lui        $2, %hi(D_800A63C0)
+89:   lui       $2, %hi(D_800A63C0)
+107:  lui        $2, %hi(D_800A63C0)
+115:   lui       $2, %hi(D_800A63C0)
+133:  lui        $2, %hi(D_800A63C0)
+141:   lui       $2, %hi(D_800A63C0)
+159:  lui        $2, %hi(D_800A63C0)
+167:   lui       $2, %hi(D_800A63C0)
+185:  lui        $2, %hi(D_800A63C0)
+193:   lui       $2, %hi(D_800A63C0)
+211:  lui        $2, %hi(D_800A63C0)
+219:   lui       $2, %hi(D_800A63C0)
+237:  lui        $2, %hi(D_800A63C0)
+245:   lui       $2, %hi(D_800A63C0)
+263:  lui        $2, %hi(D_800A63C0)
+271:   lui       $2, %hi(D_800A63C0)
+289:  lui        $2, %hi(D_800A63C0)
+297:   lui       $2, %hi(D_800A63C0)
+315:  lui        $2, %hi(D_800A63C0)
+323:   lui       $2, %hi(D_800A63C0)
+341:  lui        $2, %hi(D_800A63C0)
+349:   lui       $2, %hi(D_800A63C0)
+367:  lui        $2, %hi(D_800A63C0)
+375:   lui       $2, %hi(D_800A63C0)
+393:  lui        $2, %hi(D_800A63C0)
+401:   lui       $2, %hi(D_800A63C0)
+419:  lui        $2, %hi(D_800A63C0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_408/func_8009476C.s
+75:   lui       $2, %hi(D_8009FE14)
+83:   lui       $2, %hi(D_8009FE14)
+93:   lui       $2, %hi(D_8009FE14)
+97:   lui       $2, %hi(D_8009FE14)
+109:   lui       $2, %hi(D_8009FE14)
+172:   lui       $2, %hi(D_8009FE14)
+211:   lui       $2, %hi(D_8009FE14)
+219:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_210/func_8005AAE0.s
+397:   lui       $2, %hi(D_800A5964)
+424:   lui       $2, %hi(D_800A5964)
+428:   lui       $2, %hi(D_800A5964)
+1139:   lui       $4, %hi(D_8009F098)
+1323:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_210/func_800592B4.s
+223:   lui       $5, %hi(D_800AF770)
+572:   lui       $2, %hi(D_8009FE14)
+578:   lui       $2, %hi(D_8009FE14)
+584:   lui       $2, %hi(D_8009FE14)
+590:   lui       $2, %hi(D_8009FE14)
+645:   lui       $2, %hi(D_8009FE14)
+652:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_214/func_8005CF48.s
+37:  lui        $2, %hi(D_800A6378)
+249:   lui       $16, %hi(D_800A63C4)
+630:  lui        $2, %hi(D_8001BF24)
+657:   lui       $2, %hi(D_800A63C4)
+854:   lui       $2, %hi(D_800A58F0)
+858:   lui       $2, %hi(D_800A58F0)
+901:   lui       $2, %hi(D_800AADC4)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_233/func_8006409C.s
+21:   lui       $2, %hi(D_8009FE14)
+37:   lui       $2, %hi(D_8009FE14)
+100:   lui       $2, %hi(D_8009FE14)
+109:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_119/func_80041AD0.s
+130:   lui       $2, %hi(D_800A5A48)
+148:  lui        $2, %hi(D_800A5878)
+150:  lui        $2, %hi(gTotalTokens)
+152:  addiu      $22, $20, %lo(gTotalTokens)
+153:  lui        $2, %hi(D_800A59A0)
+161:  lw         $23, %lo(D_800A5878)($19)
+165:  sw         $0, %lo(D_800A59A0)($18)
+166:  sw         $0, %lo(gTotalTokens)($20)
+167:  sw         $2, %lo(D_800A5878)($19)
+169:  lw         $2, %lo(D_800A5878)($19)
+172:   sw        $2, %lo(D_800A5878)($19)
+189:  lw         $2, %lo(gTotalTokens)($20)
+200:  lw         $2, %lo(D_800A59A0)($18)
+202:  sw         $2, %lo(D_800A59A0)($18)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_169/func_8004E938.s
+54:   lui       $2, %hi(D_8009FE10)
+62:   lui       $2, %hi(D_800A63CC)
+79:   lui       $2, %hi(D_800A63CC)
+84:   lui       $2, %hi(D_800A63CC)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_169/func_8004EAA0.s
+54:   lui       $2, %hi(D_8009FE10)
+62:   lui       $2, %hi(D_800A63C8)
+79:   lui       $2, %hi(D_800A63C8)
+84:   lui       $2, %hi(D_800A63C8)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_233/func_800652F4.s
+22:   lui       $2, %hi(D_8009FE14)
+27:   lui       $2, %hi(D_8009FE14)
+120:   lui       $2, %hi(D_8009FE14)
+126:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_279/func_8006E370.s
+93:   lui       $2, %hi(D_8009FE14)
+116:   lui       $2, %hi(D_8009FE14)
+138:   lui       $2, %hi(D_8009FE14)
+143:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_119/func_80042188.s
+18:   lui       $3, %hi(D_800A5874)
+65:  lui        $2, %hi(gCurLevelTokens)
+70:  addiu      $19, $17, %lo(gCurLevelTokens)
+86:  lw         $2, %lo(gCurLevelTokens)($17)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_233/func_80064E48.s
+87:   lui       $2, %hi(D_8009FE14)
+112:   lui       $2, %hi(D_8009FE14)
+119:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_63/func_8002F0C0.s
+26:   lui       $2, %hi(D_8009FE14)
+31:   lui       $2, %hi(D_8009FE14)
+156:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_66/func_8002FC9C.s
+47:   lui       $2, %hi(D_8009FE14)
+53:   lui       $2, %hi(D_8009FE14)
+57:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_66/func_8002FDF8.s
+172:   lui       $2, %hi(D_8009FE14)
+178:   lui       $2, %hi(D_8009FE14)
+182:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_131/func_80043CF0.s
+44:   lui       $2, %hi(D_800AC248)
+114:  lui        $2, %hi(D_8009F700)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_132/func_80043EF0.s
+151:   lui       $2, %hi(D_800A59A8)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_133/func_800442F4.s
+147:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_140/func_800458E4.s
+68:   lui       $2, %hi(D_8009FE14)
+88:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_151/schedule_gfx_task.s
+43:   lui       $2, %hi(gCurGfxTask)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_160/func_8004A4F0.s
+476:  lui        $2, %hi(gGfxContext)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_160/func_8004C2A8.s
+70:   lui       $2, %hi(D_800A5F58)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_164/func_8004CC38.s
+100:   lui       $3, %hi(D_800A5F84)
+150:   lui       $2, %hi(D_800A5F70)
+155:  addiu      $2, $2, %lo(D_800A5F70)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_188/func_80052124.s
+118:   lui       $2, %hi(D_800A58F0)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_197/func_80055F14.s
+175:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_197/func_800561D4.s
+397:  lui        $2, %hi(D_8009FE10)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_22/func_80022138.s
+14:   lui       $4, %hi(D_8009F458)
+27:   lui       $4, %hi(D_8009F458)
+32:  addiu      $4, $4, %lo(D_8009F458)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_221/func_80060EA8.s
+20:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_233/func_800643B4.s
+134:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_240/func_800662D0.s
+94:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_240/func_80066614.s
+37:   lui       $4, %hi(D_800ABDA8)
+82:   lui       $2, %hi(D_8009FE14)
+103:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_243/func_80066F24.s
+19:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_270/func_8006C1E4.s
+26:   lui       $2, %hi(D_800A5968)
+41:   lui       $4, %hi(D_8009F098)
+60:   lui       $7, %hi(D_800E4E70)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_279/func_8006E6CC.s
+227:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_281/func_8006F4A4.s
+460:  lui        $2, %hi(gGfxContext)
+465:  addiu      $4, $12, %lo(gGfxContext)
+487:   addiu     $9, $12, %lo(gGfxContext)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_285/func_80070C44.s
+168:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_285/func_8007242C.s
+18:   lui       $2, %hi(D_8009FE14)
+23:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_293/func_800739FC.s
+104:   lui       $2, %hi(D_800A5878)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_317/func_8007AD18.s
+272:   lui       $4, %hi(gGfxContext)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_331/func_8007E2A8.s
+227:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_331/func_8007EBA8.s
+375:  lui        $2, %hi(D_8009FE10)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_37/func_800281B4.s
+47:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_396/func_8009099C.s
+38:   lui       $8, %hi(D_8009F098)
+44:   lui       $8, %hi(D_8009F098)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_408/func_80094574.s
+43:  lui        $2, %hi(D_800A5964)
+62:  lui        $2, %hi(D_800A5964)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_452/func_8009E1B0.s
+34:   lui       $2, %hi(D_800A5F58)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_452/func_8009EA40.s
+134:   lui       $2, %hi(D_8009FE14)
+139:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_46/func_8002C468.s
+17:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_56/func_8002DA8C.s
+23:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_56/func_8002E10C.s
+151:   lui       $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_71/func_80033FFC.s
+70:   lui       $2, %hi(D_8009FB04)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_71/func_80033468.s
+179:   lui       $2, %hi(gGfxContext)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_71/func_80033958.s
+31:   lui       $4, %hi(D_8009F098)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_76/func_800352E8.s
+25:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_81/func_800357B8.s
+37:   lui       $2, %hi(D_8009FE0C)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_81/func_80035714.s
+31:   lui       $2, %hi(D_8009FE0C)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_82/func_80037BC8.s
+44:  lui        $2, %hi(D_8009F094)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_82/func_80035870.s
+205:  lui        $2, %hi(D_8009F094)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_90/func_80038104.s
+113:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_96/func_8003C434.s
+68:   lui       $2, %hi(D_8009FE14)
+72:  lui        $2, %hi(D_8009FE14)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_219/func_8005F3CC.s
+93:   lui       $5, %hi(D_800AF788)
+95:  lwc1       $f0, 0x6C($5)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_240/func_80066430.s
+17:   lui       $2, %hi(D_8009FE14)
+27:  lwc1       $f0, %lo(D_8009FE14)($2)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_92/func_80038DC4.s
+113:   lui       $2, %hi(gPlayerObject)
+125:  addiu      $5, $2, 0x3E

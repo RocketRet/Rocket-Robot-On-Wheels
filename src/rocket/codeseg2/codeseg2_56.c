@@ -28,8 +28,6 @@ struct unkD_800ABAE0 {
 
 extern struct unkD_800ABAE0* D_800ABAE0;
 extern u32 D_800ABB30;
-
-#define D_800C00A0 _bssEnd
 extern u32 D_800C00A0;
 
 struct unkfunc_8002DF50_inner {
@@ -56,7 +54,6 @@ void func_8002DF50(struct unkfunc_8002DF50* arg0, s32 arg1, void** arg2) {
     s32 phi_s2_2;
     s32 phi_s0_2;
     s32 phi_s0_2_2;
-    struct unkD_800C00A0* temp;
 
     if (arg1 != 2) {
         if (arg1 == 0x17) {

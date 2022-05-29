@@ -19,12 +19,12 @@ extern s32 D_800E48B8;
 extern void *D_800E4DA0;
 
 extern u8 D_800E4990[];
-extern u8 D_800F6AA0[];
+extern u8 _codeseg2SegmentBssEnd[];
 
 // TODO different order?
 // void func_80061300()
 // {
-//     gDepthBuffer = ALIGN(D_800F6AA0, 64);
+//     gDepthBuffer = ALIGN(_codeseg2SegmentBssEnd, 64);
 //     bzero(gDepthBuffer, FRAMEBUFFER_BYTES);
 //     gAudioHeapPtr = D_800E48A4 = FRAMEBUFFER_BYTES + (s32)gDepthBuffer;
 //     bzero(gAudioHeapPtr, AUDIO_HEAP_SIZE);

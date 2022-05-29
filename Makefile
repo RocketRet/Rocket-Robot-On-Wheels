@@ -59,7 +59,7 @@ export VR4300MUL := ON
 PROC_VERSION != uname -a
 IS_WSL := $(findstring microsoft,$(PROC_VERSION)) $(findstring Microsoft,$(PROC_VERSION))
 
-ifneq ($(IS_WSL),)
+ifneq ($(strip $(IS_WSL)),)
 CC1N64 := ./sn/cc1n64.exe
 ASN64 := ./sn/asn64.exe
 else
@@ -77,7 +77,7 @@ OPTFLAGS := -O2
 ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I. -Iinclude -O1 --no-construct-floats
 BINOFLAGS := -I binary -O elf32-big
 CPP_LDFLAGS := -P -Wno-trigraphs -DBUILD_DIR=$(BUILD_DIR)
-LDFLAGS := -T $(BUILD_DIR)/$(LD_SCRIPT) -mips3 --accept-unknown-input-arch --no-check-sections -T tools/undefined_syms.txt -T tools/undefined_syms_auto.txt
+LDFLAGS := -T $(BUILD_DIR)/$(LD_SCRIPT) -mips3 --accept-unknown-input-arch --no-check-sections -T tools/undefined_syms.txt
 Z64OFLAGS := -O binary --pad-to=$(ROM_SIZE) --gap-fill=0x00
 
 MKDIR := mkdir -p
@@ -129,7 +129,8 @@ $(ELF) : $(OBJS) $(BUILD_DIR)/$(LD_SCRIPT)
 
 $(Z64) : $(ELF)
 	$(OBJCOPY) $(Z64OFLAGS) $< $@
-	
+	python3 tools/n64cksum.py $@
+
 $(BUILD_DIR)/ultra/%.o: OPTFLAGS := -O3
 
 clean:
@@ -139,8 +140,9 @@ check: $(Z64)
 	@$(DIFF) $(BASEROM) $(Z64) && printf "OK\n"
 
 setup:
-	tools/splat/split.py tools/NSUE.00.yaml
+	tools/splat/split.py tools/NSUE.00.yaml --modes=code
 	git checkout -q $(ASM_DIR)
+	tools/fixup.py
 
 $(KMC_CC) :
 	$(MAKE) -C tools/ gcc-2.7.2/gcc

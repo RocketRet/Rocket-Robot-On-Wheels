@@ -114,10 +114,22 @@ static inline f32 read_unaligned_f32(u8 **dataPtr)
 struct DataPtr {
     u8 *ptr;
 };
-// void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, u8 arg3);
+void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, u8 arg3);
 
-const s32 D_8001D6C8[] = {
-    0x80086A24, 0x80086C90, 0x80086CD8, 0x80086D28, 0x80086D78, 0x80087210, 0x80087234, 0x80086E3C, 0x80086DE4, 0x80087060, 0x80087254, 0x80087264, 0x80086DA8
+const uintptr_t D_8001D6C8[] = {
+    0x80086A24 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80086C90 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80086CD8 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80086D28 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80086D78 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80087210 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80087234 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80086E3C - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80086DE4 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80087060 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80087254 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80087264 - 0x800864A8 + (uintptr_t)func_800864A8,
+    0x80086DA8 - 0x800864A8 + (uintptr_t)func_800864A8
 };
 
 #ifdef NON_MATCHING
@@ -483,7 +495,7 @@ void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedByt
     }
 }
 #else
-INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_375", func_800864A8, struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_375", func_800864A8, struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, u8 arg3);
 #endif
 
 extern struct unkfunc_8001E044_inner *D_800AC7F0[];

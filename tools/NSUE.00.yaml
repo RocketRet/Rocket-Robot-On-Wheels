@@ -6,14 +6,12 @@ options:
   cpp_args:
   - "-D_LANGUAGE_C"
   - "-D_FINALROM"
-  modes:
-  - all
   generated_c_preamble: |
     #include <include_asm.h>
     #include <ultra64.h>
   symbol_addrs_path: tools/symbol_addrs.txt
-  undefined_syms_auto_path: tools/undefined_syms_auto.txt
-  undefined_funcs_auto_path: tools/undefined_funcs_auto.txt
+  create_undefined_syms_auto: no
+  create_undefined_funcs_auto: no
   do_c_func_detection: yes
   hi_lo_max_distance: 20
   base_path: ..
@@ -21,7 +19,8 @@ options:
   asset_path: bin
   build_path: build/us
   migrate_rodata_to_functions: no
-  auto_all_sections: no
+  auto_all_sections: []
+  asm_data_macro: glabel
   section_order:
   - .rodata
   - .text
@@ -36,7 +35,7 @@ segments:
     start: 0x0040
     vram: 0xA4000040
     subsegments:
-    - [0x0040, asm, boot]
+    - [0x0040, bin, boot]
     - [0x0B70, bin, boot2]
   - name: codesegs0_1
     type: code
@@ -56,7 +55,7 @@ segments:
     - [0x0013A0, .rodata, ../ultra/src/sched/sched]
     - [0x0013D0, .rodata, ../ultra/src/gu/perspective]
     - [0x001410, .rodata, ../ultra/src/gu/sinf]
-    - [0x001470, bin, exceptasm_rodata] # rodata
+    - [0x001470, rodata, exceptasm_rodata]
     - [0x001540, .rodata, ../ultra/src/io/devmgr]
     - [0x001560, .rodata, ../ultra/src/io/sirawread]
     - [0x001570, .rodata, ../ultra/src/io/sirawwrite]
@@ -256,7 +255,7 @@ segments:
     - [0x0194E0, .data, ../ultra/src/io/vimgr]
     - [0x019500, .data, ../ultra/src/io/vitbl]
     - [0x01A220, .data, ../ultra/src/os/thread]
-    - [0x01A240, bin, exceptasm_data]
+    - [0x01A240, data, exceptasm_data]
     - [0x01A260, .data, ../ultra/src/io/piacs]
     - [0x01A270, .data, lib/codeseg1/player_fx]
     - [0x01A480, .data, lib/codeseg1/aud_sched]
@@ -350,11 +349,8 @@ segments:
     - [0x01CEC0, rodata, rocket/codeseg2/codeseg2_221]
     - [0x01D030, rodata, rocket/codeseg2/codeseg2_227]
     - [0x01D050, rodata, rocket/codeseg2/codeseg2_228]
-    - [0x01D060, rodata, rocket/codeseg2/codeseg2_229]
     - [0x01D070, rodata, rocket/codeseg2/codeseg2_230]
     - [0x01D0F0, rodata, rocket/codeseg2/codeseg2_233]
-    - [0x01D100, rodata, rocket/codeseg2/codeseg2_234]
-    - [0x01D170, rodata, rocket/codeseg2/codeseg2_237]
     - [0x01D240, rodata, rocket/codeseg2/codeseg2_240]
     - [0x01D2C0, rodata, rocket/codeseg2/codeseg2_243]
     - [0x01D2E0, rodata, rocket/codeseg2/codeseg2_244]
@@ -377,9 +373,7 @@ segments:
     - [0x01DA00, rodata, rocket/codeseg2/codeseg2_300]
     - [0x01DA30, rodata, rocket/codeseg2/codeseg2_303]
     - [0x01DA60, rodata, rocket/codeseg2/codeseg2_304]
-    - [0x01DAC0, rodata, rocket/codeseg2/codeseg2_307]
     - [0x01DAF0, rodata, rocket/codeseg2/codeseg2_308]
-    - [0x01DB00, rodata, rocket/codeseg2/codeseg2_309]
     - [0x01DB40, rodata, rocket/codeseg2/codeseg2_311]
     - [0x01DB50, rodata, rocket/codeseg2/codeseg2_312]
     - [0x01DD60, rodata, rocket/codeseg2/codeseg2_317]
@@ -421,7 +415,6 @@ segments:
     - [0x01E930, rodata, rocket/codeseg2/codeseg2_449]
     - [0x01E9A0, rodata, rocket/codeseg2/codeseg2_451]
     - [0x01E9C0, rodata, rocket/codeseg2/codeseg2_452]
-    - [0x01E9F0, rodata, rocket/codeseg2/codeseg2_455]
 
     - [0x01EA00, c, rocket/codeseg2/codeseg2_0]
     - [0x01EA50, c, rocket/codeseg2/codeseg2_1]
@@ -564,14 +557,10 @@ segments:
     - [0x062790, c, rocket/codeseg2/codeseg2_226]
     - [0x0628E0, c, rocket/codeseg2/codeseg2_227]
     - [0x062AD0, c, rocket/codeseg2/codeseg2_228]
-    - [0x062D60, c, rocket/codeseg2/codeseg2_229]
     - [0x063150, c, rocket/codeseg2/codeseg2_230]
     - [0x0643E0, c, rocket/codeseg2/codeseg2_231]
     - [0x064440, c, rocket/codeseg2/codeseg2_232]
     - [0x064770, c, rocket/codeseg2/codeseg2_233]
-    - [0x064ED0, c, rocket/codeseg2/codeseg2_234]
-    - [0x065D10, c, rocket/codeseg2/codeseg2_236]
-    - [0x065D70, c, rocket/codeseg2/codeseg2_237]
     - [0x066ED0, c, rocket/codeseg2/codeseg2_240]
     - [0x067970, c, rocket/codeseg2/codeseg2_243]
     - [0x067E30, c, rocket/codeseg2/codeseg2_244]
@@ -606,9 +595,7 @@ segments:
     - [0x075D00, c, rocket/codeseg2/codeseg2_302]
     - [0x076540, c, rocket/codeseg2/codeseg2_303]
     - [0x0771B0, c, rocket/codeseg2/codeseg2_304]
-    - [0x0781A0, c, rocket/codeseg2/codeseg2_307]
     - [0x0783B0, c, rocket/codeseg2/codeseg2_308]
-    - [0x078650, c, rocket/codeseg2/codeseg2_309]
     - [0x078D70, c, rocket/codeseg2/codeseg2_311]
     - [0x078ED0, c, rocket/codeseg2/codeseg2_312]
     - [0x07AAA0, c, rocket/codeseg2/codeseg2_317]
@@ -698,7 +685,6 @@ segments:
     - [0x09D330, c, rocket/codeseg2/codeseg2_449]
     - [0x09E820, c, rocket/codeseg2/codeseg2_451]
     - [0x09EAA0, c, rocket/codeseg2/codeseg2_452]
-    - [0x09FA60, c, rocket/codeseg2/codeseg2_455]
 
     - [0x09FC70, data, all_data] # data
     - [0x0AFF20, .data, rocket/codeseg2/codeseg2_395]
@@ -734,7 +720,13 @@ segments:
     - [0x0B0460, .bss, lib/codeseg1/aud_dma]  # 0x800BFFD0 - 0x800C0010
     - [0x0B0460, .bss, lib/codeseg1/aud_samples]  # 0x800C0010 - 0x800C0020
     - [0x0B0460, .bss, ../ultra/src/io/driverominit]  # 0x800C0020 - 0x800C00A0
+  - name: codeseg2_bss
+    type: code
+    start: 0x0B0460
+    vram: 0x800C00A0
+    subsegments:
     # Codeseg 2 bss
+    - [0x0B0460, bss, rocket/codeseg2/codeseg2_bss]  # 0x800C00A0 - 0x800F6AA0
   - name: assets
     type: code
     start: 0x0B0460

@@ -16,7 +16,7 @@ extern struct Texture **textureTable;
 extern s32 textureTableAddress;
 extern s32 textureTableLength;
 
-extern u8 _dataEndRom[];
+extern u8 _assetsSegmentRomStart[];
 extern void (*textureHandlers[])(s32, struct TextureCompressionHeader*, struct Texture*);
 extern struct DecompressionParams compressionParamsTable[2];
 
