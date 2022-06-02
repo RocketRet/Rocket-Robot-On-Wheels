@@ -114,9 +114,9 @@ static inline f32 read_unaligned_f32(u8 **dataPtr)
 struct DataPtr {
     u8 *ptr;
 };
-void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, u8 arg3);
+void func_800864A8(struct GameObject *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3);
 
-const uintptr_t D_8001D6C8[] = {
+const uintptr_t jtbl_8001D6C8[] = {
     0x80086A24 - 0x800864A8 + (uintptr_t)func_800864A8,
     0x80086C90 - 0x800864A8 + (uintptr_t)func_800864A8,
     0x80086CD8 - 0x800864A8 + (uintptr_t)func_800864A8,
@@ -133,7 +133,7 @@ const uintptr_t D_8001D6C8[] = {
 };
 
 #ifdef NON_MATCHING
-void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3) {
+void func_800864A8(struct GameObject *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3) {
     Vtx *vertexBuffer;
     s32 vertexCount;
     u8 sp58[4];
@@ -372,7 +372,7 @@ void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedByt
                     curSubmodelCmd0->unkC = temp_f20;
                     curSubmodelCmd0->unk20 = 0;
                     curSubmodelCmd0->unk21 = 0;
-                    curSubmodelCmd0->unk22 = arg0->unk110;
+                    curSubmodelCmd0->unk22 = arg0->unk110.val;
                     curSubmodelCmd0->unk10 = read_unaligned_f32(&dataPtr);
                     curSubmodelCmd0->unk14[0] = read_unaligned_f32(&dataPtr);
                     curSubmodelCmd0->unk14[1] = read_unaligned_f32(&dataPtr);
@@ -397,7 +397,7 @@ void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedByt
                     break;
                 case 12:
                     arg0->submodels[arg0->numSubmodels - 1].unk22 = *dataPtr++;
-                    arg0->unk110 |= 0x1000;
+                    arg0->unk110.val |= 0x1000;
                     break;
                 case 8:
                     v0Cmd8 = *dataPtr++;
@@ -432,7 +432,7 @@ void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedByt
                             curSubmodelCmd7->unkC = temp_f20;
                             curSubmodelCmd7->unk20 = 0;
                             curSubmodelCmd7->unk21 = 0;
-                            curSubmodelCmd7->unk22 = arg0->unk110;
+                            curSubmodelCmd7->unk22 = arg0->unk110.val;
                             prevSubmodelCmd7 = curSubmodelCmd7 - 1; // size 0x28 bytes
                             curSubmodelCmd7->unk10 = prevSubmodelCmd7->unk10;
                             VEC3F_COPY(curSubmodelCmd7->unk14, prevSubmodelCmd7->unk14);
@@ -495,14 +495,14 @@ void func_800864A8(struct Model *arg0, s32 decompressedSize, u8 *decompressedByt
     }
 }
 #else
-INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_375", func_800864A8, struct Model *arg0, s32 decompressedSize, u8 *decompressedBytes, u8 arg3);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_375", func_800864A8, struct GameObject *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3);
 #endif
 
 extern struct unkfunc_8001E044_inner *D_800AC7F0[];
 
-struct Model *func_800872F8(s32 arg0, void *arg1, s32 arg2)
+struct GameObject *func_800872F8(s32 arg0, void *arg1, s32 arg2)
 {
-    struct Model *ret;
+    struct GameObject *ret;
     struct unkfunc_8001E044_inner *var;
 
     var = D_800AC7F0[arg0];
@@ -513,9 +513,9 @@ struct Model *func_800872F8(s32 arg0, void *arg1, s32 arg2)
 }
 
 // TODO arg0 typing
-struct Model *func_80087374(s32 **arg0, s32 arg1, s32 arg2)
+struct GameObject *func_80087374(s32 **arg0, s32 arg1, s32 arg2)
 {
-    struct Model *ret;
+    struct GameObject *ret;
     struct unkfunc_8001E044_inner *var;
 
     var = D_800AC7F0[(*arg0)[1]];
@@ -534,14 +534,14 @@ struct DataAndHeader {
     } header __attribute__((aligned(8)));
 };
 
-struct Model *func_80087418(u32 *romPtr, struct unkfunc_800882B8 *arg1, s32 arg2) {
+struct GameObject *func_80087418(u32 *romPtr, struct unkfunc_800882B8 *arg1, s32 arg2) {
     struct DataAndHeader sp10;
     s32 temp_s4;
     s32 dataLen;
     void *temp_a1;
     struct unkfunc_8001E044_inner *handler;
     void *temp_v0;
-    struct Model *model;
+    struct GameObject *model;
     u8 **dataPtrPtr = &sp10.dataPtr;
 
     push_second_heap_state();
@@ -566,7 +566,7 @@ struct Model *func_80087418(u32 *romPtr, struct unkfunc_800882B8 *arg1, s32 arg2
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087554);
 
 #ifdef NON_MATCHING
-void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
+void func_800875E8(struct GameObject *arg0, u32 romAddr, u8 *dataPtr) {
     // Do I think they used a union? No
     // Can I match it without one? Also no
     // union {
@@ -698,7 +698,7 @@ void func_800875E8(struct Model *arg0, u32 romAddr, u8 *dataPtr) {
     phi_s5 = 0;
     while (1) {
         // struct DataAndHeader sp18_;
-        struct Model *curModel;
+        struct GameObject *curModel;
         struct unkfunc_8001E044_inner *temp_s1_2;
         u32 dataLen2;
         struct unkfunc_800882B8 * temp_s2_2;

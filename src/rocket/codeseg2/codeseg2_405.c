@@ -2,6 +2,9 @@
 #include <ultra64.h>
 #include <types.h>
 #include <mem.h>
+#include <materials.h>
+
+#include "codeseg2.h"
 
 struct unkfunc_800922C4 {
     u32 *unk0;
@@ -17,6 +20,8 @@ extern struct {
 
 extern struct MaterialGfx *D_800AF4F8;
 
+void func_80092094(struct MaterialGfx*);
+
 void func_80092050(void) {
     struct MaterialGfx *material;
 
@@ -27,7 +32,7 @@ void func_80092050(void) {
     }
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_80092094);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_405", func_80092094, struct MaterialGfx*);
 
 
 // wip
@@ -96,59 +101,43 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800926B8);
 
 extern struct MaterialGfx *materialTable;
 
-// wip
-// struct unkfunc_80093DDC *func_80093DDC(struct unkfunc_80093DDC *arg0, s32 arg1) {
-//     struct unkfunc_80093DDC sp10;
-//     struct unkfunc_80093DDC sp18;
-//     struct unkfunc_80093DDC sp20;
-//     struct unkfunc_80093DDC sp28;
-//     struct unkfunc_80093DDC *temp_v1_2;
-//     s32 temp_v1;
-//     struct MaterialGfx *temp_a0;
-//     s8 phi_v1;
-//     struct TexturedMaterial *materialData;
+static inline struct unkfunc_80093DDC unk_inline_func_80093DDC() {
+    struct unkfunc_80093DDC ret;
 
-//     temp_a0 = &materialTable[arg1];
-//     materialData = temp_a0->materialData;
-//     temp_v1 = ((u32)materialData) & 0xF0000000;
-//     if (temp_v1 == 0) {
-//         temp_v1_2 = &sp20;
-//         sp20.unk0_0 = 2;
-//         sp20.unk0_4 = 1;
-//         // sp20 = (((sp20 & 0xF0FFFFFF) | 0x2000000) & 0xFFFFFFF) | 0x10000000;
-//         temp_v1_2->unk1 = 1;
-//         temp_v1_2->unk2 = 1;
-//         sp28 = sp20;
-//         if (sp28.unk2 == 5) {
-//             phi_v1 = 7;
-//         } else if (sp28.unk2 == 3) {
-//             phi_v1 = 5;
-//         } else if (sp28.unk2 == 4) {
-//             phi_v1 = 6;
-//         } else if (sp28.unk0_4 == 2) {
-//             phi_v1 = 4;
-//         } else if (sp28.unk2 == 1) {
-//             phi_v1 = 3;
-//         } else if (sp28.unk1 == 2) {
-//             phi_v1 = 2;
-//         } else {
-//             phi_v1 = sp28.unk1 == 1;
-//         }
-//         sp20.unk3 = phi_v1;
-//         sp18 = sp20;
-//         sp10 = sp20;
-//         *arg0 = sp10;
-//     } else {
-//         if (temp_v1 != 0x80000000) {
-//             materialData = load_textured_material(materialData);
-//         }
-//         sp10 = materialData->header.unk4;
-//         *arg0 = sp10;
-//     }
-//     return arg0;
-// }
+    ret.unk0_0 = 2;
+    ret.unk0_4 = 1;
+    ret.unk1 = 1;
+    ret.unk2 = 1;
+    ret.unk3 = unk_parse_struct_unkfunc_80093DDC(ret);
+    
+    return ret;
+}
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_80093DDC);
+static inline struct unkfunc_80093DDC unk_inline_func_80093DDC2() {
+    struct unkfunc_80093DDC ret;
+
+    ret = unk_inline_func_80093DDC();
+
+    return ret;
+}
+
+struct unkfunc_80093DDC *func_80093DDC(struct unkfunc_80093DDC *arg0, s32 arg1) {
+    struct unkfunc_80093DDC sp10;
+    struct MaterialGfx *materialGfx;
+    struct TexturedMaterial *materialData;
+
+    materialGfx = &materialTable[arg1];
+    
+    if (!IS_VIRTUAL_ADDRESS(materialTable[arg1].materialData)) {
+        sp10 = unk_inline_func_80093DDC2();
+    } else {
+        materialData = get_material_data(materialGfx);
+        sp10 = materialData->header.unk4;
+    }
+    
+    *arg0 = sp10;
+    return arg0;
+}
 
 void texture_handler_copy(u32 assetAddress, UNUSED struct TextureCompressionHeader *header, struct Texture *asset)
 {

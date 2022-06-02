@@ -58,7 +58,7 @@ void func_800882B8(struct unkfunc_800882B8 *arg0, u32 romAddr, s32 arg2) {
     phi_s3 = 0;
     while (1) {
         struct DataAndHeader fileInfo2;
-        struct Model *curModel;
+        struct GameObject *curModel;
         struct unkfunc_8001E044_inner *temp_s1;
         u32 dataLen2;
         s32 temp_s2;

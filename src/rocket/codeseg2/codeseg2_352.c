@@ -59,6 +59,8 @@ void func_80084048(struct unkfunc_800841C4 *arg0)
     arg0->unk22C |= 0x00080000;
 }
 
+void func_8008408C(s32, Vec3f);
+
 void func_8008405C(s32 arg0, f32 arg1)
 {
     Vec3f vec;
@@ -68,7 +70,9 @@ void func_8008405C(s32 arg0, f32 arg1)
     func_8008408C(arg0, vec);
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_352", func_8008408C);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_352", func_8008408C, s32, Vec3f);
+
+void func_80084140(s32, Vec3f);
 
 void func_80084110(s32 arg0, f32 arg1)
 {
@@ -79,12 +83,14 @@ void func_80084110(s32 arg0, f32 arg1)
     func_80084140(arg0, vec);
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_352", func_80084140);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_352", func_80084140, s32, Vec3f);
 
 void func_800841C4(struct unkfunc_800841C4 *arg0)
 {
     arg0->unk22C |= 0x00040000;
 }
+
+void func_80084208(s32, Vec3f);
 
 void func_800841D8(s32 arg0, f32 arg1)
 {
@@ -95,7 +101,9 @@ void func_800841D8(s32 arg0, f32 arg1)
     func_80084208(arg0, vec);
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_352", func_80084208);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_352", func_80084208, s32, Vec3f);
+
+void func_800842BC(s32, Vec3f);
 
 void func_8008428C(s32 arg0, f32 arg1)
 {
@@ -106,7 +114,7 @@ void func_8008428C(s32 arg0, f32 arg1)
     func_800842BC(arg0, vec);
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_352", func_800842BC);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_352", func_800842BC, s32, Vec3f);
 
 void func_80084340(s32 *arg0)
 {

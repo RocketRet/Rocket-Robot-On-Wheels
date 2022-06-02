@@ -80,6 +80,8 @@ void read_controller_noblock()
     }
 }
 
+void get_controller_data();
+
 void read_controller_block()
 {
     if (gControllerReadStarted)
@@ -132,7 +134,7 @@ extern struct unkD_800A5FC4 D_800A5FC4[MAXCONTROLLERS];
 //     }
 // }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_169", get_controller_data);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_169", get_controller_data);
 
 void clear_buttons_pressed(struct ControllerData *contData, u32 buttons)
 {

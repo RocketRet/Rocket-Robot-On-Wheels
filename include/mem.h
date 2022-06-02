@@ -4,6 +4,12 @@
 #include <ultra64.h>
 #include <types.h>
 
+#define IS_VIRTUAL_ADDRESS(x) \
+    ((((u32)(x)) & 0xF0000000) != 0x00000000)
+
+#define IS_K0_ADDRESS(x) \
+    ((((u32)(x)) & 0xF0000000) == 0x80000000)
+
 #define READ_VALUE(x, type) ({*x += sizeof(type); *(type*)(*x - sizeof(type));})
 static inline u32 read_u32(u8 **ptr) { *ptr += sizeof(u32); return *(u32*)(*ptr - sizeof(u32)); }
 static inline u16 read_u16(u8 **ptr) { *ptr += sizeof(u16); return *(u16*)(*ptr - sizeof(u16)); }

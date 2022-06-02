@@ -12,7 +12,7 @@ void func_8008CB60(struct unkfunc_8008CB60 *arg0, s32 arg1)
 }
 
 // TODO are these really the same struct?
-void func_8008CB68(struct unkfunc_8008CB60 *arg0, s32 arg1)
+void func_8008CB68(struct unkfunc_8008CB60 *arg0)
 {
     arg0->unk34 = 0;
 }

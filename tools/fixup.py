@@ -21,8 +21,8 @@ with open("tools/fixups.txt", "r") as file:
             old_line_contents = lines[line_num - 1]
             if old_line_contents == line_contents:
                 print(f"Identical @ {cur_asm_file}:{line_num}")
-            elif old_line_contents[0:15] != line_contents[0:15]:
-                print(f"Too different @ {cur_asm_file}:{line_num}")
+            # elif old_line_contents[0:4] != line_contents[0:4]:
+            #     print(f"Too different @ {cur_asm_file}:{line_num}")
             else:
                 lines[line_num - 1] = line_contents
     

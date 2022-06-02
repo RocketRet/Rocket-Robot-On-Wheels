@@ -2,22 +2,26 @@
 #include <ultra64.h>
 #include <types.h>
 
-extern f64 D_8001BA20;
-extern f64 D_8001BA28;
-extern f32 D_8001BA30;
-
 f32 clampf_abs(f32, f32);
 
-// float load
-#ifdef NON_MATCHING
 f32 func_80057280(Mtx3f arg0)
 {
-    f32 sum = arg0[0][0] + arg0[1][1] + arg0[2][2];
-    return clampf_abs((sum - D_8001BA20) * D_8001BA28, D_8001BA30); //clampf_abs((sum - 1.0) * 0.5, 1)
+    // Calculate the trace of the matrix (sum of primary diagonal)
+    f32 trace = arg0[0][0] + arg0[1][1] + arg0[2][2];
+    // Convert the trace to the cosine of the matrix's rotational angle
+    return clampf_abs((trace - 1.0) * 0.5, 1.0);
 }
-#else
-INCLUDE_ASM(f32, "rocket/codeseg2/codeseg2_204", func_80057280, Mtx3f);
-#endif
+
+const f64 D_8001BA38 = 1.0;
+const f64 D_8001BA40 = 0.5;
+const u64 D_8001BA48 = 0x3FEFFFFDE7210BE9; // Can't match as a double for some reason
+const f64 D_8001BA50 = -0.9998999834060669;
+const f32 D_8001BA58 = 3.1415927;
+const f32 D_8001BA5C = 65536.0f;
+const f32 D_8001BA60 = 16.0f;
+const f32 D_8001BA64 = 65536.0f;
+const f32 D_8001BA68 = 65536.0f;
+const f32 D_8001BA6C = 0.0000009536743f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_204", func_800572D8);
 

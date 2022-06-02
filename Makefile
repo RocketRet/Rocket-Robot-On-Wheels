@@ -109,8 +109,8 @@ $(SN_LNKS) : $(BUILD_DIR)/%.obj : %.c | $(SRC_BUILD_DIRS)
 	@$(ASN64) $(ASN64FLAGS) $@.s -o $@
 
 $(SN_OBJS) : $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.obj
-	@printf "Running obj parser on $< $<\r\n"
-	tools/psyq-obj-parser $< -o $@ -b -n > /dev/null
+	@printf "Running obj parser on $<\r\n"
+	@tools/psyq-obj-parser $< -o $@ -b -n > /dev/null
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
@@ -132,6 +132,7 @@ $(Z64) : $(ELF)
 	python3 tools/n64cksum.py $@
 
 $(BUILD_DIR)/ultra/%.o: OPTFLAGS := -O3
+$(BUILD_DIR)/src/rocket/codeseg2/codeseg2_3.obj: OPTFLAGS := -O3
 
 clean:
 	$(RMDIR) $(BUILD_ROOT)

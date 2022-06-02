@@ -375,8 +375,8 @@ SECTIONS
         build/us/asm/data/rocket/codeseg2/codeseg2_197.rodata.o(.rodata);
         build/us/src/rocket/codeseg2/codeseg2_198.o(.rdata);
         build/us/src/rocket/codeseg2/codeseg2_203.o(.rdata);
-        build/us/asm/data/rocket/codeseg2/codeseg2_204.rodata.o(.rodata);
-        build/us/asm/data/rocket/codeseg2/codeseg2_207.rodata.o(.rodata);
+        build/us/src/rocket/codeseg2/codeseg2_204.o(.rdata);
+        build/us/src/rocket/codeseg2/codeseg2_207.o(.rdata);
         build/us/asm/data/rocket/codeseg2/codeseg2_210.rodata.o(.rodata);
         build/us/asm/data/rocket/codeseg2/codeseg2_214.rodata.o(.rodata);
         build/us/asm/data/rocket/codeseg2/codeseg2_219.rodata.o(.rodata);
@@ -418,7 +418,7 @@ SECTIONS
         build/us/asm/data/rocket/codeseg2/codeseg2_331.rodata.o(.rodata);
         build/us/asm/data/rocket/codeseg2/codeseg2_335.rodata.o(.rodata);
         build/us/asm/data/rocket/codeseg2/codeseg2_341.rodata.o(.rodata);
-        build/us/asm/data/rocket/codeseg2/codeseg2_343.rodata.o(.rodata);
+        build/us/src/rocket/codeseg2/codeseg2_343.o(.rdata);
         build/us/asm/data/rocket/codeseg2/codeseg2_346.rodata.o(.rodata);
         build/us/asm/data/rocket/codeseg2/codeseg2_352.rodata.o(.rodata);
         build/us/asm/data/rocket/codeseg2/codeseg2_367.rodata.o(.rodata);

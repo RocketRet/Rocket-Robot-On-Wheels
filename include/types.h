@@ -208,7 +208,7 @@ struct unkfunc_8001E248 {
     s32 unk28;
 };
 
-struct ModelUnkInner {
+struct GameObjectUnkFC {
     struct unkfunc_8001E248* unk0;
     s32 unk4;
     f32 unk8;
@@ -216,7 +216,7 @@ struct ModelUnkInner {
     s32 unk10;
 };
 
-struct ModelUnkD8 {
+struct GameObjectUnkD8 {
     u8 pad[0x8];
     Vec3f unk8;
     u8 pad1[0x20 - 0x8 - sizeof(Vec3f)];
@@ -225,7 +225,7 @@ struct ModelUnkD8 {
     u32 unk74;
 };
 
-struct Model {
+struct GameObject {
     /* 0x000 */ struct unkfunc_8001E044_inner *unk0;
     /* 0x004 */ s32 unk4;
     /* 0x008 */ s32 unk8;
@@ -234,7 +234,7 @@ struct Model {
     /* 0x014 */ s32 unk14;
     /* 0x018 */ Mtx3f rotation;
     /* 0x03C */ Vec3f position;
-    /* 0x048 */ u8 padding3[0x6C - 0x48];
+    /* 0x048 */ Mtx3f unk48;
     /* 0x06C */ Vec3f unk6C;
     /* 0x078 */ Vec3f velocity;
     /* 0x084 */ Vec3f angular_velocity;
@@ -242,7 +242,7 @@ struct Model {
     /* 0x09C */ Vec3f angular_acceleration;
     /* 0x0A8 */ Vec3f unkA8;
     /* 0x0B4 */ Mtx3f unkB4;
-    /* 0x0D8 */ struct ModelUnkD8 *unkD8;
+    /* 0x0D8 */ struct GameObjectUnkD8 *unkD8;
     /* 0x0DC */ u8 padding3_2[0xE0 - 0xDC];
     /* 0x0E0 */ s16 unkE0;
     /* 0x0E2 */ s16 unkE2;
@@ -252,12 +252,21 @@ struct Model {
     /* 0x0F0 */ Gfx *unkF0;
     /* 0x0F4 */ struct Submodel *submodels;
     /* 0x0F8 */ s32 numSubmodels;
-    /* 0x0FC */ struct ModelUnkInner* unkFC;
+    /* 0x0FC */ struct GameObjectUnkFC* unkFC;
     /* 0x100 */ f32 unk100;
     /* 0x104 */ f32 unk104;
     /* 0x108 */ s32 unk108;
     /* 0x10C */ u8 padding4[0x110 - 0x10C];
-    /* 0x110 */ u32 unk110;
+    /* 0x110 */ union { // TODO reconcile the members of this union so it's just a bitfield
+        u32 val;
+        struct {
+            s32 unk110_0 : 8;
+            s32 unk110_8 : 2;
+            s32 unk110_10 : 2;
+            s32 unk110_12 : 5;
+            s32 unk110_17 : 1; // sleeping
+        } bitfield;
+    } unk110;
     /* 0x114 */ s32 unk114;
     /* 0x118 */ s32 unk118;
     /* 0x11C */ s32 unk11C;
@@ -295,19 +304,25 @@ struct unkfunc_8001E044_inner {
     s32 unk4;
     s32 unk8;
     s32 unkC;
-    void (*unk10)(struct Model*, void*, s32);
+    void (*unk10)(struct GameObject*, void*, s32);
     s32 unk14;
     s32 unk18;
     s32 unk1C;
-    void (*unk20)(struct Model*, void*, s32);
+    void (*unk20)(struct GameObject*, void*, s32);
     u8 padding1[0x40 - 0x20 - 0x04];
-    void (*unk40)(struct Model*);
+    void (*unk40)(struct GameObject*);
     s32 unk44;
     s32 unk48;
-    void (*unk4C)(struct Model*, void*);
-    u8 padding2[0x68 - 0x4C - 0x04];
-    void (*unk68)(struct Model*, s32, void*, s32);
-    void (*unk6C)(struct Model*, s32, Gfx *);
+    void (*unk4C)(struct GameObject*, void*);
+    u8 padding2[0x54 - 0x4C - 0x04];
+    void (*unk54)(struct GameObject *, s32, struct GameObject *);
+    void (*unk58)(struct GameObject *, Vec3f); // position
+    void (*unk5C)(struct GameObject *, Mtx3f); // rotation
+    void (*unk60)(struct GameObject *, Vec3f); // velocity
+    void (*unk64)(struct GameObject *, Vec3f); // angular_velocity
+    u8 padding3[0x68 - 0x64 - 0x04];
+    void (*unk68)(struct GameObject*, s32, void*, s32);
+    void (*unk6C)(struct GameObject*, s32, Gfx *);
 };
 
 #endif

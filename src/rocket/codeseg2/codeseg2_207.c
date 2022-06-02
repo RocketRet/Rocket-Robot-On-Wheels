@@ -3,10 +3,29 @@
 #include <types.h>
 #include <macros.h>
 
+const float D_8001BA70 = 65536.0f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_207", func_80057970);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_207", func_80057A28);
+// Verbatim copy of guMtxF2L, not sure why the devs included another copy of it
+void mtxf_to_mtx(Mtx4f mf, Mtx *m)
+{
+    int i, j;
+    int e1, e2;
+    int *ai, *af;
+
+    ai = (int *)&m->m[0][0];
+    af = (int *)&m->m[2][0];
+
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 2; j++) {
+            e1 = FTOFIX32(mf[i][j * 2]);
+            e2 = FTOFIX32(mf[i][j * 2 + 1]);
+            *(ai++) = (e1 & 0xffff0000) | ((e2 >> 16) & 0xffff);
+            *(af++) = ((e1 << 16) & 0xffff0000) | (e2 & 0xffff);
+        }
+    }
+}
 
 // TODO
 // void func_80057AC0(Mtx *in, Mtx4f out)
@@ -64,36 +83,34 @@ void mtx3f_rotate_axis(f32, s32 *, Mtx3f);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_207", func_80057BAC);
 
-extern f32 D_8001BA78; // 1e-4
-extern f32 D_8001BA7C; // 1
-extern f32 D_8001BA80; // 1
-
 void vec3f_scale(f32, Vec3f, Vec3f);
 void vec3f_cross_product(Vec3f, Vec3f, Vec3f);
 f32 vec3f_safe_normalize(Vec3f in, Vec3f out);
 f32 vec3f_magnitude(Vec3f);
 
-// float load
-#ifdef NON_MATCHING
-void func_80057C6C(Vec3f *arg0, Mtx3f arg1)
+void func_80057C6C(Vec3f arg0, Mtx3f arg1)
 {
     f32 mag = vec3f_magnitude(arg0);
-    if (mag < D_8001BA78)
+    if (mag < 0.0001f)
     {
         bzero(arg1, sizeof(Mtx3f));
-        arg1[0][0] = arg1[1][1] = arg1[2][2] = D_8001BA7C;
+        arg1[0][0] = arg1[1][1] = arg1[2][2] = 1.0f;
     }
     else
     {
-        vec3f_scale(D_8001BA80 / mag, arg0, arg1[0]);
+        vec3f_scale(1.0f / mag, arg0, arg1[0]);
         vec3f_cross_product(D_800AF788, arg1[0], arg1[1]);
         vec3f_safe_normalize(arg1[1], D_800AF77C);
         vec3f_cross_product(arg1[0], arg1[1], arg1[2]);
     }
 }
-#else
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_207", func_80057C6C);
-#endif
+
+asm(".section .rdata");
+const float D_8001BA84 = 0.9999f;
+const float D_8001BA88 = 1.0;
+const float D_8001BA8C = 0.0001f;
+const float D_8001BA90 = 1.0f;
+const float D_8001BA94 = 1.0f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_207", func_80057D28);
 

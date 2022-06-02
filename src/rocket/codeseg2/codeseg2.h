@@ -33,4 +33,44 @@ struct unkfunc_8001DFD0 {
     s32 unk110_17 : 1;
 };
 
+extern struct GfxContext gGfxContext; // 0x10 bytes
+
+static inline Gfx* next_gfx() {
+    Gfx* ret = gGfxContext.dlHead;
+    gGfxContext.dlHead++;
+    return ret;
+}
+
+static inline s32 unk_parse_struct_unkfunc_80093DDC(struct unkfunc_80093DDC arg0) {
+    s32 phi_v1;
+    if (arg0.unk2 == 5) {
+        phi_v1 = 7;
+    } else if (arg0.unk2 == 3) {
+        phi_v1 = 5;
+    } else if (arg0.unk2 == 4) {
+        phi_v1 = 6;
+    } else if (arg0.unk0_4 == 2) {
+        phi_v1 = 4;
+    } else if (arg0.unk2 == 2) {
+        phi_v1 = 3;
+    } else if (arg0.unk1 == 2) {
+        phi_v1 = 2;
+    } else if (arg0.unk2 == 1) {
+        phi_v1 = 1;
+    } else {
+        phi_v1 = 0;
+    }
+    return phi_v1;
+}
+
+static inline struct unkfunc_80093DDC unk_make_struct_unkfunc_80093DDC() {
+    struct unkfunc_80093DDC ret;
+    ret.unk0_0 = 0;
+    ret.unk0_4 = 0;
+    ret.unk1 = 0;
+    ret.unk2 = 0;
+    ret.unk3 = unk_parse_struct_unkfunc_80093DDC(ret);
+    return ret;
+}
+
 #endif

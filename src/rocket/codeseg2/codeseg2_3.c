@@ -7,9 +7,9 @@
 #include "codeseg2.h"
 
 void func_80085D04(u8 **dataPtrPtr, Vec3f arg1, Mtx3f arg2);
-void func_8001E248(struct Model* arg0);
-void func_8008CCE8(struct unkfunc_800882B8*, void (*)(struct Model*), struct Model*, s32, s32);
-void func_80024508(void*, struct Model*, s32, f32, f32);
+void func_8001E248(struct GameObject* arg0);
+void func_8008CCE8(struct unkfunc_800882B8*, void (*)(struct GameObject*), struct GameObject*, s32, s32);
+void func_80024508(void*, struct GameObject*, s32, f32, f32);
 f32 vec3f_safe_normalize(Vec3f in, Vec3f out);
 void vec3f_scale(f32, Vec3f, Vec3f);
 f32 vec3f_normalize(Vec3f vec);
@@ -22,9 +22,9 @@ struct unkfunc_8001E248* func_8008BE8C();
 
 extern Vec3f D_800AF794;
 
-void func_8001DFD0(struct unkfunc_8001DFD0 *arg0)
+void func_8001DFD0(struct unkfunc_8001DFD0 *arg0, void* arg1, void* arg2)
 {
-    func_80050868();
+    func_80050868(arg0, arg1, arg2);
     arg0->unk110_8 = 3;
     arg0->unk110_10 = 3;
     arg0->unk110_0 = 0xff;
@@ -35,7 +35,7 @@ void func_8001DFD0(struct unkfunc_8001DFD0 *arg0)
 }
 
 
-void func_8001E044(struct Model *arg0, s32 arg1, u8 *dataPtr)
+void func_8001E044(struct GameObject *arg0, s32 arg1, u8 *dataPtr)
 {
     s32 decompressedSize;
     void *decompressedBytes;
@@ -77,8 +77,8 @@ void func_8001E044(struct Model *arg0, s32 arg1, u8 *dataPtr)
     }
 }
 
-void func_8001E198(struct Model* arg0) {
-    struct ModelUnkInner* temp_v1;
+void func_8001E198(struct GameObject* arg0) {
+    struct GameObjectUnkFC* temp_v1;
 
     MTX3F_COPY(arg0->unkB4, arg0->rotation);
     VEC3F_COPY(arg0->unkA8, arg0->position);
@@ -89,10 +89,10 @@ void func_8001E198(struct Model* arg0) {
     }
 }
 
-void func_8001E248(struct Model* arg0) {
+void func_8001E248(struct GameObject* arg0) {
     Vec3f sp18;
     f32 sp28;
-    struct ModelUnkInner* temp_s0;
+    struct GameObjectUnkFC* temp_s0;
     struct unkfunc_8001E248* temp_v0;
     struct unkfunc_8001E248* phi_s1;
     f32* phi_v0;
@@ -123,18 +123,18 @@ void func_8001E248(struct Model* arg0) {
     }
 }
 
-void func_8001E330(struct Model* arg0, f32 dt) {
+void func_8001E330(struct GameObject* arg0, f32 dt) {
     Vec3f rotation_delta_vector;
     Mtx3f rotation_delta;
     Mtx3f rotation;
-    struct Model* temp_v0;
+    struct GameObject* temp_v0;
 
     temp_v0 = arg0->unk10;
-    if (temp_v0 != NULL && (temp_v0->unk110 & 0x80000)) {
+    if (temp_v0 != NULL && (temp_v0->unk110.val & 0x80000)) {
         return;
     }
-    if (temp_v0 != NULL || (arg0->unk110 & 0x30000)) {
-        if ((arg0->unk110 & 0x4000) == 0) {
+    if (temp_v0 != NULL || (arg0->unk110.val & 0x30000)) {
+        if ((arg0->unk110.val & 0x4000) == 0) {
             vec3f_scale_add(1.0f, arg0->position, dt, arg0->velocity, arg0->position);
             vec3f_scale(dt, arg0->angular_velocity, rotation_delta_vector);
             mtx3f_axis_angle(rotation_delta_vector, rotation_delta);
@@ -163,7 +163,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E504);
 
 // TODO float regalloc
 #ifdef NON_MATCHING
-void func_8001E69C(struct Model* arg0, f32 dt, Mtx3f out) {
+void func_8001E69C(struct GameObject* arg0, f32 dt, Mtx3f out) {
     Vec3f sp18;
     Vec3f rotation_axis;
     Mtx3f rotation_delta;
@@ -209,7 +209,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E954);
 
 
 #ifdef NON_MATCHING
-Mtx* func_8001EA18(struct Model* arg0, struct Submodel* arg1, f32* arg2, f32 (*arg3)[3], f32 arg4) {
+Mtx* func_8001EA18(struct GameObject* arg0, struct Submodel* arg1, f32* arg2, f32 (*arg3)[3], f32 arg4) {
     Mtx3f sp10;
     Mtx3f sp38;
     Mtx4f sp60;
@@ -273,14 +273,14 @@ Mtx* func_8001EA18(struct Model* arg0, struct Submodel* arg1, f32* arg2, f32 (*a
     mtx4f_concat(sp120, spE0, sp160);
     temp_s0 = gGfxContext.unkC - 1;
     gGfxContext.unkC = temp_s0;
-    func_80057A28(sp160, temp_s0);
+    mtxf_to_mtx(sp160, temp_s0);
     return temp_s0;
 }
 #else
 s32 func_8001EA18();
 
 asm(".section .rdata");
-const uintptr_t D_80019FD8[] = {
+const uintptr_t jtbl_80019FD8[] = {
     0x8001EA88 - 0x8001EA18 + (uintptr_t)func_8001EA18,
     0x8001EA98 - 0x8001EA18 + (uintptr_t)func_8001EA18,
     0x8001EAA8 - 0x8001EA18 + (uintptr_t)func_8001EA18,
@@ -343,7 +343,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F2A4);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F36C);
 
-void alloc_vertex_data_storage(struct Model *model)
+void alloc_vertex_data_storage(struct GameObject *model)
 {
     if (model->vertexDataStorage == NULL)
     {
@@ -353,98 +353,104 @@ void alloc_vertex_data_storage(struct Model *model)
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F518);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F7A4);
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F82C);
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F860);
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F8B8);
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F920);
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F9B4);
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F9FC);
-
-struct unkfunc_8001FA50 {
-    struct unkfunc_8001FA50_2 *unk0;
-    u8 padding[0x14];
-    Mtx3f unk18;
-};
-
-struct unkfunc_8001FA50_2 {
-    u8 padding[0x5C];
-    void (*unk5C)(struct unkfunc_8001FA50 *, Mtx3f);
-};
-
-// Stack offset register saving diff
-// void func_8001FA50(struct unkfunc_8001FA50 *arg0, f32 arg1, f32 arg2, f32 arg3)
-// {
-//     Vec3f vec;
-//     Mtx3f a, b;
-//     vec[0] = arg1;
-//     vec[1] = arg2;
-//     vec[2] = arg3;
-//     mtx3f_axis_angle(vec, a);
-//     mtx3f_concat(a, arg0->unk18, b);
-//     arg0->unk0->unk5C(arg0, b);
-// }
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001FA50);
-
-struct unkfunc_8001FAF4_sub0 {
-    u8 padding[0x5C];
-    void (*unk5C)(void *, Mtx3f);
-};
-
-struct unkfunc_8001FAF4 {
-    struct unkfunc_8001FAF4_sub0 *unk0;
-};
-
-void func_8001FAB0(struct unkfunc_8001FAF4 *arg0, Vec3f arg1)
-{
-    Mtx3f matrix;
-
-    mtx3f_axis_angle(arg1, matrix);
-    arg0->unk0->unk5C(arg0, matrix);
-    return;
+void obj_setter_position(struct GameObject* obj, Vec3f position) {
+    struct {
+        struct GameObject* unk0;
+        Vec3f unk4;
+    } sp10;
+    sp10.unk0 = obj;
+    VEC3F_COPY(sp10.unk4, obj->unk6C);
+    VEC3F_COPY(obj->position, position);
+    
+    if (obj->unk0->unk40) {
+        obj->unk0->unk40(obj);
+    }
+    
+    obj->unk0->unk54(obj, 6, &sp10);
 }
 
-// TODO minor diff
-// void func_8001FAF4(struct unkfunc_8001FAF4 *arg0, f32 x, f32 y, f32 z)
-// {
-//     Vec3f vec;
-//     Mtx3f matrix;
+void obj_set_position_xyz(struct GameObject* obj, f32 x, f32 y, f32 z) {
+    Vec3f new_position;
 
-//     vec[0] = x;
-//     vec[1] = y;
-//     vec[2] = z;
-//     mtx3f_axis_angle(vec, matrix);
-//     arg0->unk0->unk5C(arg0, &matrix[1]); // changing this to just be matrix messes everything up, but should be correct
-// }
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001FAF4);
-
-void func_8001FD30(struct unkfunc_8001DFD0 *);
-
-void func_8001FB44(struct unkfunc_8001DFD0 *arg0, Vec3f arg1)
-{
-    VEC3F_COPY(arg0->unk78, arg1);
-    func_8001FD30(arg0);
+    new_position[0] = x;
+    new_position[1] = y;
+    new_position[2] = z;
+    obj->unk0->unk58(obj, new_position);
 }
 
-struct unkfunc_8001FB7C {
-    struct unkfunc_8001FB7C_sub0 *unk0;
-};
+void obj_translate(struct GameObject* obj, Vec3f translation) {
+    Vec3f new_position;
 
-struct unkfunc_8001FB7C_sub0 {
-    u8 padding[0x60];
-    void (*unk60)(struct unkfunc_8001FB7C *, Vec3f);
-};
+    VEC3F_ADD(new_position, obj->position, translation);
+    obj->unk0->unk58(obj, new_position);
+}
 
-void func_8001FB7C(struct unkfunc_8001FB7C *arg0, f32 x, f32 y, f32 z)
-{
+void obj_translate_xyz(struct GameObject* obj, f32 x, f32 y, f32 z) {
+    Vec3f translation;
+
+    translation[0] = x;
+    translation[1] = y;
+    translation[2] = z;
+    obj_translate(obj, translation);
+}
+
+void obj_setter_rotation(struct GameObject* obj, Mtx3f rotation_matrix) {
+    MTX3F_COPY(obj->rotation, rotation_matrix);
+    
+    if (obj->unk0->unk40) {
+        obj->unk0->unk40(obj);
+    }
+    
+    obj->unk0->unk54(obj, 7, obj);
+}
+
+void obj_rotate_matrix(struct GameObject* obj, Mtx3f rotation_matrix) {
+    Mtx3f new_rotation;
+
+    mtx3f_concat(rotation_matrix, obj->rotation, new_rotation);
+    obj->unk0->unk5C(obj, new_rotation);
+}
+
+void obj_rotate_axis_angle(struct GameObject* obj, Vec3f rotation_vector) {
+    Mtx3f rotation_matrix;
+
+    mtx3f_axis_angle(rotation_vector, rotation_matrix);
+    obj_rotate_matrix(obj, rotation_matrix);
+}
+
+void obj_rotate_axis_angle_xyz(struct GameObject* obj, f32 x, f32 y, f32 z) {
+    Vec3f rotation_vector;
+
+    rotation_vector[0] = x;
+    rotation_vector[1] = y;
+    rotation_vector[2] = z;
+    obj_rotate_axis_angle(obj, rotation_vector);
+}
+
+void obj_set_rotation_axis_angle(struct GameObject *obj, Vec3f rotation_vector) {
+    Mtx3f new_rotation;
+
+    mtx3f_axis_angle(rotation_vector, new_rotation);
+    obj->unk0->unk5C(obj, new_rotation);
+}
+
+void obj_set_rotation_axis_angle_xyz(struct GameObject *obj, f32 x, f32 y, f32 z) {
+    Vec3f vec;
+
+    vec[0] = x;
+    vec[1] = y;
+    vec[2] = z;
+    obj_set_rotation_axis_angle(obj, vec);
+}
+
+void obj_update_sleeping(struct GameObject *);
+
+void obj_setter_velocity(struct GameObject *obj, Vec3f velocity) {
+    VEC3F_COPY(obj->velocity, velocity);
+    obj_update_sleeping(obj);
+}
+
+void obj_set_velocity_xyz(struct GameObject *arg0, f32 x, f32 y, f32 z) {
     Vec3f vec;
 
     vec[0] = x;
@@ -453,13 +459,21 @@ void func_8001FB7C(struct unkfunc_8001FB7C *arg0, f32 x, f32 y, f32 z)
     arg0->unk0->unk60(arg0, vec);
 }
 
-void func_8001FBB0(struct unkfunc_8001DFD0 *arg0, Vec3f arg1)
+void obj_setter_angular_velocity(struct GameObject *obj, Vec3f arg1)
 {
-    VEC3F_COPY(arg0->unk84, arg1);
-    func_8001FD30(arg0);
+    VEC3F_COPY(obj->angular_velocity, arg1);
+    obj_update_sleeping(obj);
 }
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001FBE8);
+void obj_set_angular_velocity_xyz(struct GameObject *obj, f32 x, f32 y, f32 z) {
+    Vec3f vec;
+
+    vec[0] = x;
+    vec[1] = y;
+    vec[2] = z;
+
+    obj->unk0->unk64(obj, vec);
+}
 
 asm(".section .rdata");
 const f32 D_8001A018 = 2500.0f;
@@ -469,28 +483,20 @@ const f32 D_8001A024 = 0.0004f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001FC1C);
 
-void func_8001FD30(struct unkfunc_8001DFD0* arg0) {
-    s32 phi_a1;
+void obj_update_sleeping(struct GameObject* obj) {
+    s32 sleeping;
 
-    phi_a1 = 0;
-    if (VEC3F_MAG_SQUARED(arg0->unk78) < SQUARED(0.02f) && VEC3F_MAG_SQUARED(arg0->unk84) < SQUARED(0.02f)) {
-        phi_a1 = 1;
+    sleeping = 0;
+    if (VEC3F_MAG_SQUARED(obj->velocity) < SQUARED(0.02f) && VEC3F_MAG_SQUARED(obj->angular_velocity) < SQUARED(0.02f)) {
+        sleeping = 1;
     }
-    arg0->unk110_17 = phi_a1;
+    obj->unk110.bitfield.unk110_17 = sleeping;
 }
-
-// INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_3", func_8001FD30, struct unkfunc_8001DFD0*);
-
-struct unkfunc_8001FDB4 {
-    u8 padding[0x48];
-    Mtx3f unk48;
-    Vec3f unk6C;
-};
 
 void vec3f_rotate();
 void vec3f_transpose_rotate();
 
-void func_8001FDB4(struct unkfunc_8001FDB4 *arg0, struct unkfunc_8001FDB4 *arg1, Vec3f arg2, Vec3f arg3)
+void func_8001FDB4(struct GameObject *arg0, struct GameObject *arg1, Vec3f arg2, Vec3f arg3)
 {
     Vec3f sp10;
     Vec3f sp20;
@@ -513,7 +519,7 @@ void func_8001FDB4(struct unkfunc_8001FDB4 *arg0, struct unkfunc_8001FDB4 *arg1,
     VEC3F_COPY(arg3, src);
 }
 
-void func_8001FEA0(struct unkfunc_8001FDB4* arg0, struct unkfunc_8001FDB4* arg1, Vec3f arg2, Vec3f arg3) {
+void func_8001FEA0(struct GameObject* arg0, struct GameObject* arg1, Vec3f arg2, Vec3f arg3) {
     Vec3f sp10;
     Vec3f sp20;
     f32* src;
@@ -533,7 +539,7 @@ void func_8001FEA0(struct unkfunc_8001FDB4* arg0, struct unkfunc_8001FDB4* arg1,
     VEC3F_COPY(arg3, src);
 }
 
-void func_8001FF38(struct unkfunc_8001FDB4* arg0, struct unkfunc_8001FDB4* arg1, Mtx3f arg2, Mtx3f arg3) {
+void func_8001FF38(struct GameObject* arg0, struct GameObject* arg1, Mtx3f arg2, Mtx3f arg3) {
     Mtx3f sp10;
     Mtx3f sp38;
     f32 (*src)[3];
@@ -644,9 +650,9 @@ const f32 D_8001A04C = 3.4028235e38f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_80020A20);
 
-void func_80020A84(s32 **arg0)
+void func_80020A84(struct GameObject *obj)
 {
-    arg0[0x3F][4] = 1; // TODO probably a struct
+    obj->unkFC->unk10 = 1;
 }
 
 asm(".section .rdata");

@@ -90,7 +90,7 @@ void thread6_unk(void *);
 
 void thread1_idle(void *arg0)
 {
-    osCreatePiManager(0x96, &D_800BA0B0, D_800B9D90, 200);
+    osCreatePiManager(OS_PRIORITY_PIMGR, &D_800BA0B0, D_800B9D90, 200);
     osCreateThread(&D_800AFA10, 6, thread6_unk, NULL, &gThread6Stack[0x1000], 9);
     osStartThread(&D_800AFA10);
     osSetThreadPri(NULL, 0);

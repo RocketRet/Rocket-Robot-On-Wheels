@@ -78,7 +78,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_370", func_800856AC);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_370", func_80085978);
 
-void func_80085C68(u8 **dataPtrPtr, struct Model *arg1)
+void func_80085C68(u8 **dataPtrPtr, struct GameObject *arg1)
 {
     u8 *curPtr;
 
