@@ -517,3 +517,7 @@ obj_setter_rotation = 0x8001F920; // !
 obj_setter_position = 0x8001F7A4; // !
 obj_set_position_xyz = 0x8001F82C; // !
 mtxf_to_mtx = 0x80057A28; // !
+__floatdidf = 0x8000F7F0; // !
+__floatdisf = 0x80008E50; // !
+__fixunssfdi = 0x8000A550; // !
+__cmpdi2 = 0x80009250; // !

@@ -141,8 +141,9 @@ check: $(Z64)
 	@$(DIFF) $(BASEROM) $(Z64) && printf "OK\n"
 
 setup:
-	tools/splat/split.py tools/NSUE.00.yaml --modes=code
+	tools/splat/split.py tools/NSUE.00.yaml --modes=all
 	git checkout -q $(ASM_DIR)
+	git checkout -q $(LD_SCRIPT)
 	tools/fixup.py
 
 $(KMC_CC) :

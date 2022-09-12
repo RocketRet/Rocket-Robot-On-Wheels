@@ -1,12 +1,6 @@
 asm/nonmatchings/rocket/codeseg2/codeseg2_396/func_800907B0.s
 72:   addiu     $2, $3, -2
 
-asm/nonmatchings/rocket/codeseg2/codeseg2_449/func_8009CDBC.s
-51:  lwc1       $f0, %lo(D_800AF7D0)($3)
-
-asm/nonmatchings/rocket/codeseg2/codeseg2_230/func_800625D8.s
-271:  addiu      $2, $2, 0x2A
-
 asm/nonmatchings/rocket/codeseg2/codeseg2_23/func_800235DC.s
 531:  lw         $3, 0x4($16)
 547:  lw         $17, 0x8($16)
@@ -20,5 +14,5 @@ asm/nonmatchings/rocket/codeseg2/codeseg2_23/func_800235DC.s
 691:  lh         $2, 0x8($16)
 704:  lw         $5, 0x8($16)
 
-asm/data/all_data.data.s
-408:.word D_8009FF2C, 0x00000001, 0x00000003, 0x00000230, func_8007F580, func_8001E954, func_80080E80, 0x00000000, func_8001E044, func_80083734, 0x00000000, func_800824A0, func_80080038, func_8007F660, func_8007F96C, func_8007FB7C, func_8007FFB0, func_8008080C, func_80084704, func_80083224, 0x00000000, func_80084794, func_80081728, func_800818D0, func_80081CA0, func_80081D60, func_800864A8, func_80086310, func_80020730, func_800801C0, func_800800F0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, func_80080438, func_8008388C, func_8008392C, func_8009A674, func_8008302C, func_80083A80
+asm/lib/codeseg1/exceptasm.s
+424:  div        $0, $13, $12
