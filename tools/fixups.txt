@@ -13,6 +13,3 @@ asm/nonmatchings/rocket/codeseg2/codeseg2_23/func_800235DC.s
 690:  lh         $7, 0xA($16)
 691:  lh         $2, 0x8($16)
 704:  lw         $5, 0x8($16)
-
-asm/lib/codeseg1/exceptasm.s
-424:  div        $0, $13, $12

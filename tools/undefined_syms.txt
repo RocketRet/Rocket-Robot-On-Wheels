@@ -26,7 +26,7 @@ D_A4800018 = 0xA4800018;
 
 D_B00B0464 = _assetsSegmentRomStart + 4;
 _assetsSegmentRomStart = assets_ROM_START + 0xB0000000;
-_wavebankRomStart = _binary_bin_wavebank_bin_start + 0xB0000000;
+_wavebankRomStart = wavebank_ROM_START + 0xB0000000;
 gspF3DEX2_fifoTextStart = _binary_bin_f3dex2_code_bin_start;
 gspF3DEX2_fifoDataStart = _binary_bin_f3dex2_data_bin_start;
 n_aspMainTextStart = _binary_bin_n_aspMain_code_bin_start;

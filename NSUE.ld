@@ -1,7 +1,6 @@
 SECTIONS
 {
     __romPos = 0x0;
-    . = __romPos;
     header_ROM_START = __romPos;
     header_VRAM = ADDR(.header);
     .header : AT(header_ROM_START) SUBALIGN(16)
@@ -774,7 +773,7 @@ SECTIONS
         build/us/asm/data/rocket/codeseg2/codeseg2_bss.bss.o(.bss);
         codeseg2_bss_BSS_END = .;
     }
-    . = __romPos;
+
     assets_ROM_START = __romPos;
     assets_VRAM = ADDR(.assets);
     .assets : AT(assets_ROM_START) SUBALIGN(16)
@@ -786,83 +785,345 @@ SECTIONS
         assets_DATA_END = .;
     }
     __romPos += SIZEOF(.assets);
-    assets_ROM_END = __romPos;
-    . = __romPos;
-    audio_ROM_START = __romPos;
-    audio_VRAM = ADDR(.audio);
-    .audio : AT(audio_ROM_START) SUBALIGN(16)
+    assets_ROM_END = fxbank_ROM_START;
+
+    fxbank_ROM_START = __romPos;
+    fxbank_VRAM = ADDR(.fxbank);
+    .fxbank : AT(fxbank_ROM_START) SUBALIGN(16)
     {
-        audio_TEXT_END = .;
-        audio_DATA_START = .;
+        fxbank_TEXT_END = .;
+        fxbank_DATA_START = .;
         fxbank = .;
         build/us/bin/fxbank.o(.data);
+        fxbank_DATA_END = .;
+    }
+    __romPos += SIZEOF(.fxbank);
+    fxbank_ROM_END = ptrbank_ROM_START;
+
+    ptrbank_ROM_START = __romPos;
+    ptrbank_VRAM = ADDR(.ptrbank);
+    .ptrbank : AT(ptrbank_ROM_START) SUBALIGN(16)
+    {
+        ptrbank_TEXT_END = .;
+        ptrbank_DATA_START = .;
         ptrbank = .;
         build/us/bin/ptrbank.o(.data);
+        ptrbank_DATA_END = .;
+    }
+    __romPos += SIZEOF(.ptrbank);
+    ptrbank_ROM_END = wavebank_ROM_START;
+
+    wavebank_ROM_START = __romPos;
+    wavebank_VRAM = ADDR(.wavebank);
+    .wavebank : AT(wavebank_ROM_START) SUBALIGN(16)
+    {
+        wavebank_TEXT_END = .;
+        wavebank_DATA_START = .;
         wavebank = .;
         build/us/bin/wavebank.o(.data);
+        wavebank_DATA_END = .;
+    }
+    __romPos += SIZEOF(.wavebank);
+    wavebank_ROM_END = song00_ROM_START;
+
+    song00_ROM_START = __romPos;
+    song00_VRAM = ADDR(.song00);
+    .song00 : AT(song00_ROM_START) SUBALIGN(16)
+    {
+        song00_TEXT_END = .;
+        song00_DATA_START = .;
         song00 = .;
         build/us/bin/song00.o(.data);
+        song00_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song00);
+    song00_ROM_END = song01_ROM_START;
+
+    song01_ROM_START = __romPos;
+    song01_VRAM = ADDR(.song01);
+    .song01 : AT(song01_ROM_START) SUBALIGN(16)
+    {
+        song01_TEXT_END = .;
+        song01_DATA_START = .;
         song01 = .;
         build/us/bin/song01.o(.data);
+        song01_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song01);
+    song01_ROM_END = song02_ROM_START;
+
+    song02_ROM_START = __romPos;
+    song02_VRAM = ADDR(.song02);
+    .song02 : AT(song02_ROM_START) SUBALIGN(16)
+    {
+        song02_TEXT_END = .;
+        song02_DATA_START = .;
         song02 = .;
         build/us/bin/song02.o(.data);
+        song02_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song02);
+    song02_ROM_END = song03_ROM_START;
+
+    song03_ROM_START = __romPos;
+    song03_VRAM = ADDR(.song03);
+    .song03 : AT(song03_ROM_START) SUBALIGN(16)
+    {
+        song03_TEXT_END = .;
+        song03_DATA_START = .;
         song03 = .;
         build/us/bin/song03.o(.data);
+        song03_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song03);
+    song03_ROM_END = song04_ROM_START;
+
+    song04_ROM_START = __romPos;
+    song04_VRAM = ADDR(.song04);
+    .song04 : AT(song04_ROM_START) SUBALIGN(16)
+    {
+        song04_TEXT_END = .;
+        song04_DATA_START = .;
         song04 = .;
         build/us/bin/song04.o(.data);
+        song04_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song04);
+    song04_ROM_END = song05_ROM_START;
+
+    song05_ROM_START = __romPos;
+    song05_VRAM = ADDR(.song05);
+    .song05 : AT(song05_ROM_START) SUBALIGN(16)
+    {
+        song05_TEXT_END = .;
+        song05_DATA_START = .;
         song05 = .;
         build/us/bin/song05.o(.data);
+        song05_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song05);
+    song05_ROM_END = song06_ROM_START;
+
+    song06_ROM_START = __romPos;
+    song06_VRAM = ADDR(.song06);
+    .song06 : AT(song06_ROM_START) SUBALIGN(16)
+    {
+        song06_TEXT_END = .;
+        song06_DATA_START = .;
         song06 = .;
         build/us/bin/song06.o(.data);
+        song06_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song06);
+    song06_ROM_END = song07_ROM_START;
+
+    song07_ROM_START = __romPos;
+    song07_VRAM = ADDR(.song07);
+    .song07 : AT(song07_ROM_START) SUBALIGN(16)
+    {
+        song07_TEXT_END = .;
+        song07_DATA_START = .;
         song07 = .;
         build/us/bin/song07.o(.data);
+        song07_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song07);
+    song07_ROM_END = song08_ROM_START;
+
+    song08_ROM_START = __romPos;
+    song08_VRAM = ADDR(.song08);
+    .song08 : AT(song08_ROM_START) SUBALIGN(16)
+    {
+        song08_TEXT_END = .;
+        song08_DATA_START = .;
         song08 = .;
         build/us/bin/song08.o(.data);
+        song08_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song08);
+    song08_ROM_END = song09_ROM_START;
+
+    song09_ROM_START = __romPos;
+    song09_VRAM = ADDR(.song09);
+    .song09 : AT(song09_ROM_START) SUBALIGN(16)
+    {
+        song09_TEXT_END = .;
+        song09_DATA_START = .;
         song09 = .;
         build/us/bin/song09.o(.data);
+        song09_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song09);
+    song09_ROM_END = song0A_ROM_START;
+
+    song0A_ROM_START = __romPos;
+    song0A_VRAM = ADDR(.song0A);
+    .song0A : AT(song0A_ROM_START) SUBALIGN(16)
+    {
+        song0A_TEXT_END = .;
+        song0A_DATA_START = .;
         song0A = .;
         build/us/bin/song0A.o(.data);
+        song0A_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song0A);
+    song0A_ROM_END = song0B_ROM_START;
+
+    song0B_ROM_START = __romPos;
+    song0B_VRAM = ADDR(.song0B);
+    .song0B : AT(song0B_ROM_START) SUBALIGN(16)
+    {
+        song0B_TEXT_END = .;
+        song0B_DATA_START = .;
         song0B = .;
         build/us/bin/song0B.o(.data);
+        song0B_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song0B);
+    song0B_ROM_END = song0C_ROM_START;
+
+    song0C_ROM_START = __romPos;
+    song0C_VRAM = ADDR(.song0C);
+    .song0C : AT(song0C_ROM_START) SUBALIGN(16)
+    {
+        song0C_TEXT_END = .;
+        song0C_DATA_START = .;
         song0C = .;
         build/us/bin/song0C.o(.data);
+        song0C_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song0C);
+    song0C_ROM_END = song0D_ROM_START;
+
+    song0D_ROM_START = __romPos;
+    song0D_VRAM = ADDR(.song0D);
+    .song0D : AT(song0D_ROM_START) SUBALIGN(16)
+    {
+        song0D_TEXT_END = .;
+        song0D_DATA_START = .;
         song0D = .;
         build/us/bin/song0D.o(.data);
+        song0D_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song0D);
+    song0D_ROM_END = song0E_ROM_START;
+
+    song0E_ROM_START = __romPos;
+    song0E_VRAM = ADDR(.song0E);
+    .song0E : AT(song0E_ROM_START) SUBALIGN(16)
+    {
+        song0E_TEXT_END = .;
+        song0E_DATA_START = .;
         song0E = .;
         build/us/bin/song0E.o(.data);
+        song0E_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song0E);
+    song0E_ROM_END = song0F_ROM_START;
+
+    song0F_ROM_START = __romPos;
+    song0F_VRAM = ADDR(.song0F);
+    .song0F : AT(song0F_ROM_START) SUBALIGN(16)
+    {
+        song0F_TEXT_END = .;
+        song0F_DATA_START = .;
         song0F = .;
         build/us/bin/song0F.o(.data);
+        song0F_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song0F);
+    song0F_ROM_END = song10_ROM_START;
+
+    song10_ROM_START = __romPos;
+    song10_VRAM = ADDR(.song10);
+    .song10 : AT(song10_ROM_START) SUBALIGN(16)
+    {
+        song10_TEXT_END = .;
+        song10_DATA_START = .;
         song10 = .;
         build/us/bin/song10.o(.data);
+        song10_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song10);
+    song10_ROM_END = song11_ROM_START;
+
+    song11_ROM_START = __romPos;
+    song11_VRAM = ADDR(.song11);
+    .song11 : AT(song11_ROM_START) SUBALIGN(16)
+    {
+        song11_TEXT_END = .;
+        song11_DATA_START = .;
         song11 = .;
         build/us/bin/song11.o(.data);
+        song11_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song11);
+    song11_ROM_END = song12_ROM_START;
+
+    song12_ROM_START = __romPos;
+    song12_VRAM = ADDR(.song12);
+    .song12 : AT(song12_ROM_START) SUBALIGN(16)
+    {
+        song12_TEXT_END = .;
+        song12_DATA_START = .;
         song12 = .;
         build/us/bin/song12.o(.data);
+        song12_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song12);
+    song12_ROM_END = song13_ROM_START;
+
+    song13_ROM_START = __romPos;
+    song13_VRAM = ADDR(.song13);
+    .song13 : AT(song13_ROM_START) SUBALIGN(16)
+    {
+        song13_TEXT_END = .;
+        song13_DATA_START = .;
         song13 = .;
         build/us/bin/song13.o(.data);
+        song13_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song13);
+    song13_ROM_END = song14_ROM_START;
+
+    song14_ROM_START = __romPos;
+    song14_VRAM = ADDR(.song14);
+    .song14 : AT(song14_ROM_START) SUBALIGN(16)
+    {
+        song14_TEXT_END = .;
+        song14_DATA_START = .;
         song14 = .;
         build/us/bin/song14.o(.data);
+        song14_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song14);
+    song14_ROM_END = song15_ROM_START;
+
+    song15_ROM_START = __romPos;
+    song15_VRAM = ADDR(.song15);
+    .song15 : AT(song15_ROM_START) SUBALIGN(16)
+    {
+        song15_TEXT_END = .;
+        song15_DATA_START = .;
         song15 = .;
         build/us/bin/song15.o(.data);
+        song15_DATA_END = .;
+    }
+    __romPos += SIZEOF(.song15);
+    song15_ROM_END = song16_ROM_START;
+
+    song16_ROM_START = __romPos;
+    song16_VRAM = ADDR(.song16);
+    .song16 : AT(song16_ROM_START) SUBALIGN(16)
+    {
+        song16_TEXT_END = .;
+        song16_DATA_START = .;
         song16 = .;
         build/us/bin/song16.o(.data);
-        audio_DATA_END = .;
+        song16_DATA_END = .;
     }
-    __romPos += SIZEOF(.audio);
-    audio_ROM_END = __romPos;
-    . = __romPos;
-    BC6610_ROM_START = __romPos;
-    BC6610_VRAM = ADDR(.BC6610);
-    .BC6610 : AT(BC6610_ROM_START) SUBALIGN(16)
-    {
-        BC6610_TEXT_END = .;
-        BC6610_DATA_START = .;
-        BC6610 = .;
-        build/us/bin/BC6610.o(.data);
-        BC6610_DATA_END = .;
-    }
-    __romPos += SIZEOF(.BC6610);
-    BC6610_ROM_END = __romPos;
+    __romPos += SIZEOF(.song16);
+    song16_ROM_END = __romPos;
 
     /DISCARD/ :
     {
