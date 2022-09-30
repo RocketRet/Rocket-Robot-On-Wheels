@@ -138,7 +138,7 @@ void thread6_unk(void* arg0) {
                 break;
             case 0x4:
                 func_80074C88(&D_800AB9C8, 5);
-                MusStop(3U, 0);
+                MusStop(MUSFLAG_EFFECTS | MUSFLAG_SONGS, 0);
                 isPal = 1;
                 break;
             case 0xFF:

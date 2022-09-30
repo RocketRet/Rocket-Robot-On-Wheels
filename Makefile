@@ -142,9 +142,7 @@ check: $(Z64)
 
 setup:
 	tools/splat/split.py tools/NSUE.00.yaml --modes=all
-	git checkout -q $(ASM_DIR)
-	git checkout -q $(LD_SCRIPT)
-	tools/fixup.py
+	tools/fixup.py > /dev/null
 
 $(KMC_CC) :
 	$(MAKE) -C tools/ gcc-2.7.2/gcc

@@ -1,4 +1,4 @@
-.section .rdata
+.section .rodata
 
 .globl D_8001DB98
 D_8001DB98:

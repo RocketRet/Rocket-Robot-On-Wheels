@@ -99,7 +99,6 @@ osScRemoveClient = 0x800036F0; // !
 __scSchedule = 0x80003E98; // !
 osCreateMesgQueue = 0x800046C0; // !
 _codesegs0_1SegmentBssStart = 0x800AF860; // defined:true
-_codesegs0_1SegmentBssEnd = 0x800C00A0; // defined:true
 _assetsSegmentRomStart = 0xB00B0460; // defined:true
 gGfxContext = 0x800A5DA8;
 D_800A5DB4 = 0x800A5DB4;
