@@ -152,13 +152,13 @@ void vec3f_lerp(float t, Vec3f a, Vec3f b, Vec3f out)
     }
 }
 
-const float D_8001DCEC = 1e-4f;
-const float D_8001DCF0 = 1e-4f;
-const float D_8001DCF4 = 0.5f;
-const float D_8001DCF8 = 0.5f;
-const float D_8001DCFC = 1e-4f;
-const float D_8001DD00 = 1.0f;
-const float D_8001DD04 = -1.0f;
+// const float D_8001DCEC = 1e-4f;
+// const float D_8001DCF0 = 1e-4f;
+// const float D_8001DCF4 = 0.5f;
+// const float D_8001DCF8 = 0.5f;
+// const float D_8001DCFC = 1e-4f;
+// const float D_8001DD00 = 1.0f;
+// const float D_8001DD04 = -1.0f;
 
 // void vec3f_lerp(Vec3f a, Vec3f b)
 // {

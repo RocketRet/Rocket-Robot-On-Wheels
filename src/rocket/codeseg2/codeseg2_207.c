@@ -3,7 +3,7 @@
 #include <types.h>
 #include <macros.h>
 
-const float D_8001BA70 = 65536.0f;
+// const float D_8001BA70 = 65536.0f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_207", func_80057970);
 
@@ -105,12 +105,12 @@ void func_80057C6C(Vec3f arg0, Mtx3f arg1)
     }
 }
 
-asm(".section .rodata");
-const float D_8001BA84 = 0.9999f;
-const float D_8001BA88 = 1.0;
-const float D_8001BA8C = 0.0001f;
-const float D_8001BA90 = 1.0f;
-const float D_8001BA94 = 1.0f;
+// asm(".section .rodata");
+// const float D_8001BA84 = 0.9999f;
+// const float D_8001BA88 = 1.0;
+// const float D_8001BA8C = 0.0001f;
+// const float D_8001BA90 = 1.0f;
+// const float D_8001BA94 = 1.0f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_207", func_80057D28);
 

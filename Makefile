@@ -143,6 +143,7 @@ check: $(Z64)
 setup:
 	tools/splat/split.py tools/NSUE.00.yaml --modes=all
 	tools/fixup.py > /dev/null
+	find asm/ -type f -exec sed -i 's|.rdata|.rodata|g' {} +
 
 $(KMC_CC) :
 	$(MAKE) -C tools/ gcc-2.7.2/gcc

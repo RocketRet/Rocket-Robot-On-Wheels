@@ -3,9 +3,9 @@
 #include <macros.h>
 #include <types.h>
 
-const float D_8001D500 = -0.02f;
-const float D_8001D504 = -0.02f;
-const float D_8001D508 = 0.5f;
+// const float D_8001D500 = -0.02f;
+// const float D_8001D504 = -0.02f;
+// const float D_8001D508 = 0.5f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_343", func_800818D0);
 

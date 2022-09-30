@@ -4,7 +4,7 @@
 #include <types.h>
 #include <macros.h>
 
-const f32 D_8001D6C0 = 3.40282346638529E38f;
+// const f32 D_8001D6C0 = 3.40282346638529E38f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80086370);
 
@@ -55,7 +55,7 @@ struct ModelData {
 };
 
 // extern f32 D_8001D6C4;
-const f32 D_8001D6C4 = 3.40282346638529E38f;
+// const f32 D_8001D6C4 = 3.40282346638529E38f;
 extern Vec3f D_800AF794;
 
 static inline s16 read_unaligned_s16(u8 **dataPtr)
@@ -116,21 +116,21 @@ struct DataPtr {
 };
 void func_800864A8(struct GameObject *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3);
 
-const uintptr_t jtbl_8001D6C8[] = {
-    0x80086A24 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80086C90 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80086CD8 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80086D28 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80086D78 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80087210 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80087234 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80086E3C - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80086DE4 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80087060 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80087254 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80087264 - 0x800864A8 + (uintptr_t)func_800864A8,
-    0x80086DA8 - 0x800864A8 + (uintptr_t)func_800864A8
-};
+// const uintptr_t jtbl_8001D6C8[] = {
+//     0x80086A24 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80086C90 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80086CD8 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80086D28 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80086D78 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80087210 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80087234 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80086E3C - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80086DE4 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80087060 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80087254 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80087264 - 0x800864A8 + (uintptr_t)func_800864A8,
+//     0x80086DA8 - 0x800864A8 + (uintptr_t)func_800864A8
+// };
 
 #ifdef NON_MATCHING
 void func_800864A8(struct GameObject *arg0, s32 decompressedSize, u8 *decompressedBytes, s32 arg3) {

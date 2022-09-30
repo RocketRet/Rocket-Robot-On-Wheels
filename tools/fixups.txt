@@ -1,15 +1,15 @@
 asm/nonmatchings/rocket/codeseg2/codeseg2_23/func_800235DC.s
-531:  lw         $3, 0x4($16)
-547:  lw         $17, 0x8($16)
-595:  lw         $17, 0x8($16)
-620:  lw         $3, 0x4($16)
-673:  lw         $5, 0xC($16)
-674:  lh         $7, 0xA($16)
-675:  lh         $2, 0x8($16)
-689:  lw         $5, 0xC($16)
-690:  lh         $7, 0xA($16)
-691:  lh         $2, 0x8($16)
-704:  lw         $5, 0x8($16)
+612:  lw         $3, 0x4($16)
+628:  lw         $17, 0x8($16)
+676:  lw         $17, 0x8($16)
+701:  lw         $3, 0x4($16)
+754:  lw         $5, 0xC($16)
+755:  lh         $7, 0xA($16)
+756:  lh         $2, 0x8($16)
+770:  lw         $5, 0xC($16)
+771:  lh         $7, 0xA($16)
+772:  lh         $2, 0x8($16)
+785:  lw         $5, 0x8($16)
 
 asm/lib/codeseg1/exceptasm.s
 424:  div        $0, $13, $12
@@ -20,12 +20,12 @@ asm/nonmatchings/rocket/codeseg2/codeseg2_147/func_8004667C.s
 119:  .word 0x00A6001A                         # div        $5, $6
 
 asm/nonmatchings/rocket/codeseg2/codeseg2_303/func_80075CC8.s
-213:  .word 0x1060FFEC                         # beqz       $3, .L80075F80
-214:   .word 0x00850018                        #  mult      $4, $5
-362:  .word 0x1040FFEC                         # beqz       $2, .L80076198
-363:   .word 0x00850018                        #  mult      $4, $5
-491:  .word 0x1040FFEC                         # beqz       $2, .L8007635C
-492:   .word 0x00850018                        #  mult      $4, $5
+232:  .word 0x1060FFEC                         # beqz       $3, .L80075F80
+233:   .word 0x00850018                        #  mult      $4, $5
+381:  .word 0x1040FFEC                         # beqz       $2, .L80076198
+382:   .word 0x00850018                        #  mult      $4, $5
+510:  .word 0x1040FFEC                         # beqz       $2, .L8007635C
+511:   .word 0x00850018                        #  mult      $4, $5
 
 asm/entry.s
 17:  lui        $9, %hi(_codesegs0_1SegmentBssEnd)
