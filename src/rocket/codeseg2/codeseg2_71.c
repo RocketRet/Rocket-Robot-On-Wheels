@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include "macros.h"
 
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_71", func_80031FB0);

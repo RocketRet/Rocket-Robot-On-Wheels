@@ -3,25 +3,6 @@
 #include <types.h>
 #include <mus/libmus.h>
 
-// const double D_8001D790 = 0.7;
-// const double D_8001D798 = 1.0;
-// const double D_8001D7A0 = 128.0;
-// const float D_8001D7A8 = 128.0f;
-// const float D_8001D7AC = 128.0f;
-// const double D_8001D7B0 = 0.7;
-// const double D_8001D7B8 = 1.0;
-// const double D_8001D7C0 = 128.0;
-// const float D_8001D7C8 = 128.0f;
-// const float D_8001D7CC = 128.0f;
-// const float D_8001D7D0 = -1.0f;
-// const float D_8001D7D4 = 128.0f;
-// const double D_8001D7D8 = 0.7;
-// const double D_8001D7E0 = 1.0;
-// const double D_8001D7E8 = 128.0;
-// const double D_8001D7F0 = 0.7;
-// const double D_8001D7F8 = 1.0;
-// const double D_8001D800 = 128.0;
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_396", func_8008FF30);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_396", func_80090134);
@@ -135,25 +116,6 @@ void func_800914A8(float arg0)
     MusSetMasterVolume(MUSFLAG_EFFECTS | MUSFLAG_SONGS, arg0 * 32767.0f);
 }
 
-// const float D_8001D818 = 3.0f;
-// const float D_8001D81C = 1.5f;
-// const float D_8001D820 = 15.0f;
-// const float D_8001D824 = 1.0f;
-// const double D_8001D828 = 0.7;
-// const double D_8001D830 = 1.0;
-// const double D_8001D838 = 128.0;
-// const float D_8001D840 = 128.0f;
-// const float D_8001D844 = 14.0f;
-// const double D_8001D848 = 14.0;
-// const float D_8001D850 = 128.0f;
-// const float D_8001D854 = 0.15f;
-// const double D_8001D858 = 0.5;
-// const double D_8001D860 = 2.0;
-// const float D_8001D868 = 0.5f;
-// const float D_8001D86C = 2.0f;
-// const float D_8001D870 = 0.1f;
-// const float D_8001D874 = 15.0f;
-// const float D_8001D878 = 1.0f;
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_396", func_800914DC);
 
 void func_80091AA8(musHandle handle, s32 arg1)

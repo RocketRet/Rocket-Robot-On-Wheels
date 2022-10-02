@@ -97,6 +97,118 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800923E8);
 //     gSPEndDisplayList(arg1->gfx++);
 // }
 
+typedef struct CombinerParams_s {
+    u8 color[4];
+    u8 alpha[4];
+} CombinerParams;
+
+// asm(".section .rodata");
+
+// const CombinerParams D_8001D8A4 = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
+//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_1 }
+// };
+
+// const CombinerParams D_8001D8AC = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
+//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_TEXEL0 }
+// };
+
+// const CombinerParams D_8001D8B4 = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
+//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_SHADE }
+// };
+
+// const CombinerParams D_8001D8BC = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
+//     { G_ACMUX_TEXEL0, G_ACMUX_0, G_ACMUX_SHADE, G_ACMUX_0 }
+// };
+
+// const CombinerParams D_8001D8C4 = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
+//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_ENVIRONMENT }
+// };
+
+// const CombinerParams D_8001D8CC = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
+//     { G_ACMUX_TEXEL0, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
+// };
+
+// const CombinerParams D_8001D8D4 = {
+//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_TEXEL0, G_CCMUX_ENVIRONMENT },
+//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_1 }
+// };
+
+// const CombinerParams D_8001D8DC = {
+//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_TEXEL0, G_CCMUX_ENVIRONMENT },
+//     { G_ACMUX_TEXEL0, G_ACMUX_0, G_ACMUX_SHADE, G_ACMUX_1 }
+// };
+
+// const CombinerParams D_8001D8E4 = {
+//     { G_CCMUX_ENVIRONMENT, G_CCMUX_SHADE, G_CCMUX_TEXEL0, G_CCMUX_SHADE },
+//     { G_ACMUX_TEXEL0, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_1 }
+// };
+
+// const CombinerParams D_8001D8EC = {
+//     { G_CCMUX_TEXEL1, G_CCMUX_TEXEL0, G_CCMUX_SHADE_ALPHA, G_CCMUX_TEXEL0 },
+//     { G_ACMUX_TEXEL1, G_ACMUX_TEXEL0, G_ACMUX_SHADE, G_ACMUX_TEXEL0 }
+// };
+
+// const CombinerParams D_8001D8F4 = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_COMBINED, G_CCMUX_0 },
+//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
+// };
+
+// const CombinerParams D_8001D8FC = {
+//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_COMBINED, G_CCMUX_ENVIRONMENT },
+//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_PRIMITIVE, G_ACMUX_0 }
+// };
+
+// const CombinerParams D_8001D904 = {
+//     { G_CCMUX_ENVIRONMENT, G_CCMUX_SHADE, G_CCMUX_COMBINED, G_CCMUX_SHADE },
+//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
+// };
+
+// const CombinerParams D_8001D90C = {
+//     { G_CCMUX_TEXEL1, G_CCMUX_TEXEL0, G_CCMUX_LOD_FRACTION, G_CCMUX_TEXEL0 },
+//     { G_ACMUX_TEXEL1, G_ACMUX_TEXEL0, G_ACMUX_LOD_FRACTION, G_ACMUX_TEXEL0 }
+// };
+
+// const CombinerParams D_8001D914 = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_COMBINED, G_CCMUX_0 },
+//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_PRIMITIVE }
+// };
+
+// const CombinerParams D_8001D91C = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_COMBINED, G_CCMUX_0 },
+//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_PRIMITIVE, G_ACMUX_0 }
+// };
+
+// const CombinerParams D_8001D924 = {
+//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_COMBINED, G_CCMUX_ENVIRONMENT },
+//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_PRIMITIVE }
+// };
+
+// const CombinerParams D_8001D92C = {
+//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_COMBINED, G_CCMUX_ENVIRONMENT },
+//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_SHADE, G_ACMUX_0 }
+// };
+
+// const CombinerParams D_8001D934 = {
+//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_COMBINED, G_CCMUX_0 },
+//     { G_ACMUX_PRIMITIVE, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
+// };
+
+// const CombinerParams D_8001D93C = {
+//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_COMBINED, G_CCMUX_ENVIRONMENT },
+//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
+// };
+
+// const CombinerParams D_8001D944 = {
+//     { G_CCMUX_0, G_CCMUX_0, G_CCMUX_0, G_CCMUX_COMBINED },
+//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_PRIMITIVE, G_ACMUX_0 }
+// };
+
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800926B8);
 
 extern struct MaterialGfx *materialTable;

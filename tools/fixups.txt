@@ -30,3 +30,6 @@ asm/nonmatchings/rocket/codeseg2/codeseg2_303/func_80075CC8.s
 asm/entry.s
 17:  lui        $9, %hi(_codesegs0_1SegmentBssEnd)
 18:  addiu      $9, $9, %lo(_codesegs0_1SegmentBssEnd)
+
+asm/nonmatchings/rocket/codeseg2/codeseg2_204/func_800572D8.s
+16: .double -0.99989998340606689453125

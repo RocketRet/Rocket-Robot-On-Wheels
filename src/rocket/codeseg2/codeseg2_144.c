@@ -27,14 +27,12 @@ extern f32 D_8001B420;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_144", func_80046200);
 
-// float load
-#ifdef NON_MATCHING
 void func_80046268()
 {
     func_80089D5C();
     D_800A5C3C.unk34 = alloc_second_heap(0x3C00);
-    D_800C0440.unk10 = D_8001B420;
-    D_800C0440.unk14 = D_8001B420;
+    D_800C0440.unk10 = 1.0f;
+    D_800C0440.unk14 = 1.0f;
     D_800A5C3C.unk28 = 0;
     D_800C0440.unk18 = 0xFF;
     D_800C0440.unk19 = 0xFF;
@@ -45,9 +43,6 @@ void func_80046268()
     D_800C0440.unk8 = 0x140;
     D_800C0440.unkC = 1;
 }
-#else
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_144", func_80046268);
-#endif
 
 void func_800462E4(Gfx **dlHead)
 {

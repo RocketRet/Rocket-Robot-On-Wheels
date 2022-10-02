@@ -12,17 +12,7 @@ f32 func_80057280(Mtx3f arg0)
     return clampf_abs((trace - 1.0) * 0.5, 1.0);
 }
 
-// const f64 D_8001BA38 = 1.0;
-// const f64 D_8001BA40 = 0.5;
-// const u64 D_8001BA48 = 0x3FEFFFFDE7210BE9; // Can't match as a double for some reason
-// const f64 D_8001BA50 = -0.9998999834060669;
-// const f32 D_8001BA58 = 3.1415927;
-// const f32 D_8001BA5C = 65536.0f;
-// const f32 D_8001BA60 = 16.0f;
-// const f32 D_8001BA64 = 65536.0f;
-// const f32 D_8001BA68 = 65536.0f;
-// const f32 D_8001BA6C = 0.0000009536743f;
-
+asm(".section .rodata\n.align 3");
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_204", func_800572D8);
 
 void vec3f_scale(f32, Vec3f, Vec3f);

@@ -113,10 +113,6 @@ struct unkfunc_80065194 {
     struct unkfunc_80065194 *unk268;
 };
 
-extern const f32 D_8001C574;
-
-// float load
-#ifdef NON_MATCHING
 void func_80065194(struct unkfunc_80065194 *arg0)
 {
     s32 var;
@@ -128,11 +124,8 @@ void func_80065194(struct unkfunc_80065194 *arg0)
         var = 5;
     }
     func_800652F4(arg0, var);
-    arg0->unk244 = D_8001C574;
+    arg0->unk244 = -1.0f;
 }
-#else
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_80065194);
-#endif
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_800651F8);
 
