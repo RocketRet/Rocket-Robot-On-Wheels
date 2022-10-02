@@ -20,16 +20,16 @@ asm/nonmatchings/rocket/codeseg2/codeseg2_147/func_8004667C.s
 119:  .word 0x00A6001A                         # div        $5, $6
 
 asm/nonmatchings/rocket/codeseg2/codeseg2_303/func_80075CC8.s
-232:  .word 0x1060FFEC                         # beqz       $3, .L80075F80
-233:   .word 0x00850018                        #  mult      $4, $5
-381:  .word 0x1040FFEC                         # beqz       $2, .L80076198
-382:   .word 0x00850018                        #  mult      $4, $5
-510:  .word 0x1040FFEC                         # beqz       $2, .L8007635C
-511:   .word 0x00850018                        #  mult      $4, $5
+233:  .word 0x1060FFEC                         # beqz       $3, .L80075F80
+234:   .word 0x00850018                        #  mult      $4, $5
+382:  .word 0x1040FFEC                         # beqz       $2, .L80076198
+383:   .word 0x00850018                        #  mult      $4, $5
+511:  .word 0x1040FFEC                         # beqz       $2, .L8007635C
+512:   .word 0x00850018                        #  mult      $4, $5
 
 asm/entry.s
 17:  lui        $9, %hi(_codesegs0_1SegmentBssEnd)
 18:  addiu      $9, $9, %lo(_codesegs0_1SegmentBssEnd)
 
 asm/nonmatchings/rocket/codeseg2/codeseg2_204/func_800572D8.s
-16: .double -0.99989998340606689453125
+20: .double -0.99989998340606689453125

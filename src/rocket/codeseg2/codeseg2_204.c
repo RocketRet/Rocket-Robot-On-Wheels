@@ -12,7 +12,6 @@ f32 func_80057280(Mtx3f arg0)
     return clampf_abs((trace - 1.0) * 0.5, 1.0);
 }
 
-asm(".section .rodata\n.align 3");
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_204", func_800572D8);
 
 void vec3f_scale(f32, Vec3f, Vec3f);
