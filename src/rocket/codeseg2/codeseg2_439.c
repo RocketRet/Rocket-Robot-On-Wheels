@@ -152,22 +152,6 @@ void vec3f_lerp(float t, Vec3f a, Vec3f b, Vec3f out)
     }
 }
 
-const float D_8001DCEC = 1e-4f;
-const float D_8001DCF0 = 1e-4f;
-const float D_8001DCF4 = 0.5f;
-const float D_8001DCF8 = 0.5f;
-const float D_8001DCFC = 1e-4f;
-const float D_8001DD00 = 1.0f;
-const float D_8001DD04 = -1.0f;
-
-// void vec3f_lerp(Vec3f a, Vec3f b)
-// {
-//     float dot = a[0] * b[0] + a[1] * b[1] * a[2] * b[2];
-
-// }
-
-// INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_439", vec3f_lerp);
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_439", func_8009AEC8);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_439", func_8009AF20);

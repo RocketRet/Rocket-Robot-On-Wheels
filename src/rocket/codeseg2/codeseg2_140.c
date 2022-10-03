@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include "macros.h"
 
 struct unkfunc_80045810 {
     u8 padding[0x234];
@@ -18,11 +19,9 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_140", func_800458E4);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_140", func_80045A54);
 
-extern f32 D_8001B3D8;
-
 void func_80045B60(f32 *arg0, s32 arg1, u8 *dataPtr)
 {
-    arg0[0x8F] = D_8001B3D8;
+    arg0[0x8F] = FLT_MAX;
     func_800875E8(arg0, arg1, dataPtr);
 }
 

@@ -188,22 +188,11 @@ void func_8001E69C(struct GameObject* arg0, f32 dt, Mtx3f out) {
     }
 }
 #else
-asm(".section .rodata");
-const f32 D_80019FC0 = 0.5f;
-const f32 D_80019FC4 = 1.0f;
-const f32 D_80019FC8 = 0.0001f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E69C);
 #endif
 
-asm(".section .rodata");
-const f32 D_80019FCC = 1.0f;
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E824);
-
-asm(".section .rodata");
-const f32 D_80019FD0 = 1.0f;
-const f32 D_80019FD4 = 0.0f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001E954);
 
@@ -279,26 +268,8 @@ Mtx* func_8001EA18(struct GameObject* arg0, struct Submodel* arg1, f32* arg2, f3
 #else
 s32 func_8001EA18();
 
-asm(".section .rodata");
-const uintptr_t jtbl_80019FD8[] = {
-    0x8001EA88 - 0x8001EA18 + (uintptr_t)func_8001EA18,
-    0x8001EA98 - 0x8001EA18 + (uintptr_t)func_8001EA18,
-    0x8001EAA8 - 0x8001EA18 + (uintptr_t)func_8001EA18,
-    0x8001EB00 - 0x8001EA18 + (uintptr_t)func_8001EA18,
-    0x8001EB5C - 0x8001EA18 + (uintptr_t)func_8001EA18};
-const f32 D_80019FEC = -16.0f;
-const f32 D_80019FF0 = 16.0f;
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001EA18);
 #endif
-
-asm(".section .rodata");
-const f32 D_80019FF4 = FLT_MAX;
-const f32 D_80019FF8 = 2.1474836e9f;
-const f32 D_80019FFC = 16.0f;
-const f32 D_8001A000 = 255.0f;
-const f32 D_8001A004 = 0.0f;
-
 
 struct unkfunc_8001F128 {
     u8 padding[0x10C];
@@ -329,15 +300,6 @@ void func_8001F128(s32 arg0, struct unkfunc_8001F128* arg1, Vec3f arg2, Vec3f ar
         func_8001ECEC(arg0, arg1, arg2, arg3, sp20, 0.0f, 1.0f, arg1 ? arg1->unk10C * arg6 : arg6);
     }
 }
-
-// asm(".section .rodata");
-// const f64 D_8001A008 = 0.01;
-// const f32 D_8001A010 = 1.0f;
-
-// INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F128);
-
-asm(".section .rodata");
-const f32 D_8001A014 = 1.0f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001F2A4);
 
@@ -475,12 +437,6 @@ void obj_set_angular_velocity_xyz(struct GameObject *obj, f32 x, f32 y, f32 z) {
     obj->unk0->unk64(obj, vec);
 }
 
-asm(".section .rodata");
-const f32 D_8001A018 = 2500.0f;
-const f32 D_8001A01C = 50.0f;
-const f32 D_8001A020 = 50.0f;
-const f32 D_8001A024 = 0.0004f;
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8001FC1C);
 
 void obj_update_sleeping(struct GameObject* obj) {
@@ -566,11 +522,6 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_80020050);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_800200F4);
 
-asm(".section .rodata");
-const f32 D_8001A02C = 0.0625f;
-const f32 D_8001A030 = 1.0f;
-const f32 D_8001A034 = 2.1474836e9f;
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_80020134);
 
 struct unkD_8009F400 {
@@ -620,33 +571,15 @@ void func_80020780(s32 *arg0)
     arg0[0x44] = val;
 }
 
-asm(".section .rodata");
-const f32 D_8001A038 = 0.0004f;
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_800207AC);
-
-asm(".section .rodata");
-const f32 D_8001A03C = 0.0004f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8002085C);
 
-asm(".section .rodata");
-const f32 D_8001A040 = 3.4028235e38f;
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8002090C);
-
-asm(".section .rodata");
-const f32 D_8001A044 = 3.4028235e38f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_8002095C);
 
-asm(".section .rodata");
-const f32 D_8001A048 = 3.4028235e38f;
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_800209BC);
-
-asm(".section .rodata");
-const f32 D_8001A04C = 3.4028235e38f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_80020A20);
 
@@ -654,11 +587,5 @@ void func_80020A84(struct GameObject *obj)
 {
     obj->unkFC->unk10 = 1;
 }
-
-asm(".section .rodata");
-const f32 D_8001A050 = 3.4028235e38f;
-const f32 D_8001A054 = 0.0f;
-const f32 D_8001A058 = 0.0f;
-const f32 D_8001A05C = 0.0f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_3", func_80020A94);

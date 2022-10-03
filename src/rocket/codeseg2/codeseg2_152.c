@@ -67,10 +67,6 @@ void func_800477D8(struct unkfunc_800477D8 *arg0, Vec3f arg1, struct unkfunc_800
     arg0->unkC = arg2;
 }
 
-const f32 D_8001B43C = 256.0f;
-const f32 D_8001B440 = 127.0f;
-const f32 D_8001B444 = 2147483648.0f;
-
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_152", func_80047844);
 
 void func_80047908(struct unkfunc_800477D8 *arg0, Vec3f arg1, struct unkfunc_800477D8_inner arg2, s32 arg3, s32 arg4)
@@ -85,14 +81,5 @@ void func_80047908(struct unkfunc_800477D8 *arg0, Vec3f arg1, struct unkfunc_800
     arg0->unk8 = arg3;
     arg0->unkA = arg4;
 }
-
-const f32 D_8001B44C = 1.0f;
-const f32 D_8001B450 = 2147483648.0f;
-const f32 D_8001B454 = 1.0f;
-const f32 D_8001B458 = 2147483648.0f;
-const f32 D_8001B45C = 1.0f;
-const f32 D_8001B460 = 2147483648.0f;
-const f32 D_8001B464 = 1.0f;
-const f32 D_8001B468 = 2147483648.0f;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_152", func_8004797C);

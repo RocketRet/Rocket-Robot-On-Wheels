@@ -5,9 +5,6 @@
 
 extern s32 gCurLevelTokens;
 
-const float D_8001C950 = 1.0f;
-const float D_8001C954 = 4.0f;
-
 // This seems to draw tokens, changing D_8001C950 changes the size of tokens
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_267", func_8006BDF0);
 
