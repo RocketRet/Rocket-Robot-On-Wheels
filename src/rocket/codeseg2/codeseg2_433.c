@@ -46,7 +46,28 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", func_80099A34);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", func_80099A9C);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", func_80099B08);
+// Returns the a % b, wrapping around to positive when the result is negative.
+// Does not work with a negative b value.
+f32 positive_fmodf(f32 a, f32 b) {
+    s32 integer_quotient;
+    f32 remainder;
+
+    integer_quotient = a / b;
+    remainder = a - integer_quotient * b;
+    
+    if ((a < 0.0f && remainder > 0.0f)) {
+        // This is pointless due to the last if statement
+        remainder -= b;
+    } else if (a > 0.0f && remainder < 0.0f) {
+        remainder += b;
+    }
+
+    if (remainder < 0.0f) {
+        remainder += b;
+    }
+    
+    return remainder;
+}
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_433", func_80099B8C);
 

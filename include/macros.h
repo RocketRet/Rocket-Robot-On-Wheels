@@ -1,6 +1,8 @@
 #ifndef __MACROS_H__
 #define __MACROS_H__
 
+#define ALIGNED(x) __attribute__((aligned(x)))
+
 #ifndef FLT_MAX
 #define FLT_MAX 3.4028235e38f
 #endif

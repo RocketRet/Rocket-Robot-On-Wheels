@@ -54,14 +54,14 @@ struct ControllerData {
 };
 
 struct TextureHeader {
-    u16 width;
-    u16 height;
-    u8 imSize;   // G_IM_SIZ_x
-    u8 imFormat; // G_IM_FMT_x
-    u16 bytesPerRow;
-    u32 imageBytes;
-    u16 paletteBytes;
-    u16 unkE;
+    /* 0x00 */ u16 width;
+    /* 0x02 */ u16 height;
+    /* 0x04 */ u8 imSize;   // G_IM_SIZ_x
+    /* 0x05 */ u8 imFormat; // G_IM_FMT_x
+    /* 0x06 */ u16 bytesPerRow;
+    /* 0x08 */ u32 imageBytes;
+    /* 0x0C */ u16 paletteBytes;
+    /* 0x0E */ u16 unkE;
 };
 
 struct Texture {
@@ -95,10 +95,15 @@ struct unkfunc_80093DDC {
 
 struct TextureGroupHeader {
     struct unkfunc_80093DDC unk4;
-    u16 unk8;
-    u16 unkA;
-    u32 unkC;
-    u32 unk10;
+    u16 flags;
+    u16 baseTextureWidth;
+    u16 baseTextureHeight;
+    u8 clampWrapMirrorS;
+    u8 clampWrapMirrorT;
+    u8 envColorR;
+    u8 envColorG;
+    u8 envColorB;
+    u8 envColorA;
     u8 unk14;
     u8 numTextures;
     u8 unk16;
@@ -108,19 +113,39 @@ struct TextureGroupHeader {
 };
 
 struct TexturedMaterial {
-    uintptr_t romAddress;
-    struct TextureGroupHeader header;
-    u8 widthPower;  // Width as a power of two (rounded up)
-    u8 heightPower; // Height as a power of two (rounded up)
-    u16 unk22;
-    struct Texture **textures;
+    /* 0x00 */ uintptr_t romAddress;
+    /* 0x04 */ struct TextureGroupHeader header;
+    /* 0x20 */ u8 widthPower;  // Width as a power of two (rounded up)
+    /* 0x21 */ u8 heightPower; // Height as a power of two (rounded up)
+    /* 0x22 */ u16 unk22;
+    /* 0x24 */ struct Texture **textures;
+};
+
+struct TileScrollParams {
+    struct MaterialGfx *unk0;
+    s32 unk4;
+    s32 unk8;
+    f32 tile0SpeedS;
+    f32 tile0SpeedT;
+    f32 tile1SpeedS;
+    f32 tile1SpeedT;
 };
 
 struct MaterialGfx {
-    uintptr_t materialData; // ROM address of textured material data, RAM address of TexturedMaterial struct, or color of solid shaded material (00RRGGBB)
+    // ROM address of textured material data, RAM address of TexturedMaterial struct, or color of solid shaded material (00RRGGBB)
+    union {
+        uintptr_t raw;
+        struct TexturedMaterial *texturedMaterial;
+        struct {
+            u8 pad;
+            u8 r;
+            u8 g;
+            u8 b;
+        } color;
+    } materialData;
     u32 gfxCount; // Number of Gfx commands, or zero if not loaded
     Gfx *gfx; // Pointer to Gfx command array
-    struct MaterialGfx **unkC;
+    struct TileScrollParams *scrollParams;
 };
 
 struct unkfunc_80091F54 {

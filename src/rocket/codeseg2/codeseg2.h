@@ -35,6 +35,33 @@ struct unkfunc_8001DFD0 {
 
 extern struct GfxContext gGfxContext; // 0x10 bytes
 
+struct unkD_800A5C3C {
+    u8 padding[0x28];
+    s16 unk28;
+    s16 unk2A;
+    u8 padding2[0x34 - 0x2C];
+    s32 unk34;
+    Gfx *unk38;
+    Gfx *unk3C;
+};
+
+struct unkD_800C0440 {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    f32 unk10;
+    f32 unk14;
+    u8 unk18;
+    u8 unk19;
+    u8 unk1A;
+    u8 unk1B;
+};
+
+extern struct unkD_800A5C3C D_800A5C3C;
+extern struct unkD_800C0440 D_800C0440;
+
+
 static inline Gfx* next_gfx() {
     Gfx* ret = gGfxContext.dlHead;
     gGfxContext.dlHead++;

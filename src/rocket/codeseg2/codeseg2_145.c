@@ -1,17 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
-
-struct unkD_800C0440 {
-    u8 padding[0x10];
-    f32 unk10;
-    f32 unk14;
-    u8 unk18;
-    u8 unk19;
-    u8 unk1A;
-    u8 unk1B;
-};
-
-extern struct unkD_800C0440 D_800C0440;
+#include "codeseg2.h"
 
 void func_80046340(f32 arg0, f32 arg1)
 {

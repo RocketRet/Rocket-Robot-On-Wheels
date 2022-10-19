@@ -484,3 +484,4 @@ __floatdidf = 0x8000F7F0; // !
 __floatdisf = 0x80008E50; // !
 __fixunssfdi = 0x8000A550; // !
 __cmpdi2 = 0x80009250; // !
+positive_fmodf = 0x80099B08; // !

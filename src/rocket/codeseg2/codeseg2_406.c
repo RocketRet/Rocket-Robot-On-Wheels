@@ -1,6 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
-#include <mem.h>
+#include "mem.h"
+#include "materials.h"
 
 extern struct DecompressionParams compressionParamsTable[];
 
@@ -22,7 +23,7 @@ struct TexturedMaterial *load_textured_material(struct MaterialGfx *material) {
     struct TexturedMaterial *textureGroup;
     s32 i;
 
-    curRomAddr = material->materialData;
+    curRomAddr = material->materialData.raw;
     textureGroup = (struct TexturedMaterial*)main_alloc_bzero(sizeof(struct TexturedMaterial));
 
     dma_read(curRomAddr, &textureGroup->header, sizeof(struct TextureGroupHeader));
@@ -44,10 +45,10 @@ struct TexturedMaterial *load_textured_material(struct MaterialGfx *material) {
         // curGroupTexturePointer = &textureGroup->textures[i];
         curGroupTexturePointer = (struct Texture**)(i * 4 + (u32)textureGroup->textures); // Doesn't match as an array index or pointer arithmetic
         
-        if ((((u32)textureTable[curTextureIndex]) & 0xF0000000) == 0x80000000) {
+        if (IS_K0_ADDRESS(textureTable[curTextureIndex])) {
             curTexture = textureTable[curTextureIndex];
         } else {
-            curTexture = load_texture(&textureTable[curTextureIndex]);
+            curTexture = load_texture((uintptr_t*)&textureTable[curTextureIndex]);
         }
         *curGroupTexturePointer = curTexture;
         i += 1;
@@ -63,19 +64,19 @@ struct TexturedMaterial *load_textured_material(struct MaterialGfx *material) {
         curDimension = curDimension >> 1;
         textureGroup->heightPower++;
     }
-    textureGroup->unk22 = (textureGroup->header.unk8 & 2) ? 0 : 2;
-    textureGroup->romAddress = material->materialData;
-    material->materialData = (uintptr_t)textureGroup;
+    textureGroup->unk22 = (textureGroup->header.flags & MATERIAL_FLAG_POINT_FILTERED) ? 0 : 2;
+    textureGroup->romAddress = material->materialData.raw;
+    material->materialData.raw = (uintptr_t)textureGroup;
     return textureGroup;
 }
 
-struct Texture *load_texture(struct MaterialGfx *material)
+struct Texture *load_texture(uintptr_t* textureRomAddress)
 {
     struct Texture *texture;
     struct TextureCompressionHeader compressionHeader;
     uintptr_t curRomAddr;
 
-    curRomAddr = material->materialData;
+    curRomAddr = *textureRomAddress;
     
     texture = (struct Texture*)main_alloc_bzero(sizeof(struct Texture));
 
@@ -102,8 +103,8 @@ void adjust_texture_table(void)
     struct Texture **piVar2;
     int iVar3;
 
-    textureTable = alloc_second_heap(textureTableLength * sizeof(struct Texture *));
-    dma_read(textureTableAddress, textureTable, textureTableLength * sizeof(struct Texture *));
+    textureTable = alloc_second_heap(textureTableLength * sizeof(struct MaterialGfx *));
+    dma_read(textureTableAddress, textureTable, textureTableLength * sizeof(struct MaterialGfx *));
     piVar2 = textureTable;
     iVar1 = textureTableLength;
     for (iVar3 = 0; iVar3 < iVar1; iVar3++)

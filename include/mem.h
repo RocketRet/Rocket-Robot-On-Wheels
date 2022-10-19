@@ -4,8 +4,8 @@
 #include <ultra64.h>
 #include <types.h>
 
-#define IS_VIRTUAL_ADDRESS(x) \
-    ((((u32)(x)) & 0xF0000000) != 0x00000000)
+#define IS_SOLID_COLOR(x) \
+    ((((u32)(x)) & 0xF0000000) == 0x00000000)
 
 #define IS_K0_ADDRESS(x) \
     ((((u32)(x)) & 0xF0000000) == 0x80000000)
@@ -35,7 +35,7 @@ void decompress(struct DecompressionParams *arg0, u32 compressedSize, u8 *src, u
 void push_second_heap_state();
 void pop_second_heap_state();
 
-struct Texture *load_texture(struct MaterialGfx *material);
+struct Texture *load_texture(uintptr_t *textureRomAddress);
 struct TexturedMaterial *load_textured_material(struct MaterialGfx *arg0);
 
 #endif

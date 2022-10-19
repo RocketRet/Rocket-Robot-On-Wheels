@@ -20,11 +20,11 @@ int pop_second_heap_state();
 
 void func_800751D8(s32 **arg0, s32 arg1)
 {
-    s32 *s1;
+    struct GfxContext *s1;
     Gfx **s2;
     s32 var4;
     push_second_heap_state();
-    s1 = &gGfxContext.unk0;
+    s1 = &gGfxContext;
     s2 = &gGfxContext.dlHead;
     func_80046268(s2);
     func_80046354(0xFF, 0x80, 0, 0xFF);

@@ -1,8 +1,9 @@
 #include <include_asm.h>
 #include <ultra64.h>
-#include <types.h>
-#include <mem.h>
-#include <materials.h>
+#include "types.h"
+#include "mem.h"
+#include "materials.h"
+#include "macros.h"
 
 #include "codeseg2.h"
 
@@ -19,8 +20,11 @@ extern struct {
 } D_800AAF80;
 
 extern struct MaterialGfx *D_800AF4F8;
+extern RGBA32 D_800A5398;
+extern RGBA32 D_800A539C;
 
 void func_80092094(struct MaterialGfx*);
+f32 positive_fmodf(f32, f32);
 
 void func_80092050(void) {
     struct MaterialGfx *material;
@@ -28,7 +32,7 @@ void func_80092050(void) {
     material = D_800AF4F8;
     while (material != 0) {
         func_80092094(material);
-        material = *material->unkC;
+        material = material->scrollParams->unk0;
     }
 }
 
@@ -76,140 +80,308 @@ INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_405", func_80092094, struct Material
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800922C4);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800923E8);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_405", func_800923E8, void*, void*, s32, s32, s32, s32, s32);
 
-// wip long function
-// creates a displaylist from a material (textured or solid)
-// void func_800926B8(s32 arg0, struct MaterialGfx *arg1, s32 *arg2)
-// {
-//     gDPPipeSync(arg1->gfx++);
-//     if ((*arg2 & 0xF0000000) == 0)
-//     {
-//         gDPSetCombineMode(arg1->gfx++, G_CC_SHADE, G_CC_SHADE);
-//         gDPSetCombineLERP(arg1->gfx++, 0, 0, 0, SHADE, 0, 0, 0, SHADE, 0, 0, 0, COMBINED, COMBINED, 0, PRIMITIVE, 0);
-//         gSPSetGeometryMode(arg1->gfx++, G_SHADE | G_CULL_BACK | G_SHADING_SMOOTH);
-//         gSPTexture(arg1->gfx++, 0x0000, 0x0000, 0, G_TX_RENDERTILE, G_OFF);
-//     }
-//     else
-//     {
+#define MAKE_COMBINER(a, b, c, d, Aa, Ab, Ac, Ad) \
+    ({ tempParams = (CombinerParams) {{ G_CCMUX_##a, G_CCMUX_##b, G_CCMUX_##c, G_CCMUX_##d}, {G_ACMUX_##Aa, G_ACMUX_##Ab, G_ACMUX_##Ac, G_ACMUX_##Ad}}; tempParams; })
 
-//     }
-//     gSPEndDisplayList(arg1->gfx++);
-// }
+void func_800926B8(struct unkfunc_800926B8 *arg0, struct MaterialGfx* arg1, s32* arg2) {
+    uintptr_t materialValue;
 
-typedef struct CombinerParams_s {
-    u8 color[4];
-    u8 alpha[4];
-} CombinerParams;
+    gDPPipeSync(NEXT_GFX(arg0->unk8));
+    materialValue = arg1->materialData.raw;
+    
+    if (IS_SOLID_COLOR(materialValue)) {
+        RGBA32_pad8 diffuseColor;
+        RGBA32_pad8 ambientColor;
+        
+        gDPSetCombineLERP(NEXT_GFX(arg0->unk8), 0, 0, 0, SHADE, 0, 0, 0, SHADE, 0, 0, 0, COMBINED, COMBINED, 0, PRIMITIVE, 0)
+        gSPSetGeometryMode(NEXT_GFX(arg0->unk8), G_SHADE | G_CULL_BACK | G_SHADING_SMOOTH);
+        gSPTexture(NEXT_GFX(arg0->unk8), 0x0000, 0x0000, 0, G_TX_RENDERTILE, G_OFF)
+        diffuseColor.colors.r = (arg1->materialData.color.r * D_800A539C.colors.r) / 256.0f;
+        diffuseColor.colors.g = (arg1->materialData.color.g * D_800A539C.colors.g) / 256.0f;
+        diffuseColor.colors.b = (arg1->materialData.color.b * D_800A539C.colors.b) / 256.0f;
+        diffuseColor.colors.a = 0xFF;
+        ambientColor.colors.r = (arg1->materialData.color.r * D_800A5398.colors.r) / 256.0f;
+        ambientColor.colors.g = (arg1->materialData.color.g * D_800A5398.colors.g) / 256.0f;
+        ambientColor.colors.b = (arg1->materialData.color.b * D_800A5398.colors.b) / 256.0f;
+        ambientColor.colors.a = 0xFF;
+        gSPLightColor(NEXT_GFX(arg0->unk8), LIGHT_1, *&diffuseColor.rgba32);
+        gSPLightColor(NEXT_GFX(arg0->unk8), LIGHT_2, *&ambientColor.rgba32);
+    } else {
+        CombinerParams cycle1 ALIGNED(8); // Align so that a u64 comparison is safe later
+        CombinerParams unused;
+        CombinerParams cycle2 ALIGNED(8);
+        CombinerParams tempParams;
+        s32 baseTextureIndex;
+        s32 tileIndex;
+        s32 tmemAddress;
+        s32 paletteIndex;
+        s32 loadedTextureIndex;
+        s16 scrollScaleS;
+        s16 scrollScaleT;
+        f32 scrollSpeedT;
+        f32 scrollSpeedS;
+        s32 textureScaleT;
+        s32 textureScaleS;
+        s32 lodLevel;
+        s16 tileScrollS;
+        s16 tileScrollT;
+        f32 materialTextureHeight;
+        f32 materialTextureWidth;
+        s16 tileHighS;
+        s16 tileHighT;
+        struct TileScrollParams* tileScrollParams;
+        struct TexturedMaterial *material;
+        struct Texture* baseTexture;
+        struct Texture* curTexture;
+        
+        // Set up a textured material
+        material = arg1->materialData.texturedMaterial;
 
-// asm(".section .rodata");
+        // Load the material if it hasn't been loaded yet
+        if (!IS_K0_ADDRESS(material)) {
+            material = load_textured_material(arg1);
+        }
+        tileScrollParams = arg1->scrollParams;
+        
+        baseTextureIndex = tileScrollParams ? tileScrollParams->unk8 : 0;
 
-// const CombinerParams D_8001D8A4 = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
-//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_1 }
-// };
+        lodLevel = 0;
+        tileIndex = 0;
+        tmemAddress = 0;
+        paletteIndex = 0;
+        
+        scrollSpeedS = tileScrollParams ? tileScrollParams->tile0SpeedS : 0.0f;
+        scrollSpeedT = tileScrollParams ? tileScrollParams->tile0SpeedT : 0.0f;
+        loop_41:
+        {
+            loadedTextureIndex = baseTextureIndex + lodLevel;
+            curTexture = material->textures[loadedTextureIndex];
 
-// const CombinerParams D_8001D8AC = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
-//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_TEXEL0 }
-// };
+            // Set up load commands for the current texture
+            func_800923E8(arg0, (void* ) material, baseTextureIndex, lodLevel, tmemAddress, paletteIndex, 0);
 
-// const CombinerParams D_8001D8B4 = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
-//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_SHADE }
-// };
+            // Configure the tile descriptor for the current texture
+            gDPSetTile(NEXT_GFX(arg0->unk8), curTexture->header.imFormat, curTexture->header.imSize, curTexture->header.bytesPerRow / sizeof(u64), tmemAddress, 
+                tileIndex, paletteIndex,
+                material->header.clampWrapMirrorT, material->heightPower - lodLevel, lodLevel,
+                material->header.clampWrapMirrorS, material->widthPower - lodLevel, lodLevel);
+            
+            materialTextureWidth  = material->header.baseTextureWidth;
+            materialTextureHeight = material->header.baseTextureHeight;
+            
+            baseTexture = material->textures[baseTextureIndex];
+            scrollScaleS = (materialTextureWidth  / 256.0f) * 4 * baseTexture->header.width;
+            scrollScaleT = (materialTextureHeight / 256.0f) * 4 * baseTexture->header.height;
+            
+            tileHighS = (materialTextureWidth  / 256.0f) * 4 * (baseTexture->header.width - 1);
+            tileHighT = (materialTextureHeight / 256.0f) * 4 * (baseTexture->header.height - 1);
+            
+            tileScrollS = tileScrollT = material->unk22;
+            if (scrollSpeedS != 0.0f) {
+                tileScrollS += (s32)(positive_fmodf(scrollSpeedS, 1.0f) * scrollScaleS);
+            }
+            if (scrollSpeedT != 0.0f) {
+                tileScrollT += (s32)(positive_fmodf(scrollSpeedT, 1.0f) * scrollScaleT);
+            }
+            
+            gDPSetTileSize(NEXT_GFX(arg0->unk8), tileIndex, tileScrollS, tileScrollT, tileScrollS + tileHighS, tileScrollT + tileHighT);
 
-// const CombinerParams D_8001D8BC = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
-//     { G_ACMUX_TEXEL0, G_ACMUX_0, G_ACMUX_SHADE, G_ACMUX_0 }
-// };
+            if (material->header.flags & MATERIAL_FLAG_MIPMAPPED) {
+                if (loadedTextureIndex < (material->header.numTextures - 1)) {
+                    tmemAddress += curTexture->header.imageBytes / sizeof(u64);
+                    if (curTexture->header.imSize == G_IM_SIZ_4b) {
+                        paletteIndex += 1;
+                    }
+                    lodLevel += 1;
+                    tileIndex += 1;
+                    // continue;
+                    goto loop_41;
+                }
+                tileIndex = 0;
+                loadedTextureIndex = 0;
+                curTexture = material->textures[0];
+            }
+            // If there are more textures to process, continue to do so
+            if ((material->header.flags & MATERIAL_FLAG_MULTITEXTURE_MIX) && loadedTextureIndex < (material->header.numTextures - 1)) {
+                // Increment the tmem address by the size of the loaded texture in tmem words (8 bytes each)
+                tmemAddress += (u32) curTexture->header.imageBytes >> 3;
+                // Advance the palette index for 4-bit textures, since only they can have multiple palettes
+                if (curTexture->header.imSize == G_IM_SIZ_4b) {
+                    paletteIndex += 1;
+                }
+                baseTextureIndex += 1;
+                tileIndex += 1;
+                if (tileScrollParams != NULL) {
+                    scrollSpeedS = tileScrollParams->tile1SpeedS;
+                    scrollSpeedT = tileScrollParams->tile1SpeedT;
+                }
+                goto loop_41;
+            } else {
+                // break;
+                goto after;
+            }
+        }
+        after:
 
-// const CombinerParams D_8001D8C4 = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
-//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_ENVIRONMENT }
-// };
+        textureScaleS = 0x200;
+        textureScaleT = 0x200;
+        if (material->header.clampWrapMirrorS & G_TX_MIRROR) {
+            textureScaleS *= 2;
+        }
+        if (material->header.clampWrapMirrorT & G_TX_MIRROR) {
+            textureScaleT *= 2;
+        }
+        textureScaleS = textureScaleS * (s32) ((f32) curTexture->header.width  * material->header.baseTextureWidth / 256.0f);
+        textureScaleT = textureScaleT * (s32) ((f32) curTexture->header.height * material->header.baseTextureHeight / 256.0f);
+        if (textureScaleS > 0xFFFF) {
+            textureScaleS = 0xFFFF;
+        }
+        if (textureScaleT > 0xFFFF) {
+            textureScaleT = 0xFFFF;
+        }
+        
+        gSPTexture(NEXT_GFX(arg0->unk8),
+            textureScaleS, textureScaleT, lodLevel - 1, G_TX_RENDERTILE, G_ON);
+        gDPSetEnvColor(NEXT_GFX(arg0->unk8),
+            material->header.envColorR, material->header.envColorG, material->header.envColorB, material->header.envColorA);
 
-// const CombinerParams D_8001D8CC = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_TEXEL0, G_CCMUX_0 },
-//     { G_ACMUX_TEXEL0, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
-// };
+        // Pick a combiner based on material flags
+        switch (material->header.flags & 0x3CC) {
+            case 0:
+            default:
+                // Opaque Shaded Texture
+                cycle1 = MAKE_COMBINER( SHADE, 0, TEXEL0, 0,  0, 0, 0, 1 );
+                cycle2 = cycle1;
+                break;
+            case 4:
+                // Shaded Texture with Texture Alpha
+                cycle1 = MAKE_COMBINER( SHADE, 0, TEXEL0, 0,  0, 0, 0, TEXEL0 );
+                cycle2 = cycle1;
+                break;
+            case 8:
+                // Shaded Texture with Vertex Alpha
+                cycle1 = MAKE_COMBINER( SHADE, 0, TEXEL0, 0,  0, 0, 0, SHADE );
+                cycle2 = cycle1;
+                break;
+            case 0xC:
+                // Shaded Texture with Texture and Vertex Alpha
+                cycle1 = MAKE_COMBINER( SHADE, 0, TEXEL0, 0,  TEXEL0, 0, SHADE, 0 );
+                cycle2 = cycle1;
+                break;
+            case 0x108:
+                // Shaded Texture with Environment Alpha
+                cycle1 = MAKE_COMBINER( SHADE, 0, TEXEL0, 0,  0, 0, 0, ENVIRONMENT );
+                cycle2 = cycle1;
+                break;
+            case 0x10C:
+                // Shaded Texture with Texture and Environment Alpha
+                cycle1 = MAKE_COMBINER( SHADE, 0, TEXEL0, 0,  TEXEL0, 0, ENVIRONMENT, 0 );
+                cycle2 = cycle1;
+                break;
+            case 0x200:
+                // Opaque Shade/Environment Mix Driven by Texture
+                cycle1 = MAKE_COMBINER( SHADE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  0, 0, 0, 1 );
+                cycle2 = cycle1;
+                break;
+            case 0x208:
+            case 0x20C:
+                // Shade/Environment Mix Driven by Texture with Texture and Vertex Alpha
+                cycle1 = MAKE_COMBINER( SHADE, ENVIRONMENT, TEXEL0, ENVIRONMENT,  TEXEL0, 0, SHADE, 0 );
+                cycle2 = cycle1;
+                break;
+            case 0x308:
+            case 0x30C:
+                // Environment/Shade Mix Driven by Texture with Texture and Environment Alpha
+                cycle1 = MAKE_COMBINER( ENVIRONMENT, SHADE, TEXEL0, SHADE,  TEXEL0, 0, ENVIRONMENT, 0 );
+                cycle2 = cycle1;
+                break;
+            // 2 cycle modes
+            // (This is where they start getting complicated)
+            case MATERIAL_FLAG_MULTITEXTURE_MIX:
+            case MATERIAL_FLAG_MULTITEXTURE_MIX | 0x8:
+            case MATERIAL_FLAG_MULTITEXTURE_MIX | 0x108:
+                // Shaded Multitexture Mix Driven by Vertex Alpha
+                // with Environment Alpha and Multitexture Mix Alpha Driven by Vertex Alpha
+                cycle1 = MAKE_COMBINER( TEXEL1, TEXEL0, SHADE_ALPHA, TEXEL0,  TEXEL1, TEXEL0, SHADE, TEXEL0 );
+                cycle2 = MAKE_COMBINER( SHADE, 0, COMBINED, 0,  COMBINED, 0, ENVIRONMENT, 0 );
+                break;
+            case MATERIAL_FLAG_MULTITEXTURE_MIX | 0x200:
+            case MATERIAL_FLAG_MULTITEXTURE_MIX | 0x208:
+                // Shade/Environment Mix Driven by Multitexture Mix Driven by Vertex Alpha
+                // with Primitive Alpha and Multitexture Mix Alpha Driven by Vertex Alpha
+                cycle1 = MAKE_COMBINER( TEXEL1, TEXEL0, SHADE_ALPHA, TEXEL0,  TEXEL1, TEXEL0, SHADE, TEXEL0 );
+                cycle2 = MAKE_COMBINER( SHADE, ENVIRONMENT, COMBINED, ENVIRONMENT,  COMBINED, 0, PRIMITIVE, 0 );
+                break;
+            case MATERIAL_FLAG_MULTITEXTURE_MIX | 0x308:
+                // Environment/Shade Mix Driven by Multitexture Mix Driven by Vertex Alpha
+                // with Environment Alpha and Multitexture Mix Alpha Driven by Vertex Alpha
+                cycle1 = MAKE_COMBINER( TEXEL1, TEXEL0, SHADE_ALPHA, TEXEL0,  TEXEL1, TEXEL0, SHADE, TEXEL0 );
+                cycle2 = MAKE_COMBINER( ENVIRONMENT, SHADE, COMBINED, SHADE,  COMBINED, 0, ENVIRONMENT, 0 );
+                break;
+            case MATERIAL_FLAG_MIPMAPPED:
+                // Shaded Mipmapped Texture with Primitive Alpha
+                cycle1 = MAKE_COMBINER( TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0 );
+                cycle2 = MAKE_COMBINER( SHADE, 0, COMBINED, 0,  0, 0, 0, PRIMITIVE );
+                break;
+            case MATERIAL_FLAG_MIPMAPPED | 0x4:
+            case MATERIAL_FLAG_MIPMAPPED | 0x8:
+                // Shaded Mipmapped Texture with Texture and Primitive Alpha
+                cycle1 = MAKE_COMBINER( TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0 );
+                cycle2 = MAKE_COMBINER( SHADE, 0, COMBINED, 0,  COMBINED, 0, PRIMITIVE, 0 );
+                break;
+            case MATERIAL_FLAG_MIPMAPPED | 0x200:
+                // Shade/Environment Mix Driven by Mipmapped Texture with Primitive Alpha
+                cycle1 = MAKE_COMBINER( TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0 );
+                cycle2 = MAKE_COMBINER( SHADE, ENVIRONMENT, COMBINED, ENVIRONMENT,  0, 0, 0, PRIMITIVE );
+                break;
+            case MATERIAL_FLAG_MIPMAPPED | 0x208:
+                // Shade/Environment Mix Driven by Mipmapped Texture with Mipmapped Texture and Vertex Alpha
+                cycle1 = MAKE_COMBINER( TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0 );
+                cycle2 = MAKE_COMBINER( SHADE, ENVIRONMENT, COMBINED, ENVIRONMENT,  COMBINED, 0, SHADE, 0 );
+                break;
+            case MATERIAL_FLAG_MIPMAPPED | 0x108:
+                // Shaded Mipmapped Texture with Primitive and Environment Alpha
+                cycle1 = MAKE_COMBINER( TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0 );
+                cycle2 = MAKE_COMBINER( SHADE, 0, COMBINED, 0,  PRIMITIVE, 0, ENVIRONMENT, 0 );
+                break;
+            case MATERIAL_FLAG_MIPMAPPED | 0x308:
+                // Shade/Environment Mix Driven by Mipmapped Texture with Mipmapped Texture and Primitive Alpha
+                cycle1 = MAKE_COMBINER( TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0,  TEXEL1, TEXEL0, LOD_FRACTION, TEXEL0 );
+                cycle2 = MAKE_COMBINER( SHADE, ENVIRONMENT, COMBINED, ENVIRONMENT,  COMBINED, 0, ENVIRONMENT, 0 );
+                break;
+        }
 
-// const CombinerParams D_8001D8D4 = {
-//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_TEXEL0, G_CCMUX_ENVIRONMENT },
-//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_1 }
-// };
+        // If the two combiner cycles are configured the same but this is a 2-cycle material, replace the second cycle with:
+        // color: Combined
+        // alpha: Combined * Primitive
+        if ((material->header.unk4.unk0_0) == 0x02 && ((u32*)cycle1.color)[0] == ((u32*)cycle2.color)[0] && ((u32*)cycle1.color)[1] == ((u32*)cycle2.color)[1]) {
+            cycle2 = MAKE_COMBINER( 0, 0, 0, COMBINED,  COMBINED, 0, PRIMITIVE, 0 );
+        }
+    
+        gDPSetCombineLERP_custom(NEXT_GFX(arg0->unk8),
+            cycle1.color[0], cycle1.color[1], cycle1.color[2], cycle1.color[3],
+            cycle1.alpha[0], cycle1.alpha[1], cycle1.alpha[2], cycle1.alpha[3],
+            cycle2.color[0], cycle2.color[1], cycle2.color[2], cycle2.color[3],
+            cycle2.alpha[0], cycle2.alpha[1], cycle2.alpha[2], cycle2.alpha[3]
+        );
 
-// const CombinerParams D_8001D8DC = {
-//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_TEXEL0, G_CCMUX_ENVIRONMENT },
-//     { G_ACMUX_TEXEL0, G_ACMUX_0, G_ACMUX_SHADE, G_ACMUX_1 }
-// };
-
-// const CombinerParams D_8001D8E4 = {
-//     { G_CCMUX_ENVIRONMENT, G_CCMUX_SHADE, G_CCMUX_TEXEL0, G_CCMUX_SHADE },
-//     { G_ACMUX_TEXEL0, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_1 }
-// };
-
-// const CombinerParams D_8001D8EC = {
-//     { G_CCMUX_TEXEL1, G_CCMUX_TEXEL0, G_CCMUX_SHADE_ALPHA, G_CCMUX_TEXEL0 },
-//     { G_ACMUX_TEXEL1, G_ACMUX_TEXEL0, G_ACMUX_SHADE, G_ACMUX_TEXEL0 }
-// };
-
-// const CombinerParams D_8001D8F4 = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_COMBINED, G_CCMUX_0 },
-//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
-// };
-
-// const CombinerParams D_8001D8FC = {
-//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_COMBINED, G_CCMUX_ENVIRONMENT },
-//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_PRIMITIVE, G_ACMUX_0 }
-// };
-
-// const CombinerParams D_8001D904 = {
-//     { G_CCMUX_ENVIRONMENT, G_CCMUX_SHADE, G_CCMUX_COMBINED, G_CCMUX_SHADE },
-//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
-// };
-
-// const CombinerParams D_8001D90C = {
-//     { G_CCMUX_TEXEL1, G_CCMUX_TEXEL0, G_CCMUX_LOD_FRACTION, G_CCMUX_TEXEL0 },
-//     { G_ACMUX_TEXEL1, G_ACMUX_TEXEL0, G_ACMUX_LOD_FRACTION, G_ACMUX_TEXEL0 }
-// };
-
-// const CombinerParams D_8001D914 = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_COMBINED, G_CCMUX_0 },
-//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_PRIMITIVE }
-// };
-
-// const CombinerParams D_8001D91C = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_COMBINED, G_CCMUX_0 },
-//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_PRIMITIVE, G_ACMUX_0 }
-// };
-
-// const CombinerParams D_8001D924 = {
-//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_COMBINED, G_CCMUX_ENVIRONMENT },
-//     { G_ACMUX_0, G_ACMUX_0, G_ACMUX_0, G_ACMUX_PRIMITIVE }
-// };
-
-// const CombinerParams D_8001D92C = {
-//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_COMBINED, G_CCMUX_ENVIRONMENT },
-//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_SHADE, G_ACMUX_0 }
-// };
-
-// const CombinerParams D_8001D934 = {
-//     { G_CCMUX_SHADE, G_CCMUX_0, G_CCMUX_COMBINED, G_CCMUX_0 },
-//     { G_ACMUX_PRIMITIVE, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
-// };
-
-// const CombinerParams D_8001D93C = {
-//     { G_CCMUX_SHADE, G_CCMUX_ENVIRONMENT, G_CCMUX_COMBINED, G_CCMUX_ENVIRONMENT },
-//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_ENVIRONMENT, G_ACMUX_0 }
-// };
-
-// const CombinerParams D_8001D944 = {
-//     { G_CCMUX_0, G_CCMUX_0, G_CCMUX_0, G_CCMUX_COMBINED },
-//     { G_ACMUX_COMBINED, G_ACMUX_0, G_ACMUX_PRIMITIVE, G_ACMUX_0 }
-// };
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_405", func_800926B8);
+        gSPSetGeometryMode(NEXT_GFX(arg0->unk8), G_SHADE | G_SHADING_SMOOTH);
+        
+        if (arg1->materialData.texturedMaterial->header.flags & MATERIAL_FLAG_TWO_SIDED) {
+            gSPClearGeometryMode(NEXT_GFX(arg0->unk8), G_CULL_BACK);
+        } else {
+            gSPSetGeometryMode(NEXT_GFX(arg0->unk8), G_CULL_BACK);
+        }
+        gDPSetTextureFilter(NEXT_GFX(arg0->unk8), (material->header.flags & MATERIAL_FLAG_POINT_FILTERED) ? G_TF_POINT : G_TF_BILERP);
+        gDPSetTextureLOD(NEXT_GFX(arg0->unk8), (material->header.flags & MATERIAL_FLAG_MIPMAPPED) ? G_TL_LOD : G_TL_TILE);
+        gSPLightColor(NEXT_GFX(arg0->unk8), LIGHT_1, *&D_800A539C.rgba32);
+        gSPLightColor(NEXT_GFX(arg0->unk8), LIGHT_2, *&D_800A5398.rgba32);
+    }
+    gSPEndDisplayList(NEXT_GFX(arg0->unk8));
+    return;
+}
 
 extern struct MaterialGfx *materialTable;
 
@@ -233,21 +405,21 @@ static inline struct unkfunc_80093DDC unk_inline_func_80093DDC2() {
     return ret;
 }
 
-struct unkfunc_80093DDC *func_80093DDC(struct unkfunc_80093DDC *arg0, s32 arg1) {
+struct TextureGroupHeader *func_80093DDC(struct TextureGroupHeader *arg0, s32 arg1) {
     struct unkfunc_80093DDC sp10;
     struct MaterialGfx *materialGfx;
     struct TexturedMaterial *materialData;
 
     materialGfx = &materialTable[arg1];
     
-    if (!IS_VIRTUAL_ADDRESS(materialTable[arg1].materialData)) {
+    if (IS_SOLID_COLOR(materialTable[arg1].materialData.raw)) {
         sp10 = unk_inline_func_80093DDC2();
     } else {
         materialData = get_material_data(materialGfx);
         sp10 = materialData->header.unk4;
     }
     
-    *arg0 = sp10;
+    arg0->unk4 = sp10;
     return arg0;
 }
 

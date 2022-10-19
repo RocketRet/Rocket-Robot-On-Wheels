@@ -60,7 +60,7 @@ void func_80079CA0(struct unkfunc_80079CA0 *arg0, s32 arg1, Gfx *arg2) {
 
     if (arg1 != -1) {
         temp_a0 = &materialTable[arg1];
-        prevTextureGroup = temp_a0->materialData;
+        prevTextureGroup = temp_a0->materialData.texturedMaterial;
         maskedAddress = (u32)prevTextureGroup & 0xF0000000;
         if (maskedAddress != 0) {
             if (maskedAddress == 0x80000000) {

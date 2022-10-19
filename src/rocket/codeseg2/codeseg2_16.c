@@ -8,7 +8,7 @@ void func_80020AF0(struct unkfunc_8009C28C *arg0, s32 arg1, Gfx* arg2)
 {
     if (arg1 != -1 && arg1 == arg0->unk230)
     {
-        arg0->unk234[0] = materialTable[arg1].materialData;
+        arg0->unk234[0] = materialTable[arg1].materialData.raw;
         gSPDisplayList(arg2, func_800922C4(arg0->unk234, 1));
     }
     else

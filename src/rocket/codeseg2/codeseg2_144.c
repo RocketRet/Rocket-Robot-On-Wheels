@@ -1,28 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include "codeseg2.h"
 
-struct unkD_800A5C3C {
-    u8 padding[0x28];
-    s16 unk28;
-    u8 padding2[0x34 - 0x28 - 0x02];
-    s32 unk34;
-};
-
-struct unkD_800C0440 {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
-    s32 unkC;
-    f32 unk10;
-    f32 unk14;
-    u8 unk18;
-    u8 unk19;
-    u8 unk1A;
-    u8 unk1B;
-};
-
-extern struct unkD_800A5C3C D_800A5C3C;
-extern struct unkD_800C0440 D_800C0440;
 extern f32 D_8001B420;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_144", func_80046200);
