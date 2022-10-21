@@ -74,7 +74,7 @@ ASN64FLAGS := -q -G0
 KMC_CFLAGS := -c -G0  -mgp32 -mfp32 -mips3
 WARNFLAGS := -Wuninitialized -Wshadow -Wall
 OPTFLAGS := -O2
-ASFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -I include -c
+ASFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -c
 LDFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -nostartfiles -Wl,-T,$(LD_SCRIPT) -Wl,-T,tools/undefined_syms.txt -Wl,--build-id=none
 BINOFLAGS := -I binary -O elf32-tradbigmips
 Z64OFLAGS := -O binary --pad-to=$(ROM_SIZE) --gap-fill=0x00
@@ -120,10 +120,10 @@ $(SN_OBJS) : $(BUILD_DIR)/%.o : %.c | $(SRC_BUILD_DIRS) $(KMC_CC) $(KMC_AS)
 	$(AS_WRAPPER) $(AS) $@.s $(ASFLAGS) $(OPTFLAGS) -x assembler-with-cpp -o $@
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
-	$(AS) $(ASFLAGS) $< -o $@
+	$(AS) $(ASFLAGS) $(CPPFLAGS) $< -o $@
 	
 $(BUILD_DIR)/%.o : %.s | $(ASM_BUILD_DIRS) $(SRC_BUILD_DIRS)
-	$(AS) $(ASFLAGS) $< -o $@
+	$(AS) $(ASFLAGS) $(CPPFLAGS) $< -o $@
 
 $(BUILD_DIR)/%.o : %.bin | $(BIN_BUILD_DIR)
 	$(OBJCOPY) $(BINOFLAGS) $< $@

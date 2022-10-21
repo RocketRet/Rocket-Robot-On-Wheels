@@ -38,7 +38,18 @@ def get_line_tokens(line: str) -> List[str]:
 with open(input_filename, mode="r") as input_file:
     input_lines: List[str] = input_file.readlines()
     preprocessed: List[str] = [
-        "\t.include \"gasn64.inc\"\n",
+        ".macro glabel label\n"
+        "    .global \\label\n"
+        "    \\label:\n"
+        ".endm\n"
+        "\n"
+        ".macro move a, b\n"
+        "    addu \\a, \\b, $0\n"
+        ".endm\n"
+        "\n"
+        ".macro b target\n"
+        "    bgez $0, \\target\n"
+        ".endm\n"
         "\t.set noreorder\n"
     ]
     line: str
