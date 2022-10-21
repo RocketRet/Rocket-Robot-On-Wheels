@@ -1,7 +1,7 @@
 name: "Rocket Robot on Wheels (US)"
 options:
   basename: "NSUE"
-  compiler: "SN64"
+  compiler: "GCC"
   o_as_suffix: yes
   cpp_args:
   - "-D_LANGUAGE_C"

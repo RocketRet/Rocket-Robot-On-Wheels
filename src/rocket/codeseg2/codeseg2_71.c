@@ -25,6 +25,9 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_71", func_80032C74);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_71", func_80032E24);
 
+const u32 D_8001A8FC = 0xFF0000FF;
+const u32 D_8001A900 = 0xFFFFFFFF;
+
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_71", func_80033468);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_71", func_800338B0);

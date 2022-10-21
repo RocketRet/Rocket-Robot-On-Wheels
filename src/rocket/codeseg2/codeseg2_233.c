@@ -154,6 +154,8 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_80065754);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_80065808);
 
+const s32 D_8001C5B8[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 0};
+
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_8006589C);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_80065FF0);

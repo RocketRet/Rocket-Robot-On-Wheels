@@ -1,6 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
-
+#include <types.h>
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_80040220);
 
@@ -9,6 +9,8 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_800402CC);
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_800406E8);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_80040744);
+
+const Vec3f D_8001B0A0 = { 1.5f, -0.025f, 0.0f };
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_800407A4);
 

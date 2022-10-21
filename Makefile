@@ -40,14 +40,14 @@ ELF := $(Z64:.z64=.elf)
 LIBULTRA_SRCS := $(foreach dir,$(LIBULTRA_SRC_DIRS),$(wildcard $(dir)/*.c))
 SN_SRCS := $(foreach dir,$(shell find $(SRC_DIR)/rocket/ -type d) $(shell find $(SRC_DIR)/lib/ -type d),$(wildcard $(dir)/*.c))
 SN_SRCS := $(filter-out $(FILTERED_OUT_SRCS),$(SN_SRCS))
-SN_LNKS := $(addprefix $(BUILD_DIR)/, $(SN_SRCS:.c=.obj))
-SN_OBJS := $(SN_LNKS:.obj=.o)
+SN_OBJS := $(addprefix $(BUILD_DIR)/, $(SN_SRCS:.c=.o))
 
 # Tools
 CPP := mips-linux-gnu-cpp
-AS := mips-linux-gnu-as
+AS := mips-linux-gnu-gcc
+AS_WRAPPER := tools/gasn64.py
 OBJCOPY := mips-linux-gnu-objcopy
-LD := mips-linux-gnu-ld
+LD := mips-linux-gnu-gcc
 STRIP := mips-linux-gnu-strip
 KMC_DIR := tools/gcc-2.7.2
 KMC_CC := $(KMC_DIR)/gcc
@@ -69,15 +69,14 @@ endif
 
 # Flags
 CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -Iultra/src/audio -Iultra/src/n_audio -Iinclude/mus -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64 -DSUPPORT_NAUDIO -DN_MICRO
-CC1N64_CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mhard-float -meb
+CC1N64_CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mhard-float -meb -g
 ASN64FLAGS := -q -G0
 KMC_CFLAGS := -c -G0  -mgp32 -mfp32 -mips3
 WARNFLAGS := -Wuninitialized -Wshadow -Wall
 OPTFLAGS := -O2
-ASFLAGS := -G0 -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I. -Iinclude -O1 --no-construct-floats
-BINOFLAGS := -I binary -O elf32-big
-CPP_LDFLAGS := -P -Wno-trigraphs -DBUILD_DIR=$(BUILD_DIR)
-LDFLAGS := -T $(BUILD_DIR)/$(LD_SCRIPT) -mips3 --accept-unknown-input-arch --no-check-sections -T tools/undefined_syms.txt
+ASFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -I include -c
+LDFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -nostartfiles -Wl,-T,$(LD_SCRIPT) -Wl,-T,tools/undefined_syms.txt -Wl,--build-id=none
+BINOFLAGS := -I binary -O elf32-tradbigmips
 Z64OFLAGS := -O binary --pad-to=$(ROM_SIZE) --gap-fill=0x00
 
 MKDIR := mkdir -p
@@ -102,15 +101,23 @@ $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS) $(KMC_CC) $(
 	export COMPILER_PATH=$(KMC_DIR) && $(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
 	$(STRIP) $@ -N $(<:.i=.c)
 
-$(SN_LNKS) : $(BUILD_DIR)/%.obj : %.c | $(SRC_BUILD_DIRS)
+# Old rule with asn64.exe, break in case of emergency
+# SN_LNKS := $(addprefix $(BUILD_DIR)/, $(SN_SRCS:.c=.obj))
+# $(SN_LNKS) : $(BUILD_DIR)/%.obj : %.c | $(SRC_BUILD_DIRS)
+# 	@printf "Compiling $<\r\n"
+# 	@$(CPP) $(CPPFLAGS) $< -o $@.i
+# 	@$(CC1N64) $(CC1N64_CFLAGS) $(OPTFLAGS) $@.i -o $@.s
+# 	@$(ASN64) $(ASN64FLAGS) $@.s -o $@
+
+# $(SN_OBJS) : $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.obj
+# 	@printf "Running obj parser on $<\r\n"
+# 	@tools/psyq-obj-parser $< -o $@ -b -n > /dev/null
+
+$(SN_OBJS) : $(BUILD_DIR)/%.o : %.c | $(SRC_BUILD_DIRS) $(KMC_CC) $(KMC_AS)
 	@printf "Compiling $<\r\n"
 	@$(CPP) $(CPPFLAGS) $< -o $@.i
-	@$(CC1N64) $(CC1N64_CFLAGS) $(OPTFLAGS) $@.i -o $@.s
-	@$(ASN64) $(ASN64FLAGS) $@.s -o $@
-
-$(SN_OBJS) : $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.obj
-	@printf "Running obj parser on $<\r\n"
-	@tools/psyq-obj-parser $< -o $@ -b -n > /dev/null
+	$(CC1N64) $(CC1N64_CFLAGS) $(OPTFLAGS) $@.i -o $@.s
+	$(AS_WRAPPER) $(AS) $@.s $(ASFLAGS) $(OPTFLAGS) -x assembler-with-cpp -o $@
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
@@ -121,18 +128,15 @@ $(BUILD_DIR)/%.o : %.s | $(ASM_BUILD_DIRS) $(SRC_BUILD_DIRS)
 $(BUILD_DIR)/%.o : %.bin | $(BIN_BUILD_DIR)
 	$(OBJCOPY) $(BINOFLAGS) $< $@
 
-$(BUILD_DIR)/$(LD_SCRIPT) : $(LD_SCRIPT) | $(BUILD_DIR)
-	$(CPP) $(CPP_LDFLAGS) $< -o $@
-
-$(ELF) : $(OBJS) $(BUILD_DIR)/$(LD_SCRIPT)
-	$(LD) $(LDFLAGS) -Map $(@:.elf=.map) -o $@
+$(ELF) : $(OBJS)
+	$(LD) $(LDFLAGS) -Wl,-Map,$(@:.elf=.map) -o $@
 
 $(Z64) : $(ELF)
 	$(OBJCOPY) $(Z64OFLAGS) $< $@
 	python3 tools/n64cksum.py $@
 
 $(BUILD_DIR)/ultra/%.o: OPTFLAGS := -O3
-$(BUILD_DIR)/src/rocket/codeseg2/codeseg2_3.obj: OPTFLAGS := -O3
+$(BUILD_DIR)/src/rocket/codeseg2/codeseg2_3.o: OPTFLAGS := -O3
 
 clean:
 	$(RMDIR) $(BUILD_ROOT)

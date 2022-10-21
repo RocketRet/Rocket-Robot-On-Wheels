@@ -1,6 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
-
+#include <macros.h>
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_327", func_8007CDE0);
 
@@ -25,6 +25,9 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_327", func_8007D9DC);
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_327", func_8007DA04);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_327", func_8007DD08);
+
+const float D_8001D23C = -FLT_MAX;
+const float D_8001D240 = FLT_MAX;
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_327", func_8007DD98);
 

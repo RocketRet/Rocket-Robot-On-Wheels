@@ -80,4 +80,6 @@ void func_80079CA0(struct unkfunc_80079CA0 *arg0, s32 arg1, Gfx *arg2) {
     }
 }
 
+const s32 D_8001D11C[] = { 0x45, 0x45, 0x45, 0x45, 0x47, 0x4B, 0x4B, 0x4B, 0x58, 0x5B, 0x60, 0x60, 0x60, 0x66 };
+
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_312", func_80079D6C);
