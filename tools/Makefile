@@ -5,11 +5,15 @@ GCC_272_DIR := gcc-2.7.2
 GCC_272     := $(GCC_272_DIR)/gcc
 GCC_272_AS  := $(GCC_272_DIR)/as
 
+SN_GCC_DIR := modern-sn64
+SN_GCC     := $(SN_GCC_DIR)/gcc
+SN_ASN64   := $(SN_GCC_DIR)/modern-asn64.py
+
 CC           := gcc
 CXX          := g++
 CFLAGS       := -I . -Wall -Wextra -Wno-unused-parameter -O2 -s
 LDFLAGS      := -lm
-ALL_PROGRAMS := iplfontutil armips $(GCC_272) $(GCC_272_AS)
+ALL_PROGRAMS := iplfontutil armips $(GCC_272) $(GCC_272_AS) $(SN_GCC) $(SN_ASN64)
 
 # Only build armips from tools if it is not found on the system
 ifeq ($(shell which armips 2>/dev/null),)
@@ -18,7 +22,7 @@ else
   BUILD_PROGRAMS := $(filter-out armips,$(ALL_PROGRAMS))
 endif
 
-COMPILE_PROGRAMS := $(filter-out $(GCC_272) $(GCC_272_AS),$(BUILD_PROGRAMS))
+COMPILE_PROGRAMS := $(filter-out $(GCC_272) $(GCC_272_AS) $(SN_GCC) $(SN_ASN64),$(BUILD_PROGRAMS))
 
 default: all
 
@@ -43,7 +47,21 @@ $(GCC_272_AS): | $(GCC_272_DIR)
 	tar xf binutils-2.6-linux.tar.gz -C $(GCC_272_DIR)
 	$(RM) binutils-2.6-linux.tar.gz
 
-$(GCC_272_DIR):
+$(SN_GCC): | $(SN_GCC_DIR)
+	wget https://github.com/decompals/SN64-gcc/releases/download/gcc-2.7.2-970404/SN64-gcc-2.7.2-970404-linux.tar.gz
+	tar xf SN64-gcc-2.7.2-970404-linux.tar.gz -C $(SN_GCC_DIR)
+	$(RM) SN64-gcc-2.7.2-970404-linux.tar.gz
+
+$(SN_ASN64): | $(SN_GCC_DIR)
+	wget https://github.com/RocketRet/modern-asn64/releases/download/main-release/modern-asn64.py -P $(SN_GCC_DIR)
+	echo -n "#!/bin/bash\n\n$$" > $(SN_GCC_DIR)/as
+	echo -n "( dirname -- \"$$" >> $(SN_GCC_DIR)/as
+	echo -n "0\"; )/modern-asn64.py mips-linux-gnu-as \"$$" >> $(SN_GCC_DIR)/as
+	echo    "@\"" >> $(SN_GCC_DIR)/as
+	chmod +x $(SN_GCC_DIR)/as
+	chmod +x $(SN_GCC_DIR)/modern-asn64.py
+
+$(GCC_272_DIR) $(SN_GCC_DIR):
 	mkdir -p $@
 
 all: $(BUILD_PROGRAMS)

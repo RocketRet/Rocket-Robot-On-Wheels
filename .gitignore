@@ -16,5 +16,6 @@ graphviz_render*
 ctx.c
 out.s
 tools/gcc-2.7.2
+tools/modern-sn64
 *.d
 NSUE.ld

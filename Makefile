@@ -45,37 +45,29 @@ SN_OBJS := $(addprefix $(BUILD_DIR)/, $(SN_SRCS:.c=.o))
 # Tools
 CPP := mips-linux-gnu-cpp
 AS := mips-linux-gnu-gcc
-AS_WRAPPER := tools/gasn64.py
 OBJCOPY := mips-linux-gnu-objcopy
 LD := mips-linux-gnu-gcc
 STRIP := mips-linux-gnu-strip
 KMC_DIR := tools/gcc-2.7.2
 KMC_CC := $(KMC_DIR)/gcc
 KMC_AS := $(KMC_DIR)/as
+SN_DIR := tools/modern-sn64
+SN_CC := $(SN_DIR)/gcc
+SN_AS := $(SN_DIR)/modern-asn64.py
 
 export N64ALIGN := ON
 export VR4300MUL := ON
 
-PROC_VERSION != uname -a
-IS_WSL := $(findstring microsoft,$(PROC_VERSION)) $(findstring Microsoft,$(PROC_VERSION))
-
-ifneq ($(strip $(IS_WSL)),)
-CC1N64 := ./sn/cc1n64.exe
-ASN64 := ./sn/asn64.exe
-else
-CC1N64 := wine ./sn/cc1n64.exe
-ASN64 := wine ./sn/asn64.exe
-endif
-
 # Flags
-CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -Iultra/src/audio -Iultra/src/n_audio -Iinclude/mus -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64 -DSUPPORT_NAUDIO -DN_MICRO
-CC1N64_CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mhard-float -meb -g
+CPPFLAGS := -Iinclude -Iinclude/2.0I -Iinclude/2.0I/PR -Iultra/src/audio -Iultra/src/n_audio -Iinclude/mus -DF3DEX_GBI_2 -D_FINALROM -DTARGET_N64 -DSUPPORT_NAUDIO -DN_MICRO -D_LANGUAGE_C
+CFLAGS := -G0 -mcpu=vr4300 -mips2 -fno-exceptions -funsigned-char -gdwarf \
+   -Wa,-G0,-EB,-mips3,-mabi=32,-mgp32,-march=vr4300,-mfp32,-mno-shared
 ASN64FLAGS := -q -G0
 KMC_CFLAGS := -c -G0  -mgp32 -mfp32 -mips3
 WARNFLAGS := -Wuninitialized -Wshadow -Wall
 OPTFLAGS := -O2
-ASFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -c
-LDFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -nostartfiles -Wl,-T,$(LD_SCRIPT) -Wl,-T,tools/undefined_syms.txt -Wl,--build-id=none
+ASFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -gdwarf -c
+LDFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -gdwarf -nostartfiles -Wl,-T,$(LD_SCRIPT) -Wl,-T,tools/undefined_syms.txt -Wl,--build-id=none
 BINOFLAGS := -I binary -O elf32-tradbigmips
 Z64OFLAGS := -O binary --pad-to=$(ROM_SIZE) --gap-fill=0x00
 
@@ -99,9 +91,22 @@ $(BUILD_DIR)/ultra/%.i : ultra/%.c | $(SRC_BUILD_DIRS)
 
 $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS) $(KMC_CC) $(KMC_AS)
 	export COMPILER_PATH=$(KMC_DIR) && $(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
-	$(STRIP) $@ -N $(<:.i=.c)
+	@$(STRIP) $@ -N $(<:.i=.c)
 
-# Old rule with asn64.exe, break in case of emergency
+
+# Legacy stuff in case testing with the original toolchain is needed
+# PROC_VERSION != uname -a
+# IS_WSL := $(findstring microsoft,$(PROC_VERSION)) $(findstring Microsoft,$(PROC_VERSION))
+
+# ifneq ($(strip $(IS_WSL)),)
+# CC1N64 := ./sn/cc1n64.exe
+# ASN64 := ./sn/asn64.exe
+# else
+# CC1N64 := wine ./sn/cc1n64.exe
+# ASN64 := wine ./sn/asn64.exe
+# endif
+# CC1N64_CFLAGS := -quiet -G0 -mcpu=vr4300 -mips3 -mhard-float -meb -g
+
 # SN_LNKS := $(addprefix $(BUILD_DIR)/, $(SN_SRCS:.c=.obj))
 # $(SN_LNKS) : $(BUILD_DIR)/%.obj : %.c | $(SRC_BUILD_DIRS)
 # 	@printf "Compiling $<\r\n"
@@ -113,15 +118,13 @@ $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS) $(KMC_CC) $(
 # 	@printf "Running obj parser on $<\r\n"
 # 	@tools/psyq-obj-parser $< -o $@ -b -n > /dev/null
 
-$(SN_OBJS) : $(BUILD_DIR)/%.o : %.c | $(SRC_BUILD_DIRS) $(KMC_CC) $(KMC_AS)
+$(SN_OBJS) : $(BUILD_DIR)/%.o : %.c | $(SRC_BUILD_DIRS) $(SN_CC) $(SN_AS)
 	@printf "Compiling $<\r\n"
-	@$(CPP) $(CPPFLAGS) $< -o $@.i
-	$(CC1N64) $(CC1N64_CFLAGS) $(OPTFLAGS) $@.i -o $@.s
-	$(AS_WRAPPER) $(AS) $@.s $(ASFLAGS) $(OPTFLAGS) -x assembler-with-cpp -o $@
+	export COMPILER_PATH=$(SN_DIR) && $(SN_CC) $(CFLAGS) $(OPTFLAGS) $(CPPFLAGS) $< -c -o $@
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $(CPPFLAGS) $< -o $@
-	
+
 $(BUILD_DIR)/%.o : %.s | $(ASM_BUILD_DIRS) $(SRC_BUILD_DIRS)
 	$(AS) $(ASFLAGS) $(CPPFLAGS) $< -o $@
 
@@ -149,11 +152,8 @@ setup:
 	tools/fixup.py > /dev/null
 	find asm/ -type f -exec sed -i 's|.rdata|.rodata|g' {} +
 
-$(KMC_CC) :
-	$(MAKE) -C tools/ gcc-2.7.2/gcc
-
-$(KMC_AS) :
-	$(MAKE) -C tools/ gcc-2.7.2/as
+$(KMC_CC) $(KMC_AS) $(SN_CC) $(SN_AS) :
+	$(MAKE) -C tools/ $(@:tools/%=%)
 
 .SUFFIXES:
 MAKEFLAGS += --no-builtin-rules
