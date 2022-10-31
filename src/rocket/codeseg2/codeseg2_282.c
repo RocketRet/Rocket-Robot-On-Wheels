@@ -6,6 +6,8 @@ struct unkfunc_8006FD50 {
     u32 unkAC;
 };
 
+void func_80087554();
+
 void func_8006FD50(struct unkfunc_8006FD50 *arg0)
 {
     arg0->unkAC = -1;

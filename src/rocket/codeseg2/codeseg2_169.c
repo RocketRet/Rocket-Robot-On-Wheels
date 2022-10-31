@@ -12,11 +12,15 @@ extern OSMesg D_800E4820;
 
 extern u8 D_800A5FC0[MAXCONTROLLERS];
 
+void func_8004E548(u32 arg0);
+void func_8004E5A4();
+void get_controller_data();
+
 void setup_si_mesg_queue()
 {
     OSContStatus stat[4];
     osCreateMesgQueue(&D_800A63A8, &D_800E4820, 1);
-    osSetEventMesg(OS_EVENT_SI, &D_800A63A8, 1);
+    osSetEventMesg(OS_EVENT_SI, &D_800A63A8, (OSMesg)1);
     osContInit(&D_800A63A8, &D_800A5FC0[0], &stat[0]);
     func_8004E548(1);
 }
@@ -79,8 +83,6 @@ void read_controller_noblock()
         }
     }
 }
-
-void get_controller_data();
 
 void read_controller_block()
 {

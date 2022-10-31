@@ -3,7 +3,9 @@
 
 extern u8 *D_800A5994;
 
-u32 func_80042BA0(u32 arg0)
+void func_80043EF0();
+
+s32 func_80042BA0(s32 arg0)
 {
     return (*D_800A5994) & (1 << arg0);
 }

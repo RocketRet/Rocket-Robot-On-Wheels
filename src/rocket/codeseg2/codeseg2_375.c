@@ -176,7 +176,7 @@ void func_800864A8(struct GameObject *arg0, s32 decompressedSize, u8 *decompress
                 vertexPositions = main_alloc_nozero(vertexPositionBytes);
                 arg0->vertexDataStorage->unk10 = vertexPositions;
             }
-            memmove(vertexPositions, dataPtr, vertexPositionBytes);
+            custom_memmove(vertexPositions, dataPtr, vertexPositionBytes);
             dataPtr += vertexPositionBytes;
         }
         // Read texture coords
@@ -192,7 +192,7 @@ void func_800864A8(struct GameObject *arg0, s32 decompressedSize, u8 *decompress
                 textureCoords = main_alloc_nozero(textureCoordBytes);
                 arg0->vertexDataStorage->unk1C = textureCoords;
             }
-            memmove(textureCoords, dataPtr, textureCoordBytes);
+            custom_memmove(textureCoords, dataPtr, textureCoordBytes);
             dataPtr += textureCoordBytes;
         }
         // Read vertex colors/normals
@@ -208,7 +208,7 @@ void func_800864A8(struct GameObject *arg0, s32 decompressedSize, u8 *decompress
                 vertexColors = main_alloc_nozero(vertexColorBytes);
                 arg0->vertexDataStorage->unk8 = vertexColors;
             }
-            memmove(vertexColors, dataPtr, vertexColorBytes);
+            custom_memmove(vertexColors, dataPtr, vertexColorBytes);
             dataPtr += vertexColorBytes;
         }
         vertexCount = read_unaligned_s16(&dataPtr);
@@ -493,7 +493,7 @@ struct GameObject *func_800872F8(s32 arg0, void *arg1, s32 arg2)
 }
 
 // TODO arg0 typing
-struct GameObject *func_80087374(s32 **arg0, s32 arg1, s32 arg2)
+struct GameObject *func_80087374(s32 **arg0, void *arg1, s32 arg2)
 {
     struct GameObject *ret;
     struct unkfunc_8001E044_inner *var;
@@ -518,9 +518,7 @@ struct GameObject *func_80087418(u32 *romPtr, struct unkfunc_800882B8 *arg1, s32
     struct DataAndHeader sp10;
     s32 temp_s4;
     s32 dataLen;
-    void *temp_a1;
     struct unkfunc_8001E044_inner *handler;
-    void *temp_v0;
     struct GameObject *model;
     u8 **dataPtrPtr = &sp10.dataPtr;
 
@@ -712,15 +710,6 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_800875E8);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087BF8);
 
-struct unkfunc_80087D4C {
-    u8 padding[0x18];
-    Vec3f unk18;
-    Mtx3f unk24;
-    u32 unk48;
-    u32 unk4C;
-    f32 unk50[6];
-};
-
 void mtx3f_axis_angle(Vec3f, Mtx3f);
 void read_vec3f(u8**, Vec3f);
 
@@ -754,6 +743,8 @@ void func_80087D4C(struct unkfunc_80087D4C *arg0, s32 arg1, u8 *dataPtr) {
 #else
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_375", func_80087D4C);
 #endif
+
+void func_80085978(s32, u8**, struct unkfunc_80087D4C *);
 
 void func_80087E88(struct unkfunc_80087D4C *arg0, s32 arg1, u8 *dataPtr) {
     f32 *vecPtr;

@@ -1,14 +1,15 @@
-#include <include_asm.h>
 #include <ultra64.h>
-#include <PR/sched.h>
-#include <macros.h>
-#include <types.h>
 #include <libmus.h>
+#include <PR/sched.h>
+#include <PR/os_internal.h>
+#include "include_asm.h"
+#include "macros.h"
+#include "types.h"
+#include "gfx.h"
 
 extern struct ControllerData gControllerData;
 extern u32 D_800A638C;
 extern u32 D_8009FE10;
-extern u32 D_8009F094;
 extern u32 D_800AB9C8;
 
 // bss
@@ -44,6 +45,7 @@ extern u8 _codeseg2SegmentBssEnd[];
 extern u8 _assetsSegmentRomStart[];
 
 void thread1_idle(void *);
+void func_80074C88(u32*, s32);
 
 void func_80000DD0()
 {

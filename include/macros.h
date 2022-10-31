@@ -1,7 +1,13 @@
 #ifndef __MACROS_H__
 #define __MACROS_H__
 
+#ifdef __GNUC__
 #define ALIGNED(x) __attribute__((aligned(x)))
+#define UNUSED __attribute__((unused))
+#else
+#define ALIGNED(x)
+#define UNUSED
+#endif
 
 #ifndef FLT_MAX
 #define FLT_MAX 3.4028235e38f
@@ -14,12 +20,6 @@
 #define ROMADDR(x) ((u32)x + 0xB0000000)
 
 #define RAM_END 0x80400000
-#define FRAMEBUFFER_BYTES ((SCREEN_WIDTH) * (SCREEN_HEIGHT) * sizeof(u16))
-
-#define NEXT_GFX(gfx) (++gfx - 1)
-
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
 
 #define SQUARED(x) \
     ((x) * (x))

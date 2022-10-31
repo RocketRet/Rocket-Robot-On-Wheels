@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include "codeseg2.h"
 
 struct unkfunc_80063B70 {
     u8 padding[0x1A8];
@@ -10,9 +11,24 @@ struct unkfunc_80063B70 {
     s32 unk1B8;
 };
 
+struct unkfunc_80065194 {
+    u8 unk0[0x244];
+    f32 unk244;
+    u32 unk248;
+    struct unkfunc_80065194 *unk24C[6];
+    u32 unk264;
+    struct unkfunc_80065194 *unk268;
+};
+
+void func_80083734(void*);
+// TODO merge with unkfunc_8007F580
+void func_8007F580(struct unkfunc_80063B70*);
+void func_800824A0();
+void func_800652F4(struct unkfunc_80065194*, s32);
+
 void func_80063B70(struct unkfunc_80063B70 *arg0)
 {
-    func_8007F580();
+    func_8007F580(arg0);
     arg0->unk1A8 = 3;
     arg0->unk1B8 = 3;
 }
@@ -67,7 +83,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_80064A48);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_80064A90);
 
-void func_80064E48(s32, s32);
+void func_80064E48(s32*, s32);
 void func_800912A4(s32, s32);
 void func_8006409C(s32 *, s32);
 
@@ -76,8 +92,8 @@ void func_80064DC8(s32 *arg0,s32 arg1)
     if (arg1 != arg0[0x8c]) {
         if (arg1 == 2) {
             arg0[0x8f] = -1;
-            func_80064E48(arg0,1);
-            func_800912A4(9,0xffffffff);
+            func_80064E48(arg0, 1);
+            func_800912A4(9, -1);
             arg0[0x90] = 1;
         }
         else {
@@ -87,16 +103,9 @@ void func_80064DC8(s32 *arg0,s32 arg1)
     func_8006409C(arg0,arg1);
 }
 
-INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_233", func_80064E48, s32, s32);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_233", func_80064E48, s32*, s32);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_80065110);
-
-struct unkfunc_800824A0 {
-    u8 padding[0x10];
-    s32 unk10;
-    u8 padding2[0x268 - 0x04 - 0x10];
-    s32 unk268;
-};
 
 void func_80065170(struct unkfunc_800824A0 *arg0)
 {
@@ -104,19 +113,10 @@ void func_80065170(struct unkfunc_800824A0 *arg0)
     func_800824A0();
 }
 
-struct unkfunc_80065194 {
-    u8 unk0[0x244];
-    f32 unk244;
-    u32 unk248;
-    struct unkfunc_80065194 *unk24C[6];
-    u32 unk264;
-    struct unkfunc_80065194 *unk268;
-};
-
 void func_80065194(struct unkfunc_80065194 *arg0)
 {
     s32 var;
-    func_80083734();
+    func_80083734(arg0);
     arg0->unk268->unk24C[arg0->unk264] = arg0;
     var = 6;
     if (arg0->unk264 & 1)
@@ -129,7 +129,7 @@ void func_80065194(struct unkfunc_80065194 *arg0)
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_800651F8);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_233", func_800652F4);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_233", func_800652F4, struct unkfunc_80065194 *, s32);
 
 struct unkfunc_800654D4 {
     u8 padding[0x10];
@@ -167,7 +167,7 @@ struct unkfunc_80066038 {
 
 struct unkfunc_80066038_2 {
     u8 padding[0x278];
-    s32 unk278;
+    struct unkfunc_80066038 *unk278;
 };
 
 void func_80066038(struct unkfunc_80066038 *arg0)

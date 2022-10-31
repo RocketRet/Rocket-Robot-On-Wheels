@@ -22,6 +22,8 @@ s32 func_80041A30(s32 arg0)
 extern u8 D_800A58F0[0x88];
 extern s32 D_800A63C4;
 
+void func_8007A158();
+
 void func_80041A54()
 {
     bzero(D_800A58F0, sizeof(D_800A58F0));

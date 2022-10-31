@@ -1,7 +1,9 @@
-#include <include_asm.h>
 #include <ultra64.h>
-#include <types.h>
-
+#include "include_asm.h"
+#include "types.h"
+#include "mem.h"
+#include "gfx.h"
+#include "mathutils.h"
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_96", func_80039490);
 
@@ -33,23 +35,39 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_96", func_8003AF94);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_96", func_8003B068);
 
-struct unkD_8009F094 {
-    u8 padding[0xC4];
-    Lights1 *light;
+extern Vec3f D_800A53A0;
+
+struct unkfunc_8003B144 {
+    u8 pad[0xC];
+    Mtx3f unkC;
 };
 
-extern struct unkD_8009F094 D_8009F094;
+void func_8003B144(struct unkfunc_8003B144 *arg0) {
+    f32 lightDir[3];
+    s32 i;
+    Lights1* lights;
 
-// void func_8003B144(s32 arg0)
-// {
-//     gSPSetLights1(gGfxContext.dlHead++, (*D_8009F094.light));
-// }
+    if (D_800AAF78[1] != 0) {
+        vec3f_rotate(arg0->unkC, D_800A53A0, lightDir);
+        vec3f_normalize(lightDir);
+        lights = (Lights1*)SEGMENTED_TO_VIRTUAL(D_8009F094.unk0->light);
 
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_96", func_8003B144, s32);
+        for (i = 0; i < 3; i++) {
+            lights->a.l.col[i] = lights->a.l.colc[i] = D_800A5398.asArray[i];
+            lights->l[0].l.col[i] = lights->l[0].l.colc[i] = D_800A539C.asArray[i];
+            lights->l[0].l.dir[i] = (s32) (lightDir[i] * 127.0f);
+        }
+
+        gSPSetLights1(NEXT_GFX(gGfxContext.dlHead), (*D_8009F094.unk0->light));
+    }
+}
+
+
+// INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_96", func_8003B144, s32);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_96", func_8003B298);
 
-void func_8003B358(s32 arg0)
+void func_8003B358(struct unkfunc_8003B144 *arg0)
 {
     func_8003ACD4();
     func_8003B144(arg0);

@@ -1,7 +1,8 @@
 #ifndef __MATERIALS_H__
 #define __MATERIALS_H__
 
-#include <types.h>
+#include "types.h"
+#include "mem.h"
 
 #define MATERIAL_FLAG_TWO_SIDED         0x01
 #define MATERIAL_FLAG_POINT_FILTERED    0x02
@@ -48,6 +49,7 @@ typedef union RGBA32_u {
         u8 b;
         u8 a;
     } colors;
+    u8 asArray[4];
     u32 rgba32;
 } RGBA32;
 
@@ -59,6 +61,7 @@ typedef union RGBA32_pad8_u {
         u8 a;
     } colors;
     u32 rgba32;
+    u8 asArray[4];
     u8 pad[8];
 } RGBA32_pad8;
 

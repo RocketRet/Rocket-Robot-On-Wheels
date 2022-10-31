@@ -1,7 +1,8 @@
-#include <include_asm.h>
 #include <ultra64.h>
-#include <macros.h>
-#include <types.h>
+#include "include_asm.h"
+#include "macros.h"
+#include "types.h"
+#include "gfx.h"
 
 extern struct GfxContext gGfxContext;
 extern struct GfxTask* gCurGfxTask;

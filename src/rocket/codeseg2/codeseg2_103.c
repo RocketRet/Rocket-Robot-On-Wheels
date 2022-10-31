@@ -1,6 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 #include <types.h>
+#include "mathutils.h"
 
 void vec3f_scale(f32, Vec3f, Vec3f);
 f32 vec3f_magnitude(Vec3f);
@@ -9,6 +10,9 @@ struct unkfunc_8003CBD0 {
     u8 padding[0x230];
     f32 unk230;
 };
+
+// TODO unify with unkfunc_800263B4
+void func_800263B4(struct unkfunc_8003CBD0 *arg0);
 
 void func_8003CBD0(struct unkfunc_8003CBD0 *arg0) {
     func_800263B4(arg0);

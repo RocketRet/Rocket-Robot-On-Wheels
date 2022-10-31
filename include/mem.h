@@ -10,6 +10,11 @@
 #define IS_K0_ADDRESS(x) \
     ((((u32)(x)) & 0xF0000000) == 0x80000000)
 
+// Segment table
+extern u32 D_800AAF78[];
+
+#define SEGMENTED_TO_VIRTUAL(addr) (void*)(D_800AAF78[(((u32)(addr)) >> 24) & 0xF] + (((u32)(addr)) & 0xFFFFFF))
+
 #define READ_VALUE(x, type) ({*x += sizeof(type); *(type*)(*x - sizeof(type));})
 static inline u32 read_u32(u8 **ptr) { *ptr += sizeof(u32); return *(u32*)(*ptr - sizeof(u32)); }
 static inline u16 read_u16(u8 **ptr) { *ptr += sizeof(u16); return *(u16*)(*ptr - sizeof(u16)); }

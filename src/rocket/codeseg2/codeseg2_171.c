@@ -8,6 +8,8 @@ struct unkD_800A63C0 {
     struct unkD_800A63C0 *unk1C;
 };
 
+void func_8007F378(s32);
+
 extern struct unkD_800A63C0 *D_800A63C0;
 extern s32 D_800A63C4;
 

@@ -42,6 +42,8 @@ void func_80077B24(UNUSED s32 arg0, s32 arg1) {
     }
 }
 
+void func_80078170(void*, s32);
+
 void func_80077BD0(s32 *arg0)
 {
     arg0[4] = -1;

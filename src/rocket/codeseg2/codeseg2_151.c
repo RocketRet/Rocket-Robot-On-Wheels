@@ -22,13 +22,7 @@ extern OSMesgQueue D_80017DE4;
 
 void schedule_gfx_task(void) {
     struct unkfunc_80093DDC sp10;
-    Gfx* temp_v1;
-    Gfx* temp_v1_2;
-    Mtx* temp_a0_3;
-    struct GfxTask* temp_a0;
-    u8 temp_v1_3;
     OSScTask* sched_task;
-    s8 phi_v1;
 
     gDPFullSync(next_gfx());
     gSPEndDisplayList(next_gfx());
@@ -38,7 +32,7 @@ void schedule_gfx_task(void) {
         sp10 = unk_make_struct_unkfunc_80093DDC();
     }
     sched_task = &gCurGfxTask->schedTask;
-    sched_task->list.t.data_ptr = gCurGfxTask->unk14;
+    sched_task->list.t.data_ptr = (u64*)gCurGfxTask->unk14;
     sched_task->list.t.data_size = (u8*)gGfxContext.dlHead - (u8*)gCurGfxTask->unk14;
     sched_task->list.t.flags = 0;
     sched_task->list.t.type = M_GFXTASK;

@@ -27,7 +27,4 @@
 #define INCLUDE_ASM(TYPE, FOLDER, NAME, ARGS...)
 #endif
 
-// TODO this with guards to prevent issues in context generation/etc
-#define UNUSED
-
 #endif

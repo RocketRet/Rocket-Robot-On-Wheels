@@ -1,18 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_304", func_800765B0);
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_304", func_8007668C);
-
-void func_800766E8(s32 arg0)
-{
-    func_80076734(arg0, 2);
-}
-
-INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_304", func_80076708);
-
 extern struct {
     f32 unk0;
 } D_8009FE14;
@@ -23,6 +11,19 @@ struct unkfunc_80076734 {
     s32 unk4C;
     f32 unk50;
 };
+
+void func_80076734(struct unkfunc_80076734 *arg0, s32 arg1);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_304", func_800765B0);
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_304", func_8007668C);
+
+void func_800766E8(struct unkfunc_80076734 *arg0)
+{
+    func_80076734(arg0, 2);
+}
+
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_304", func_80076708);
 
 void func_80076734(struct unkfunc_80076734 *arg0, s32 arg1)
 {

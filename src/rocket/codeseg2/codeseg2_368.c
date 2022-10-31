@@ -7,6 +7,9 @@ struct unkfunc_8008530C {
     u32 unk268;
 };
 
+void func_80085094(u32*);
+void func_80084A88(u32*);
+
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_368", func_80085220);
 
 void func_800852EC(struct unkfunc_8008530C *arg0)

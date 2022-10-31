@@ -2,7 +2,7 @@
 #include <ultra64.h>
 #include "types.h"
 #include "mem.h"
-#include "materials.h"
+#include "gfx.h"
 #include "macros.h"
 
 #include "codeseg2.h"
@@ -20,8 +20,6 @@ extern struct {
 } D_800AAF80;
 
 extern struct MaterialGfx *D_800AF4F8;
-extern RGBA32 D_800A5398;
-extern RGBA32 D_800A539C;
 
 void func_80092094(struct MaterialGfx*);
 f32 positive_fmodf(f32, f32);
@@ -92,6 +90,7 @@ void func_800926B8(struct unkfunc_800926B8 *arg0, struct MaterialGfx* arg1, s32*
     materialValue = arg1->materialData.raw;
     
     if (IS_SOLID_COLOR(materialValue)) {
+        // Can also be matched using a single Lights1 struct to hold both of these
         RGBA32_pad8 diffuseColor;
         RGBA32_pad8 ambientColor;
         
@@ -106,11 +105,12 @@ void func_800926B8(struct unkfunc_800926B8 *arg0, struct MaterialGfx* arg1, s32*
         ambientColor.colors.g = (arg1->materialData.color.g * D_800A5398.colors.g) / 256.0f;
         ambientColor.colors.b = (arg1->materialData.color.b * D_800A5398.colors.b) / 256.0f;
         ambientColor.colors.a = 0xFF;
+        // TODO handle endianness
         gSPLightColor(NEXT_GFX(arg0->unk8), LIGHT_1, *&diffuseColor.rgba32);
         gSPLightColor(NEXT_GFX(arg0->unk8), LIGHT_2, *&ambientColor.rgba32);
     } else {
         CombinerParams cycle1 ALIGNED(8); // Align so that a u64 comparison is safe later
-        CombinerParams unused;
+        UNUSED CombinerParams unused;
         CombinerParams cycle2 ALIGNED(8);
         CombinerParams tempParams;
         s32 baseTextureIndex;
@@ -376,6 +376,7 @@ void func_800926B8(struct unkfunc_800926B8 *arg0, struct MaterialGfx* arg1, s32*
         }
         gDPSetTextureFilter(NEXT_GFX(arg0->unk8), (material->header.flags & MATERIAL_FLAG_POINT_FILTERED) ? G_TF_POINT : G_TF_BILERP);
         gDPSetTextureLOD(NEXT_GFX(arg0->unk8), (material->header.flags & MATERIAL_FLAG_MIPMAPPED) ? G_TL_LOD : G_TL_TILE);
+        // TODO handle endianness
         gSPLightColor(NEXT_GFX(arg0->unk8), LIGHT_1, *&D_800A539C.rgba32);
         gSPLightColor(NEXT_GFX(arg0->unk8), LIGHT_2, *&D_800A5398.rgba32);
     }

@@ -13,7 +13,7 @@ s32* func_8007F524(s32 **arg0)
     s32* ret = arg0[2];
     if (ret)
     {
-        arg0[2] = (s32**)*ret;
+        arg0[2] = (s32*)*ret;
     }
     return ret;
 }

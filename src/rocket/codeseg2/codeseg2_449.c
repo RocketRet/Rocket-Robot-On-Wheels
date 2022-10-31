@@ -35,20 +35,14 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_449", func_8009D898);
 
 extern struct MaterialGfx *materialTable;
 
-struct unkfunc_800338D0 {
-    u8 padding[0x258];
-    s32 unk258;
-    u8 padding2[0x260 - 0x258 - 0x04];
-    s32 unk260;
-    u8 padding3[0x26D - 0x260 - 0x04];
-    u8 unk26D;
-};
+Gfx *func_800922C4(struct MaterialGfx *, s32);
+void func_80086310(struct unkfunc_800338D0 *arg0, s32 arg1, Gfx *arg2);
 
 void func_8009DA54(struct unkfunc_800338D0 *arg0, s32 arg1, Gfx* arg2)
 {
-    if (arg0->unk26D == 0 && arg0->unk260 == 0)
+    if (arg0->unk26D == 0 && arg0->unk258.gfx == 0)
     {
-        arg0->unk258 = materialTable[arg1].materialData.raw;
+        arg0->unk258.materialData.raw = materialTable[arg1].materialData.raw;
         gSPDisplayList(arg2, func_800922C4(&arg0->unk258, 1));
     }
     else

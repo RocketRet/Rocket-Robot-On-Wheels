@@ -1,8 +1,10 @@
 #include <include_asm.h>
 #include <ultra64.h>
 #include <types.h>
+#include "mathutils.h"
 
 f32 clampf_abs(f32, f32);
+void func_80057708(Mtx3f a, Mtx3f b, Mtx3f out);
 
 f32 func_80057280(Mtx3f arg0)
 {
@@ -26,11 +28,11 @@ void func_8005759C(Vec3f arg0, Vec3f arg1)
 
 void func_800575DC(Mtx3f arg0)
 {
-    vec3f_normalize(&arg0[0]);
-    vec3f_cross_product(&arg0[0], &arg0[1], &arg0[2]);
-    vec3f_normalize(&arg0[2]);
-    vec3f_cross_product(&arg0[2], &arg0[0], &arg0[1]);
-    vec3f_normalize(&arg0[1]);
+    vec3f_normalize(arg0[0]);
+    vec3f_cross_product(arg0[0], arg0[1], arg0[2]);
+    vec3f_normalize(arg0[2]);
+    vec3f_cross_product(arg0[2], arg0[0], arg0[1]);
+    vec3f_normalize(arg0[1]);
 }
 
 void vec3f_transpose_rotate(Mtx3f mat, Vec3f in, Vec3f out)

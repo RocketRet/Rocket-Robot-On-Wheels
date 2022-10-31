@@ -1,6 +1,9 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
+void func_8004C44C(s32);
+void func_80083734(void*);
+s32 func_800800F0();
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_221", func_8005FC10);
 
@@ -25,9 +28,10 @@ void func_80060E5C(void) {
 
 }
 
+struct unkfunc_80060E64;
 struct unkfunc_80060E64_sub {
     u8 padding[0x2C];
-    void (*unk2C)(s32, s32);
+    void (*unk2C)(struct unkfunc_80060E64*, s32);
 };
 
 struct unkfunc_80060E64 {

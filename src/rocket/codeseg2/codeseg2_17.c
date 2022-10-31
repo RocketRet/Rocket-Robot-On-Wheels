@@ -6,6 +6,8 @@ struct unkfunc_8007F580 {
     s32 unk25C;
 };
 
+void func_8007F580(struct unkfunc_8007F580*);
+
 void func_80020C20(struct unkfunc_8007F580 *arg0)
 {
     func_8007F580(arg0);

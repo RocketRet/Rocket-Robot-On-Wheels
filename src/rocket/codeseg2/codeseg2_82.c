@@ -1,6 +1,9 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include "types.h"
 
+void func_80056BD0(Mtx3f);
+void func_8003B89C(s32, s32*);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_82", func_80035870);
 
@@ -10,15 +13,22 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_82", func_80035EB0);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_82", func_800361C4);
 
-void func_800362DC(s32 *arg0, s32 arg1)
+struct unkfunc_800362DC {
+    s32 unk0;
+    s32 unk4;
+    u8 pad[0xC];
+    Mtx3f unk14;
+};
+
+void func_800362DC(struct unkfunc_800362DC *arg0, s32 arg1)
 {
-    arg0[1] = arg1;
-    func_80056BD0(arg0 + 0x5);
+    arg0->unk4 = arg1;
+    func_80056BD0(arg0->unk14);
 }
 
-void func_80036300(s32 **arg0)
+void func_80036300(s32 *arg0)
 {
-    func_8003B89C(arg0[1], arg0[1][0x79] + 0x134);
+    func_8003B89C(arg0[1], (s32*)(((s32*)arg0[1])[0x79] + 0x134));
 }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_82", func_80036328);

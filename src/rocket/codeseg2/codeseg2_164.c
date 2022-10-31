@@ -13,6 +13,8 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D058);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_164", func_8004D0A4);
 
+void func_80085094(s32);
+
 void func_8004D0DC(s32 arg0)
 {
     func_80085094(arg0 + 0x2AC);

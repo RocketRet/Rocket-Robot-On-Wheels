@@ -8,9 +8,9 @@ struct unkD_800A5990 {
 
 extern struct unkD_800A5990 *D_800A5990;
 
-u32 func_80042AC8(s32 arg0, struct unkD_800A5990 *arg1);
+s32 func_80042AC8(s32 arg0, struct unkD_800A5990 *arg1);
 
-u32 func_80042AA0(s32 arg0)
+s32 func_80042AA0(s32 arg0)
 {
     return func_80042AC8(arg0, D_800A5990);
 }
@@ -39,4 +39,4 @@ u32 func_80042AA0(s32 arg0)
 //     return val == 0;
 // }
 
-INCLUDE_ASM(u32, "rocket/codeseg2/codeseg2_125", func_80042AC8, s32 arg0, struct unkD_800A5990 *arg1);
+INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_125", func_80042AC8, s32 arg0, struct unkD_800A5990 *arg1);

@@ -12,7 +12,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_38", func_80028A2C);
 
 void func_80028A84(s32 **arg0)
 {
-    arg0[0xAB] = arg0[3][0x38]; // TODO probably a struct
+    arg0[0xAB] = (s32*)arg0[3][0x38]; // TODO probably a struct
 }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_38", func_80028A94);

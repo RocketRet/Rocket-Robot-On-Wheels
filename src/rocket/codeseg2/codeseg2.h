@@ -9,10 +9,13 @@ struct unkfunc_8001DFD0 {
     s32 unk8;
     void* unkC;
     void* unk10;
-    u8 pad1[0x64];
+    u8 pad0[0x48 - 0x14];
+    s32 unk48;
+    u8 unk4C;
+    u8 pad1[0x78 - 0x4D];
     Vec3f unk78;
     Vec3f unk84;
-    u8 pad2[0x50];
+    u8 pad2[0xE0 - 0x90];
     u16 unkE0;
     u16 unkE2;
     u32 unkE4;
@@ -40,7 +43,7 @@ struct unkD_800A5C3C {
     s16 unk28;
     s16 unk2A;
     u8 padding2[0x34 - 0x2C];
-    s32 unk34;
+    void *unk34;
     Gfx *unk38;
     Gfx *unk3C;
 };

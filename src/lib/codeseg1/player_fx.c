@@ -44,6 +44,7 @@ REVERB_MEM gReverbFx;
 static s32 GetFxMostSections(void);
 static s32 GetFxLongest(void);
 static void SetForCustom(ALSynConfig *c);
+void _init_lpfilter(ALLowPass *lp);
 
 #ifdef SUPPORT_NAUDIO
 #define alGlobals n_alGlobals

@@ -1,14 +1,18 @@
 #include <include_asm.h>
 #include <ultra64.h>
 #include "codeseg2.h"
+#include "mem.h"
 
 extern f32 D_8001B420;
 
+void func_80089D5C(Gfx **dlPtr);
+void func_8008AAEC(Gfx **dlHead);
+
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_144", func_80046200);
 
-void func_80046268()
+void func_80046268(Gfx **dlPtr)
 {
-    func_80089D5C();
+    func_80089D5C(dlPtr);
     D_800A5C3C.unk34 = alloc_second_heap(0x3C00);
     D_800C0440.unk10 = 1.0f;
     D_800C0440.unk14 = 1.0f;

@@ -2,8 +2,14 @@
 #include <ultra64.h>
 #include <sounds.h>
 #include <gameplay.h>
+#include "types.h"
 
 extern s32 gCurLevelTokens;
+
+void func_8009C5C8(s32, Vec3f, float, s32*);
+void func_8006B430(struct GameObject *arg0, Vec3f arg1);
+void func_8008C590(struct unkfunc_800882B8 *, struct GameObject *);
+void func_80042710(s32);
 
 // This seems to draw tokens, changing D_8001C950 changes the size of tokens
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_267", func_8006BDF0);
@@ -13,35 +19,26 @@ struct unkfunc_8006BEE4 {
     s32* unkC;
     u8 padding2[0x2C - 0xC - 0x4];
     s32 unk2C;
-    s32 unk30;
-    u8 padding3[0x71 - 0x30 - 0x4];
+    Vec3f unk30;
+    u8 padding3[0x71 - 0x30 - 0xC];
     u8 unk71;
 };
 
-void func_8009C5C8(s32, s32*, float, s32*);
-
 void func_8006BEE4(struct unkfunc_8006BEE4* arg0) {
     s32 iVar1;
-    func_8006B430(arg0, &arg0->unk30);
+    func_8006B430((struct GameObject*) arg0, arg0->unk30);
     iVar1 = arg0->unkC[0x51];
     if (iVar1 != 0) {
-        func_8009C5C8(iVar1, &arg0->unk30, 0.5f, &arg0->unk2C);
+        func_8009C5C8(iVar1, arg0->unk30, 0.5f, &arg0->unk2C);
     }
     arg0->unk71 = 0;
     return;
 }
 
-struct unkfunc_8006BF3C {
-    u8 padding[0xC];
-    s32 unkC;
-    u8 padding2[0x3C - 0xC - 0x4];
-    s32 unk3C;
-};
-
 void func_8006BF3C(struct unkfunc_8006BF3C* arg0, s32 arg1) {
     if (arg1 != arg0->unk3C) {
         if (arg0->unk3C == 0) {
-            func_8008C590(arg0->unkC, arg0);
+            func_8008C590(arg0->unkC, (struct GameObject*) arg0);
             arg0->unk3C = arg1;
         } else {
             arg0->unk3C = arg1;

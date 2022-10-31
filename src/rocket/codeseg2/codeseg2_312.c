@@ -3,6 +3,7 @@
 #include <types.h>
 #include <mem.h>
 
+void func_8008392C();
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_312", func_800782D0);
 
@@ -51,10 +52,11 @@ struct unkfunc_80079CA0 {
 };
 
 Gfx *func_800922C4(struct MaterialGfx *, s32);
+void func_80086310(struct unkfunc_800338D0 *arg0, s32 arg1, Gfx *arg2);
 
 void func_80079CA0(struct unkfunc_80079CA0 *arg0, s32 arg1, Gfx *arg2) {
     struct MaterialGfx *temp_a0;
-    s32 maskedAddress;
+    u32 maskedAddress;
     struct TexturedMaterial *prevTextureGroup;
     struct TexturedMaterial *materialData;
 
@@ -72,10 +74,11 @@ void func_80079CA0(struct unkfunc_80079CA0 *arg0, s32 arg1, Gfx *arg2) {
                 arg0->unk27C.materialData = materialTable[arg1].materialData;
                 gSPDisplayList(arg2, func_800922C4(&arg0->unk27C, 1));
             } else {
-                func_80086310(arg0, arg1, arg2);
+                // TODO merge types?
+                func_80086310((struct unkfunc_800338D0*) arg0, arg1, arg2);
             }
         } else {
-            func_80086310(arg0, arg1, arg2);
+            func_80086310((struct unkfunc_800338D0*) arg0, arg1, arg2);
         }
     }
 }

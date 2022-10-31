@@ -1,7 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 #include <types.h>
-
+#include "mathutils.h"
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_380", func_8008AC50);
 
@@ -29,8 +29,6 @@ struct unkfunc_8008BE58 {
     u8 padding[0x3C];
     Vec3f unk3C;
 };
-
-void set_vec3f_components(Vec3f *, f32, f32, f32);
 
 void func_8008BE58(struct unkfunc_8008BE58 *arg0, f32 arg1)
 {

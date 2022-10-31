@@ -7,9 +7,9 @@ extern void *D_800E48A0;
 extern void *D_800E48A4;
 extern void *D_800E48A8;
 extern void *D_800E48AC;
-extern s32 D_800E48B0;
+extern void *D_800E48B0;
 extern s32 D_800E48B8;
-extern s32 D_800E48C0[];
+extern void *D_800E48C0[];
 
 void func_80061440()
 {
@@ -36,11 +36,11 @@ void clear_main_pool()
     D_800E48AC = D_800E48A8;
 }
 
-void memcpy(void *, void *, s32);
+void custom_memcpy(u8 *, u8 *, s32);
 
 void *main_alloc_copy(s32 size, u8 *src)
 {
-    void *addr;
+    u8 *addr;
     if (size == 0)
     {
         addr = NULL;
@@ -51,7 +51,7 @@ void *main_alloc_copy(s32 size, u8 *src)
         D_800E48AC = (void*)((uintptr_t)tmpAddr + ALIGN(size,8));
         addr = tmpAddr;
     }
-    memcpy(addr, src, size);
+    custom_memcpy(addr, src, size);
     return addr;
 }
 
@@ -85,7 +85,7 @@ void *alloc_second_heap(u32 len)
     }
     else
     {
-        D_800E48B0 -= ALIGN(len, 8); 
+        D_800E48B0 = (void*)((uintptr_t)D_800E48B0 - ALIGN(len, 8));
         return D_800E48B0;
     }
 }
@@ -97,7 +97,7 @@ void pop_second_heap_state()
 
 // Minor regalloc
 #ifdef NON_MATCHING
-void memcpy(void *dst, void *src, s32 count)
+void custom_memcpy(void *dst, void *src, s32 count)
 {
     u8* dst8 = (u8*)dst;
     u8* src8 = (u8*)src;
@@ -134,10 +134,10 @@ void memcpy(void *dst, void *src, s32 count)
     }
 }
 #else
-INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_223", memcpy, void*, void*, s32);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_223", custom_memcpy, u8*, u8*, s32);
 #endif
 
-void memmove(u8 *dst, u8 *src, s32 count)
+void custom_memmove(u8 *dst, u8 *src, s32 count)
 {
     if (src < dst)
     {

@@ -36,7 +36,7 @@ extern struct {
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_46", func_8002C120);
 
-void func_8002C154(struct unkfunc_8002C154 *arg0, s32 arg1)
+void func_8002C154(struct unkfunc_8002C154 *arg0, u32 arg1)
 {
     if (arg1 != arg0->unk230)
     {

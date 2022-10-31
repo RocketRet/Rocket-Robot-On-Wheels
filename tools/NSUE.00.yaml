@@ -66,9 +66,9 @@ segments:
     - [0x001620, .rodata, ../ultra/src/io/viswapcontext]
     - [0x001630, .rodata, ../ultra/src/io/sprawdma]
     - [0x001640, .rodata, ../ultra/src/io/epirawread]
-    - [0x001660, .rodata, ../ultra/src/audio/drvrnew] # should be drvrNew but KMC gcc doesn't preserve caps
+    - [0x001660, .rodata, ../ultra/src/audio/drvrNew]
     - [0x0016A0, .rodata, ../ultra/src/audio/reverb]
-    - [0x001700, .rodata, ../ultra/src/n_audio/n_drvrnew]
+    - [0x001700, .rodata, ../ultra/src/n_audio/n_drvrNew]
     - [0x001730, .rodata, ../ultra/src/n_audio/n_reverb]
     - [0x001770, .rodata, ../ultra/src/n_audio/n_synthesizer]
     - [0x001790, .rodata, ../ultra/src/n_audio/n_env]
@@ -202,11 +202,11 @@ segments:
     - [0x0116E0, c, ../ultra/src/os/yieldthread]
     - [0x011730, c, ../ultra/src/n_audio/n_sl]
     - [0x0117B0, c, ../ultra/src/audio/sl]
-    - [0x011860, c, ../ultra/src/audio/drvrnew] # should be drvrNew but KMC gcc doesn't preserve caps
+    - [0x011860, c, ../ultra/src/audio/drvrNew]
     - [0x012090, c, ../ultra/src/n_audio/n_auxbus]
     - [0x012140, c, ../ultra/src/audio/reverb]
     - [0x012D20, c, ../ultra/src/audio/heapalloc]
-    - [0x012D70, c, ../ultra/src/n_audio/n_drvrnew]
+    - [0x012D70, c, ../ultra/src/n_audio/n_drvrNew]
     - [0x013290, c, ../ultra/src/n_audio/n_reverb]
     - [0x013C80, c, ../ultra/src/n_audio/n_synthesizer]
     - [0x014260, c, ../ultra/src/n_audio/n_env]
@@ -265,9 +265,9 @@ segments:
     - [0x01A4C0, .data, ../ultra/src/io/vi]
     - [0x01A530, .data, ../ultra/src/n_audio/n_sl]
     - [0x01A540, .data, ../ultra/src/audio/sl]
-    - [0x01A550, .data, ../ultra/src/audio/drvrnew] # should be drvrNew but KMC gcc doesn't preserve caps
-    - [0x01A6E0, bin] # data (what file is this?)
-    - [0x01A700, .data, ../ultra/src/n_audio/n_drvrnew]
+    - [0x01A550, .data, ../ultra/src/audio/drvrNew]
+    - [0x01A6E0, .data, ../ultra/src/audio/reverb]
+    - [0x01A700, .data, ../ultra/src/n_audio/n_drvrNew]
     - [0x01A890, .data, ../ultra/src/n_audio/n_reverb]
     - [0x01A8A0, .data, ../ultra/src/n_audio/n_env]
     - [0x01A9A0, .data, lib/codeseg1/aud_samples]

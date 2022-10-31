@@ -64,7 +64,7 @@ CFLAGS := -G0 -mcpu=vr4300 -mips2 -fno-exceptions -funsigned-char -gdwarf \
    -Wa,-G0,-EB,-mips3,-mabi=32,-mgp32,-march=vr4300,-mfp32,-mno-shared
 ASN64FLAGS := -q -G0
 KMC_CFLAGS := -c -G0  -mgp32 -mfp32 -mips3
-WARNFLAGS := -Wuninitialized -Wshadow -Wall
+WARNFLAGS := -Wuninitialized -Wshadow -Wall -Werror
 OPTFLAGS := -O2
 ASFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -gdwarf -c
 LDFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -gdwarf -nostartfiles -Wl,-T,$(LD_SCRIPT) -Wl,-T,tools/undefined_syms.txt -Wl,--build-id=none
@@ -120,7 +120,7 @@ $(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS) $(KMC_CC) $(
 
 $(SN_OBJS) : $(BUILD_DIR)/%.o : %.c | $(SRC_BUILD_DIRS) $(SN_CC) $(SN_AS)
 	@printf "Compiling $<\r\n"
-	export COMPILER_PATH=$(SN_DIR) && $(SN_CC) $(CFLAGS) $(OPTFLAGS) $(CPPFLAGS) $< -c -o $@
+	export COMPILER_PATH=$(SN_DIR) && $(SN_CC) $(CFLAGS) $(OPTFLAGS) $(WARNFLAGS) $(CPPFLAGS) $< -c -o $@
 
 $(BUILD_DIR)/%.o : $(BUILD_DIR)/%.s
 	$(AS) $(ASFLAGS) $(CPPFLAGS) $< -o $@
@@ -140,6 +140,7 @@ $(Z64) : $(ELF)
 
 $(BUILD_DIR)/ultra/%.o: OPTFLAGS := -O3
 $(BUILD_DIR)/src/rocket/codeseg2/codeseg2_3.o: OPTFLAGS := -O3
+$(BUILD_DIR)/src/lib/%.o: WARNFLAGS := 
 
 clean:
 	$(RMDIR) $(BUILD_ROOT)

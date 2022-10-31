@@ -3,6 +3,7 @@
 #include <mem.h>
 #include <types.h>
 #include <macros.h>
+#include "mathutils.h"
 
 #include "codeseg2.h"
 
@@ -10,15 +11,11 @@ void func_80085D04(u8 **dataPtrPtr, Vec3f arg1, Mtx3f arg2);
 void func_8001E248(struct GameObject* arg0);
 void func_8008CCE8(struct unkfunc_800882B8*, void (*)(struct GameObject*), struct GameObject*, s32, s32);
 void func_80024508(void*, struct GameObject*, s32, f32, f32);
-f32 vec3f_safe_normalize(Vec3f in, Vec3f out);
-void vec3f_scale(f32, Vec3f, Vec3f);
-f32 vec3f_normalize(Vec3f vec);
-void mtx3f_axis_angle(Vec3f, Mtx3f);
-void mtx3f_concat(Mtx3f, Mtx3f, Mtx3f);
-void vec3f_scale_add(float aScale, Vec3f a, float bScale, Vec3f b, Vec3f out);
-f32 vec3f_magnitude(Vec3f);
-void mtx3f_rotate_axis(f32 angle, Vec3f arg1, Mtx3f out);
 struct unkfunc_8001E248* func_8008BE8C();
+void func_80050868(struct unkfunc_8001DFD0* arg0, void* arg1, void* arg2);
+void func_80085C68(u8 **dataPtrPtr, struct GameObject *arg1);
+void func_80024DB8(struct unkfunc_8001E248*, struct GameObject*, Vec3f, f32*, Vec3f);
+void func_80057778(Mtx3f a, Mtx3f b, Mtx3f out);
 
 extern Vec3f D_800AF794;
 
@@ -95,7 +92,6 @@ void func_8001E248(struct GameObject* arg0) {
     struct GameObjectUnkFC* temp_s0;
     struct unkfunc_8001E248* temp_v0;
     struct unkfunc_8001E248* phi_s1;
-    f32* phi_v0;
     f32 phi_f0;
 
     temp_s0 = arg0->unkFC;
@@ -448,9 +444,6 @@ void obj_update_sleeping(struct GameObject* obj) {
     }
     obj->unk110.bitfield.unk110_17 = sleeping;
 }
-
-void vec3f_rotate();
-void vec3f_transpose_rotate();
 
 void func_8001FDB4(struct GameObject *arg0, struct GameObject *arg1, Vec3f arg2, Vec3f arg3)
 {

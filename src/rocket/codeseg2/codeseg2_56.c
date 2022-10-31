@@ -51,9 +51,6 @@ s32 func_800830D0(struct unkfunc_8002DF50*, void*);
 void func_8002DF50(struct unkfunc_8002DF50* arg0, s32 arg1, void** arg2) {
     s32 phi_s0;
     s32 phi_s2;
-    s32 phi_s2_2;
-    s32 phi_s0_2;
-    s32 phi_s0_2_2;
 
     if (arg1 != 2) {
         if (arg1 == 0x17) {
@@ -62,8 +59,8 @@ void func_8002DF50(struct unkfunc_8002DF50* arg0, s32 arg1, void** arg2) {
                 phi_s0 = 1;
             }
             if (phi_s0) {
-                s32 phi_s0 = arg0->unk348 == 0;
-                s32 phi_s2 = 1;
+                phi_s0 = arg0->unk348 == 0;
+                phi_s2 = 1;
                 if (arg0->unk348 != 1) {
                     if (phi_s0 && arg0->unk354 == 3) {
                         if (D_800A59A0 < arg0->unk35C) {
@@ -83,8 +80,8 @@ void func_8002DF50(struct unkfunc_8002DF50* arg0, s32 arg1, void** arg2) {
             }
         }
     } else if (func_8002DB74(arg0, arg2[0]) && (arg2[1] == arg0)) {
-        s32 phi_s0 = arg0->unk348 == 0;
-        s32 phi_s2 = 1;
+        phi_s0 = arg0->unk348 == 0;
+        phi_s2 = 1;
         if (arg0->unk348 != 1) {
             if (phi_s0 && arg0->unk354 == 3) {
                 if (D_800A59A0 < arg0->unk35C) {
@@ -140,10 +137,12 @@ struct unkfunc_8002E45C {
     s32 unk240;
 };
 
-void func_8002E45C(struct unkfunc_8002E45C *arg0, s32 arg1, u8 *dataPtr)
+void func_800875E8(struct GameObject *arg0, u32 romAddr, u8 *dataPtr);
+
+void func_8002E45C(struct unkfunc_8002E45C *arg0, u32 romAddr, u8 *dataPtr)
 {
     arg0->unk240 = 0xC7;
-    func_800875E8(arg0, arg1, dataPtr);
+    func_800875E8((struct GameObject*)arg0, romAddr, dataPtr);
 }
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_56", func_8002E480);

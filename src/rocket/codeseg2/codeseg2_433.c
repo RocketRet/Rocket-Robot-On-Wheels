@@ -8,7 +8,6 @@ void sincosf(f32 angle, f32 *sinOut, f32 *cosOut)
 {
     f32 sinVal;
     f64 cosVal;
-    s32 negativeCos;
     s32 num_half_rotations;
 
     sinVal = sinf(angle);

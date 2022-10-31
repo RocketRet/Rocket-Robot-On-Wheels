@@ -3,6 +3,8 @@
 
 extern s32 D_800F6A68;
 
+void func_80094C50(s32, s32);
+
 void func_80095170(s32 arg0, s32 arg1)
 {
     if (arg1 == 1)

@@ -2,6 +2,17 @@
 #include <ultra64.h>
 #include <types.h>
 
+// TODO unify with unkfunc_8007F580
+struct unkfunc_80041414 {
+    u8 padding[0x230];
+    s32 unk230;
+    s32 unk234;
+};
+
+void func_80085094(s32);
+void func_80084A88(s32);
+void func_8007F580(struct unkfunc_80041414*);
+
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_80040220);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_800402CC);
@@ -40,12 +51,6 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_80041264);
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_80041298);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_115", func_8004133C);
-
-struct unkfunc_80041414 {
-    u8 padding[0x230];
-    s32 unk230;
-    s32 unk234;
-};
 
 void func_80041414(struct unkfunc_80041414 *arg0)
 {

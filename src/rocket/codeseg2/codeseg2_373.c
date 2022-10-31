@@ -6,7 +6,7 @@ extern struct MaterialGfx *materialTable;
 
 Gfx *func_800922C4(struct MaterialGfx *, s32);
 
-void func_80086310(s32 arg0, s32 arg1, Gfx *arg2)
+void func_80086310(void *arg0, s32 arg1, Gfx *arg2)
 {
     if (arg1 != -1)
     {

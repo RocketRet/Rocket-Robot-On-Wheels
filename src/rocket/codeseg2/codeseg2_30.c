@@ -1,11 +1,8 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include "types.h"
 
-struct unkfunc_800263B4 {
-    u8 padding[0x234];
-    s32 unk234;
-    s32 unk238;
-};
+void func_800263B4(struct unkfunc_800263B4 *);
 
 void func_80026450(struct unkfunc_800263B4 *arg0)
 {

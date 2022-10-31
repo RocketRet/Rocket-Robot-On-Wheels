@@ -32,7 +32,7 @@ struct unkD_800E4DD0 {
 
 extern s32 D_800AAF60;
 extern s32 D_800AAF64;
-extern u32 D_800AF5F0;
+extern s32 D_800AF5F0;
 extern OSIoMesg D_800E4DB0;
 extern OSMesgQueue D_80017DFC;
 extern struct unkD_800E4DD0 D_800E4DD0[];

@@ -7,6 +7,8 @@ s32 func_80050860(s32 arg0) {
     return arg0;
 }
 
+void func_8008C148(void*, struct unkfunc_8001DFD0*);
+
 void func_80050868(struct unkfunc_8001DFD0* arg0, void* arg1, void* arg2) {
     arg0->unk4 = 0;
     arg0->unkC = arg1;
@@ -30,7 +32,7 @@ struct unkfunc_800508B4 {
     struct unkfunc_800508B4 *unk10;
 };
 
-s32 func_800508B4(struct unkfunc_800508B4 *arg0)
+struct unkfunc_800508B4 *func_800508B4(struct unkfunc_800508B4 *arg0)
 {
     while (arg0->unk10)
     {

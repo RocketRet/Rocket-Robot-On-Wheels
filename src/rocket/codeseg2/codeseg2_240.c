@@ -1,6 +1,7 @@
 #include <include_asm.h>
 #include <ultra64.h>
 
+void func_800824A0();
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_240", func_800662D0);
 

@@ -35,6 +35,7 @@
   #include "player_fx.h"
 #endif
 
+#include "macros.h"
 
 /* define note data */
 #define REST		   96	/* c8 = rest				*/

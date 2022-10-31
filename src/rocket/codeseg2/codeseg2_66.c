@@ -11,6 +11,9 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_66", func_8002F690);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_66", func_8002F724);
 
+void func_80085094(u32*);
+void func_80084A88(u32*);
+
 void func_8002FB6C(struct unkfunc_8002FB6C *arg0)
 {
     func_80085094(&arg0->unk270);

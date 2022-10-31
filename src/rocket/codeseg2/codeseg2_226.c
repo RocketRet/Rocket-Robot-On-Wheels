@@ -9,6 +9,8 @@ struct unkD_800E4DD0 {
     u32 *unkC;
 };
 
+void func_80061A58();
+
 extern struct unkD_800E4DD0 D_800E4DD0[];
 extern s32 D_800AAF60;
 extern s32 D_800AAF64;

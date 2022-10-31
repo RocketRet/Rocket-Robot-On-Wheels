@@ -42,7 +42,7 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_23", func_80024508);
 
 struct unkfunc_8002490C {
     u8 padding[0x40];
-    struct unkfunc_8002490C *unk40;
+    struct unkfunc_8002490C_2 *unk40;
 };
 
 struct unkfunc_8002490C_2 {

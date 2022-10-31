@@ -3,6 +3,9 @@
 #include <macros.h>
 #include <types.h>
 
+void obj_setter_velocity(struct GameObject *obj, Vec3f velocity);
+void func_80026D78(void*, struct GameObject*, s32);
+
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_343", func_800818D0);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_343", func_800819FC);

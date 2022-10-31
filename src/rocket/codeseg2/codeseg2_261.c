@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include "types.h"
 
 struct unkfunc_8006B430 {
     s32 unk0;
@@ -11,7 +12,9 @@ struct unkfunc_8006B430 {
     s32 unk18;
 };
 
-void func_8006B430(struct unkfunc_8006B430 *arg0, s32 arg1)
+void func_8001FDB4(struct GameObject *arg0, struct GameObject *arg1, Vec3f arg2, Vec3f arg3);
+
+void func_8006B430(struct GameObject *arg0, Vec3f arg1)
 {
-    func_8001FDB4(arg0->unk10, 0, &arg0->unk18, arg1);
+    func_8001FDB4(arg0->unk10, 0, arg0->rotation[0], arg1);
 }

@@ -2,9 +2,11 @@
 #include <ultra64.h>
 #include <types.h>
 
+void func_80091BFC(struct unkfunc_80091F54*);
+
 extern s32 D_800A3190;
 
-extern s32 D_800AF310;
+extern struct unkfunc_80091F54 *D_800AF310;
 extern s32 D_800AF320;
 
 extern s32 D_800AF44C[4];
@@ -19,7 +21,6 @@ void func_80091F40(struct unkfunc_80091F54 *arg0, s32 arg1)
 void func_80091F54(s32 arg0)
 {
     struct unkfunc_80091F54 var;
-    struct unkfunc_80091F54 *tmp;
     u32 i;
 
     if (D_800AF320 != 1)

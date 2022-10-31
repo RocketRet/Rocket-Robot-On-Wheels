@@ -2,6 +2,9 @@
 #include <ultra64.h>
 #include "macros.h"
 
+void func_80085094(s32*);
+void func_80084A88(s32*);
+
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_71", func_80031FB0);
 
@@ -50,14 +53,19 @@ INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_71", func_80033A24);
 
 INCLUDE_ASM(s32, "rocket/codeseg2/codeseg2_71", func_80033FFC);
 
-void func_80034124(s32 arg0)
+struct unkfunc_80034124 {
+    u8 padding[0x2C8];
+    s32 unk2C8;
+};
+
+void func_80034124(struct unkfunc_80034124 *arg0)
 {
-    func_80085094(arg0 + 0x2C8);
+    func_80085094(&arg0->unk2C8);
 }
 
-void func_80034144(s32 arg0)
+void func_80034144(struct unkfunc_80034124 *arg0)
 {
-    func_80084A88(arg0 + 0x2C8);
+    func_80084A88(&arg0->unk2C8);
 }
 
 struct unkfunc_80034164 {

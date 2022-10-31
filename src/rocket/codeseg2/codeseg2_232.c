@@ -2,9 +2,18 @@
 #include <ultra64.h>
 
 extern s32 D_800AC2E0;
-extern s32 D_800A58F0;
+extern u16 D_800A58F0;
 
 void func_80078244(s32, s32, f32);
+void func_80041A54();
+void func_80041F08(s32);
+void func_80041AD0(s32);
+void func_80078170(void*, s32);
+u32 func_80042A50(s32 arg0, u16 *arg1);
+void func_8007F378(s32);
+void func_80043EF0();
+void func_800625D8(void*, s32);
+void func_8002A86C(s32, s32);
 
 void func_80063840(s32 arg0)
 {

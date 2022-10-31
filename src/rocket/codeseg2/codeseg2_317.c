@@ -1,5 +1,6 @@
 #include <include_asm.h>
 #include <ultra64.h>
+#include "codeseg2.h"
 
 struct unkD_800ADAD8 {
     u16 unk0;
@@ -7,12 +8,13 @@ struct unkD_800ADAD8 {
     u32 unk4;
 };
 
+void func_80050868(struct unkfunc_8001DFD0* arg0, void* arg1, void* arg2);
+
 extern u32 D_800ADADC;
 extern struct unkD_800ADAD8 *D_800ADAD8;
 
 // Does a binary search through D_800ADAD8, but seems to be unused
 s32 func_80079EA0(s32 arg0) {
-    s32 temp_v0;
     s32 max;
     s32 min;
 
@@ -43,9 +45,9 @@ struct unkfunc_80079F08 {
     u8 unk4C;
 };
 
-void func_80079F08(struct unkfunc_80079F08 *arg0)
+void func_80079F08(struct unkfunc_8001DFD0 *arg0, void *arg1, void *arg2)
 {
-    func_80050868();
+    func_80050868(arg0, arg1, arg2);
     arg0->unk48 = -1;
     arg0->unk4C = 0;
 }

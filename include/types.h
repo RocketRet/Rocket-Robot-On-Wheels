@@ -31,7 +31,7 @@ struct GfxContext {
 struct GfxTask {
     /* 0x000 */ void *framebuffer;
     /* 0x004 */ struct GfxContext ctx;
-    /* 0x014 */ u32 unk14;
+    /* 0x014 */ void *unk14;
     /* 0x018 */ u8 unk18[0xD8 - 0x14 - 0x04];
     /* 0x0C0 */ Mtx3f unkD8;
     /* 0x0FC */ Mtx3f unkFC;
@@ -149,7 +149,7 @@ struct MaterialGfx {
 };
 
 struct unkfunc_80091F54 {
-    u32 unk0;
+    void *unk0;
     u32 unk4;
     u32 unk8;
     u32 unkC;
@@ -225,6 +225,8 @@ struct unkfunc_800882B8 {
     s32 unk134;
     s32 unk138;
     s32 *unk13C;
+    s32 pad140;
+    s32 unk144;
 };
 
 struct unkfunc_8001E248 {
@@ -316,6 +318,22 @@ struct GameObject {
     /* 0x180 */ s32 unk180;
 };
 
+struct unkfunc_80087D4C {
+    u8 padding[0x18];
+    Vec3f unk18;
+    Mtx3f unk24;
+    u32 unk48;
+    u32 unk4C;
+    f32 unk50[6];
+};
+
+struct unkfunc_8006BF3C {
+    u8 padding[0xC];
+    struct unkfunc_800882B8 *unkC;
+    u8 padding2[0x3C - 0xC - 0x4];
+    s32 unk3C;
+};
+
 struct unkfunc_8001E044_2 {
     struct unkfunc_8001E044_inner *unk0;
     u8 padding[0x24 - 0x00 - 0x04];
@@ -333,14 +351,14 @@ struct unkfunc_8001E044_inner {
     s32 unk14;
     s32 unk18;
     s32 unk1C;
-    void (*unk20)(struct GameObject*, void*, s32);
+    void (*unk20)(struct GameObject*, void*, u8*);
     u8 padding1[0x40 - 0x20 - 0x04];
     void (*unk40)(struct GameObject*);
     s32 unk44;
     s32 unk48;
     void (*unk4C)(struct GameObject*, void*);
     u8 padding2[0x54 - 0x4C - 0x04];
-    void (*unk54)(struct GameObject *, s32, struct GameObject *);
+    void (*unk54)(struct GameObject *, s32, void*);
     void (*unk58)(struct GameObject *, Vec3f); // position
     void (*unk5C)(struct GameObject *, Mtx3f); // rotation
     void (*unk60)(struct GameObject *, Vec3f); // velocity
@@ -348,6 +366,26 @@ struct unkfunc_8001E044_inner {
     u8 padding3[0x68 - 0x64 - 0x04];
     void (*unk68)(struct GameObject*, s32, void*, s32);
     void (*unk6C)(struct GameObject*, s32, Gfx *);
+};
+
+struct unkfunc_800338D0 {
+    u8 padding[0x258];
+    struct MaterialGfx unk258;
+    u8 padding3[0x26D - 0x258 - 0x10];
+    u8 unk26D;
+};
+
+struct unkfunc_800263B4 {
+    u8 padding[0x234];
+    s32 unk234;
+    s32 unk238;
+};
+
+struct unkfunc_800824A0 {
+    u8 padding[0x10];
+    s32 unk10;
+    u8 padding2[0x268 - 0x04 - 0x10];
+    s32 unk268;
 };
 
 #endif
