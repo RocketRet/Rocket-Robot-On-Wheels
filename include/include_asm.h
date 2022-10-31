@@ -9,16 +9,17 @@
   TYPE NAME(ARGS);\
   \
   asm ( \
-      "\t.text\r\n" \
-      "\t.set noat\r\n" \
-      "\t.set noreorder\r\n" \
-      "\t.global " #NAME NONMATCHING_SUFFIX "\r\n" \
-      "\t.ent " #NAME NONMATCHING_SUFFIX "\r\n" \
-      "\t" #NAME NONMATCHING_SUFFIX ":\r\n" \
-      "\t.end " #NAME NONMATCHING_SUFFIX "\r\n" \
-      "\t.include \"asm/nonmatchings/"FOLDER"/"#NAME".s\"\r\n" \
-      "\t.set reorder\r\n" \
-      "\t.set at\r\n" \
+      "\t.text\n" \
+      "\t.set noat\n" \
+      "\t.set noreorder\n" \
+      "\t.global " #NAME NONMATCHING_SUFFIX "\n" \
+      "\t.equiv " #NAME NONMATCHING_SUFFIX ", 0\n" \
+      "\t.ent " #NAME "\n" \
+      "\t.type " #NAME ", @function\n" \
+      "\t.include \"asm/nonmatchings/"FOLDER"/"#NAME".s\"\n" \
+      "\t.end " #NAME "\n" \
+      "\t.set reorder\n" \
+      "\t.set at\n" \
   );
 #endif
 // __asm__( ".include \"include/macro.inc\"\n");

@@ -181,10 +181,10 @@ void func_8001E69C(struct GameObject* arg0, f32 dt, Mtx3f out) {
             VEC3F_DOT(arg0->angular_velocity, rotation_axis) * dt +
             VEC3F_DOT(arg0->angular_acceleration, rotation_axis) * 0.5f * dt * dt; // <-- here
         mtx3f_rotate_axis(angle, rotation_axis, rotation_delta);
-        mtx3f_concat(rotation_delta, arg0->unk18, out);
+        mtx3f_concat(rotation_delta, arg0->rotation, out);
         return;
     } else {
-        MTX3F_COPY(out, arg0->unk18);
+        MTX3F_COPY(out, arg0->rotation);
     }
 }
 #else

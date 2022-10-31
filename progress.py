@@ -30,19 +30,18 @@ def get_matching_stats():
 
     # Pass 1: get all nonmatchings
     for line in nm_lines:
-        if "g     F ." in line or "g     F *ABS*	" in line:
+        if "g       *ABS*" in line:
             components = line.split()
-            size = int(components[4], 16)
-            name = components[5]
+            name = components[-1]
             if name.endswith("_NONMATCHING"):
                 nonmatchings.add(name[:-12])
 
     # Pass 2: sum size of nonmatchings
     for line in nm_lines:
-        if "g     F ." in line or "g     F *ABS*	" in line:
+        if "g     F ." in line:
             components = line.split()
-            size = int(components[4], 16)
-            name = components[5]
+            size = int(components[-2], 16)
+            name = components[-1]
             if name in nonmatchings:
                 total_unmatched += size
                 funcs_unmatched += 1
