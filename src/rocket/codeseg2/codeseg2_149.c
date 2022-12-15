@@ -19,7 +19,6 @@ void update_gfx_context();
 void schedule_gfx_task(void);
 void func_80046D58();
 void func_80046CBC();
-void func_80046FBC(s32, s32, s32, s32, s32, s32, s32, s32);
 
 void func_80046B40()
 {
@@ -51,7 +50,7 @@ void func_80046B40()
     update_gfx_context();
     func_80046D58();
     gSPDisplayList(NEXT_GFX(gGfxContext.dlHead), D_800A5CC0);
-    func_80046FBC(0, 0, 0, 0xFF, 0x12, 0xE, 0x12D, 0xE1);
+    draw_rectangle(0, 0, 0, 0xFF, 0x12, 0xE, 0x12D, 0xE1);
     schedule_gfx_task();
 }
 
@@ -71,4 +70,3 @@ void func_80046CBC(void) {
     }
 }
 
-// INCLUDE_ASM(void*, "rocket/codeseg2/codeseg2_149", func_80046CBC);

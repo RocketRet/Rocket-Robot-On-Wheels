@@ -2,6 +2,7 @@
 #include <ultra64.h>
 #include <types.h>
 #include <macros.h>
+#include "gfx.h"
 
 void func_800476A0(Gfx *arg0, Vtx * arg1, u32 arg2, u32 arg3)
 {
@@ -33,12 +34,12 @@ void load_translation_mtx(f32 *translation)
     guTranslate(newMtx, translation[0] * scale, translation[1] * scale, translation[2] * scale);
     guScale(&temp, inverseScale, inverseScale, inverseScale);
     guMtxCatL(&temp, newMtx, newMtx);
-    gSPMatrix(++gGfxContext.dlHead - 1, newMtx, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_PUSH);
+    gSPMatrix(NEXT_GFX(gGfxContext.dlHead), newMtx, G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_PUSH);
 }
 
 void pop_matrix()
 {
-    gSPPopMatrix(++gGfxContext.dlHead - 1, G_MTX_MODELVIEW);
+    gSPPopMatrix(NEXT_GFX(gGfxContext.dlHead), G_MTX_MODELVIEW);
 }
 
 struct unkfunc_800477D8_inner {

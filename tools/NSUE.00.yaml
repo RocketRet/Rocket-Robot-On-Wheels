@@ -1,19 +1,17 @@
 name: "Rocket Robot on Wheels (US)"
 options:
+  platform: n64
   basename: "NSUE"
   compiler: "GCC"
   o_as_suffix: yes
-  cpp_args:
-  - "-D_LANGUAGE_C"
-  - "-D_FINALROM"
   generated_c_preamble: |
     #include <include_asm.h>
     #include <ultra64.h>
   symbol_addrs_path: tools/symbol_addrs.txt
   create_undefined_syms_auto: no
   create_undefined_funcs_auto: no
+  asm_data_macro: dlabel
   do_c_func_detection: yes
-  hi_lo_max_distance: 20
   base_path: ..
   target_path: baserom.us.z64
   asset_path: bin
@@ -694,6 +692,7 @@ segments:
     type: code
     start: 0x0B0460
     vram: 0x800AF860
+    bss_size: 0x10840
     follows_vram: codeseg2
     subsegments:
     # Codesegs 0/1 bss
@@ -730,7 +729,9 @@ segments:
     bss_size: 0x36A00
     subsegments:
     # Codeseg 2 bss
-    - [0x0B0460, bss, rocket/codeseg2/codeseg2_bss]  # 0x800C00A0 - 0x800F6AA0
+    - name: rocket/codeseg2/codeseg2_bss
+      vram: 0x800C00A0
+      type: bss
   - name: assets
     type: code
     start: 0x0B0460

@@ -9,7 +9,6 @@
 
 extern struct ControllerData gControllerData;
 extern u32 D_800A638C;
-extern u32 D_8009FE10;
 extern u32 D_800AB9C8;
 
 // bss

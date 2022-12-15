@@ -20,6 +20,7 @@ extern struct {
 } D_800AAF80;
 
 extern struct MaterialGfx *D_800AF4F8;
+extern struct MaterialGfx *materialTable;
 
 void func_80092094(struct MaterialGfx*);
 f32 positive_fmodf(f32, f32);
@@ -356,7 +357,7 @@ void func_800926B8(struct unkfunc_800926B8 *arg0, struct MaterialGfx* arg1, s32*
         // If the two combiner cycles are configured the same but this is a 2-cycle material, replace the second cycle with:
         // color: Combined
         // alpha: Combined * Primitive
-        if ((material->header.unk4.unk0_0) == 0x02 && ((u32*)cycle1.color)[0] == ((u32*)cycle2.color)[0] && ((u32*)cycle1.color)[1] == ((u32*)cycle2.color)[1]) {
+        if ((material->header.unk4.cycleType) == 0x02 && ((u32*)cycle1.color)[0] == ((u32*)cycle2.color)[0] && ((u32*)cycle1.color)[1] == ((u32*)cycle2.color)[1]) {
             cycle2 = MAKE_COMBINER( 0, 0, 0, COMBINED,  COMBINED, 0, PRIMITIVE, 0 );
         }
     
@@ -384,44 +385,21 @@ void func_800926B8(struct unkfunc_800926B8 *arg0, struct MaterialGfx* arg1, s32*
     return;
 }
 
-extern struct MaterialGfx *materialTable;
-
-static inline struct unkfunc_80093DDC unk_inline_func_80093DDC() {
-    struct unkfunc_80093DDC ret;
-
-    ret.unk0_0 = 2;
-    ret.unk0_4 = 1;
-    ret.unk1 = 1;
-    ret.unk2 = 1;
-    ret.unk3 = unk_parse_struct_unkfunc_80093DDC(ret);
-    
-    return ret;
-}
-
-static inline struct unkfunc_80093DDC unk_inline_func_80093DDC2() {
-    struct unkfunc_80093DDC ret;
-
-    ret = unk_inline_func_80093DDC();
-
-    return ret;
-}
-
-struct TextureGroupHeader *func_80093DDC(struct TextureGroupHeader *arg0, s32 arg1) {
-    struct unkfunc_80093DDC sp10;
+struct RenderParams func_80093DDC(s32 arg1) {
+    struct RenderParams sp10;
     struct MaterialGfx *materialGfx;
     struct TexturedMaterial *materialData;
 
     materialGfx = &materialTable[arg1];
     
     if (IS_SOLID_COLOR(materialTable[arg1].materialData.raw)) {
-        sp10 = unk_inline_func_80093DDC2();
+        sp10 = unk_make_premade_RenderParams();
     } else {
         materialData = get_material_data(materialGfx);
         sp10 = materialData->header.unk4;
     }
     
-    arg0->unk4 = sp10;
-    return arg0;
+    return sp10;
 }
 
 void texture_handler_copy(u32 assetAddress, UNUSED struct TextureCompressionHeader *header, struct Texture *asset)

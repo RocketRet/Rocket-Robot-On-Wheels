@@ -1,16 +1,3 @@
-asm/nonmatchings/rocket/codeseg2/codeseg2_23/func_800235DC.s
-591:/* 248F0 80023CF0 8E030004 */  lw         $v1, 0x4($s0)
-607:/* 24924 80023D24 8E110008 */  lw         $s1, 0x8($s0)
-654:/* 249CC 80023DCC 8E110008 */  lw         $s1, 0x8($s0)
-679:/* 24A24 80023E24 8E030004 */  lw         $v1, 0x4($s0)
-731:/* 24AD4 80023ED4 8E05000C */  lw         $a1, 0xC($s0)
-732:/* 24AD8 80023ED8 8607000A */  lh         $a3, 0xA($s0)
-733:/* 24ADC 80023EDC 86020008 */  lh         $v0, 0x8($s0)
-746:/* 24B0C 80023F0C 8E05000C */  lw         $a1, 0xC($s0)
-747:/* 24B10 80023F10 8607000A */  lh         $a3, 0xA($s0)
-748:/* 24B14 80023F14 86020008 */  lh         $v0, 0x8($s0)
-760:/* 24B40 80023F40 8E050008 */  lw         $a1, 0x8($s0)
-
 asm/entry.s
-15:/* 1010 80000410 3C09800C */  lui        $t1, %hi(_codesegs0_1SegmentBssEnd)
-16:/* 1014 80000414 252900A0 */  addiu      $t1, $t1, %lo(_codesegs0_1SegmentBssEnd)
+17:/* 1010 80000410 3C09800C */  lui        $t1, %hi(_codesegs0_1SegmentBssEnd)
+18:/* 1014 80000414 252900A0 */  addiu      $t1, $t1, %lo(_codesegs0_1SegmentBssEnd)

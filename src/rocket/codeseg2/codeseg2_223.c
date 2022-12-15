@@ -36,7 +36,7 @@ void clear_main_pool()
     D_800E48AC = D_800E48A8;
 }
 
-void custom_memcpy(u8 *, u8 *, s32);
+void custom_memcpy(void *, void *, s32);
 
 void *main_alloc_copy(s32 size, u8 *src)
 {
@@ -134,7 +134,7 @@ void custom_memcpy(void *dst, void *src, s32 count)
     }
 }
 #else
-INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_223", custom_memcpy, u8*, u8*, s32);
+INCLUDE_ASM(void, "rocket/codeseg2/codeseg2_223", custom_memcpy, void*, void*, s32);
 #endif
 
 void custom_memmove(u8 *dst, u8 *src, s32 count)

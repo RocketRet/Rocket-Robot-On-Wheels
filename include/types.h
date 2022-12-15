@@ -31,16 +31,18 @@ struct GfxContext {
 struct GfxTask {
     /* 0x000 */ void *framebuffer;
     /* 0x004 */ struct GfxContext ctx;
-    /* 0x014 */ void *unk14;
-    /* 0x018 */ u8 unk18[0xD8 - 0x14 - 0x04];
-    /* 0x0C0 */ Mtx3f unkD8;
+    /* 0x014 */ Gfx *dlStart;
+    /* 0x018 */ Mtx perspectiveMtx;
+    /* 0x058 */ Mtx viewMtx;
+    /* 0x098 */ Mtx identityModelMtx;
+    /* 0x0D8 */ Mtx3f unkD8;
     /* 0x0FC */ Mtx3f unkFC;
     /* 0x120 */ s16 unk120;
     /* 0x122 */ u16 unk122;
     /* 0x124 */ u16 unk124;
     /* 0x126 */ u16 unk126;
     /* 0x128 */ struct GfxTask *unk128;
-    /* 0x12C */ u32 unk12C;
+    /* 0x12C : Alignment Padding */
     /* 0x130 */ OSScTask schedTask;
 };
 
@@ -66,8 +68,8 @@ struct TextureHeader {
 
 struct Texture {
     struct TextureHeader header;
-    void *imageData;
-    void *paletteData;
+    /* 0x10 */ void *imageData;
+    /* 0x14 */ void *paletteData;
 };
 
 struct TextureCompressionHeader {
@@ -85,16 +87,16 @@ struct DecompressionParams {
     u32 mask;
 };
 
-struct unkfunc_80093DDC {
+struct RenderParams {
     u8 unk0_4 : 4;
-    u8 unk0_0 : 4;
+    u8 cycleType : 4;
     u8 unk1;
     u8 unk2;
-    u8 unk3;
+    u8 renderMode;
 };
 
 struct TextureGroupHeader {
-    struct unkfunc_80093DDC unk4;
+    struct RenderParams unk4;
     u16 flags;
     u16 baseTextureWidth;
     u16 baseTextureHeight;
@@ -206,7 +208,7 @@ struct VertexDataStorage {
 
 struct Submodel {
     Gfx *unk0;
-    struct unkfunc_80093DDC unk4;
+    struct RenderParams unk4;
     f32 unk8;
     f32 unkC;
     f32 unk10;
@@ -215,7 +217,7 @@ struct Submodel {
     u8 unk21;
     u8 unk22;
     u8 unk23;
-    f32 unk24;
+    s32 unk24;
 };
 
 struct unkfunc_800882B8 {
@@ -292,6 +294,8 @@ struct GameObject {
             s32 unk110_10 : 2;
             s32 unk110_12 : 5;
             s32 unk110_17 : 1; // sleeping
+            s32 unk110_18 : 1;
+            s32 unk110_19 : 1;
         } bitfield;
     } unk110;
     /* 0x114 */ s32 unk114;

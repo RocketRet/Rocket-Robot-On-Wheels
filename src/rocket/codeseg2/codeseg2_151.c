@@ -4,8 +4,8 @@
 #include <types.h>
 #include "codeseg2.h"
 
-extern struct unkfunc_80093DDC D_800A5DB8; // 0x04 bytes
-extern struct GfxTask* gCurGfxTask; // 0x04 bytes
+extern struct RenderParams D_800A5DB8; // 0x04 bytes
+extern struct GfxTask* gCurGfxTask;
 
 extern u32* D_800AAF7C;
 extern u32 D_800AAF84;
@@ -21,19 +21,19 @@ extern u64 D_800C0860[OS_YIELD_DATA_SIZE];
 extern OSMesgQueue D_80017DE4;
 
 void schedule_gfx_task(void) {
-    struct unkfunc_80093DDC sp10;
+    struct RenderParams sp10;
     OSScTask* sched_task;
 
     gDPFullSync(next_gfx());
     gSPEndDisplayList(next_gfx());
-    if (D_800A5DB8.unk0_0 != 0 && D_800A5DB8.unk0_4 != 0 && D_800A5DB8.unk1 != 0 && D_800A5DB8.unk2 != 0) {
+    if (D_800A5DB8.cycleType != 0 && D_800A5DB8.unk0_4 != 0 && D_800A5DB8.unk1 != 0 && D_800A5DB8.unk2 != 0) {
         sp10 = D_800A5DB8;
     } else {
-        sp10 = unk_make_struct_unkfunc_80093DDC();
+        sp10 = unk_make_RenderParams(0, 0, 0, 0);
     }
     sched_task = &gCurGfxTask->schedTask;
-    sched_task->list.t.data_ptr = (u64*)gCurGfxTask->unk14;
-    sched_task->list.t.data_size = (u8*)gGfxContext.dlHead - (u8*)gCurGfxTask->unk14;
+    sched_task->list.t.data_ptr = (u64*)gCurGfxTask->dlStart;
+    sched_task->list.t.data_size = (u8*)gGfxContext.dlHead - (u8*)gCurGfxTask->dlStart;
     sched_task->list.t.flags = 0;
     sched_task->list.t.type = M_GFXTASK;
     sched_task->list.t.ucode_boot = rspbootTextStart;
@@ -52,7 +52,7 @@ void schedule_gfx_task(void) {
     sched_task->msgQ = &D_80017DE4;
     sched_task->msg = (void*) &gCurGfxTask->unk124;
     sched_task->framebuffer = gCurGfxTask->framebuffer;
-    //! BUG: This only needs to invalidate the 0x40 bytes of the OSTask itself, not the full GfxTask
+    // Writes back both the OSTask and the matrices in the GfxTask
     osWritebackDCache(gCurGfxTask, sizeof(*gCurGfxTask));
     osWritebackDCache(gGfxContext.dlStart, (u8*)gGfxContext.dlHead - (u8*)gGfxContext.dlStart);
     osWritebackDCache(gGfxContext.unkC, (u8*)gGfxContext.dlStart + gGfxContext.unk0 - (u8*)gGfxContext.unkC);

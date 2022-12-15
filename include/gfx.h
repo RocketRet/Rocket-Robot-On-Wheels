@@ -8,6 +8,8 @@
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
+#define MARGIN_X 18
+#define MARGIN_Y 14
 #define FRAMEBUFFER_BYTES ((SCREEN_WIDTH) * (SCREEN_HEIGHT) * sizeof(u16))
 
 struct unkD_8009F094_inner {
@@ -25,5 +27,12 @@ extern struct unkD_8009F094 D_8009F094;
 
 extern RGBA32 D_800A5398;
 extern RGBA32 D_800A539C;
+
+extern struct {
+    s32 unk0;
+    f32 unk4;
+} D_8009FE10;
+
+void draw_rectangle(s32, s32, s32, s32, s32, s32, s32, s32);
 
 #endif

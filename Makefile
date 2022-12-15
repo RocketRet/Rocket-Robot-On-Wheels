@@ -64,7 +64,7 @@ CFLAGS := -G0 -mcpu=vr4300 -mips2 -fno-exceptions -funsigned-char -gdwarf \
    -Wa,-G0,-EB,-mips3,-mabi=32,-mgp32,-march=vr4300,-mfp32,-mno-shared
 ASN64FLAGS := -q -G0
 KMC_CFLAGS := -c -G0  -mgp32 -mfp32 -mips3
-WARNFLAGS := -Wuninitialized -Wshadow -Wall -Werror
+WARNFLAGS := -Wall -Werror -Wno-uninitialized
 OPTFLAGS := -O2
 ASFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -gdwarf -c
 LDFLAGS := -march=vr4300 -mabi=32 -mgp32 -mfp32 -mips3 -mno-abicalls -G0 -fno-pic -gdwarf -nostartfiles -Wl,-T,$(LD_SCRIPT) -Wl,-T,tools/undefined_syms.txt -Wl,--build-id=none
@@ -86,11 +86,8 @@ $(BUILD_DIR) : | $(BUILD_ROOT)
 $(BUILD_ROOT) $(BUILD_DIR) $(SRC_DIR) $(SRC_BUILD_DIRS) $(ASM_BUILD_DIRS) $(BIN_BUILD_DIR) :
 	$(MKDIR) $@
 
-$(BUILD_DIR)/ultra/%.i : ultra/%.c | $(SRC_BUILD_DIRS)
-	$(CPP) $(CPPFLAGS) -D__FILE__=\"$(notdir $<)\" -Wno-builtin-macro-redefined $< -o $@
-
-$(BUILD_DIR)/ultra/%.o : $(BUILD_DIR)/ultra/%.i | $(SRC_BUILD_DIRS) $(KMC_CC) $(KMC_AS)
-	export COMPILER_PATH=$(KMC_DIR) && $(KMC_CC) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
+$(BUILD_DIR)/ultra/%.o : ultra/%.c | $(SRC_BUILD_DIRS) $(KMC_CC) $(KMC_AS)
+	export COMPILER_PATH=$(KMC_DIR) && $(KMC_CC) -D__FILE__=\"$(notdir $<)\" $(CPPFLAGS) $(KMC_CFLAGS) $(OPTFLAGS) $< -o $@
 	@$(STRIP) $@ -N $(<:.i=.c)
 
 
@@ -150,7 +147,7 @@ check: $(Z64)
 
 setup:
 	tools/splat/split.py tools/NSUE.00.yaml --modes=all
-	tools/fixup.py > /dev/null
+	tools/fixup.py
 
 $(KMC_CC) $(KMC_AS) $(SN_CC) $(SN_AS) :
 	$(MAKE) -C tools/ $(@:tools/%=%)
@@ -158,9 +155,7 @@ $(KMC_CC) $(KMC_AS) $(SN_CC) $(SN_AS) :
 .SUFFIXES:
 MAKEFLAGS += --no-builtin-rules
 
-keep-asm: $(C_ASMS) $(C_ASMS:.s=.i)
-
-.PHONY: all keep-asm clean check setup
+.PHONY: all clean check setup
 
 print-% : ; $(info $* is a $(flavor $*) variable set to [$($*)]) @true
 

@@ -24,4 +24,6 @@ void mtx3f_transpose(Mtx3f in, Mtx3f out);
 void mtx3f_rotate_axis(f32 angle, Vec3f arg1, Mtx3f out);
 void mtx3f_axis_angle(Vec3f in, Mtx3f out);
 
+void sincosf(float angle, float* sinout, float* cosout);
+
 #endif
