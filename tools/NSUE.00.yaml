@@ -8,6 +8,7 @@ options:
     #include <include_asm.h>
     #include <ultra64.h>
   symbol_addrs_path: tools/symbol_addrs.txt
+  reloc_addrs_path: tools/reloc_addrs.txt
   create_undefined_syms_auto: no
   create_undefined_funcs_auto: no
   asm_data_macro: dlabel
@@ -729,9 +730,7 @@ segments:
     bss_size: 0x36A00
     subsegments:
     # Codeseg 2 bss
-    - name: rocket/codeseg2/codeseg2_bss
-      vram: 0x800C00A0
-      type: bss
+    - [0x0B0460, bss, rocket/codeseg2/codeseg2_bss]  # 0x800C00A0 - 0x800F6AA0
   - name: assets
     type: code
     start: 0x0B0460

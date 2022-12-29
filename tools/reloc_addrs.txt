@@ -1,0 +1,2 @@
+rom:0x001010 symbol:_codesegs0_1SegmentBssEnd reloc:MIPS_HI16
+rom:0x001014 symbol:_codesegs0_1SegmentBssEnd reloc:MIPS_LO16

@@ -146,8 +146,8 @@ check: $(Z64)
 	@$(DIFF) $(BASEROM) $(Z64) && printf "OK\n"
 
 setup:
+	rm -rf asm/ data/
 	tools/splat/split.py tools/NSUE.00.yaml --modes=all
-	tools/fixup.py
 
 $(KMC_CC) $(KMC_AS) $(SN_CC) $(SN_AS) :
 	$(MAKE) -C tools/ $(@:tools/%=%)

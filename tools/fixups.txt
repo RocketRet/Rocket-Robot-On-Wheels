@@ -1,3 +1,0 @@
-asm/entry.s
-17:/* 1010 80000410 3C09800C */  lui        $t1, %hi(_codesegs0_1SegmentBssEnd)
-18:/* 1014 80000414 252900A0 */  addiu      $t1, $t1, %lo(_codesegs0_1SegmentBssEnd)
