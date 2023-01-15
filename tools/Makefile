@@ -54,10 +54,10 @@ $(SN_GCC): | $(SN_GCC_DIR)
 
 $(SN_ASN64): | $(SN_GCC_DIR)
 	wget https://github.com/RocketRet/modern-asn64/releases/download/main-release/modern-asn64.py -P $(SN_GCC_DIR)
-	echo -n "#!/bin/bash\n\n$$" > $(SN_GCC_DIR)/as
-	echo -n "( dirname -- \"$$" >> $(SN_GCC_DIR)/as
-	echo -n "0\"; )/modern-asn64.py mips-linux-gnu-as \"$$" >> $(SN_GCC_DIR)/as
-	echo    "@\"" >> $(SN_GCC_DIR)/as
+	printf "#!/bin/bash\n\n$$" > $(SN_GCC_DIR)/as
+	printf "( dirname -- \"$$" >> $(SN_GCC_DIR)/as
+	printf "0\"; )/modern-asn64.py mips-linux-gnu-as \"$$" >> $(SN_GCC_DIR)/as
+	printf "@\"" >> $(SN_GCC_DIR)/as
 	chmod +x $(SN_GCC_DIR)/as
 	chmod +x $(SN_GCC_DIR)/modern-asn64.py
 

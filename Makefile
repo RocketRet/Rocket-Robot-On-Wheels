@@ -43,11 +43,19 @@ SN_SRCS := $(filter-out $(FILTERED_OUT_SRCS),$(SN_SRCS))
 SN_OBJS := $(addprefix $(BUILD_DIR)/, $(SN_SRCS:.c=.o))
 
 # Tools
-CPP := mips-linux-gnu-cpp
-AS := mips-linux-gnu-gcc
-OBJCOPY := mips-linux-gnu-objcopy
-LD := mips-linux-gnu-gcc
-STRIP := mips-linux-gnu-strip
+ifeq ($(shell type mips-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
+  CROSS := mips-linux-gnu-
+else ifeq ($(shell type mips64-linux-gnu-ld >/dev/null 2>/dev/null; echo $$?), 0)
+  CROSS := mips64-linux-gnu-
+else
+  CROSS := mips64-elf-
+endif
+
+CPP     := $(CROSS)cpp
+AS      := $(CROSS)gcc
+OBJCOPY := $(CROSS)objcopy
+LD      := $(CROSS)gcc
+STRIP   := $(CROSS)strip
 KMC_DIR := tools/gcc-2.7.2
 KMC_CC := $(KMC_DIR)/gcc
 KMC_AS := $(KMC_DIR)/as
